@@ -44,7 +44,7 @@
     <link href="http://example.com/2020/09/14/IDEA/IDEA-Statistic/"/>
     <id>http://example.com/2020/09/14/IDEA/IDEA-Statistic/</id>
     <published>2020-09-13T16:00:00.000Z</published>
-    <updated>2020-09-14T02:43:46.998Z</updated>
+    <updated>2020-09-14T02:46:28.898Z</updated>
     
     <content type="html"><![CDATA[<p>IDEA插件 Statistic使用,主要代码行数,将代码数量统计并直观展示出来.<a id="more"></a></p><h3 id="1-插件安装"><a href="#1-插件安装" class="headerlink" title="1.插件安装"></a>1.插件安装</h3><p>IDEA–&gt;file–&gt;settings–&gt;plugins–&gt;搜索插件(Statistic)</p><img src="/img/image-20200914103816130.png" alt="image-20200914103816130" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20200914103816130.png" class="lozad post-image"><p>我这里已经安装,还未重启IDE,点击Install安装插件,安装完成后根据提重启IDE</p><h3 id="2-插件使用"><a href="#2-插件使用" class="headerlink" title="2.插件使用"></a>2.插件使用</h3><p>更新中…</p>]]></content>
     
@@ -52,6 +52,8 @@
     <summary type="html">&lt;p&gt;IDEA插件 Statistic使用,主要代码行数,将代码数量统计并直观展示出来.</summary>
     
     
+    
+    <category term="IDEA" scheme="http://example.com/categories/IDEA/"/>
     
     
     <category term="IDEA" scheme="http://example.com/tags/IDEA/"/>
