@@ -129,119 +129,25 @@
     <div class="section-wrap">
       <div class="container">
         <div class="columns">
-          <main class="main-column">
-<article class="card card-content">
-  <header>
-    <h1 class="post-title">
-      IDEA 远程调试
-    </h1>
-  </header>
-  <div class="post-meta post-show-meta">
-    <time datetime="2020-09-08T14:55:59.089Z" style="display: flex; align-items: center;">
-      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-      <span>2020-09-08</span>
-    </time>
-    
-    <span class="dot"></span>
-    
-    <a href="/categories/IDEA/" class="post-meta-link">IDEA</a>
-    
-    
-    
-    <span class="dot"></span>
-    <span>293 字</span>
-    
-  </div>
-  
-  <div class="post-meta post-show-meta" style="margin-top: -10px;">
-    <div style="display: flex; align-items: center;">
-      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
-      
-      
-        <a href="/tags/IDEA/" class="post-meta-link">IDEA</a>
-      
-      
-      <span class="dot"></span>
-      
-        <a href="/tags/远程调试/" class="post-meta-link">远程调试</a>
-      
-    </div>
-  </div>
-  
-  </header>
-  <div id="section" class="post-content">
-    <h3 id="本机调试"><a href="#本机调试" class="headerlink" title="本机调试"></a><strong>本机调试</strong></h3><p>此处不做过多解释，相信考虑远程debug调试的，肯定对本机调试是有一定了解的。说下自己在本机调试spring Boot项目时遇到的项目长时间卡顿，这个时候可能是因为本机环境中debug断点太多，去除一下后即可正常启动；</p>
-<h3 id="远程调试"><a href="#远程调试" class="headerlink" title="远程调试"></a><strong>远程调试</strong></h3><p>远程调试一个大前提就是我们需要保证远程代码和本地代码一致；</p>
-<hr>
-<p><strong>此处部署为war包项目</strong></p>
-<p>在远程环境中要开启允许远程debug调试</p>
-<ol>
-<li>windows环境–》bin目录–》<code>startup.bat</code> 增加设置(此处设置debug端口为 address=8081，可以根据实际条件自行设置)</li>
-</ol>
-<pre class="highlight"><span class="line">SET CATALINA_OPTS&#x3D;-server -Xdebug -Xnoagent -Djava.compiler&#x3D;NONE -Xrunjdwp:transport&#x3D;dt_socket,server&#x3D;y,suspend&#x3D;n,address&#x3D;8081</span><br></pre>
-
-<ol>
-<li>Linux环境中–》<code>catalina.sh</code>文件</li>
-</ol>
-<pre class="highlight"><span class="line">CATALINA_OPTS&#x3D;&quot;-Xdebug -Xrunjdwp:transport&#x3D;dt_socket,suspend&#x3D;n,server&#x3D;y,address&#x3D;8081&quot;</span><br></pre>
-
-<p>IDEA中创建debug调试</p>
-<p><img src="https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70" class="lozad post-image"><img src="https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70" class="lozad post-image"><img src="https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70" class="lozad post-image"></p>
-<ol>
-<li><p>全部设置完成后，重启项目</p>
-</li>
-<li><p><img src="https://img-blog.csdnimg.cn/20190809175100811.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdnimg.cn/20190809175100811.png" class="lozad post-image"></p>
-</li>
-<li><p>然后idea中debug启动刚才新建的服务，在本机代码中打断点，发起相应请求即可进入debug模式；</p>
-</li>
-</ol>
-<hr>
-<p>若项目为jar项目应该使用</p>
-<p><img src="https://img-blog.csdnimg.cn/20190809175123597.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdnimg.cn/20190809175123597.png" class="lozad post-image"></p>
-
-  </div>
-  <div>
-  
-  <div class="post-note note-warning copyright" style="margin-top: 42px">
-    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://example.com/about">sunfy</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://example.com/2020/09/08/IDEA/IDEA-debug/">http://example.com/2020/09/08/IDEA/IDEA-debug/</a></p>
-    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
-  </div>
-  
-  </div>
-</article>
-<div class="nav">
-  
-  <div class="nav-item-prev">
-    <a href="/2020/09/09/Linux/Centos-staticIP/" class="nav-link">
-      <i class="iconfont icon-left nav-prev-icon"></i>
-      <div>
-        <div class="nav-label">上一篇</div>
-        
-        <div class="nav-title">Centos设置静态ip </div>
-        
-      </div>
-    </a>
-  </div>
-  
-  
-  <div class="nav-item-next">
-    <a href="/2020/09/08/java/javaDesignPatterns/" class="nav-link">
-      <div>
-        <div class="nav-label">下一篇</div>
-        
-        <div class="nav-title">Java设计模式 </div>
-        
-      </div>
-      <i class="iconfont icon-right nav-next-icon"></i>
-    </a>
-  </div>
-  
+          <main class="main-column"><div class="card card-content tag-page-card">
+  <div class="tags-page-title">标签&nbsp-&nbspJDK</div>
 </div>
-
-<div class="card card-content toc-card" id="mobiletoc">
-  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%9C%BA%E8%B0%83%E8%AF%95"><span class="toc-text">本机调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95"><span class="toc-text">远程调试</span></a></li></ol>
+<div class="archive-timeline">
+  
+  
+    
+      <div class="archive-timeline-tag"><span>2020</span></div>
+      
+    
+    <div class="archive-timeline-item">
+      <div class="archive-timeline-post">
+        <div class="card card-content">
+          <div class="archive-timeline-post-date">2020-09-14</div>
+          <div class="archive-timeline-post-content"><a href="/2020/09/14/IDEA/IDEA-JDK8/" class="archive-timeline-post-item">jdk源码环境搭建</a></div>
+        </div>
+      </div>
+    </div>
+  
 </div></main>
           <aside class="left-column">
             
@@ -270,13 +176,6 @@
             
             <div class="sticky-tablet">
   
-  
-  <article class="display-when-two-columns spacer">
-    <div class="card card-content toc-card">
-      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%9C%BA%E8%B0%83%E8%AF%95"><span class="toc-text">本机调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95"><span class="toc-text">远程调试</span></a></li></ol>
-    </div>
-  </article>
   
   
   <article class="card card-content">
@@ -344,16 +243,54 @@
   </article>
   
   
+  <article class="card card-content widescreen-archive">
+    <div class="archive-card">
+  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
+  <div class="archive-card-list">
+    
+    
+    
+      
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+      <a href="/archives/2020" class="archive-card-list-item">
+          2020
+          <span class="archive-card-list-item-badge">6</span>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
 </div>
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
   
-  
-  <article class="card card-content toc-card">
-    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%9C%BA%E8%B0%83%E8%AF%95"><span class="toc-text">本机调试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95"><span class="toc-text">远程调试</span></a></li></ol>
-  </article>
   
   
   <article class="card card-content">
@@ -385,6 +322,49 @@
 </div>
   </article>
   
+  
+  <article class="card card-content">
+    <div class="archive-card">
+  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
+  <div class="archive-card-list">
+    
+    
+    
+      
+        
+        
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+    
+      <a href="/archives/2020" class="archive-card-list-item">
+          2020
+          <span class="archive-card-list-item-badge">6</span>
+      </a>
+    
+  </div>
+</div>
+  </article>
   
 </div>
           </aside>
