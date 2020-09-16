@@ -129,94 +129,93 @@
     <div class="section-wrap">
       <div class="container">
         <div class="columns">
-          <main class="main-column"><div class="card card-content">
-  <h1 class="widget-title">归档</h1>
-</div>
-<div class="archive-timeline">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      MySQL常见异常
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-09-16T02:47:40.214Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-09-16</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/DB/" class="post-meta-link">DB</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>490 字</span>
+    
+  </div>
   
-  
-  
-  <div class="archive-timeline-tag"><span>2020</span></div>
-  
-  
-  <div class="archive-timeline-item">
-    <div class="archive-timeline-post">
-      <div class="card card-content">
-        <div class="archive-timeline-post-date">2020-09-16</div>
-        <div class="archive-timeline-post-content"><a href="/2020/09/16/DB/MySQl常见错误/"
-            class="archive-timeline-post-item">MySQL常见异常</a></div>
-      </div>
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/DB/" class="post-meta-link">DB</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/MySQL/" class="post-meta-link">MySQL</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Linux/" class="post-meta-link">Linux</a>
+      
     </div>
   </div>
   
+  </header>
+  <div id="section" class="post-content">
+    <h3 id="linux，登录mysql报错ERROR-2002-HY000-Can’t-connect-to-local-MySQL-server-through-socket-‘-var-lib-mysql-sock’"><a href="#linux，登录mysql报错ERROR-2002-HY000-Can’t-connect-to-local-MySQL-server-through-socket-‘-var-lib-mysql-sock’" class="headerlink" title="linux，登录mysql报错ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/var/lib/mysql.sock’"></a>linux，登录mysql报错ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/var/lib/mysql.sock’</h3><p>首先检查/etc下的是否有my.cnf文件,这是启动时基本配置文件</p>
+<pre class="highlight"><span class="line">[mysqld]</span><br><span class="line">log-bin&#x3D;mysql-bin</span><br><span class="line">server-id&#x3D;1</span><br><span class="line">#</span><br><span class="line"># Remove leading # and set to the amount of RAM for the most important data</span><br><span class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</span><br><span class="line">innodb_buffer_pool_size &#x3D; 8M</span><br><span class="line">#</span><br><span class="line"># Remove leading # to turn on a very important data integrity option: logging</span><br><span class="line"># changes to the binary log between backups.</span><br><span class="line"># log_bin</span><br><span class="line">#</span><br><span class="line"># Remove leading # to set options mainly useful for reporting servers.</span><br><span class="line"># The server defaults are faster for transactions and fast SELECTs.</span><br><span class="line"># Adjust sizes as needed, experiment to find the optimal values.</span><br><span class="line">join_buffer_size &#x3D; 8M</span><br><span class="line">sort_buffer_size &#x3D; 2M</span><br><span class="line">read_rnd_buffer_size &#x3D; 2M</span><br><span class="line">datadir&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql</span><br><span class="line">socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock</span><br><span class="line">log-bin</span><br><span class="line">max_binlog_size&#x3D;50M</span><br><span class="line">expire_logs_days&#x3D;7</span><br><span class="line"># 关闭所有网络链接,开启后只能使用mysql客户端链接</span><br><span class="line">#skip-networking</span><br><span class="line">#default-time-zone &#x3D; &#39;+8:00&#39;</span><br><span class="line">performance_schema_max_table_instances&#x3D;200</span><br><span class="line">table_definition_cache&#x3D;200</span><br><span class="line">table_open_cache&#x3D;128</span><br><span class="line">bind-address &#x3D; 0.0.0.0</span><br><span class="line">#skip-grant-tables</span><br><span class="line"></span><br><span class="line"># Disabling symbolic-links is recommended to prevent assorted security risks</span><br><span class="line">symbolic-links&#x3D;0</span><br><span class="line"></span><br><span class="line"># Recommended in standard MySQL setup</span><br><span class="line">sql_mode&#x3D;NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</span><br><span class="line"></span><br><span class="line">[mysqld_safe]</span><br><span class="line">log-error&#x3D;&#x2F;var&#x2F;log&#x2F;mysqld.log</span><br><span class="line">pid-file&#x3D;&#x2F;var&#x2F;run&#x2F;mysqld&#x2F;mysqld.pid</span><br><span class="line"></span><br><span class="line">#配置开启binlog</span><br><span class="line">log‐bin&#x3D;&#x2F;usr&#x2F;local&#x2F;software&#x2F;mysql&#x2F;binlog&#x2F;mysql‐bin</span><br><span class="line">##注意5.7以及更高版本需要配置本项:server‐id&#x3D;123454(自定义,保证唯一性);</span><br><span class="line">###binlog格式,有3种statement,row,mixed</span><br><span class="line">binlog‐format&#x3D;ROW</span><br><span class="line">###表示每1次执行写入就与硬盘同步,会影响性能,为0时表示,事务提交时mysql不做刷盘操作,由系统决定</span><br><span class="line">sync‐binlog&#x3D;1</span><br><span class="line">#</span><br></pre>
+
+<p>关闭进程指令：ps aux |grep ‘mysql*’<br>关闭mysql的所有进程</p>
+<p>启动mysql: systemctl start mysqld</p>
+<h3 id="ERROR-You-have-enabled-the-binary-log-but-you-haven’t-provided-the-mandatory-server-id"><a href="#ERROR-You-have-enabled-the-binary-log-but-you-haven’t-provided-the-mandatory-server-id" class="headerlink" title="[ERROR] You have enabled the binary log, but you haven’t provided the mandatory server-id."></a>[ERROR] You have enabled the binary log, but you haven’t provided the mandatory server-id.</h3><h4 id="报错的原因："><a href="#报错的原因：" class="headerlink" title="报错的原因："></a>报错的原因：</h4><p>在设置bin log日志的时候，没有设置server_id参数。server-id参数用于在复制中，为主库和备库提供一个独立的ID，以区分主库和备库；开启二进制文件的时候，需要设置这个参数。</p>
+<pre class="highlight"><span class="line">[root@mysql bin]# vi &#x2F;etc&#x2F;my.cnf</span><br><span class="line">#add</span><br><span class="line">[mysqld]</span><br><span class="line">log-bin&#x3D;mysql-bin</span><br><span class="line">server-id&#x3D;1</span><br></pre>
+
+
+  </div>
+  <div>
   
-  <div class="archive-timeline-item">
-    <div class="archive-timeline-post">
-      <div class="card card-content">
-        <div class="archive-timeline-post-date">2020-09-14</div>
-        <div class="archive-timeline-post-content"><a href="/2020/09/14/IDEA/IDEA-Statistic/"
-            class="archive-timeline-post-item">IDEA Statistic插件使用,代码统计</a></div>
-      </div>
-    </div>
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://example.com/about">sunfy</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://example.com/2020/09/16/DB/MySQl%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/">http://example.com/2020/09/16/DB/MySQl%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
   </div>
   
-  
-  <div class="archive-timeline-item">
-    <div class="archive-timeline-post">
-      <div class="card card-content">
-        <div class="archive-timeline-post-date">2020-09-14</div>
-        <div class="archive-timeline-post-content"><a href="/2020/09/14/IDEA/IDEA-JDK8/"
-            class="archive-timeline-post-item">jdk源码环境搭建</a></div>
-      </div>
-    </div>
   </div>
+</article>
+<div class="nav">
   
   
-  <div class="archive-timeline-item">
-    <div class="archive-timeline-post">
-      <div class="card card-content">
-        <div class="archive-timeline-post-date">2020-09-09</div>
-        <div class="archive-timeline-post-content"><a href="/2020/09/09/Linux/Centos-staticIP/"
-            class="archive-timeline-post-item">Centos设置静态ip</a></div>
+  <div class="nav-item-next">
+    <a href="/2020/09/14/IDEA/IDEA-Statistic/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">IDEA Statistic插件使用,代码统计 </div>
+        
       </div>
-    </div>
-  </div>
-  
-  
-  <div class="archive-timeline-item">
-    <div class="archive-timeline-post">
-      <div class="card card-content">
-        <div class="archive-timeline-post-date">2020-09-08</div>
-        <div class="archive-timeline-post-content"><a href="/2020/09/08/IDEA/IDEA-debug/"
-            class="archive-timeline-post-item">IDEA 远程调试</a></div>
-      </div>
-    </div>
-  </div>
-  
-  
-  <div class="archive-timeline-item">
-    <div class="archive-timeline-post">
-      <div class="card card-content">
-        <div class="archive-timeline-post-date">2020-09-08</div>
-        <div class="archive-timeline-post-content"><a href="/2020/09/08/java/javaDesignPatterns/"
-            class="archive-timeline-post-item">Java设计模式</a></div>
-      </div>
-    </div>
-  </div>
-  
-  
-  <div class="archive-timeline-item">
-    <div class="archive-timeline-post">
-      <div class="card card-content">
-        <div class="archive-timeline-post-date">2020-04-15</div>
-        <div class="archive-timeline-post-content"><a href="/2020/04/15/git/gitBase/"
-            class="archive-timeline-post-item">Git基本操作</a></div>
-      </div>
-    </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
   </div>
   
 </div>
-</main>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#linux%EF%BC%8C%E7%99%BB%E5%BD%95mysql%E6%8A%A5%E9%94%99ERROR-2002-HY000-Can%E2%80%99t-connect-to-local-MySQL-server-through-socket-%E2%80%98-var-lib-mysql-sock%E2%80%99"><span class="toc-text">linux，登录mysql报错ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘&#x2F;var&#x2F;lib&#x2F;mysql.sock’</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ERROR-You-have-enabled-the-binary-log-but-you-haven%E2%80%99t-provided-the-mandatory-server-id"><span class="toc-text">[ERROR] You have enabled the binary log, but you haven’t provided the mandatory server-id.</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%9A"><span class="toc-text">报错的原因：</span></a></li></ol></li></ol>
+</div></main>
           <aside class="left-column">
             
             <div class="card card-author">
@@ -244,6 +243,13 @@
             
             <div class="sticky-tablet">
   
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#linux%EF%BC%8C%E7%99%BB%E5%BD%95mysql%E6%8A%A5%E9%94%99ERROR-2002-HY000-Can%E2%80%99t-connect-to-local-MySQL-server-through-socket-%E2%80%98-var-lib-mysql-sock%E2%80%99"><span class="toc-text">linux，登录mysql报错ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘&#x2F;var&#x2F;lib&#x2F;mysql.sock’</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ERROR-You-have-enabled-the-binary-log-but-you-haven%E2%80%99t-provided-the-mandatory-server-id"><span class="toc-text">[ERROR] You have enabled the binary log, but you haven’t provided the mandatory server-id.</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%9A"><span class="toc-text">报错的原因：</span></a></li></ol></li></ol>
+    </div>
+  </article>
   
   
   <article class="card card-content">
@@ -322,58 +328,16 @@
   </article>
   
   
-  <article class="card card-content widescreen-archive">
-    <div class="archive-card">
-  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a href="/archives/2020" class="archive-card-list-item">
-          2020
-          <span class="archive-card-list-item-badge">7</span>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
 </div>
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
   
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#linux%EF%BC%8C%E7%99%BB%E5%BD%95mysql%E6%8A%A5%E9%94%99ERROR-2002-HY000-Can%E2%80%99t-connect-to-local-MySQL-server-through-socket-%E2%80%98-var-lib-mysql-sock%E2%80%99"><span class="toc-text">linux，登录mysql报错ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘&#x2F;var&#x2F;lib&#x2F;mysql.sock’</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ERROR-You-have-enabled-the-binary-log-but-you-haven%E2%80%99t-provided-the-mandatory-server-id"><span class="toc-text">[ERROR] You have enabled the binary log, but you haven’t provided the mandatory server-id.</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%9A"><span class="toc-text">报错的原因：</span></a></li></ol></li></ol>
+  </article>
   
   
   <article class="card card-content">
@@ -405,53 +369,6 @@
 </div>
   </article>
   
-  
-  <article class="card card-content">
-    <div class="archive-card">
-  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a href="/archives/2020" class="archive-card-list-item">
-          2020
-          <span class="archive-card-list-item-badge">7</span>
-      </a>
-    
-  </div>
-</div>
-  </article>
   
 </div>
           </aside>

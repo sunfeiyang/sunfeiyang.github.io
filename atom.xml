@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2020-09-14T02:42:19.638Z</updated>
+  <updated>2020-09-16T02:58:20.842Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,25 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>jdk源码环境搭建</title>
-    <link href="http://example.com/2020/09/14/IDEA/IDEA-JDK8/"/>
-    <id>http://example.com/2020/09/14/IDEA/IDEA-JDK8/</id>
-    <published>2020-09-13T16:00:00.000Z</published>
-    <updated>2020-09-14T02:42:19.638Z</updated>
+    <title>MySQL常见异常</title>
+    <link href="http://example.com/2020/09/16/DB/MySQl%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/"/>
+    <id>http://example.com/2020/09/16/DB/MySQl%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF/</id>
+    <published>2020-09-16T02:47:40.214Z</published>
+    <updated>2020-09-16T02:58:20.842Z</updated>
     
-    <content type="html"><![CDATA[<p>JDK源码环境搭建,在阅读过程中进行修改\标记等.搭建环境IDEA+JDK8<a id="more"></a></p><p>更新中…</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;JDK源码环境搭建,在阅读过程中进行修改\标记等.搭建环境IDEA+JDK8</summary>
+    <content type="html"><![CDATA[<h3 id="linux，登录mysql报错ERROR-2002-HY000-Can’t-connect-to-local-MySQL-server-through-socket-‘-var-lib-mysql-sock’"><a href="#linux，登录mysql报错ERROR-2002-HY000-Can’t-connect-to-local-MySQL-server-through-socket-‘-var-lib-mysql-sock’" class="headerlink" title="linux，登录mysql报错ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/var/lib/mysql.sock’"></a>linux，登录mysql报错ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/var/lib/mysql.sock’</h3><p>首先检查/etc下的是否有my.cnf文件,这是启动时基本配置文件</p><pre class="highlight"><span class="line">[mysqld]</span><br><span class="line">log-bin&#x3D;mysql-bin</span><br><span class="line">server-id&#x3D;1</span><br><span class="line">#</span><br><span class="line"># Remove leading # and set to the amount of RAM for the most important data</span><br><span class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</span><br><span class="line">innodb_buffer_pool_size &#x3D; 8M</span><br><span class="line">#</span><br><span class="line"># Remove leading # to turn on a very important data integrity option: logging</span><br><span class="line"># changes to the binary log between backups.</span><br><span class="line"># log_bin</span><br><span class="line">#</span><br><span class="line"># Remove leading # to set options mainly useful for reporting servers.</span><br><span class="line"># The server defaults are faster for transactions and fast SELECTs.</span><br><span class="line"># Adjust sizes as needed, experiment to find the optimal values.</span><br><span class="line">join_buffer_size &#x3D; 8M</span><br><span class="line">sort_buffer_size &#x3D; 2M</span><br><span class="line">read_rnd_buffer_size &#x3D; 2M</span><br><span class="line">datadir&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql</span><br><span class="line">socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock</span><br><span class="line">log-bin</span><br><span class="line">max_binlog_size&#x3D;50M</span><br><span class="line">expire_logs_days&#x3D;7</span><br><span class="line"># 关闭所有网络链接,开启后只能使用mysql客户端链接</span><br><span class="line">#skip-networking</span><br><span class="line">#default-time-zone &#x3D; &#39;+8:00&#39;</span><br><span class="line">performance_schema_max_table_instances&#x3D;200</span><br><span class="line">table_definition_cache&#x3D;200</span><br><span class="line">table_open_cache&#x3D;128</span><br><span class="line">bind-address &#x3D; 0.0.0.0</span><br><span class="line">#skip-grant-tables</span><br><span class="line"></span><br><span class="line"># Disabling symbolic-links is recommended to prevent assorted security risks</span><br><span class="line">symbolic-links&#x3D;0</span><br><span class="line"></span><br><span class="line"># Recommended in standard MySQL setup</span><br><span class="line">sql_mode&#x3D;NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</span><br><span class="line"></span><br><span class="line">[mysqld_safe]</span><br><span class="line">log-error&#x3D;&#x2F;var&#x2F;log&#x2F;mysqld.log</span><br><span class="line">pid-file&#x3D;&#x2F;var&#x2F;run&#x2F;mysqld&#x2F;mysqld.pid</span><br><span class="line"></span><br><span class="line">#配置开启binlog</span><br><span class="line">log‐bin&#x3D;&#x2F;usr&#x2F;local&#x2F;software&#x2F;mysql&#x2F;binlog&#x2F;mysql‐bin</span><br><span class="line">##注意5.7以及更高版本需要配置本项:server‐id&#x3D;123454(自定义,保证唯一性);</span><br><span class="line">###binlog格式,有3种statement,row,mixed</span><br><span class="line">binlog‐format&#x3D;ROW</span><br><span class="line">###表示每1次执行写入就与硬盘同步,会影响性能,为0时表示,事务提交时mysql不做刷盘操作,由系统决定</span><br><span class="line">sync‐binlog&#x3D;1</span><br><span class="line">#</span><br></pre><p>关闭进程指令：ps aux |grep ‘mysql*’<br>关闭mysql的所有进程</p><p>启动mysql: systemctl start mysqld</p><h3 id="ERROR-You-have-enabled-the-binary-log-but-you-haven’t-provided-the-mandatory-server-id"><a href="#ERROR-You-have-enabled-the-binary-log-but-you-haven’t-provided-the-mandatory-server-id" class="headerlink" title="[ERROR] You have enabled the binary log, but you haven’t provided the mandatory server-id."></a>[ERROR] You have enabled the binary log, but you haven’t provided the mandatory server-id.</h3><h4 id="报错的原因："><a href="#报错的原因：" class="headerlink" title="报错的原因："></a>报错的原因：</h4><p>在设置bin log日志的时候，没有设置server_id参数。server-id参数用于在复制中，为主库和备库提供一个独立的ID，以区分主库和备库；开启二进制文件的时候，需要设置这个参数。</p><pre class="highlight"><span class="line">[root@mysql bin]# vi &#x2F;etc&#x2F;my.cnf</span><br><span class="line">#add</span><br><span class="line">[mysqld]</span><br><span class="line">log-bin&#x3D;mysql-bin</span><br><span class="line">server-id&#x3D;1</span><br></pre>]]></content>
     
     
+      
+      
+    <summary type="html">&lt;h3 id=&quot;linux，登录mysql报错ERROR-2002-HY000-Can’t-connect-to-local-MySQL-server-through-socket-‘-var-lib-mysql-sock’&quot;&gt;&lt;a href=&quot;#linux，登录mysql报错E</summary>
+      
     
-    <category term="IDEA" scheme="http://example.com/categories/IDEA/"/>
     
     
-    <category term="IDEA" scheme="http://example.com/tags/IDEA/"/>
+    <category term="DB" scheme="http://example.com/categories/DB/"/>
     
-    <category term="JDK" scheme="http://example.com/tags/JDK/"/>
+    
+    <category term="DB" scheme="http://example.com/tags/DB/"/>
+    
+    <category term="MySQL" scheme="http://example.com/tags/MySQL/"/>
+    
+    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
     
   </entry>
   
@@ -59,6 +64,29 @@
     <category term="IDEA" scheme="http://example.com/tags/IDEA/"/>
     
     <category term="Statistic" scheme="http://example.com/tags/Statistic/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jdk源码环境搭建</title>
+    <link href="http://example.com/2020/09/14/IDEA/IDEA-JDK8/"/>
+    <id>http://example.com/2020/09/14/IDEA/IDEA-JDK8/</id>
+    <published>2020-09-13T16:00:00.000Z</published>
+    <updated>2020-09-14T02:42:19.638Z</updated>
+    
+    <content type="html"><![CDATA[<p>JDK源码环境搭建,在阅读过程中进行修改\标记等.搭建环境IDEA+JDK8<a id="more"></a></p><p>更新中…</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;JDK源码环境搭建,在阅读过程中进行修改\标记等.搭建环境IDEA+JDK8</summary>
+    
+    
+    
+    <category term="IDEA" scheme="http://example.com/categories/IDEA/"/>
+    
+    
+    <category term="IDEA" scheme="http://example.com/tags/IDEA/"/>
+    
+    <category term="JDK" scheme="http://example.com/tags/JDK/"/>
     
   </entry>
   
