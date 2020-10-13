@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2020-09-25T08:56:58.449Z</updated>
+  <updated>2020-10-13T06:40:29.019Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>批量修改文件后缀名</title>
+    <link href="http://example.com/2020/10/13/tools/renameFileSuffix/"/>
+    <id>http://example.com/2020/10/13/tools/renameFileSuffix/</id>
+    <published>2020-10-13T06:16:00.959Z</published>
+    <updated>2020-10-13T06:40:29.019Z</updated>
+    
+    <content type="html"><![CDATA[<p>各个系统下批量修改文件后缀名（Windows,Ubuntu,CentOS） <a id="more"></a></p><h3 id="windows修改"><a href="#windows修改" class="headerlink" title="windows修改"></a>windows修改</h3><ol><li><p>在所需修改的文件目录下，新建txt文件．此处什么类型的文件都可以，主要就是新建一个文件，通过命令修改。</p></li><li><p>打开新建的文件，填写</p></li></ol><pre class="highlight"><span class="line">ren *.png *.txt</span><br></pre><ol start="3"><li><p>说明：此处命令将当前文件所在目录下的png后缀修改为txt</p></li><li><p>将新建文件后缀名修改为bat，将文件放在要修改目录下双击即可完成。</p></li></ol><h3 id="Ubuntu修改"><a href="#Ubuntu修改" class="headerlink" title="Ubuntu修改"></a>Ubuntu修改</h3><pre class="highlight"><span class="line"><span class="meta">#</span><span class="bash"> 当前目录下的后缀名为.c的文件更改为.h的文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 格式  :</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 原字符串：将文件名需要替换的字符串；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 目标字符串：将文件名中含有的原字符替换成目标字符串；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 文件：指定要改变文件名的文件列表。</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rename <span class="string">&#x27;命令参数/原串/替换后的串/&#x27;</span> 目录文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> s       表示替换</span></span><br><span class="line">rename &#x27;s/\.c/\.h/&#x27;  ./*</span><br></pre><h3 id="CentOS修改"><a href="#CentOS修改" class="headerlink" title="CentOS修改"></a>CentOS修改</h3><pre class="highlight"><span class="line"><span class="meta">#</span><span class="bash"> 把当前目录下的后缀名为.c的文件更改为.h的文件</span></span><br><span class="line">rename .c .h *.c</span><br></pre><h3 id="Shell脚本解决"><a href="#Shell脚本解决" class="headerlink" title="Shell脚本解决"></a>Shell脚本解决</h3><pre class="highlight"><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">find ./ -name *.c | while read i</span><br><span class="line">do</span><br><span class="line">    echo &quot;$i&quot;;</span><br><span class="line">    mv $i.c $i.h</span><br><span class="line">done </span><br></pre><h3 id="find-xargs-解决"><a href="#find-xargs-解决" class="headerlink" title="find xargs 解决"></a>find xargs 解决</h3><pre class="highlight"><span class="line"><span class="meta">#</span><span class="bash"> 递归的更改，会更改当前目录下及其子目录下所有匹配文件</span></span><br><span class="line">find ./ -name &quot;*.c&quot; | awk -F &quot;.&quot; &#x27;&#123;print $2&#125;&#x27; | xargs -i -t mv ./&#123;&#125;.c ./&#123;&#125;.h</span><br></pre>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;各个系统下批量修改文件后缀名（Windows,Ubuntu,CentOS）</summary>
+    
+    
+    
+    <category term="tools" scheme="http://example.com/categories/tools/"/>
+    
+    
+    <category term="tools" scheme="http://example.com/tags/tools/"/>
+    
+  </entry>
   
   <entry>
     <title>java设计模式之观察者模式</title>
