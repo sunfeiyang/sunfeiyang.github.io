@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2020-10-13T06:40:29.019Z</updated>
+  <updated>2020-10-14T05:12:44.168Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux常用命令</title>
+    <link href="http://example.com/2020/10/14/Linux/CommonCommands/"/>
+    <id>http://example.com/2020/10/14/Linux/CommonCommands/</id>
+    <published>2020-10-14T05:05:50.142Z</published>
+    <updated>2020-10-14T05:12:44.168Z</updated>
+    
+    <content type="html"><![CDATA[<p>Linux系统常用基本命令 </p><a id="more"></a><h3 id="ack-待查询字符串"><a href="#ack-待查询字符串" class="headerlink" title="ack  [待查询字符串]"></a>ack  [待查询字符串]</h3><p>搜索当前文件夹内所有文件中对应的字符（递归查询）</p><h3 id="unar-待解压文件"><a href="#unar-待解压文件" class="headerlink" title="unar  [待解压文件]"></a>unar  [待解压文件]</h3><p>解压命令，可以解压zip文件，主要可以解决windows系统中的部分文件解压后乱码问题</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Linux系统常用基本命令 &lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    
+    <category term="Ubuntu" scheme="http://example.com/tags/Ubuntu/"/>
+    
+    <category term="CentOS" scheme="http://example.com/tags/CentOS/"/>
+    
+  </entry>
   
   <entry>
     <title>批量修改文件后缀名</title>
