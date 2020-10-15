@@ -144,13 +144,6 @@
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/tags/tools/</loc>
-    <lastmod>2020-10-15</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://xinghuohan.cn/tags/Java/</loc>
     <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
@@ -159,6 +152,13 @@
   
   <url>
     <loc>http://xinghuohan.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2020-10-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/tags/tools/</loc>
     <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -202,14 +202,14 @@
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/categories/tools/</loc>
+    <loc>http://xinghuohan.cn/categories/Java/</loc>
     <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/categories/Java/</loc>
+    <loc>http://xinghuohan.cn/categories/tools/</loc>
     <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
