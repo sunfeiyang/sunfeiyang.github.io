@@ -2,63 +2,63 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2020/10/14/Linux/CommonCommands/</loc>
+    <loc>https://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</loc>
     
     <lastmod>2020-10-14</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/10/13/tools/renameFileSuffix/</loc>
+    <loc>https://xinghuohan.cn/2020/10/13/tools/renameFileSuffix/</loc>
     
     <lastmod>2020-10-13</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/09/25/java/designpattern/observer/</loc>
+    <loc>https://xinghuohan.cn/2020/09/25/java/designpattern/observer/</loc>
     
     <lastmod>2020-09-25</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/09/09/Linux/Centos-staticIP/</loc>
+    <loc>https://xinghuohan.cn/2020/09/09/Linux/Centos-staticIP/</loc>
     
     <lastmod>2020-09-25</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/09/08/java/javaDesignPatterns/</loc>
+    <loc>https://xinghuohan.cn/2020/09/08/java/javaDesignPatterns/</loc>
     
     <lastmod>2020-09-25</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/09/22/DB/MySQl-error/</loc>
+    <loc>https://xinghuohan.cn/2020/09/22/DB/MySQl-error/</loc>
     
     <lastmod>2020-09-22</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/04/15/git/gitBase/</loc>
+    <loc>https://xinghuohan.cn/2020/04/15/git/gitBase/</loc>
     
     <lastmod>2020-09-16</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/09/14/IDEA/IDEA-Statistic/</loc>
+    <loc>https://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/</loc>
     
     <lastmod>2020-09-16</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/09/08/IDEA/IDEA-debug/</loc>
+    <loc>https://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</loc>
     
     <lastmod>2020-09-08</lastmod>
     
@@ -66,107 +66,107 @@
   
 
   <url>
-    <loc>http://example.com/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>http://example.com/tags/DB/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/DB/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/MySQL/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/MySQL/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Linux/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/Linux/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/IDEA/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/IDEA/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Statistic/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/Statistic/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Centos/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/Centos/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Ubuntu/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/Ubuntu/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/CentOS/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/CentOS/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/git/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/git/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Java/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/Java/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/tools/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/tools/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Spring/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/tags/Spring/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -174,43 +174,43 @@
 
   
   <url>
-    <loc>http://example.com/categories/DB/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/categories/DB/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/IDEA/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/categories/IDEA/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/Linux/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/categories/Linux/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/git/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/categories/git/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/Java/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/categories/Java/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/tools/</loc>
-    <lastmod>2020-10-14</lastmod>
+    <loc>https://xinghuohan.cn/categories/tools/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
