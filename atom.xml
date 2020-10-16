@@ -6,7 +6,7 @@
   <link href="http://xinghuohan.cn/atom.xml" rel="self"/>
   
   <link href="http://xinghuohan.cn/"/>
-  <updated>2020-10-14T05:12:44.168Z</updated>
+  <updated>2020-10-16T07:54:20.692Z</updated>
   <id>http://xinghuohan.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu桌面被删除后</title>
+    <link href="http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/"/>
+    <id>http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/</id>
+    <published>2020-10-16T07:37:31.201Z</published>
+    <updated>2020-10-16T07:54:20.692Z</updated>
+    
+    <content type="html"><![CDATA[<p>Ubuntu桌面被误删除，Ubuntu在重启时会校验当前设置路径是否存在，不存在会默认设置一个路径，我Ubuntu20.04版本删除桌面文件夹被删除后，将桌面路径默认为根目录，导致桌面一下子出现了很多文件，为了恢复桌面的清爽，而进行如下操作。<a id="more"></a></p><ol><li><p>终端打开自己根目录</p></li><li><p>进入隐藏文件夹 .config<img src="/img/image-20201016154927244.png" alt="image-20201016154927244" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201016154927244.png" class="lozad post-image"></p><pre class="highlight"><span class="line">-- 查看当前目录下所有文件</span><br><span class="line">ls -la</span><br></pre></li><li><p>编辑文件 vim user-dirs.dirs <img src="/img/image-20201016155127768.png" alt="image-20201016155127768" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201016155127768.png" class="lozad post-image"></p></li><li><p>进行如下修改，此处修改的路径需要自己先行在对应路径创建文件夹，然后重启即可。<img src="/img/image-20201016155252812.png" alt="image-20201016155252812" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201016155252812.png" class="lozad post-image"></p></li></ol>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Ubuntu桌面被误删除，Ubuntu在重启时会校验当前设置路径是否存在，不存在会默认设置一个路径，我Ubuntu20.04版本删除桌面文件夹被删除后，将桌面路径默认为根目录，导致桌面一下子出现了很多文件，为了恢复桌面的清爽，而进行如下操作。</summary>
+    
+    
+    
+    <category term="Linux" scheme="http://xinghuohan.cn/categories/Linux/"/>
+    
+    
+    <category term="Ubuntu" scheme="http://xinghuohan.cn/tags/Ubuntu/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux常用命令</title>
