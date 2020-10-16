@@ -11,13 +11,25 @@
   <title>sunfy</title>
   
   
-  <meta property="og:title" content="sunfy">
+  <meta property="og:title" content="Linux系统下VMware kernel Module Updater弹框，Install失败">
   
   
-  <meta property="og:url" content="http://xinghuohan.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
+  <meta property="og:url" content="http://xinghuohan.cn/2020/10/16/Linux/VmWarekernelModuleUpdater/index.html">
   
   
   <meta property="og:img" content="/img/logo.png">
+  
+  
+  <meta property="og:img" content="&lt;p&gt;Ubuntu系统更新后，打开VMware提示需要更新安装，点击安装失败问题解决">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-10-16">
+  <meta property="og:article:modified_time" content="2020-10-16">
+  <meta property="og:article:author" content="sunfy">
+  
+  
+  <meta property="og:article:tag" content="VMware">
   
   
   
@@ -172,35 +184,84 @@
     <div class="section-wrap">
       <div class="container">
         <div class="columns">
-          <main class="main-column"><div class="card card-content tag-page-card">
-  <div class="tags-page-title">标签&nbsp-&nbsp设计模式</div>
-</div>
-<div class="archive-timeline">
-  
-  
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Linux系统下VMware kernel Module Updater弹框，Install失败
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-10-16T08:03:05.580Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-10-16</span>
+    </time>
     
-      <div class="archive-timeline-tag"><span>2020</span></div>
+    <span class="dot"></span>
+    
+    <a href="/categories/Linux/" class="post-meta-link">Linux</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>184 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
       
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2020-09-25</div>
-          <div class="archive-timeline-post-content"><a href="/2020/09/25/java/designpattern/observer/" class="archive-timeline-post-item">java设计模式之观察者模式</a></div>
-        </div>
-      </div>
+      
+        <a href="/tags/VMware/" class="post-meta-link">VMware</a>
+      
     </div>
+  </div>
   
-    
-    <div class="archive-timeline-item">
-      <div class="archive-timeline-post">
-        <div class="card card-content">
-          <div class="archive-timeline-post-date">2020-09-08</div>
-          <div class="archive-timeline-post-content"><a href="/2020/09/08/java/javaDesignPatterns/" class="archive-timeline-post-item">Java设计模式</a></div>
-        </div>
+  </header>
+  <div id="section" class="post-content">
+    <p>Ubuntu系统更新后，打开VMware提示需要更新安装，点击安装失败问题解决<a id="more"></a></p>
+<ol>
+<li><p>提示框<img src="/media/sunfy/project/hexo-project/sunfeiyang-boke/source/img/image-20201016160643674.png" alt="image-20201016160643674" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/media/sunfy/project/hexo-project/sunfeiyang-boke/source/img/image-20201016160643674.png" class="lozad post-image"></p>
+</li>
+<li><p>安装失败<img src="/media/sunfy/project/hexo-project/sunfeiyang-boke/source/img/image-20201016160730834.png" alt="image-20201016160730834" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/media/sunfy/project/hexo-project/sunfeiyang-boke/source/img/image-20201016160730834.png" class="lozad post-image"></p>
+<pre class="highlight"><span class="line">--处理方法</span><br><span class="line">--打开终端执行如下代码</span><br><span class="line">VMWARE_VERSION=workstation-15.5.1</span><br><span class="line">TMP_FOLDER=/tmp/patch-vmware</span><br><span class="line">rm -fdr $TMP_FOLDER</span><br><span class="line">mkdir -p $TMP_FOLDER</span><br><span class="line">cd $TMP_FOLDER</span><br><span class="line">git clone https://github.com/mkubecek/vmware-host-modules.git</span><br><span class="line">cd $TMP_FOLDER/vmware-host-modules</span><br><span class="line">git checkout $VMWARE_VERSION</span><br><span class="line">git fetch</span><br><span class="line">make</span><br><span class="line">-- 执行如下代码时需要输入管理员密码，输入完成后执行当前代码，但是后续的代码会终止，需要手动拷贝未执行其余命令继续操作，全部命令执行完成后，VMware即可正常使用</span><br><span class="line">sudo make install</span><br><span class="line">sudo rm /usr/lib/vmware/lib/libz.so.1/libz.so.1</span><br><span class="line">sudo ln -s /lib/x86_64-linux-gnu/libz.so.1</span><br><span class="line">/usr/lib/vmware/lib/libz.so.1/libz.so.1</span><br><span class="line">sudo /etc/init.d/vmware restart</span><br><span class="line"></span><br></pre>
+
+
+</li>
+</ol>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/about">sunfy</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/2020/10/16/Linux/VmWarekernelModuleUpdater/">http://xinghuohan.cn/2020/10/16/Linux/VmWarekernelModuleUpdater/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2020/10/16/Linux/UbuntuAboutDesktop/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Ubuntu桌面被删除后 </div>
+        
       </div>
-    </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
   
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
 </div></main>
           <aside class="left-column">
             
@@ -229,6 +290,13 @@
             
             <div class="sticky-tablet">
   
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+    </div>
+  </article>
   
   
   <article class="card card-content categories-widget">
@@ -322,74 +390,16 @@
   </article>
   
   
-  <article class="card card-content widescreen-archive archive-widget">
-    <div class="archive-card">
-  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a href="/archives/2020" class="archive-card-list-item">
-          2020
-          <span class="archive-card-list-item-badge">11</span>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
 </div>
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
   
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+  </article>
   
   
   <article class="card card-content">
@@ -421,69 +431,6 @@
 </div>
   </article>
   
-  
-  <article class="card card-content">
-    <div class="archive-card">
-  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a href="/archives/2020" class="archive-card-list-item">
-          2020
-          <span class="archive-card-list-item-badge">11</span>
-      </a>
-    
-  </div>
-</div>
-  </article>
   
 </div>
           </aside>
