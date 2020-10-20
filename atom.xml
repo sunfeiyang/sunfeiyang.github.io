@@ -6,7 +6,7 @@
   <link href="http://xinghuohan.cn/atom.xml" rel="self"/>
   
   <link href="http://xinghuohan.cn/"/>
-  <updated>2020-10-20T06:50:14.510Z</updated>
+  <updated>2020-10-20T07:28:33.950Z</updated>
   <id>http://xinghuohan.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu截图工具</title>
+    <link href="http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/"/>
+    <id>http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/</id>
+    <published>2020-10-20T07:16:03.159Z</published>
+    <updated>2020-10-20T07:28:33.950Z</updated>
+    
+    <content type="html"><![CDATA[<p>Linux系统Ubuntu截图工具推荐使用 </p><a id="more"></a><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Windows上习惯了QQ的截图工具，本工具类似QQ截图工具功能，在习惯QQ截图的情况下可以很方便的使用。效果图：<img src="/img/image-20201020151914799.png" alt="image-20201020151914799" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201020151914799.png" class="lozad post-image"></p><h3 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h3><pre class="highlight"><span class="line">sudo apt-get install flameshot</span><br></pre><h3 id="启动命令"><a href="#启动命令" class="headerlink" title="启动命令"></a>启动命令</h3><pre class="highlight"><span class="line">flameshot gui</span><br></pre><h3 id="设置快捷方式"><a href="#设置快捷方式" class="headerlink" title="设置快捷方式"></a>设置快捷方式</h3><p><img src="/img/image-20201020152205127.png" alt="image-20201020152205127" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201020152205127.png" class="lozad post-image"></p><p>本机操作系统版本为Ubuntu 20.04, 不同版本可能设置快捷键位置名称有些不同，可以自行根据系统版本设置</p><p>具体设置</p><p><img src="/img/image-20201020152406303.png" alt="image-20201020152406303" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201020152406303.png" class="lozad post-image"></p><h3 id="软件设置"><a href="#软件设置" class="headerlink" title="软件设置"></a>软件设置</h3><p><img src="/img/image-20201020152618648.png" alt="image-20201020152618648" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201020152618648.png" class="lozad post-image"></p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Linux系统Ubuntu截图工具推荐使用 &lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Linux" scheme="http://xinghuohan.cn/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="http://xinghuohan.cn/tags/Linux/"/>
+    
+    <category term="Ubuntu" scheme="http://xinghuohan.cn/tags/Ubuntu/"/>
+    
+  </entry>
   
   <entry>
     <title>shiro入门基础教程</title>
