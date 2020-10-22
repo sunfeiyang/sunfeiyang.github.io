@@ -6,7 +6,7 @@
   <link href="http://xinghuohan.cn/atom.xml" rel="self"/>
   
   <link href="http://xinghuohan.cn/"/>
-  <updated>2020-10-20T07:28:33.950Z</updated>
+  <updated>2020-10-22T05:40:12.475Z</updated>
   <id>http://xinghuohan.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MyBatis源码编译环境构建</title>
+    <link href="http://xinghuohan.cn/2020/10/22/java/MyBatis/MyBatisResourceBuild/"/>
+    <id>http://xinghuohan.cn/2020/10/22/java/MyBatis/MyBatisResourceBuild/</id>
+    <published>2020-10-22T05:27:02.746Z</published>
+    <updated>2020-10-22T05:40:12.475Z</updated>
+    
+    <content type="html"><![CDATA[<p>MyBatis源码阅读环境编译，能够更方便阅读源码，可以切换源码版本！<a id="more"></a></p><h3 id="1、源码下载"><a href="#1、源码下载" class="headerlink" title="1、源码下载"></a>1、源码下载</h3><p>下载地址：<a href="https://github.com/mybatis/mybatis-3">https://github.com/mybatis/mybatis-3</a></p><p><img src="/img/image-20201022133141200.png" alt="image-20201022133141200" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201022133141200.png" class="lozad post-image"></p><pre class="highlight"><span class="line">--下载源码</span><br><span class="line">git clone https://github.com/mybatis/mybatis-3</span><br><span class="line">--进入到刚clone的目录文件</span><br><span class="line">--创建分支，切换至最新版本（from tag）</span><br><span class="line">git checkout -b [branchname] [tagname]</span><br></pre><h3 id="2、build"><a href="#2、build" class="headerlink" title="2、build"></a>2、build</h3><p>IDEA打开刚才创建的分支，Maven先clean intstall</p><p>或者命令行操作</p><pre class="highlight"><span class="line">mvn clean </span><br><span class="line"></span><br><span class="line">mvn install -Dmaven.test.skip=true</span><br></pre><p>最终结果：</p><p><img src="/img/image-20201022133938087.png" alt="image-20201022133938087" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201022133938087.png" class="lozad post-image"></p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;MyBatis源码阅读环境编译，能够更方便阅读源码，可以切换源码版本！</summary>
+    
+    
+    
+    <category term="Java" scheme="http://xinghuohan.cn/categories/Java/"/>
+    
+    
+    <category term="Java" scheme="http://xinghuohan.cn/tags/Java/"/>
+    
+    <category term="MyBatis" scheme="http://xinghuohan.cn/tags/MyBatis/"/>
+    
+  </entry>
   
   <entry>
     <title>Ubuntu截图工具</title>
