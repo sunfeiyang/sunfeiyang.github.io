@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>sunfy • Posts by &#34;远程调试&#34; tag</title>
+        <link>http://xinghuohan.cn</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Tue, 08 Sep 2020 22:55:59 +0800</pubDate>
+        <lastBuildDate>Tue, 08 Sep 2020 22:55:59 +0800</lastBuildDate>
+        <category>DB</category>
+        <category>MySQL</category>
+        <category>Linux</category>
+        <category>IDEA</category>
+        <category>Statistic</category>
+        <category>远程调试</category>
+        <category>Centos</category>
+        <category>Ubuntu</category>
+        <category>CentOS</category>
+        <category>VMware</category>
+        <category>git</category>
+        <category>Java</category>
+        <category>设计模式</category>
+        <category>tools</category>
+        <category>Spring</category>
+        <category>MyBatis</category>
+        <category>Redis</category>
+        <category>shiro</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</guid>
+            <title>IDEA 远程调试</title>
+            <link>http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</link>
+            <category>IDEA</category>
+            <category>远程调试</category>
+            <pubDate>Tue, 08 Sep 2020 22:55:59 +0800</pubDate>
+            <description><![CDATA[ &lt;h3 id=&#34;本机调试&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#本机调试&#34;&gt;#&lt;/a&gt; &lt;strong&gt;本机调试&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;此处不做过多解释，相信考虑远程 debug 调试的，肯定对本机调试是有一定了解的。说下自己在本机调试 spring Boot 项目时遇到的项目长时间卡顿，这个时候可能是因为本机环境中 debug 断点太多，去除一下后即可正常启动；&lt;/p&gt;
+&lt;h3 id=&#34;远程调试&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#远程调试&#34;&gt;#&lt;/a&gt; &lt;strong&gt;远程调试&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;远程调试一个大前提就是我们需要保证远程代码和本地代码一致；&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;此处部署为 war 包项目&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在远程环境中要开启允许远程 debug 调试&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;windows 环境–》bin 目录–》 &lt;code&gt;startup.bat&lt;/code&gt;  增加设置 (此处设置 debug 端口为 address=8081，可以根据实际条件自行设置)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;SET CATALINA_OPTS&amp;#x3D;-server -Xdebug -Xnoagent -Djava.compiler&amp;#x3D;NONE -Xrunjdwp:transport&amp;#x3D;dt_socket,server&amp;#x3D;y,suspend&amp;#x3D;n,address&amp;#x3D;8081&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol&gt;
+&lt;li&gt;Linux 环境中–》 &lt;code&gt;catalina.sh&lt;/code&gt;  文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;CATALINA_OPTS&amp;#x3D;&amp;quot;-Xdebug -Xrunjdwp:transport&amp;#x3D;dt_socket,suspend&amp;#x3D;n,server&amp;#x3D;y,address&amp;#x3D;8081&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;IDEA 中创建 debug 调试&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34;&gt;&lt;img data-src=&#34;https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34;&gt;&lt;img data-src=&#34;https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;全部设置完成后，重启项目&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://img-blog.csdnimg.cn/20190809175100811.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;然后 idea 中 debug 启动刚才新建的服务，在本机代码中打断点，发起相应请求即可进入 debug 模式；&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;若项目为 jar 项目应该使用&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;https://img-blog.csdnimg.cn/20190809175123597.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

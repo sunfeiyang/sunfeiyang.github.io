@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>sunfy • Posts by &#34;linux&#34; category</title>
+        <link>http://xinghuohan.cn</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Tue, 20 Oct 2020 15:16:03 +0800</pubDate>
+        <lastBuildDate>Tue, 20 Oct 2020 15:16:03 +0800</lastBuildDate>
+        <category>DB</category>
+        <category>MySQL</category>
+        <category>Linux</category>
+        <category>IDEA</category>
+        <category>Statistic</category>
+        <category>远程调试</category>
+        <category>Centos</category>
+        <category>Ubuntu</category>
+        <category>CentOS</category>
+        <category>VMware</category>
+        <category>git</category>
+        <category>Java</category>
+        <category>设计模式</category>
+        <category>tools</category>
+        <category>Spring</category>
+        <category>MyBatis</category>
+        <category>Redis</category>
+        <category>shiro</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/</guid>
+            <title>Ubuntu截图工具</title>
+            <link>http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/</link>
+            <category>Linux</category>
+            <category>Ubuntu</category>
+            <pubDate>Tue, 20 Oct 2020 15:16:03 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Linux 系统 Ubuntu 截图工具推荐使用&lt;/p&gt;
+&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;h3 id=&#34;前言&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h3&gt;
+&lt;p&gt;Windows 上习惯了 QQ 的截图工具，本工具类似 QQ 截图工具功能，在习惯 QQ 截图的情况下可以很方便的使用。效果图：&lt;img data-src=&#34;/img/image-20201020151914799.png&#34; alt=&#34;image-20201020151914799&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;安装过程&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装过程&#34;&gt;#&lt;/a&gt; 安装过程&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install flameshot&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;启动命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#启动命令&#34;&gt;#&lt;/a&gt; 启动命令&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;flameshot gui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;设置快捷方式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设置快捷方式&#34;&gt;#&lt;/a&gt; 设置快捷方式&lt;/h3&gt;
+&lt;p&gt;&lt;img data-src=&#34;/img/image-20201020152205127.png&#34; alt=&#34;image-20201020152205127&#34;&gt;&lt;/p&gt;
+&lt;p&gt;本机操作系统版本为 Ubuntu 20.04, 不同版本可能设置快捷键位置名称有些不同，可以自行根据系统版本设置&lt;/p&gt;
+&lt;p&gt;具体设置&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;/img/image-20201020152406303.png&#34; alt=&#34;image-20201020152406303&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;软件设置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#软件设置&#34;&gt;#&lt;/a&gt; 软件设置&lt;/h3&gt;
+&lt;p&gt;&lt;img data-src=&#34;/img/image-20201020152618648.png&#34; alt=&#34;image-20201020152618648&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/10/16/Linux/VmWarekernelModuleUpdater/</guid>
+            <title>Linux系统下VMware kernel Module Updater弹框，Install失败</title>
+            <link>http://xinghuohan.cn/2020/10/16/Linux/VmWarekernelModuleUpdater/</link>
+            <category>VMware</category>
+            <pubDate>Fri, 16 Oct 2020 16:03:05 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Ubuntu 系统更新后，打开 VMware 提示需要更新安装，点击安装失败问题解决&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;提示框&lt;img data-src=&#34;/img/image-20201016160643674.png&#34; alt=&#34;image-20201016160643674&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装失败&lt;img data-src=&#34;/img/image-20201016160730834.png&#34; alt=&#34;image-20201016160730834&#34;&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;--处理方法&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;--打开终端执行如下代码&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMWARE_VERSION=workstation-15.5.1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;TMP_FOLDER=/tmp/patch-vmware&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;rm -fdr $TMP_FOLDER&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mkdir -p $TMP_FOLDER&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cd $TMP_FOLDER&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git clone https://github.com/mkubecek/vmware-host-modules.git&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cd $TMP_FOLDER/vmware-host-modules&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git checkout $VMWARE_VERSION&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git fetch&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;make&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-- 执行如下代码时需要输入管理员密码，输入完成后执行当前代码，但是后续的代码会终止，需要手动拷贝未执行其余命令继续操作，全部命令执行完成后，VMware即可正常使用&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo make install&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo rm /usr/lib/vmware/lib/libz.so.1/libz.so.1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo ln -s /lib/x86_64-linux-gnu/libz.so.1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/usr/lib/vmware/lib/libz.so.1/libz.so.1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo /etc/init.d/vmware restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/</guid>
+            <title>Ubuntu桌面被删除后</title>
+            <link>http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/</link>
+            <category>Ubuntu</category>
+            <pubDate>Fri, 16 Oct 2020 15:37:31 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Ubuntu 桌面被误删除，Ubuntu 在重启时会校验当前设置路径是否存在，不存在会默认设置一个路径，我 Ubuntu20.04 版本删除桌面文件夹被删除后，将桌面路径默认为根目录，导致桌面一下子出现了很多文件，为了恢复桌面的清爽，而进行如下操作。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;终端打开自己根目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进入隐藏文件夹 .config&lt;img data-src=&#34;/img/image-20201016154927244.png&#34; alt=&#34;image-20201016154927244&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+   &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;-- 查看当前目录下所有文件&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ls -la&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;编辑文件 vim user-dirs.dirs &lt;img data-src=&#34;/img/image-20201016155127768.png&#34; alt=&#34;image-20201016155127768&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进行如下修改，此处修改的路径需要自己先行在对应路径创建文件夹，然后重启即可。&lt;img data-src=&#34;/img/image-20201016155252812.png&#34; alt=&#34;image-20201016155252812&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</guid>
+            <title>Linux常用命令</title>
+            <link>http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</link>
+            <category>Linux</category>
+            <category>Ubuntu</category>
+            <category>CentOS</category>
+            <pubDate>Wed, 14 Oct 2020 13:05:50 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Linux 系统常用基本命令&lt;/p&gt;
+&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;h3 id=&#34;ack-待查询字符串&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ack-待查询字符串&#34;&gt;#&lt;/a&gt; ack  [待查询字符串]&lt;/h3&gt;
+&lt;p&gt;搜索当前文件夹内所有文件中对应的字符（递归查询）&lt;/p&gt;
+&lt;h3 id=&#34;unar-待解压文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#unar-待解压文件&#34;&gt;#&lt;/a&gt; unar  [待解压文件]&lt;/h3&gt;
+&lt;p&gt;解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/09/Linux/Centos-staticIP/</guid>
+            <title>Centos设置静态ip</title>
+            <link>http://xinghuohan.cn/2020/09/09/Linux/Centos-staticIP/</link>
+            <category>Linux</category>
+            <category>Centos</category>
+            <pubDate>Wed, 09 Sep 2020 22:23:46 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Centos 设置静态 IP&lt;/p&gt;
+&lt;p&gt;Vmware workstation 中的 centos ip 地址会在没重启的情况下发生变化。 虚拟机的 IP 租约过期后，IP 就会自动重新分配，从而造成 IP 地址自行变化。&lt;/p&gt;
+&lt;p&gt;为了应用方便，需要设置 centos 的固定 ip。 版本 centos7&lt;/p&gt;
+&lt;p&gt;设置步骤 1.ifconfig 找到当前的 centos 的 ip&lt;/p&gt;
+&lt;p&gt;2. 进入文件 vim /etc/sysconfig/network-scripts/ifcfg-ens33&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;20&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;TYPE=Ethernet&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;PROXY_METHOD=none&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;BROWSER_ONLY=no&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;BOOTPROTO=static&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;DEFROUTE=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV4_FAILURE_FATAL=no&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6INIT=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_AUTOCONF=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_DEFROUTE=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_FAILURE_FATAL=no&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_ADDR_GEN_MODE=stable-privacy&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;NAME=ens33&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=529b576d-4e86-4dd1-9446-43ab40dbfd27&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;DEVICE=ens33&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ONBOOT=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPADDR=192.168.88.88&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;NETMASK=255.255.255.0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;GATEWAY=192.168.88.2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;DNS1=192.168.88.2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3. 重启网络服务 使用命令 systemctl restart network.service&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;--关闭网络管理器NetwokManager&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl stop NetworkManager&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl disable NetworkManager&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service network restart&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

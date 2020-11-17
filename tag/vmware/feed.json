@@ -1,0 +1,18 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "sunfy • All posts by \"vmware\" tag",
+    "description": "",
+    "home_page_url": "http://xinghuohan.cn",
+    "items": [
+        {
+            "id": "http://xinghuohan.cn/2020/10/16/Linux/VmWarekernelModuleUpdater/",
+            "url": "http://xinghuohan.cn/2020/10/16/Linux/VmWarekernelModuleUpdater/",
+            "title": "Linux系统下VMware kernel Module Updater弹框，Install失败",
+            "date_published": "2020-10-16T08:03:05.580Z",
+            "content_html": "<p>Ubuntu 系统更新后，打开 VMware 提示需要更新安装，点击安装失败问题解决<a id=\"more\"></a></p>\n<ol>\n<li>\n<p>提示框<img data-src=\"/img/image-20201016160643674.png\" alt=\"image-20201016160643674\"></p>\n</li>\n<li>\n<p>安装失败<img data-src=\"/img/image-20201016160730834.png\" alt=\"image-20201016160730834\"></p>\n<figure class=\"highlight shell\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br><span class=\"line\">3</span><br><span class=\"line\">4</span><br><span class=\"line\">5</span><br><span class=\"line\">6</span><br><span class=\"line\">7</span><br><span class=\"line\">8</span><br><span class=\"line\">9</span><br><span class=\"line\">10</span><br><span class=\"line\">11</span><br><span class=\"line\">12</span><br><span class=\"line\">13</span><br><span class=\"line\">14</span><br><span class=\"line\">15</span><br><span class=\"line\">16</span><br><span class=\"line\">17</span><br><span class=\"line\">18</span><br><span class=\"line\">19</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">--处理方法</span><br><span class=\"line\">--打开终端执行如下代码</span><br><span class=\"line\">VMWARE_VERSION=workstation-15.5.1</span><br><span class=\"line\">TMP_FOLDER=/tmp/patch-vmware</span><br><span class=\"line\">rm -fdr $TMP_FOLDER</span><br><span class=\"line\">mkdir -p $TMP_FOLDER</span><br><span class=\"line\">cd $TMP_FOLDER</span><br><span class=\"line\">git clone https://github.com/mkubecek/vmware-host-modules.git</span><br><span class=\"line\">cd $TMP_FOLDER/vmware-host-modules</span><br><span class=\"line\">git checkout $VMWARE_VERSION</span><br><span class=\"line\">git fetch</span><br><span class=\"line\">make</span><br><span class=\"line\">-- 执行如下代码时需要输入管理员密码，输入完成后执行当前代码，但是后续的代码会终止，需要手动拷贝未执行其余命令继续操作，全部命令执行完成后，VMware即可正常使用</span><br><span class=\"line\">sudo make install</span><br><span class=\"line\">sudo rm /usr/lib/vmware/lib/libz.so.1/libz.so.1</span><br><span class=\"line\">sudo ln -s /lib/x86_64-linux-gnu/libz.so.1</span><br><span class=\"line\">/usr/lib/vmware/lib/libz.so.1/libz.so.1</span><br><span class=\"line\">sudo /etc/init.d/vmware restart</span><br><span class=\"line\"></span><br></pre></td></tr></table></figure>\n</li>\n</ol>\n",
+            "tags": [
+                "VMware"
+            ]
+        }
+    ]
+}

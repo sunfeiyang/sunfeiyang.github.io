@@ -1,525 +1,495 @@
+
+
+
+
 <!DOCTYPE html>
-<html>
-<meta  lang="zh-CN" >
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#fff" id="theme-color">
-  <link rel="icon" href="/img/logo.png">
-  <title>sunfy</title>
-  
-  
-  <meta property="og:title" content="Git基本操作">
-  
-  
-  <meta property="og:url" content="http://xinghuohan.cn/2020/04/15/git/gitBase/index.html">
-  
-  
-  <meta property="og:img" content="/img/logo.png">
-  
-  
-  <meta property="og:img" content="&lt;p&gt;git基本操作,本博客只是最基本操作说明和相应图解 &lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/git/50.png&#34; alt=&#34;image-20200908222733250&#34;&gt;">
-  
-  
-  <meta property="og:type" content="article">
-  <meta property="og:article:published_time" content="2020-04-15">
-  <meta property="og:article:modified_time" content="2020-09-16">
-  <meta property="og:article:author" content="sunfy">
-  
-  
-  <meta property="og:article:tag" content="git">
-  
-  
-  
-  
-  <script>
-    // control reverse button
-    var reverseDarkList = {
-      dark: 'light',
-      light: 'dark'
-    };
-    var themeColor = {
-      dark: '#1c1c1e',
-      light: '#fff'
-    }
-    // get the data of css prefers-color-scheme
-    var getCssMediaQuery = function() {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    };
-    // reverse current darkmode setting function
-    var reverseDarkModeSetting = function() {
-      var setting = localStorage.getItem('user-color-scheme');
-      if(reverseDarkList[setting]) {
-        setting = reverseDarkList[setting];
-      } else if(setting === null) {
-        setting = reverseDarkList[getCssMediaQuery()];
-      } else {
-        return;
-      }
-      localStorage.setItem('user-color-scheme', setting);
-      return setting;
-    };
-    // apply current darkmode setting
-    var setDarkmode = function(mode) {
-      var setting = mode || localStorage.getItem('user-color-scheme');
-      if(setting === getCssMediaQuery()) {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-        localStorage.removeItem('user-color-scheme');
-        document.getElementById('theme-color').content = themeColor[setting];
-      } else if(reverseDarkList[setting]) {
-        document.documentElement.setAttribute('data-user-color-scheme', setting);
-        document.getElementById('theme-color').content = themeColor[setting];
-      } else {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-        localStorage.removeItem('user-color-scheme');
-        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-      }
-    };
-    setDarkmode();
-  </script>
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  </script>
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  
-  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
-  
-  
-  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
-  
-  
-  
-  
-  
-  
-  
-  
-<link rel="stylesheet" href="/css/main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
 
-  
-  
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
-
-  
-  
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-
-  
-  
-  
-<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="sunfy" type="application/atom+xml">
-</head>
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
 
 
-<body>
-  <div class="wrapper">
-    
-    <nav class="navbar">
-  <div class="navbar-logo">
-    <span class="navbar-logo-main">
-      
-      <img class="navbar-logo-img" src="/img/logo.png">
-      
-      <span class="navbar-logo-dsc">sunfy</span>
-    </span>
+<link rel="alternate" type="application/rss+xml" title="sunfy" href="http://xinghuohan.cn/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="sunfy" href="http://xinghuohan.cn/atom.xml" />
+<link rel="alternate" type="application/json" title="sunfy" href="http://xinghuohan.cn/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="git" />
+
+
+<link rel="canonical" href="http://xinghuohan.cn/2020/04/15/git/gitBase/">
+
+
+
+  <title>
+Git基本操作 - git |
+Sunfy = sunfy</title>
+<meta name="generator" content="Hexo 5.1.1"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
   </div>
-  <div class="navbar-menu">
-    
-    <a href="/" class="navbar-menu-item">
-    
-    首页
-    
-    </a>
-    
-    <a href="/archives" class="navbar-menu-item">
-    
-    归档
-    
-    </a>
-    
-    <a href="/tags" class="navbar-menu-item">
-    
-    标签
-    
-    </a>
-    
-    <a href="/categories" class="navbar-menu-item">
-    
-    分类
-    
-    </a>
-    
-    <a href="/" class="navbar-menu-item">
-    
-    关于
-    
-    </a>
-    
-    <a href="/links" class="navbar-menu-item">
-    
-    友链
-    
-    </a>
-    
-    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
-    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">Git基本操作
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="创建时间：2020-04-15 21:54:02">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">发表于</span>
+    <time itemprop="dateCreated datePublished" datetime="2020-04-15T21:54:02+08:00">2020-04-15</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="切换导航栏">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Sunfy</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
   </div>
 </nav>
-    
-    <div id="local-search" style="display: none;">
-      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
-      <div id="search-content"></div>
+
+      </div>
+      <div id="imgs" class="pjax">
+          <img src="https://wx1.sinaimg.cn/large/006tKfTcly1g09bply6xfj30kp09j0tg.jpg">
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
     </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
     
-    <div class="section-wrap">
-      <div class="container">
-        <div class="columns">
-          <main class="main-column">
-<article class="card card-content">
-  <header>
-    <h1 class="post-title">
-      Git基本操作
-    </h1>
-  </header>
-  <div class="post-meta post-show-meta">
-    <time datetime="2020-04-15T13:54:02.000Z" style="display: flex; align-items: center;">
-      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-      <span>2020-04-15</span>
-    </time>
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">首页</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/git/" itemprop="item" rel="index" title="分类于 git"><span itemprop="name">git</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN">
+  <link itemprop="mainEntityOfPage" href="http://xinghuohan.cn/2020/04/15/git/gitBase/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="John Doe">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="sunfy">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
     
-    <span class="dot"></span>
-    
-    <a href="/categories/git/" class="post-meta-link">git</a>
-    
-    
-    
-    <span class="dot"></span>
-    <span>414 字</span>
-    
-  </div>
-  
-  <div class="post-meta post-show-meta" style="margin-top: -10px;">
-    <div style="display: flex; align-items: center;">
-      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
-      
-      
-        <a href="/tags/git/" class="post-meta-link">git</a>
-      
-    </div>
-  </div>
-  
-  </header>
-  <div id="section" class="post-content">
-    <p>git基本操作,本博客只是最基本操作说明和相应图解 </p>
-<p><img src="/img/git/50.png" alt="image-20200908222733250" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/git/50.png" class="lozad post-image"><a id="more"></a></p>
-<p>Git下载</p>
-<p>git下载安装地址：<a target="_blank" rel="noopener" href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></p>
-<p>安装过程基本属于一路next，这里不做介绍，主要介绍git的操作命令</p>
-<p>Git工作流程</p>
-<p> <img src="https://img-blog.csdnimg.cn/20190809111904278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdnimg.cn/20190809111904278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70" class="lozad post-image"></p>
+      <div class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          <img data-src="https://wx1.sinaimg.cn/large/006tKfTcly1g09bply6xfj30kp09j0tg.jpg" itemprop="contentUrl">
+      </div>
+
+    <p>git 基本操作，本博客只是最基本操作说明和相应图解</p>
+<p><img data-src="/img/git/50.png" alt="image-20200908222733250"><a id="more"></a></p>
+<p>Git 下载</p>
+<p>git 下载安装地址：<span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS9kb3dubG9hZHM=">https://git-scm.com/downloads</span></p>
+<p>安装过程基本属于一路 next，这里不做介绍，主要介绍 git 的操作命令</p>
+<p>Git 工作流程</p>
+<p><img data-src="https://img-blog.csdnimg.cn/20190809111904278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70" alt="img"></p>
 <p>git 基本命令</p>
-<pre class="highlight"><span class="line"><span class="meta">#</span><span class="bash"> 将当前目录初始化为一个git仓库</span></span><br><span class="line"> git init</span><br><span class="line"><span class="meta"> #</span><span class="bash"> 在当前目录下创建<span class="built_in">test</span>目录，并初始化为一个git仓库</span></span><br><span class="line"> git init test</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 查看本地仓库中文件状态</span></span><br><span class="line"> git status</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 将本地文件添加至暂存区</span></span><br><span class="line"><span class="meta"> #</span><span class="bash"> 当前目录下的所有文件全部添加</span></span><br><span class="line"> git add -A</span><br><span class="line"><span class="meta"> #</span><span class="bash"> 只将当前选中的文件添加至暂存区</span></span><br><span class="line"> git add [filename]</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 将暂存区文件提交至本地仓库</span></span><br><span class="line"> git commit -m &quot;提交备注&quot;</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 将本地仓库关联至远程仓库</span></span><br><span class="line"> git remote add orgin https://github.com/xxxxx/xxx</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 提交本地仓库至远程仓库</span></span><br><span class="line"> git push origin</span><br><span class="line"><span class="meta"> #</span><span class="bash"> 此时由于本地仓库没有找到上游仓库位置，git会提示设置上游仓库命令</span></span><br><span class="line"> git push --set-upstream origin master</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"><span class="comment">##################################################</span></span></span><br><span class="line"><span class="meta"> #</span><span class="bash"> 至此，git仓库就已经提交完成，在远程仓库中可以看到和本地仓库同步的内容</span></span><br><span class="line"><span class="meta"> #</span><span class="bash"> 当再次修改本地仓库内容后，可以直接使用 </span></span><br><span class="line"> git add -A;git commit -m &quot;提交备注&quot;;git push;</span><br><span class="line"><span class="meta"> #</span><span class="bash"> 用以上命令进行代码提交同步</span></span><br><span class="line"><span class="meta"> #</span><span class="bash"><span class="comment">##################################################</span></span></span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 上图中右侧位置是已经存在远程仓库，在本地并没有创建仓库而是直接使用以下命令获取远程仓库内容</span></span><br><span class="line"> git clone [远程仓库地址]</span><br><span class="line"></span><br><span class="line"><span class="meta"> #</span><span class="bash"> 然后就可以通过上述的git基本命令就行git操作</span></span><br></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将当前目录初始化为一个git仓库</span></span><br><span class="line"> git init</span><br><span class="line"><span class="meta"> #</span><span class="bash"> 在当前目录下创建<span class="built_in">test</span>目录，并初始化为一个git仓库</span></span><br><span class="line"> git init test</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 查看本地仓库中文件状态</span></span><br><span class="line"> git status</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 将本地文件添加至暂存区</span></span><br><span class="line"><span class="meta"> #</span><span class="bash"> 当前目录下的所有文件全部添加</span></span><br><span class="line"> git add -A</span><br><span class="line"><span class="meta"> #</span><span class="bash"> 只将当前选中的文件添加至暂存区</span></span><br><span class="line"> git add [filename]</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 将暂存区文件提交至本地仓库</span></span><br><span class="line"> git commit -m &quot;提交备注&quot;</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 将本地仓库关联至远程仓库</span></span><br><span class="line"> git remote add orgin https://github.com/xxxxx/xxx</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 提交本地仓库至远程仓库</span></span><br><span class="line"> git push origin</span><br><span class="line"><span class="meta"> #</span><span class="bash"> 此时由于本地仓库没有找到上游仓库位置，git会提示设置上游仓库命令</span></span><br><span class="line"> git push --set-upstream origin master</span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"><span class="comment">##################################################</span></span></span><br><span class="line"><span class="meta"> #</span><span class="bash"> 至此，git仓库就已经提交完成，在远程仓库中可以看到和本地仓库同步的内容</span></span><br><span class="line"><span class="meta"> #</span><span class="bash"> 当再次修改本地仓库内容后，可以直接使用 </span></span><br><span class="line"> git add -A;git commit -m &quot;提交备注&quot;;git push;</span><br><span class="line"><span class="meta"> #</span><span class="bash"> 用以上命令进行代码提交同步</span></span><br><span class="line"><span class="meta"> #</span><span class="bash"><span class="comment">##################################################</span></span></span><br><span class="line"> </span><br><span class="line"><span class="meta"> #</span><span class="bash"> 上图中右侧位置是已经存在远程仓库，在本地并没有创建仓库而是直接使用以下命令获取远程仓库内容</span></span><br><span class="line"> git clone [远程仓库地址]</span><br><span class="line"></span><br><span class="line"><span class="meta"> #</span><span class="bash"> 然后就可以通过上述的git基本命令就行git操作</span></span><br></pre></td></tr></table></figure>
 
+      <div class="tags">
+          <a href="/tags/git/" rel="tag"><i class="ic i-tag"></i> git</a>
+      </div>
+  </div>
 
-  </div>
-  <div>
-  
-  <div class="post-note note-warning copyright" style="margin-top: 42px">
-    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/about">sunfy</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/2020/04/15/git/gitBase/">http://xinghuohan.cn/2020/04/15/git/gitBase/</a></p>
-    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
-  </div>
-  
-  </div>
-</article>
-<div class="nav">
-  
-  <div class="nav-item-prev">
-    <a href="/2020/09/08/java/javaDesignPatterns/" class="nav-link">
-      <i class="iconfont icon-left nav-prev-icon"></i>
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">更新于</span>
+    <time title="修改时间：2020-09-16 14:12:29" itemprop="dateModified" datetime="2020-09-16T14:12:29+08:00">2020-09-16</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> 赞赏</button>
+  <p>请我喝[茶]~(￣▽￣)~*</p>
+  <div id="qr">
+      
       <div>
-        <div class="nav-label">上一篇</div>
-        
-        <div class="nav-title">Java设计模式 </div>
-        
+        <img data-src="/images/wechatpay.png" alt="John Doe 微信支付">
+        <p>微信支付</p>
       </div>
-    </a>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="John Doe 支付宝">
+        <p>支付宝</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="John Doe 贝宝">
+        <p>贝宝</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>本文作者： </strong>John Doe <i class="ic i-at"><em>@</em></i>sunfy
+  </li>
+  <li class="link">
+    <strong>本文链接：</strong>
+    <a href="http://xinghuohan.cn/2020/04/15/git/gitBase/" title="Git基本操作">http://xinghuohan.cn/2020/04/15/git/gitBase/</a>
+  </li>
+  <li class="license">
+    <strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
   </div>
   
-  
-</div>
 
-<div class="card card-content toc-card" id="mobiletoc">
-  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<div class="post-nav">
+    <div class="item left">
+    </div>
+    <div class="item right">
+      
 
-</div></main>
-          <aside class="left-column">
-            
-            <div class="card card-author">
-              
-<img src="/img/logo.png" class="author-img">
-
-<p class="author-name">sunfy</p>
-<p class="author-description">sunfy个人博客</p>
-<div class="author-message">
-  <a class="author-posts-count" href="/archives">
-    <span>18</span>
-    <span>文章</span>
+  <a href="/2020/09/08/java/javaDesignPatterns/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicliwyw55j20zk0m8hdt.jpg" title="Java设计模式">
+  <span class="type">下一篇</span>
+  <span class="category"><i class="ic i-flag"></i> Java</span>
+  <h3>Java设计模式</h3>
   </a>
-  <a class="author-categories-count" href="/categories">
-    <span>6</span>
-    <span>分类</span>
-  </a>
-  <a class="author-tags-count" href="/tags">
-    <span>18</span>
-    <span>标签</span>
-  </a>
-</div>
-
-            </div>
-            
-            <div class="sticky-tablet">
-  
-  
-  <article class="display-when-two-columns spacer">
-    <div class="card card-content toc-card">
-      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
 
     </div>
-  </article>
-  
-  
-  <article class="card card-content categories-widget">
-    <div class="categories-card">
-  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
-  <div class="categories-list">
-    
-      <a href="/categories/DB">
-        <div class="categories-list-item">
-          DB
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/IDEA">
-        <div class="categories-list-item">
-          IDEA
-          <span class="categories-list-item-badge">2</span>
-        </div>
-      </a>
-    
-      <a href="/categories/Linux">
-        <div class="categories-list-item">
-          Linux
-          <span class="categories-list-item-badge">5</span>
-        </div>
-      </a>
-    
-      <a href="/categories/git">
-        <div class="categories-list-item">
-          git
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/Java">
-        <div class="categories-list-item">
-          Java
-          <span class="categories-list-item-badge">8</span>
-        </div>
-      </a>
-    
-      <a href="/categories/tools">
-        <div class="categories-list-item">
-          tools
-          <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-  </div>
 </div>
-  </article>
-  
-  <article class="card card-content tags-widget">
-    <div class="tags-card">
-  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
-  <div class="tags-list">
-    
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
-    
-    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
-    
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
-    <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\IDEA" title="IDEA"><div class="tags-list-item">IDEA</div></a>
-    
-    <a href="\tags\shiro" title="shiro"><div class="tags-list-item">shiro</div></a>
-    
-    <a href="\tags\Spring" title="Spring"><div class="tags-list-item">Spring</div></a>
-    
-    <a href="\tags\MyBatis" title="MyBatis"><div class="tags-list-item">MyBatis</div></a>
-    
-    <a href="\tags\tools" title="tools"><div class="tags-list-item">tools</div></a>
-    
-    <a href="\tags\git" title="git"><div class="tags-list-item">git</div></a>
-    
-    <a href="\tags\VMware" title="VMware"><div class="tags-list-item">VMware</div></a>
-    
-    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
-    
-    <a href="\tags\Centos" title="Centos"><div class="tags-list-item">Centos</div></a>
-    
-    <a href="\tags\远程调试" title="远程调试"><div class="tags-list-item">远程调试</div></a>
-    
-    <a href="\tags\Statistic" title="Statistic"><div class="tags-list-item">Statistic</div></a>
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-          </aside>
-          <aside class="right-column">
-            <div class="sticky-widescreen">
-  
-  
-  <article class="card card-content toc-card">
-    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
 
-  </article>
   
-  
-  <article class="card card-content">
-    <div class="recent-posts-card">
-  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
-  <div class="recent-posts-list">
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2020-11-17</div>
-        <a href="/2020/11/17/java/redis/redisCache/"><div class="recent-posts-item-content">高并发Redis缓存那些事儿</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2020-11-06</div>
-        <a href="/2020/11/06/java/redis/redisCluster/"><div class="recent-posts-item-content">Redis集群搭建</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2020-11-02</div>
-        <a href="/2020/11/02/java/redis/redisCommand2/"><div class="recent-posts-item-content">Redis持久化、主从架构和哨兵架构</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2020-10-31</div>
-        <a href="/2020/10/31/java/redis/redisCommand/"><div class="recent-posts-item-content">Redis操作命令</div></a>
-      </div>
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-          </aside>
+  <div class="wrap" id="comments"></div>
+
+
         </div>
-      </div>
-    </div>
-  </div>
-  
-  <footer class="footer">
-  <div class="footer-container">
-    <div>
-      <div class="footer-dsc">
-        <span>Copyright ©
+        <div id="sidebar">
           
-          2020 -
-          
-          2020
-        </span>
-        &nbsp;
-        <a href="/" class="footer-link">sunfy </a>
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="文章目录">
+      </div>
+      <div class="related panel pjax" data-title="系列文章">
+        <ul>
+          <li class="active"><a href="/2020/04/15/git/gitBase/" rel="bookmark" title="Git基本操作">Git基本操作</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="站点概览">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="John Doe"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">John Doe</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">18</span>
+        <span class="name">文章</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">6</span>
+        <span class="name">分类</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">18</span>
+        <span class="name">标签</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+      <span class="exturl item github" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lvdXJuYW1l" title="https:&#x2F;&#x2F;github.com&#x2F;yourname"><i class="ic i-github"></i></span>
+      <span class="exturl item twitter" data-url="aHR0cHM6Ly90d2l0dGVyLmNvbS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;twitter.com&#x2F;yourname"><i class="ic i-twitter"></i></span>
+      <span class="exturl item zhihu" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yourname"><i class="ic i-zhihu"></i></span>
+      <span class="exturl item music" data-url="aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvdXNlci9ob21lP2lkPXlvdXJpZA==" title="https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;yourid"><i class="ic i-cloud-music"></i></span>
+      <span class="exturl item weibo" data-url="aHR0cHM6Ly93ZWliby5jb20veW91cm5hbWU=" title="https:&#x2F;&#x2F;weibo.com&#x2F;yourname"><i class="ic i-weibo"></i></span>
+      <span class="exturl item about" data-url="aHR0cHM6Ly9hYm91dC5tZS95b3VybmFtZQ==" title="https:&#x2F;&#x2F;about.me&#x2F;yourname"><i class="ic i-address-card"></i></span>
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>首页</a>
+  </li>
+
+
+</ul>
+
       </div>
     </div>
+  </div>
 
-    
-    
-    
-    
-</footer>
-  <a role="button" id="scrollbutton" class="basebutton" >
-  <i class="iconfont icon-arrowleft button-icon"></i>
-</a>
-<a role="button" id="menubutton" class="basebutton">
-  <i class="iconfont icon-menu button-icon"></i>
-</a>
-<a role="button" id="popbutton" class="basebutton">
-  <i class="iconfont icon-expand button-icon"></i>
-</a>
-<a role="button" id="darkbutton" class="basebutton darkwidget">
-  <i class="iconfont icon-weather button-icon"></i>
-</a>
-<a role="button" id="searchbutton" class="basebutton searchwidget">
-  <i class="iconfont icon-search button-icon"></i>
-</a>
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
 
-  
-  
-  
-  <script>
-  var addImgLayout = function () {
-    var img = document.querySelectorAll('.post-content img');
-    var i;
-    for (i = 0; i < img.length; i++) {
-      var wrapper = document.createElement('a');
-      wrapper.setAttribute('data-fslightbox', 'gallery');
-      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
-      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
-      img[i].before(wrapper);
-      wrapper.append(img[i]);
-    }
-    refreshFsLightbox();
-  }
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>随机文章</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/DB/" title="分类于 DB">DB</a>
+</div>
+
+    <span><a href="/2020/09/22/DB/MySQl-error/" title="MySQL常见异常">MySQL常见异常</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/git/" title="分类于 git">git</a>
+</div>
+
+    <span><a href="/2020/04/15/git/gitBase/" title="Git基本操作">Git基本操作</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Java/" title="分类于 Java">Java</a>
+</div>
+
+    <span><a href="/2020/11/06/java/redis/redisCluster/" title="Redis集群搭建">Redis集群搭建</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/tools/" title="分类于 tools">tools</a>
+</div>
+
+    <span><a href="/2020/10/13/tools/renameFileSuffix/" title="批量修改文件后缀名">批量修改文件后缀名</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Java/" title="分类于 Java">Java</a>
+</div>
+
+    <span><a href="/2020/10/31/java/redis/redisCommand/" title="Redis操作命令">Redis操作命令</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Java/" title="分类于 Java">Java</a>
+</div>
+
+    <span><a href="/2020/11/02/java/redis/redisCommand2/" title="Redis持久化、主从架构和哨兵架构">Redis持久化、主从架构和哨兵架构</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Java/" title="分类于 Java">Java</a>
+</div>
+
+    <span><a href="/2020/10/20/java/shiro/shirotoUse/" title="shiro入门基础教程">shiro入门基础教程</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Linux/" title="分类于 Linux">Linux</a>
+</div>
+
+    <span><a href="/2020/10/16/Linux/UbuntuAboutDesktop/" title="Ubuntu桌面被删除后">Ubuntu桌面被删除后</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/Java/" title="分类于 Java">Java</a>
+</div>
+
+    <span><a href="/2020/10/22/java/MyBatis/MyBatisResourceBuild/" title="MyBatis源码编译环境构建">MyBatis源码编译环境构建</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/IDEA/" title="分类于 IDEA">IDEA</a>
+</div>
+
+    <span><a href="/2020/09/14/IDEA/IDEA-Statistic/" title="IDEA Statistic插件使用,代码统计">IDEA Statistic插件使用,代码统计</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>最新评论</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2020</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">John Doe @ Sunfy</span>
+  </div>
+  <div class="powered-by">
+    基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2020/04/15/git/gitBase/',
+    favicon: {
+      show: "（●´3｀●）やれやれだぜ",
+      hide: "(´Д｀)大変だ！"
+    },
+    search : {
+      placeholder: "文章搜索",
+      empty: "关于 「 ${query} 」，什么也没搜到",
+      stats: "${time} ms 内找到 ${hits} 条结果"
+    },
+    valine: true,fancybox: true,copyright: '复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
 </script>
-<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
-  
-  
-  
-<script src="/js/main.js"></script>
 
-  
-  
-  <script>
-    var addLazyload = function () {
-      var observer = lozad('.lozad', {
-        load: function (el) {
-          el.srcset = el.getAttribute('data-src');
-        },
-        loaded: function (el) {
-          el.classList.add('loaded');
-        }
-      });
-      observer.observe();
-    }
-  </script>
-  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
-  
-  
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
 </body>
-
 </html>
