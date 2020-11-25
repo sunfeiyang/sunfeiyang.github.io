@@ -28,6 +28,7 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Zookeeper</category>
+        <category>IO</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/</guid>
             <title>Ubuntu截图工具</title>

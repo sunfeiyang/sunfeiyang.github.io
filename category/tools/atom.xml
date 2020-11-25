@@ -25,6 +25,7 @@
     <category term="Redis" />
     <category term="shiro" />
     <category term="Zookeeper" />
+    <category term="IO" />
     <entry>
         <id>http://xinghuohan.cn/2020/10/13/tools/renameFileSuffix/</id>
         <title>批量修改文件后缀名</title>

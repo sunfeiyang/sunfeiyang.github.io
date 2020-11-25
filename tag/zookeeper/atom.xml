@@ -25,6 +25,7 @@
     <category term="Redis" />
     <category term="shiro" />
     <category term="Zookeeper" />
+    <category term="IO" />
     <entry>
         <id>http://xinghuohan.cn/2020/11/21/java/Zookeeper/ZookeeperCluster/</id>
         <title>Zookeeper集群</title>

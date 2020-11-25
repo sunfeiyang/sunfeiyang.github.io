@@ -25,6 +25,7 @@
     <category term="Redis" />
     <category term="shiro" />
     <category term="Zookeeper" />
+    <category term="IO" />
     <entry>
         <id>http://xinghuohan.cn/2020/09/22/DB/MySQl-error/</id>
         <title>MySQL常见异常</title>

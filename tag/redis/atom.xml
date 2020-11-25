@@ -25,6 +25,7 @@
     <category term="Redis" />
     <category term="shiro" />
     <category term="Zookeeper" />
+    <category term="IO" />
     <entry>
         <id>http://xinghuohan.cn/2020/11/17/java/redis/redisCache/</id>
         <title>高并发Redis缓存那些事儿</title>

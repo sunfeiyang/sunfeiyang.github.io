@@ -28,6 +28,7 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Zookeeper</category>
+        <category>IO</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/04/15/git/gitBase/</guid>
             <title>Git基本操作</title>

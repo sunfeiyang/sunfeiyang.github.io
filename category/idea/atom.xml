@@ -25,6 +25,7 @@
     <category term="Redis" />
     <category term="shiro" />
     <category term="Zookeeper" />
+    <category term="IO" />
     <entry>
         <id>http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/</id>
         <title>IDEA Statistic插件使用,代码统计</title>
