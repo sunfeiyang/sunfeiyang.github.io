@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Tue, 08 Sep 2020 22:44:44 +0800</pubDate>
-        <lastBuildDate>Tue, 08 Sep 2020 22:44:44 +0800</lastBuildDate>
+        <pubDate>Sat, 28 Nov 2020 14:35:30 +0800</pubDate>
+        <lastBuildDate>Sat, 28 Nov 2020 14:35:30 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -19,24 +19,24 @@
         <category>VMware</category>
         <category>git</category>
         <category>Java</category>
-        <category>设计模式</category>
+        <category>MQ</category>
         <category>tools</category>
+        <category>IO</category>
+        <category>设计模式</category>
         <category>MyBatis</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
-        <category>Spring</category>
+        <category>Zookeeper</category>
         <category>Redis</category>
         <category>shiro</category>
-        <category>Zookeeper</category>
-        <category>IO</category>
-        <category>MQ</category>
+        <category>Spring</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/09/08/java/javaDesignPatterns/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/11/28/java/MQ/RabbitMQBase/</guid>
             <title>MQ入门和RabbitMQ基础</title>
-            <link>http://xinghuohan.cn/2020/09/08/java/javaDesignPatterns/</link>
+            <link>http://xinghuohan.cn/2020/11/28/java/MQ/RabbitMQBase/</link>
             <category>Java</category>
             <category>MQ</category>
-            <pubDate>Tue, 08 Sep 2020 22:44:44 +0800</pubDate>
+            <pubDate>Sat, 28 Nov 2020 14:35:30 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;MQ 全称 Message Queue（消息队列），是在消息的传输过程中保存消息的容器。多用于分布式系统之间进行通信。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;mq的优势&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#mq的优势&#34;&gt;#&lt;/a&gt; MQ 的优势&lt;/h3&gt;
 &lt;ol&gt;

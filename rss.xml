@@ -19,60 +19,131 @@
         <category>VMware</category>
         <category>git</category>
         <category>Java</category>
-        <category>设计模式</category>
+        <category>MQ</category>
         <category>tools</category>
+        <category>IO</category>
+        <category>设计模式</category>
         <category>MyBatis</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
-        <category>Spring</category>
+        <category>Zookeeper</category>
         <category>Redis</category>
         <category>shiro</category>
-        <category>Zookeeper</category>
-        <category>IO</category>
-        <category>MQ</category>
+        <category>Spring</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/11/28/java/MQ/RabbitMQBase/</guid>
-            <title>Java设计模式</title>
+            <title>MQ入门和RabbitMQ基础</title>
             <link>http://xinghuohan.cn/2020/11/28/java/MQ/RabbitMQBase/</link>
             <category>Java</category>
-            <category>设计模式</category>
+            <category>MQ</category>
             <pubDate>Sat, 28 Nov 2020 14:35:30 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;java 设计模式：设计模式是被大多数人反复使用，在软件开发过程中所面临的一般问题的解决方案。是大多数人员经过较长时间所总结出来的的一套代码设计经验的总结；&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;什么是设计模式（ &lt;code&gt;Desin Pattern&lt;/code&gt; ）&lt;/p&gt;
-&lt;p&gt;设计模式是被大多数人反复使用，在软件开发过程中所面临的一般问题的解决方案。是大多数人员经过较长时间所总结出来的的一套代码设计经验的总结；&lt;/p&gt;
-&lt;p&gt;为什么使用设计模式？&lt;/p&gt;
-&lt;p&gt;使用设计模式可以提高代码的重用性，一定程度保证代码的可靠性，也可以帮助阅读代码的人员快速理解；&lt;/p&gt;
-&lt;p&gt;设计模式种类&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;创建型模式（5）：工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。&lt;/li&gt;
-&lt;li&gt;结构型模式（7）：适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。&lt;/li&gt;
-&lt;li&gt;行为型模式（11）：策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;设计模式遵循的原则&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设计模式遵循的原则&#34;&gt;#&lt;/a&gt; 设计模式遵循的原则&lt;/h2&gt;
+            <description><![CDATA[ &lt;p&gt;MQ 全称 Message Queue（消息队列），是在消息的传输过程中保存消息的容器。多用于分布式系统之间进行通信。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mq的优势&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#mq的优势&#34;&gt;#&lt;/a&gt; MQ 的优势&lt;/h3&gt;
 &lt;ol&gt;
-&lt;li&gt;开闭原则（Open Close Principle）：对扩展开放，对修改关闭。&lt;/li&gt;
-&lt;li&gt;里氏代换原则（Liskov Substitution Principle）：只有当衍生类可以替换掉基类，软件单位的功能不受影响时，基类才能真正被复用，而衍生类也能够在基类的基础上增加新的行为。&lt;/li&gt;
-&lt;li&gt;依赖倒转原则（Dependence Inversion Principle）：这个是开闭原则的基础，对接口编程，依赖于抽象而不依赖于具体。&lt;/li&gt;
-&lt;li&gt;接口隔离原则（Interface Segregation Principle）：使用多个隔离的接口来降低耦合度。&lt;/li&gt;
-&lt;li&gt;迪米特法则（最少知道法则）（Demeter Principle）：一个实体应当尽量少的与其他实体之间发生相互作用，使得系统功能模块相对独立。&lt;/li&gt;
-&lt;li&gt;合成复用原则（Composite Reuse Principle）：原则是尽量使用合成 / 聚合的方式，而不是使用继承。继承实际上破坏了类的封装性，超类的方法可能会被子类修改，&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;应用解耦&lt;/p&gt;
+&lt;p&gt;提高系统容错性和可维护性&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;异步提速&lt;/p&gt;
+&lt;p&gt;提升用户体验和系统吞吐量&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;削峰填谷&lt;/p&gt;
+&lt;p&gt;提高系统稳定性&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;单例模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#单例模式&#34;&gt;#&lt;/a&gt; 单例模式&lt;/h2&gt;
-&lt;p&gt;单例模式主要适用于在整个系统中，我们只需要一个（有且仅有一个），若存在多个，可能会出现一些不应有的状况，比如资源占用过多、与预期值不同等后果。主要用在配置文件、线程池、缓存、日志对象等；&lt;/p&gt;
-&lt;p&gt;分类：&lt;/p&gt;
-&lt;h3 id=&#34;饿汉模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#饿汉模式&#34;&gt;#&lt;/a&gt; 饿汉模式&lt;/h3&gt;
-&lt;p&gt;主要特点是，在类文件加载的时候就会创建，不论是否有无方法对其进行调用。&lt;/p&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;package com.sunfy.singleton;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#x2F;*&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; * static 静态的成员，是类所有，这样的对象会在类加载时就会创建类的唯一一个实例（饿汉模式）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; *&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;public class Singleton &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;1.将构造方法私有化，不允许外部直接创建对象&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private Singleton()&amp;#123;        &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;2.创建类的唯一实例，使用private(控制访问，安全考虑) static修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private static Singleton instance&amp;#x3D;new Singleton();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;3.提供一个用于获取实例的方法，使用public static（改为类所有，可以直接点）修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    public static Singleton getInstance()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        return instance;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;懒汉模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#懒汉模式&#34;&gt;#&lt;/a&gt; 懒汉模式&lt;/h3&gt;
-&lt;p&gt;主要特点是：加载类文件时不会进行创建，只有当调用该对象时才会创建，而且只有第一次调用时会创建。&lt;/p&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;package com.sunfy.singleton;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#x2F;*&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; * 懒汉模式&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; *&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;public class Singleton2 &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;1.将构造方式私有化，不允许外边直接创建对象&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private Singleton2()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;2.声明类的唯一实例，使用private static修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;  只是声明，没有直接进行创建，当第一次获取的时候会创建&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private static Singleton2 instance;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;3.提供一个用于获取实例的方法，使用public static修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    public static Singleton2 getInstance()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        if(instance&amp;#x3D;&amp;#x3D;null)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            instance&amp;#x3D;new Singleton2();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        return instance;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;二者区别&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#二者区别&#34;&gt;#&lt;/a&gt; 二者区别&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;饿汉模式的特点是加载类时比较慢，但运行时获取对象的速度比较快，线程安全&lt;/li&gt;
-&lt;li&gt;懒汉模式的特点是加载类时比较快，但运行时获取对象的速度比较慢，线程不安全&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;代理模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#代理模式&#34;&gt;#&lt;/a&gt; 代理模式&lt;/h2&gt;
-&lt;p&gt;— 未完待续…&lt;/p&gt;
+&lt;h3 id=&#34;mq的劣势&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#mq的劣势&#34;&gt;#&lt;/a&gt; MQ 的劣势&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;系统可用性降低&lt;/p&gt;
+&lt;p&gt;系统引入的外部依赖越多，系统稳定性越差。一旦 MQ 宕机，就会对业务造成影响。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;系统复杂度提高&lt;/p&gt;
+&lt;p&gt;MQ 的加入大大增加了系统的复杂度，以前系统间是同步的远程调用，现在是通过 MQ 进行异步调用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;常见产品&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#常见产品&#34;&gt;#&lt;/a&gt; 常见产品&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;** **&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Rabbit MQ&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Active MQ&lt;/strong&gt;（相对使用不多）&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Rocket MQ&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Kafka&lt;/strong&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;公司 / 社区&lt;/td&gt;
+&lt;td&gt;Rabbit&lt;/td&gt;
+&lt;td&gt;Apache&lt;/td&gt;
+&lt;td&gt;阿里&lt;/td&gt;
+&lt;td&gt;Apache&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;开发语言&lt;/td&gt;
+&lt;td&gt;Erlang&lt;/td&gt;
+&lt;td&gt;Java&lt;/td&gt;
+&lt;td&gt;Java&lt;/td&gt;
+&lt;td&gt;Scala&amp;amp;Java&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;协议支持&lt;/td&gt;
+&lt;td&gt;AMQP，XMPP，SMTP，STOMP&lt;/td&gt;
+&lt;td&gt;OpenWire,STOMP，REST,XMPP,AMQP&lt;/td&gt;
+&lt;td&gt;自定义&lt;/td&gt;
+&lt;td&gt;自定义协议，社区封装了 http 协议支持&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;客户端支持语言&lt;/td&gt;
+&lt;td&gt;官方支持 Erlang，Java，Ruby 等，社区产出多种 API，几乎支持所有语言&lt;/td&gt;
+&lt;td&gt;Java，C，C++，Python，PHP，Perl，.net 等&lt;/td&gt;
+&lt;td&gt;Java，C++（不成熟）&lt;/td&gt;
+&lt;td&gt;官方支持 Java, 社区产出多种 API，如 PHP，Python 等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;单机吞吐量&lt;/td&gt;
+&lt;td&gt;万级（其次）&lt;/td&gt;
+&lt;td&gt;万级（最差）&lt;/td&gt;
+&lt;td&gt;十万级（最好）&lt;/td&gt;
+&lt;td&gt;十万级（次之）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;消息延迟&lt;/td&gt;
+&lt;td&gt;微妙级&lt;/td&gt;
+&lt;td&gt;毫秒级&lt;/td&gt;
+&lt;td&gt;毫秒级&lt;/td&gt;
+&lt;td&gt;毫秒以内&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;功能特性&lt;/td&gt;
+&lt;td&gt;并发能力强，性能极其好，延时低，社区活跃，管理界面丰富&lt;/td&gt;
+&lt;td&gt;老牌产品，成熟度高，文档较多&lt;/td&gt;
+&lt;td&gt;MQ 功能比较完备，扩展性佳&lt;/td&gt;
+&lt;td&gt;只支持主要的 MQ 功能，毕竟是为大数据领域准备的。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;rabbit-mq&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#rabbit-mq&#34;&gt;#&lt;/a&gt; Rabbit MQ&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Broker&lt;/strong&gt;：接收和分发消息的应用，RabbitMQ Server 就是 Message Broker&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Virtual host&lt;/strong&gt;：出于多租户和安全因素设计的，把 AMQP 的基本组件划分到一个虚拟的分组中，类似于网络中的 name space 概念。当多个不同的用户使用同一个 RabbitMQ server 提供的服务时，可以划分出多个 vhost，每个用户在自己的 vhost 创建 exchange／queue 等&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Connection&lt;/strong&gt;： publisher／consumer 和 broker 之间的 TCP 连接&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Channel&lt;/strong&gt;：如果每一次访问 RabbitMQ 都建立一个 Connection，在消息量大的时候建立 TCP Connection 的开销将是巨大的，效率也较低。Channel 是在 connection 内部建立的逻辑连接，如果应用程序支持多线程，通常每个 thread 创建单独的 channel 进行通讯，AMQP method 包含了 channel id 帮助客户端和 message broker 识别 channel，所以 channel 之间是完全隔离的。Channel 作为轻量级的 Connection 极大减少了操作系统建立 TCP connection 的开销&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Exchange&lt;/strong&gt;： message 到达 broker 的第一站，根据分发规则，匹配查询表中的 routing key，分发消息到 queue 中去。常用的类型有：direct (point-to-point), topic (publish-subscribe) and fanout (multicast)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Queue&lt;/strong&gt;：消息最终被送到这里等待 consumer 取走&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Binding&lt;/strong&gt;： exchange 和 queue 之间的虚拟连接，binding 中可以包含 routing key。Binding 信息被保存到 exchange 中的查询表中，用于 message 的分发依据&lt;/p&gt;
+&lt;h4 id=&#34;6-种工作模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#6-种工作模式&#34;&gt;#&lt;/a&gt; 6 种工作模式&lt;/h4&gt;
+&lt;p&gt;简单模式、work queues、Publish/Subscribe 发布与订阅模式、Routing 路由模式、Topics 主题模式、RPC 远程调用模式（远程调用，不太算 MQ）。&lt;br&gt;
+官网对应模式介绍：&lt;a href=&#34;https://www.rabbitmq.com/getstarted.html&#34;&gt;https://www.rabbitmq.com/getstarted.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201128145309508.png&#34; alt=&#34;image-20201128145309508&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201128145309508.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201128145328279.png&#34; alt=&#34;image-20201128145328279&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201128145328279.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201128145148926.png&#34; alt=&#34;image-20201128145148926&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201128145148926.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201128145208118.png&#34; alt=&#34;image-20201128145208118&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201128145208118.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201128145226488.png&#34; alt=&#34;image-20201128145226488&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201128145226488.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201128145240371.png&#34; alt=&#34;image-20201128145240371&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201128145240371.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
@@ -920,6 +991,107 @@
 &lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;TYPE=Ethernet&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;PROXY_METHOD=none&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;BROWSER_ONLY=no&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;BOOTPROTO=static&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;DEFROUTE=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV4_FAILURE_FATAL=no&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6INIT=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_AUTOCONF=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_DEFROUTE=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_FAILURE_FATAL=no&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_ADDR_GEN_MODE=stable-privacy&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;NAME=ens33&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=529b576d-4e86-4dd1-9446-43ab40dbfd27&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;DEVICE=ens33&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ONBOOT=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPADDR=192.168.88.88&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;NETMASK=255.255.255.0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;GATEWAY=192.168.88.2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;DNS1=192.168.88.2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;p&gt;3. 重启网络服务 使用命令 systemctl restart network.service&lt;/p&gt;
 &lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;--关闭网络管理器NetwokManager&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl stop NetworkManager&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl disable NetworkManager&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service network restart&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</guid>
+            <title>IDEA 远程调试</title>
+            <link>http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</link>
+            <category>IDEA</category>
+            <category>远程调试</category>
+            <pubDate>Tue, 08 Sep 2020 22:55:59 +0800</pubDate>
+            <description><![CDATA[ &lt;h3 id=&#34;本机调试&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#本机调试&#34;&gt;#&lt;/a&gt; &lt;strong&gt;本机调试&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;此处不做过多解释，相信考虑远程 debug 调试的，肯定对本机调试是有一定了解的。说下自己在本机调试 spring Boot 项目时遇到的项目长时间卡顿，这个时候可能是因为本机环境中 debug 断点太多，去除一下后即可正常启动；&lt;/p&gt;
+&lt;h3 id=&#34;远程调试&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#远程调试&#34;&gt;#&lt;/a&gt; &lt;strong&gt;远程调试&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;远程调试一个大前提就是我们需要保证远程代码和本地代码一致；&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;此处部署为 war 包项目&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在远程环境中要开启允许远程 debug 调试&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;windows 环境–》bin 目录–》 &lt;code&gt;startup.bat&lt;/code&gt;  增加设置 (此处设置 debug 端口为 address=8081，可以根据实际条件自行设置)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;SET CATALINA_OPTS&amp;#x3D;-server -Xdebug -Xnoagent -Djava.compiler&amp;#x3D;NONE -Xrunjdwp:transport&amp;#x3D;dt_socket,server&amp;#x3D;y,suspend&amp;#x3D;n,address&amp;#x3D;8081&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;Linux 环境中–》 &lt;code&gt;catalina.sh&lt;/code&gt;  文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;CATALINA_OPTS&amp;#x3D;&amp;quot;-Xdebug -Xrunjdwp:transport&amp;#x3D;dt_socket,suspend&amp;#x3D;n,server&amp;#x3D;y,address&amp;#x3D;8081&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;IDEA 中创建 debug 调试&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;全部设置完成后，重启项目&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809175100811.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809175100811.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;然后 idea 中 debug 启动刚才新建的服务，在本机代码中打断点，发起相应请求即可进入 debug 模式；&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;若项目为 jar 项目应该使用&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809175123597.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809175123597.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/08/java/javaDesignPatterns/</guid>
+            <title>Java设计模式</title>
+            <link>http://xinghuohan.cn/2020/09/08/java/javaDesignPatterns/</link>
+            <category>Java</category>
+            <category>设计模式</category>
+            <pubDate>Tue, 08 Sep 2020 22:44:44 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;java 设计模式：设计模式是被大多数人反复使用，在软件开发过程中所面临的一般问题的解决方案。是大多数人员经过较长时间所总结出来的的一套代码设计经验的总结；&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;什么是设计模式（ &lt;code&gt;Desin Pattern&lt;/code&gt; ）&lt;/p&gt;
+&lt;p&gt;设计模式是被大多数人反复使用，在软件开发过程中所面临的一般问题的解决方案。是大多数人员经过较长时间所总结出来的的一套代码设计经验的总结；&lt;/p&gt;
+&lt;p&gt;为什么使用设计模式？&lt;/p&gt;
+&lt;p&gt;使用设计模式可以提高代码的重用性，一定程度保证代码的可靠性，也可以帮助阅读代码的人员快速理解；&lt;/p&gt;
+&lt;p&gt;设计模式种类&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;创建型模式（5）：工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。&lt;/li&gt;
+&lt;li&gt;结构型模式（7）：适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。&lt;/li&gt;
+&lt;li&gt;行为型模式（11）：策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;设计模式遵循的原则&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设计模式遵循的原则&#34;&gt;#&lt;/a&gt; 设计模式遵循的原则&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;开闭原则（Open Close Principle）：对扩展开放，对修改关闭。&lt;/li&gt;
+&lt;li&gt;里氏代换原则（Liskov Substitution Principle）：只有当衍生类可以替换掉基类，软件单位的功能不受影响时，基类才能真正被复用，而衍生类也能够在基类的基础上增加新的行为。&lt;/li&gt;
+&lt;li&gt;依赖倒转原则（Dependence Inversion Principle）：这个是开闭原则的基础，对接口编程，依赖于抽象而不依赖于具体。&lt;/li&gt;
+&lt;li&gt;接口隔离原则（Interface Segregation Principle）：使用多个隔离的接口来降低耦合度。&lt;/li&gt;
+&lt;li&gt;迪米特法则（最少知道法则）（Demeter Principle）：一个实体应当尽量少的与其他实体之间发生相互作用，使得系统功能模块相对独立。&lt;/li&gt;
+&lt;li&gt;合成复用原则（Composite Reuse Principle）：原则是尽量使用合成 / 聚合的方式，而不是使用继承。继承实际上破坏了类的封装性，超类的方法可能会被子类修改，&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;单例模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#单例模式&#34;&gt;#&lt;/a&gt; 单例模式&lt;/h2&gt;
+&lt;p&gt;单例模式主要适用于在整个系统中，我们只需要一个（有且仅有一个），若存在多个，可能会出现一些不应有的状况，比如资源占用过多、与预期值不同等后果。主要用在配置文件、线程池、缓存、日志对象等；&lt;/p&gt;
+&lt;p&gt;分类：&lt;/p&gt;
+&lt;h3 id=&#34;饿汉模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#饿汉模式&#34;&gt;#&lt;/a&gt; 饿汉模式&lt;/h3&gt;
+&lt;p&gt;主要特点是，在类文件加载的时候就会创建，不论是否有无方法对其进行调用。&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;package com.sunfy.singleton;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#x2F;*&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; * static 静态的成员，是类所有，这样的对象会在类加载时就会创建类的唯一一个实例（饿汉模式）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; *&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;public class Singleton &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;1.将构造方法私有化，不允许外部直接创建对象&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private Singleton()&amp;#123;        &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;2.创建类的唯一实例，使用private(控制访问，安全考虑) static修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private static Singleton instance&amp;#x3D;new Singleton();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;3.提供一个用于获取实例的方法，使用public static（改为类所有，可以直接点）修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    public static Singleton getInstance()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        return instance;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;懒汉模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#懒汉模式&#34;&gt;#&lt;/a&gt; 懒汉模式&lt;/h3&gt;
+&lt;p&gt;主要特点是：加载类文件时不会进行创建，只有当调用该对象时才会创建，而且只有第一次调用时会创建。&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;package com.sunfy.singleton;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#x2F;*&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; * 懒汉模式&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; *&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;public class Singleton2 &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;1.将构造方式私有化，不允许外边直接创建对象&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private Singleton2()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;2.声明类的唯一实例，使用private static修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;  只是声明，没有直接进行创建，当第一次获取的时候会创建&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private static Singleton2 instance;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;3.提供一个用于获取实例的方法，使用public static修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    public static Singleton2 getInstance()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        if(instance&amp;#x3D;&amp;#x3D;null)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            instance&amp;#x3D;new Singleton2();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        return instance;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;二者区别&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#二者区别&#34;&gt;#&lt;/a&gt; 二者区别&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;饿汉模式的特点是加载类时比较慢，但运行时获取对象的速度比较快，线程安全&lt;/li&gt;
+&lt;li&gt;懒汉模式的特点是加载类时比较快，但运行时获取对象的速度比较慢，线程不安全&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;代理模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#代理模式&#34;&gt;#&lt;/a&gt; 代理模式&lt;/h2&gt;
+&lt;p&gt;— 未完待续…&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/04/15/git/gitBase/</guid>
+            <title>Git基本操作</title>
+            <link>http://xinghuohan.cn/2020/04/15/git/gitBase/</link>
+            <category>git</category>
+            <pubDate>Wed, 15 Apr 2020 21:54:02 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;git 基本操作，本博客只是最基本操作说明和相应图解&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/git/50.png&#34; alt=&#34;image-20200908222733250&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/git/50.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Git 下载&lt;/p&gt;
+&lt;p&gt;git 下载安装地址：&lt;a href=&#34;https://git-scm.com/downloads&#34;&gt;https://git-scm.com/downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;安装过程基本属于一路 next，这里不做介绍，主要介绍 git 的操作命令&lt;/p&gt;
+&lt;p&gt;Git 工作流程&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809111904278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809111904278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;git 基本命令&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 将当前目录初始化为一个git仓库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git init&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 在当前目录下创建&lt;span class=&#34;built_in&#34;&gt;test&lt;/span&gt;目录，并初始化为一个git仓库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git init test&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 查看本地仓库中文件状态&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git status&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 将本地文件添加至暂存区&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 当前目录下的所有文件全部添加&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git add -A&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 只将当前选中的文件添加至暂存区&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git add [filename]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 将暂存区文件提交至本地仓库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git commit -m &amp;quot;提交备注&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 将本地仓库关联至远程仓库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git remote add orgin https://github.com/xxxxx/xxx&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 提交本地仓库至远程仓库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git push origin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 此时由于本地仓库没有找到上游仓库位置，git会提示设置上游仓库命令&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git push --set-upstream origin master&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;##################################################&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 至此，git仓库就已经提交完成，在远程仓库中可以看到和本地仓库同步的内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 当再次修改本地仓库内容后，可以直接使用 &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git add -A;git commit -m &amp;quot;提交备注&amp;quot;;git push;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 用以上命令进行代码提交同步&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;##################################################&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 上图中右侧位置是已经存在远程仓库，在本地并没有创建仓库而是直接使用以下命令获取远程仓库内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git clone [远程仓库地址]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 然后就可以通过上述的git基本命令就行git操作&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
  ]]></description>
         </item>
     </channel>

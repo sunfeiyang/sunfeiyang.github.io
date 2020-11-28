@@ -19,17 +19,17 @@
         <category>VMware</category>
         <category>git</category>
         <category>Java</category>
-        <category>设计模式</category>
+        <category>MQ</category>
         <category>tools</category>
+        <category>IO</category>
+        <category>设计模式</category>
         <category>MyBatis</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
-        <category>Spring</category>
+        <category>Zookeeper</category>
         <category>Redis</category>
         <category>shiro</category>
-        <category>Zookeeper</category>
-        <category>IO</category>
-        <category>MQ</category>
+        <category>Spring</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/04/15/git/gitBase/</guid>
             <title>Git基本操作</title>

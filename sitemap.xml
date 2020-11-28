@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xinghuohan.cn/2020/09/08/java/javaDesignPatterns/</loc>
+    <loc>http://xinghuohan.cn/2020/11/28/java/MQ/RabbitMQBase/</loc>
     
     <lastmod>2020-11-28</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/2020/11/28/java/MQ/RabbitMQBase/</loc>
+    <loc>http://xinghuohan.cn/2020/09/08/java/javaDesignPatterns/</loc>
     
     <lastmod>2020-11-28</lastmod>
     
@@ -256,7 +256,7 @@
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>http://xinghuohan.cn/tags/MQ/</loc>
     <lastmod>2020-11-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -264,6 +264,20 @@
   
   <url>
     <loc>http://xinghuohan.cn/tags/tools/</loc>
+    <lastmod>2020-11-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/tags/IO/</loc>
+    <lastmod>2020-11-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2020-11-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -291,7 +305,7 @@
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/tags/Spring/</loc>
+    <loc>http://xinghuohan.cn/tags/Zookeeper/</loc>
     <lastmod>2020-11-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -312,21 +326,7 @@
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/tags/Zookeeper/</loc>
-    <lastmod>2020-11-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/tags/IO/</loc>
-    <lastmod>2020-11-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/tags/MQ/</loc>
+    <loc>http://xinghuohan.cn/tags/Spring/</loc>
     <lastmod>2020-11-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
