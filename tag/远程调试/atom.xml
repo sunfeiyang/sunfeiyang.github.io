@@ -26,6 +26,7 @@
     <category term="shiro" />
     <category term="Zookeeper" />
     <category term="IO" />
+    <category term="MQ" />
     <entry>
         <id>http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</id>
         <title>IDEA 远程调试</title>

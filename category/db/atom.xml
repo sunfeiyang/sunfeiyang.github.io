@@ -26,6 +26,7 @@
     <category term="shiro" />
     <category term="Zookeeper" />
     <category term="IO" />
+    <category term="MQ" />
     <entry>
         <id>http://xinghuohan.cn/2020/09/22/DB/MySQl-error/</id>
         <title>MySQL常见异常</title>
