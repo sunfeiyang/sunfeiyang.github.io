@@ -5,6 +5,17 @@
     "home_page_url": "http://xinghuohan.cn",
     "items": [
         {
+            "id": "http://xinghuohan.cn/2020/12/01/java/MQ/RabbitMQWokers/",
+            "url": "http://xinghuohan.cn/2020/12/01/java/MQ/RabbitMQWokers/",
+            "title": "RabbitMQ主要工作模式",
+            "date_published": "2020-12-01T09:15:01.800Z",
+            "content_html": "<p>MQ 全称 Message Queue（消息队列），是在消息的传输过程中保存消息的容器。多用于分布式系统之间进行通信。<a id=\"more\"></a></p>\n<p><img src=\"/img/image-20201201171613531.png\" alt=\"image-20201201171613531\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20201201171613531.png\" class=\"lozad post-image\"></p>\n<p><img src=\"/img/image-20201201171644352.png\" alt=\"image-20201201171644352\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20201201171644352.png\" class=\"lozad post-image\"></p>\n<p><img src=\"/img/image-20201201171711864.png\" alt=\"image-20201201171711864\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20201201171711864.png\" class=\"lozad post-image\"></p>\n<p><img src=\"/img/image-20201201171736965.png\" alt=\"image-20201201171736965\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20201201171736965.png\" class=\"lozad post-image\"></p>\n<p><img src=\"/img/image-20201201171811299.png\" alt=\"image-20201201171811299\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20201201171811299.png\" class=\"lozad post-image\"></p>\n",
+            "tags": [
+                "Java",
+                "MQ"
+            ]
+        },
+        {
             "id": "http://xinghuohan.cn/2020/11/28/java/MQ/RabbitMQBase/",
             "url": "http://xinghuohan.cn/2020/11/28/java/MQ/RabbitMQBase/",
             "title": "MQ入门和RabbitMQ基础",

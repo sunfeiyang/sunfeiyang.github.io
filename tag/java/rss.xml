@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Sat, 28 Nov 2020 14:35:30 +0800</pubDate>
-        <lastBuildDate>Sat, 28 Nov 2020 14:35:30 +0800</lastBuildDate>
+        <pubDate>Tue, 01 Dec 2020 17:15:01 +0800</pubDate>
+        <lastBuildDate>Tue, 01 Dec 2020 17:15:01 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -30,6 +30,21 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Spring</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/12/01/java/MQ/RabbitMQWokers/</guid>
+            <title>RabbitMQ主要工作模式</title>
+            <link>http://xinghuohan.cn/2020/12/01/java/MQ/RabbitMQWokers/</link>
+            <category>Java</category>
+            <category>MQ</category>
+            <pubDate>Tue, 01 Dec 2020 17:15:01 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;MQ 全称 Message Queue（消息队列），是在消息的传输过程中保存消息的容器。多用于分布式系统之间进行通信。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201201171613531.png&#34; alt=&#34;image-20201201171613531&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201201171613531.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201201171644352.png&#34; alt=&#34;image-20201201171644352&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201201171644352.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201201171711864.png&#34; alt=&#34;image-20201201171711864&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201201171711864.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201201171736965.png&#34; alt=&#34;image-20201201171736965&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201201171736965.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201201171811299.png&#34; alt=&#34;image-20201201171811299&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201201171811299.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/11/28/java/MQ/RabbitMQBase/</guid>
             <title>MQ入门和RabbitMQ基础</title>
