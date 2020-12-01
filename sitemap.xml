@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xinghuohan.cn/2020/11/25/java/IOModule/BIO-NIO-AIO/</loc>
+    
+    <lastmod>2020-12-01</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xinghuohan.cn/2020/12/01/java/MQ/RabbitMQWokers/</loc>
     
     <lastmod>2020-12-01</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://xinghuohan.cn/2020/09/08/java/javaDesignPatterns/</loc>
     
     <lastmod>2020-11-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/11/25/java/IOModule/BIO-NIO-AIO/</loc>
-    
-    <lastmod>2020-11-25</lastmod>
     
   </url>
   
@@ -378,13 +378,6 @@
   
   <url>
     <loc>http://xinghuohan.cn/categories/tools/</loc>
-    <lastmod>2020-12-01</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/categories/java/</loc>
     <lastmod>2020-12-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
