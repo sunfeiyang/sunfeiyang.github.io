@@ -30,6 +30,7 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Spring</category>
+        <category>JDK</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/11/18/java/WebSocket/springBootToWebSocket/</guid>
             <title>SpringBoot集成WebSocket通信</title>

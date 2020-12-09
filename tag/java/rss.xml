@@ -30,6 +30,7 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Spring</category>
+        <category>JDK</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/12/01/java/MQ/RabbitMQWokers/</guid>
             <title>RabbitMQ主要工作模式</title>

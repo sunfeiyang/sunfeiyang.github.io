@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;ubuntu&#34; tag</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2020-10-20T07:16:03.159Z</updated>
+    <category term="DB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="IDEA" />
+    <category term="Statistic" />
+    <category term="远程调试" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="CentOS" />
+    <category term="VMware" />
+    <category term="git" />
+    <category term="Java" />
+    <category term="MQ" />
+    <category term="tools" />
+    <category term="IO" />
+    <category term="设计模式" />
+    <category term="MyBatis" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <category term="Spring" />
+    <category term="JDK" />
+    <entry>
+        <id>http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/</id>
+        <title>Ubuntu截图工具</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/"/>
+        <content type="html">&lt;p&gt;Linux 系统 Ubuntu 截图工具推荐使用&lt;/p&gt;
+&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;h3 id=&#34;前言&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h3&gt;
+&lt;p&gt;Windows 上习惯了 QQ 的截图工具，本工具类似 QQ 截图工具功能，在习惯 QQ 截图的情况下可以很方便的使用。效果图：&lt;img src=&#34;/img/image-20201020151914799.png&#34; alt=&#34;image-20201020151914799&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020151914799.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;安装过程&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装过程&#34;&gt;#&lt;/a&gt; 安装过程&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install flameshot&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;启动命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#启动命令&#34;&gt;#&lt;/a&gt; 启动命令&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;flameshot gui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;设置快捷方式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设置快捷方式&#34;&gt;#&lt;/a&gt; 设置快捷方式&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201020152205127.png&#34; alt=&#34;image-20201020152205127&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152205127.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;本机操作系统版本为 Ubuntu 20.04, 不同版本可能设置快捷键位置名称有些不同，可以自行根据系统版本设置&lt;/p&gt;
+&lt;p&gt;具体设置&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201020152406303.png&#34; alt=&#34;image-20201020152406303&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152406303.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;软件设置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#软件设置&#34;&gt;#&lt;/a&gt; 软件设置&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201020152618648.png&#34; alt=&#34;image-20201020152618648&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152618648.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+</content>
+        <category term="Linux" />
+        <category term="Ubuntu" />
+        <updated>2020-10-20T07:16:03.159Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/</id>
+        <title>Ubuntu桌面被删除后</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/"/>
+        <content type="html">&lt;p&gt;Ubuntu 桌面被误删除，Ubuntu 在重启时会校验当前设置路径是否存在，不存在会默认设置一个路径，我 Ubuntu20.04 版本删除桌面文件夹被删除后，将桌面路径默认为根目录，导致桌面一下子出现了很多文件，为了恢复桌面的清爽，而进行如下操作。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;终端打开自己根目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进入隐藏文件夹 .config&lt;img src=&#34;/img/image-20201016154927244.png&#34; alt=&#34;image-20201016154927244&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016154927244.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+   &lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;-- 查看当前目录下所有文件&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ls -la&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;编辑文件 vim user-dirs.dirs &lt;img src=&#34;/img/image-20201016155127768.png&#34; alt=&#34;image-20201016155127768&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016155127768.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进行如下修改，此处修改的路径需要自己先行在对应路径创建文件夹，然后重启即可。&lt;img src=&#34;/img/image-20201016155252812.png&#34; alt=&#34;image-20201016155252812&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016155252812.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+        <category term="Ubuntu" />
+        <updated>2020-10-16T07:37:31.201Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</id>
+        <title>Linux常用命令</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/"/>
+        <content type="html">&lt;p&gt;Linux 系统常用基本命令&lt;/p&gt;
+&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;h3 id=&#34;ack-待查询字符串&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ack-待查询字符串&#34;&gt;#&lt;/a&gt; ack  [待查询字符串]&lt;/h3&gt;
+&lt;p&gt;搜索当前文件夹内所有文件中对应的字符（递归查询）&lt;/p&gt;
+&lt;h3 id=&#34;unar-待解压文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#unar-待解压文件&#34;&gt;#&lt;/a&gt; unar  [待解压文件]&lt;/h3&gt;
+&lt;p&gt;解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题&lt;/p&gt;
+</content>
+        <category term="Linux" />
+        <category term="Ubuntu" />
+        <category term="CentOS" />
+        <updated>2020-10-14T05:05:50.142Z</updated>
+    </entry>
+</feed>

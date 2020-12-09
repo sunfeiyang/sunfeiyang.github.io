@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;tools&#34; tag</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2020-10-13T06:16:00.959Z</updated>
+    <category term="DB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="IDEA" />
+    <category term="Statistic" />
+    <category term="远程调试" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="CentOS" />
+    <category term="VMware" />
+    <category term="git" />
+    <category term="Java" />
+    <category term="MQ" />
+    <category term="tools" />
+    <category term="IO" />
+    <category term="设计模式" />
+    <category term="MyBatis" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <category term="Spring" />
+    <category term="JDK" />
+    <entry>
+        <id>http://xinghuohan.cn/2020/10/13/tools/renameFileSuffix/</id>
+        <title>批量修改文件后缀名</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/10/13/tools/renameFileSuffix/"/>
+        <content type="html">&lt;p&gt;各个系统下批量修改文件后缀名（Windows,Ubuntu,CentOS） &lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;windows修改&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#windows修改&#34;&gt;#&lt;/a&gt; windows 修改&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在所需修改的文件目录下，新建 txt 文件．此处什么类型的文件都可以，主要就是新建一个文件，通过命令修改。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;打开新建的文件，填写&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;ren *.png *.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;说明：此处命令将当前文件所在目录下的 png 后缀修改为 txt&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;将新建文件后缀名修改为 bat，将文件放在要修改目录下双击即可完成。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;ubuntu修改&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ubuntu修改&#34;&gt;#&lt;/a&gt; Ubuntu 修改&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 当前目录下的后缀名为.c的文件更改为.h的文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 格式  :&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 原字符串：将文件名需要替换的字符串；&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 目标字符串：将文件名中含有的原字符替换成目标字符串；&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 文件：指定要改变文件名的文件列表。&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; rename &lt;span class=&#34;string&#34;&gt;&amp;#x27;命令参数/原串/替换后的串/&amp;#x27;&lt;/span&gt; 目录文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; s       表示替换&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;rename &amp;#x27;s/\.c/\.h/&amp;#x27;  ./*&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;centos修改&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#centos修改&#34;&gt;#&lt;/a&gt; CentOS 修改&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 把当前目录下的后缀名为.c的文件更改为.h的文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;rename .c .h *.c&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;shell脚本解决&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#shell脚本解决&#34;&gt;#&lt;/a&gt; Shell 脚本解决&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;!/bin/bash&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;find ./ -name *.c | while read i&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;do&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    echo &amp;quot;$i&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    mv $i.c $i.h&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;done &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;find-xargs-解决&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#find-xargs-解决&#34;&gt;#&lt;/a&gt; find xargs 解决&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 递归的更改，会更改当前目录下及其子目录下所有匹配文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;find ./ -name &amp;quot;*.c&amp;quot; | awk -F &amp;quot;.&amp;quot; &amp;#x27;&amp;#123;print $2&amp;#125;&amp;#x27; | xargs -i -t mv ./&amp;#123;&amp;#125;.c ./&amp;#123;&amp;#125;.h&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+</content>
+        <category term="tools" />
+        <updated>2020-10-13T06:16:00.959Z</updated>
+    </entry>
+</feed>
