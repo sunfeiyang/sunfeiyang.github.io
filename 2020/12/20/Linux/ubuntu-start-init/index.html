@@ -14,7 +14,7 @@
   <meta property="og:title" content="Ubuntu系统安装后做的系统优化">
   
   
-  <meta property="og:url" content="http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start/index.html">
+  <meta property="og:url" content="http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/index.html">
   
   
   <meta property="og:img" content="/img/logo.png">
@@ -249,7 +249,7 @@
 <p>正常安装后 wine 窗口为独立窗口，为了便于美观建议安装如下插件：</p>
 <p>Gnome Shell 插件：<a href="https://link.zhihu.com/?target=https%3A//extensions.gnome.org/extension/1031/topicons/">TopIcons Plus</a></p>
 <h4 id="4卸载方法"><a class="markdownIt-Anchor" href="#4卸载方法">#</a> 4. 卸载方法</h4>
-<pre class="highlight"><span class="line">uninstall.sh</span><br></pre>
+<pre class="highlight"><span class="line">uninstall.sh</span><br><span class="line"><span class="meta">#</span><span class="bash"> 卸载具体软件</span></span><br><span class="line">sudo apt remove deepin.com.qq.im</span><br></pre>
 <h4 id="5系统非中文语言环境时软件设置为中文"><a class="markdownIt-Anchor" href="#5系统非中文语言环境时软件设置为中文">#</a> 5. 系统非中文语言环境时软件设置为中文</h4>
 <p>修改 <code>/opt/deepinwine/tools/run.sh</code>  文件，将  <code>WINE_CMD </code> 那一行修改为  <code>WINE_CMD=&quot;LC_ALL=zh_CN.UTF-8 deepin-wine&quot;</code></p>
 <pre class="highlight"><span class="line">sudo vim /opt/deepinwine/tools/run.sh       #打开文件进行修改</span><br></pre>
@@ -322,7 +322,7 @@
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
     <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/about">sunfy</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start/">http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start/</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/">http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/</a></p>
     <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
   </div>
   
@@ -331,7 +331,7 @@
 <div class="nav">
   
   <div class="nav-item-prev">
-    <a href="/2020/12/20/tools/renameFileSuffix (copy)/" class="nav-link">
+    <a href="/2020/12/20/tools/boke-build/" class="nav-link">
       <i class="iconfont icon-left nav-prev-icon"></i>
       <div>
         <div class="nav-label">上一篇</div>
@@ -502,12 +502,12 @@
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-12-20</div>
-        <a href="/2020/12/20/tools/renameFileSuffix (copy)/"><div class="recent-posts-item-content">Hexo配合git hub个人博客环境搭建</div></a>
+        <a href="/2020/12/20/tools/boke-build/"><div class="recent-posts-item-content">Hexo配合git hub个人博客环境搭建</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-12-20</div>
-        <a href="/2020/12/20/Linux/ubuntu-start/"><div class="recent-posts-item-content">Ubuntu系统安装后做的系统优化</div></a>
+        <a href="/2020/12/20/Linux/ubuntu-start-init/"><div class="recent-posts-item-content">Ubuntu系统安装后做的系统优化</div></a>
       </div>
     
       <div class="recent-posts-item">

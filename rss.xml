@@ -32,9 +32,9 @@
         <category>Redis</category>
         <category>shiro</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/12/20/tools/renameFileSuffix%20(copy)/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/12/20/tools/boke-build/</guid>
             <title>Hexo配合git hub个人博客环境搭建</title>
-            <link>http://xinghuohan.cn/2020/12/20/tools/renameFileSuffix%20(copy)/</link>
+            <link>http://xinghuohan.cn/2020/12/20/tools/boke-build/</link>
             <category>tools</category>
             <pubDate>Sun, 20 Dec 2020 15:32:18 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;Hexo 配合 git hub 搭建个人博客 &lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
@@ -206,9 +206,9 @@ github: &lt;a href=&#34;https://github.com/hexojs/hexo&#34;&gt;https://github.co
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/</guid>
             <title>Ubuntu系统安装后做的系统优化</title>
-            <link>http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start/</link>
+            <link>http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/</link>
             <category>Ubuntu</category>
             <pubDate>Sun, 20 Dec 2020 13:40:09 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;Ubuntu 系统在安装后应该做的一些基本优化配置，包括了系统基本的软件安装以及桌面样式优化等相关内容。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
@@ -240,7 +240,7 @@ github: &lt;a href=&#34;https://github.com/hexojs/hexo&#34;&gt;https://github.co
 &lt;p&gt;正常安装后 wine 窗口为独立窗口，为了便于美观建议安装如下插件：&lt;/p&gt;
 &lt;p&gt;Gnome Shell 插件：&lt;a href=&#34;https://link.zhihu.com/?target=https%3A//extensions.gnome.org/extension/1031/topicons/&#34;&gt;TopIcons Plus&lt;/a&gt;&lt;/p&gt;
 &lt;h4 id=&#34;4卸载方法&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#4卸载方法&#34;&gt;#&lt;/a&gt; 4. 卸载方法&lt;/h4&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;uninstall.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;uninstall.sh&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 卸载具体软件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt remove deepin.com.qq.im&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;h4 id=&#34;5系统非中文语言环境时软件设置为中文&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#5系统非中文语言环境时软件设置为中文&#34;&gt;#&lt;/a&gt; 5. 系统非中文语言环境时软件设置为中文&lt;/h4&gt;
 &lt;p&gt;修改 &lt;code&gt;/opt/deepinwine/tools/run.sh&lt;/code&gt;  文件，将  &lt;code&gt;WINE_CMD &lt;/code&gt; 那一行修改为  &lt;code&gt;WINE_CMD=&amp;quot;LC_ALL=zh_CN.UTF-8 deepin-wine&amp;quot;&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo vim /opt/deepinwine/tools/run.sh       #打开文件进行修改&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
