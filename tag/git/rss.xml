@@ -18,9 +18,9 @@
         <category>Centos</category>
         <category>Ubuntu</category>
         <category>VMware</category>
-        <category>git</category>
         <category>Java</category>
         <category>设计模式</category>
+        <category>git</category>
         <category>tools</category>
         <category>IO</category>
         <category>MQ</category>
@@ -32,9 +32,9 @@
         <category>Redis</category>
         <category>shiro</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/04/15/git/gitBase/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/04/15/tools/gitBase/</guid>
             <title>Git基本操作</title>
-            <link>http://xinghuohan.cn/2020/04/15/git/gitBase/</link>
+            <link>http://xinghuohan.cn/2020/04/15/tools/gitBase/</link>
             <category>git</category>
             <pubDate>Wed, 15 Apr 2020 21:54:02 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;git 基本操作，本博客只是最基本操作说明和相应图解&lt;/p&gt;
