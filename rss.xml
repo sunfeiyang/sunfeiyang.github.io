@@ -5,32 +5,136 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Tue, 08 Dec 2020 14:13:12 +0800</pubDate>
-        <lastBuildDate>Tue, 08 Dec 2020 14:13:12 +0800</lastBuildDate>
+        <pubDate>Sun, 20 Dec 2020 13:40:09 +0800</pubDate>
+        <lastBuildDate>Sun, 20 Dec 2020 13:40:09 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
         <category>IDEA</category>
         <category>Statistic</category>
         <category>远程调试</category>
+        <category>CentOS</category>
+        <category>JDK</category>
         <category>Centos</category>
         <category>Ubuntu</category>
-        <category>CentOS</category>
         <category>VMware</category>
         <category>git</category>
         <category>Java</category>
-        <category>MQ</category>
+        <category>设计模式</category>
         <category>tools</category>
         <category>IO</category>
-        <category>设计模式</category>
+        <category>MQ</category>
         <category>MyBatis</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
         <category>Zookeeper</category>
+        <category>Spring</category>
         <category>Redis</category>
         <category>shiro</category>
-        <category>Spring</category>
-        <category>JDK</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start/</guid>
+            <title>Ubuntu系统安装后做的系统优化</title>
+            <link>http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start/</link>
+            <category>Ubuntu</category>
+            <pubDate>Sun, 20 Dec 2020 13:40:09 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Ubuntu 系统在安装后应该做的一些基本优化配置，包括了系统基本的软件安装以及桌面样式优化等相关内容。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;添加用户并赋予sudo权限&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#添加用户并赋予sudo权限&#34;&gt;#&lt;/a&gt; 添加用户并赋予 sudo 权限&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 1. 添加用户&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo adduser username &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 2. 添加sudo权限&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo usermod -G sudo username &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 3.添加root权限&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 如果需要让此用户有root权限，执行命令：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo vim /etc/sudoers&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 修改文件如下：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; User privilege specification&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;root ALL=(ALL) ALL&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;username ALL=(ALL) ALL&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 保存退出，username 用户就拥有了root权限。&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;开机挂载磁盘&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#开机挂载磁盘&#34;&gt;#&lt;/a&gt; 开机挂载磁盘&lt;/h3&gt;
+&lt;p&gt;开机挂在需要编辑的文件为： &lt;code&gt;/etc/fstab&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;非系统盘在刚开机时不会自动挂在非系统盘，想要在开机加载非系统盘需要做如下设置&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; /etc/fstab: static file system information.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; Use &lt;span class=&#34;string&#34;&gt;&amp;#x27;blkid&amp;#x27;&lt;/span&gt; to &lt;span class=&#34;built_in&#34;&gt;print&lt;/span&gt; the universally unique identifier &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; a&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; device; this may be used with UUID= as a more robust way to name devices&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; that works even &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; disks are added and removed. See fstab(5).&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; &amp;lt;file system&amp;gt; &amp;lt;mount point&amp;gt;   &amp;lt;&lt;span class=&#34;built_in&#34;&gt;type&lt;/span&gt;&amp;gt;  &amp;lt;options&amp;gt;       &amp;lt;dump&amp;gt;  &amp;lt;pass&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; / was on /dev/sdb2 during installation&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=c3a3e15c-a5c8-4ea2-a569-fc2804d1c723 /        ext4    errors=remount-ro 0       1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; /boot/efi was on /dev/sdb1 during installation&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=343E-5C25  /boot/efi       vfat    umask=0077      0       1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/swapfile                            none            swap    sw              0       0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;#####以上内容为文件中原有内容&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=f86192d0-f81b-474c-aa58-5e978ddb1307 /media/sunfy/ubuntu  ext4    defaults 0       0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=99651901-f991-41b7-af94-3974d192f6f8 /media/sunfy/project ext4    defaults 0       0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=0d159994-e3ba-40f6-9f2d-a8b477746826 /media/sunfy/Folder  ext4    defaults 0       0&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;文件内容填写内容来源&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#文件内容填写内容来源&#34;&gt;#&lt;/a&gt; 文件内容填写内容来源&lt;/h4&gt;
+&lt;h5 id=&#34;使用命令查看分区&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#使用命令查看分区&#34;&gt;#&lt;/a&gt; 使用命令查看分区&lt;/h5&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo fdisk -l  &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h5 id=&#34;查询挂载硬盘uuid&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查询挂载硬盘uuid&#34;&gt;#&lt;/a&gt; 查询挂载硬盘 &lt;code&gt;UUID&lt;/code&gt;&lt;/h5&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo blkid /dev/sda2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h5 id=&#34;其余字段解析&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#其余字段解析&#34;&gt;#&lt;/a&gt; 其余字段解析&lt;/h5&gt;
+&lt;p&gt;第一个数字：0 表示开机不检查磁盘，1 表示开机检查磁盘；&lt;br&gt;
+第二个数字：0 表示交换分区，1 代表启动分区（Linux），2 表示普通分区&lt;br&gt;
+我挂载的分区是在 Win 系统下创建的分区，磁盘格式为 ntfs&lt;/p&gt;
+&lt;h3 id=&#34;gnome插件安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#gnome插件安装&#34;&gt;#&lt;/a&gt; gnome 插件安装&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 官方网站 https://extensions.gnome.org/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 可以安装一些基本的有效的插件，更方便使用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get update&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get upgrade&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install chrome-gnome-shell &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 安装插件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 应用间切换动画&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Coverflow Alt-Tab&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; cpu监控查看&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cpufreq&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 系统dock高度自定义&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Dash to Dock &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 几个常用按键切换提示&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Lock Keys&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 系统基本内容监控，包括cpu、磁盘、系统、风扇、网速等&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Vitals&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;安装微信-qq等&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装微信-qq等&#34;&gt;#&lt;/a&gt; 安装微信、QQ 等&lt;/h3&gt;
+&lt;h4 id=&#34;1安装前准备&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1安装前准备&#34;&gt;#&lt;/a&gt; 1. 安装前准备&lt;/h4&gt;
+&lt;p&gt;安装必要的工具及 deepin-wine 依赖&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo apt install wget g++ git     #如已安装可自行跳过&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;2安装deepin-wine&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2安装deepin-wine&#34;&gt;#&lt;/a&gt; 2. 安装 deepin-wine&lt;/h4&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;git clone &amp;quot;https://gitee.com/wszqkzqk/deepin-wine-for-ubuntu.git&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cd deepin-wine                    #切换到下载目录&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo ./install.sh                 #执行安装&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;deepin-wine 容器安装完成，然后获取到 deb 安装直接双击安装即可。&lt;/p&gt;
+&lt;h4 id=&#34;3托盘悬浮&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3托盘悬浮&#34;&gt;#&lt;/a&gt; 3. 托盘悬浮&lt;/h4&gt;
+&lt;p&gt;正常安装后 wine 窗口为独立窗口，为了便于美观建议安装如下插件：&lt;/p&gt;
+&lt;p&gt;Gnome Shell 插件：&lt;a href=&#34;https://link.zhihu.com/?target=https%3A//extensions.gnome.org/extension/1031/topicons/&#34;&gt;TopIcons Plus&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;4卸载方法&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#4卸载方法&#34;&gt;#&lt;/a&gt; 4. 卸载方法&lt;/h4&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;uninstall.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;5系统非中文语言环境时软件设置为中文&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#5系统非中文语言环境时软件设置为中文&#34;&gt;#&lt;/a&gt; 5. 系统非中文语言环境时软件设置为中文&lt;/h4&gt;
+&lt;p&gt;修改 &lt;code&gt;/opt/deepinwine/tools/run.sh&lt;/code&gt;  文件，将  &lt;code&gt;WINE_CMD &lt;/code&gt; 那一行修改为  &lt;code&gt;WINE_CMD=&amp;quot;LC_ALL=zh_CN.UTF-8 deepin-wine&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo vim /opt/deepinwine/tools/run.sh       #打开文件进行修改&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;6软件更新&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#6软件更新&#34;&gt;#&lt;/a&gt; 6. 软件更新&lt;/h4&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;wget -qO- https://deepin-wine.i-m.dev/setup.sh | sudo sh&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install deepin.com.qq.office      #安装/更新TIM&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install deepin.com.qq.im          #安装/更新QQ&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install deepin.com.wechat         #安装/更新微信&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;7解决微信中文乱码&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#7解决微信中文乱码&#34;&gt;#&lt;/a&gt; 7. 解决微信中文乱码&lt;/h4&gt;
+&lt;p&gt;1. 下载字体包 &lt;code&gt;msyh.ttc&lt;/code&gt; ：&lt;br&gt;
+&lt;a href=&#34;https://www.lanzous.com/i5wivmd&#34;&gt;链接&lt;/a&gt;&lt;br&gt;
+下载后解压，&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;cp msyh.ttc ~/.deepinwine/Deepin-WeChat/drive_c/windows/Fonts&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;2. 修改注册序列表&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;gedit ~/.deepinwine/Deepin-WeChat/system.reg&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;修改 &lt;code&gt;MS Shell Dlg&lt;/code&gt;  和 &lt;code&gt;MS Shell Dlg2&lt;/code&gt;  的值如下&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;MS Shell Dlg&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;MS Shell Dlg 2&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;3. 注册字体&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;gedit msyh_config.reg&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;将一下内容添加在 &lt;code&gt;msyh_config.reg&lt;/code&gt;  中&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;REGEDIT4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontLink\SystemLink]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Lucida Sans Unicode&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Microsoft Sans Serif&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;MS Sans Serif&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Tahoma&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Tahoma Bold&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyhbd.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Arial&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Arial Black&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12345678910&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;4. 注册&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;deepin-wine regedit msyh_config.reg&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;然后在重启微信就成功了。目前阶段没有出现问题。后续有问题进行更新。&lt;/p&gt;
+&lt;h3 id=&#34;安装vmware&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装vmware&#34;&gt;#&lt;/a&gt; 安装 VMware&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 查看安装的虚拟机&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;vmware-installer -l&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 安装&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt update &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt install gcc&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt install build-essential&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo bash  VMware-Workstation-Full-15.5.2-15785246.x86_64.bundle&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 卸载&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;vmware-installer -u vmware-workstation。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;激活密钥&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware永久激活密钥&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UG5J2-0ME12-M89WY-NPWXX-WQH88&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;GA590-86Y05-4806Y-X4PEE-ZV8E0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;YA18K-0WY8P-H85DY-L4NZG-X7RAD&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UA5DR-2ZD4H-089FY-6YQ5T-YPRX6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;B806Y-86Y05-GA590-X4PEE-ZV8E0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ZF582-0NW5N-H8D2P-0XZEE-Z22VA&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware Workstation Pro 15 激活许可证&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UY758-0RXEQ-M81WP-8ZM7Z-Y3HDA&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VF750-4MX5Q-488DQ-9WZE9-ZY2D6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UU54R-FVD91-488PP-7NNGC-ZFAX6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;YC74H-FGF92-081VZ-R5QNG-P6RY4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;YC34H-6WWDK-085MQ-JYPNX-NZRA2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware Workstation Pro 14 激活许可证&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware Workstation Pro 12 激活许可证&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5A02H-AU243-TZJ49-GTC7K-3C61N&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VF5XA-FNDDJ-085GZ-4NXZ9-N20E6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UC5MR-8NE16-H81WY-R7QGV-QG2D8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ZG1WH-ATY96-H80QP-X7PEX-Y30V4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;AA3E0-0VDE1-0893Z-KGZ59-QGAVF&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware Workstation Pro 10 激活许可证&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1Z0G9-67285-FZG78-ZL3Q2-234JG&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4C4EK-89KDL-5ZFP9-1LA5P-2A0J0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;HY086-4T01N-CZ3U0-CV0QM-13DNU&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware Workstation Pro 16 许可证密钥，批量永久激活！ &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ZF3R0-FHED2-M80TY-8QYGC-NPKYF &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;YF390-0HF8P-M81RQ-2DXQE-M2UT6 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ZF71R-DMX85-08DQY-8YMNC-PPHV8 &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;安装typora&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装typora&#34;&gt;#&lt;/a&gt; 安装 Typora&lt;/h3&gt;
+&lt;h4 id=&#34;步骤&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#步骤&#34;&gt;#&lt;/a&gt; 步骤：&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;设置密钥&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;或&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;添加 Typora 的远程仓库&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;sudo add-apt-repository &#39;deb https://typora.io/linux ./&#39;&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;更新&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;sudo apt-get update&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;安装&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;sudo apt-get install typora&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;应用程序列表与默认应用程序&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#应用程序列表与默认应用程序&#34;&gt;#&lt;/a&gt; 应用程序列表与默认应用程序&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 应用程序列表&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/usr/local/aaplications&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 出现openwith清单中，添加参数后即可在应用程序列表中就能看到对应的应用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Exec一行中添加 %F&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;中文输入法安装步骤&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#中文输入法安装步骤&#34;&gt;#&lt;/a&gt; 中文输入法安装步骤&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 安装fcitx-googlepinyin（谷歌输入法）&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install fcitx-googlepinyin&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;设置 language support，打开后如果中文环境会提示安装对应环境的语言，点击安装&lt;/p&gt;
+&lt;p&gt;安装好后就能进入语言支持界面，最下面一行 Keyboard input method system，默认是 &lt;code&gt;iBus&lt;/code&gt; ，点击下拉单切换到 fcitx（系统初始没有 &lt;code&gt;fctix&lt;/code&gt; ，安装 &lt;code&gt;fcitx-googlepinyin&lt;/code&gt;  的时候会装好 &lt;code&gt;fcitx&lt;/code&gt; ）。然后重启电脑。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201220151823562.png&#34; alt=&#34;image-20201220151823562&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201220151823562.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;重启之后在右上角状态栏点击键盘图标，在下拉单里选择倒数第三个 Configure 进入配置界面。&lt;/p&gt;
+&lt;p&gt;输入 pinyin 搜索到系统现有的拼音输入法。选择 Google Pinyin 并点击 OK 确认。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201220151854087.png&#34; alt=&#34;image-20201220151854087&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201220151854087.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/12/08/Linux/Centos-JDK/</guid>
             <title>CentOS安装JDK的几种方法及配置环境变量</title>
@@ -1066,8 +1170,8 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH&lt;/p&gt;
             <title>Linux常用命令</title>
             <link>http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</link>
             <category>Linux</category>
-            <category>Ubuntu</category>
             <category>CentOS</category>
+            <category>Ubuntu</category>
             <pubDate>Wed, 14 Oct 2020 13:05:50 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;Linux 系统常用基本命令&lt;/p&gt;
 &lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
@@ -1142,6 +1246,172 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH&lt;/p&gt;
 &lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;EventTestMain&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;(String[] args)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        EventSourceImpl eventSource = &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; EventSourceImpl();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        ListenerA a = &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; ListenerA();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        ListenerB b = &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; ListenerB();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        eventSource.addListener(a);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        eventSource.addListener(b);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        eventSource.notifyEvent(&lt;span class=&#34;string&#34;&gt;&amp;quot;发布事件A&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        eventSource.removeListener(b);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        eventSource.notifyEvent(&lt;span class=&#34;string&#34;&gt;&amp;quot;发布事件B&amp;quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;spring中的使用&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#spring中的使用&#34;&gt;#&lt;/a&gt; Spring 中的使用&lt;/h3&gt;
 &lt;p&gt;持续更新…&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/22/DB/MySQl-error/</guid>
+            <title>MySQL常见异常</title>
+            <link>http://xinghuohan.cn/2020/09/22/DB/MySQl-error/</link>
+            <category>DB</category>
+            <category>MySQL</category>
+            <category>Linux</category>
+            <pubDate>Tue, 22 Sep 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;mySQL 数据库在使用过程中遇到的一些问题记录&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;linux登录mysql报错error-2002-hy000-cant-connect-to-local-mysql-server-through-socket-varlibmysqlsock&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#linux登录mysql报错error-2002-hy000-cant-connect-to-local-mysql-server-through-socket-varlibmysqlsock&#34;&gt;#&lt;/a&gt; linux，登录 mysql 报错 ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/var/lib/mysql.sock’&lt;/h3&gt;
+&lt;p&gt;首先检查 /etc 下的是否有 my.cnf 文件，这是启动时基本配置文件&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;[mysqld]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;log-bin&amp;#x3D;mysql-bin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;server-id&amp;#x3D;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Remove leading # and set to the amount of RAM for the most important data&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;innodb_buffer_pool_size &amp;#x3D; 8M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Remove leading # to turn on a very important data integrity option: logging&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# changes to the binary log between backups.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# log_bin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Remove leading # to set options mainly useful for reporting servers.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# The server defaults are faster for transactions and fast SELECTs.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Adjust sizes as needed, experiment to find the optimal values.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;join_buffer_size &amp;#x3D; 8M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sort_buffer_size &amp;#x3D; 2M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;read_rnd_buffer_size &amp;#x3D; 2M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;datadir&amp;#x3D;&amp;#x2F;var&amp;#x2F;lib&amp;#x2F;mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;socket&amp;#x3D;&amp;#x2F;var&amp;#x2F;lib&amp;#x2F;mysql&amp;#x2F;mysql.sock&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;log-bin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;max_binlog_size&amp;#x3D;50M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;expire_logs_days&amp;#x3D;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# 关闭所有网络链接,开启后只能使用mysql客户端链接&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#skip-networking&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#default-time-zone &amp;#x3D; &amp;#39;+8:00&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;performance_schema_max_table_instances&amp;#x3D;200&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;table_definition_cache&amp;#x3D;200&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;table_open_cache&amp;#x3D;128&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;bind-address &amp;#x3D; 0.0.0.0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#skip-grant-tables&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Disabling symbolic-links is recommended to prevent assorted security risks&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;symbolic-links&amp;#x3D;0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Recommended in standard MySQL setup&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sql_mode&amp;#x3D;NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysqld_safe]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;log-error&amp;#x3D;&amp;#x2F;var&amp;#x2F;log&amp;#x2F;mysqld.log&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;pid-file&amp;#x3D;&amp;#x2F;var&amp;#x2F;run&amp;#x2F;mysqld&amp;#x2F;mysqld.pid&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#配置开启binlog&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;log‐bin&amp;#x3D;&amp;#x2F;usr&amp;#x2F;local&amp;#x2F;software&amp;#x2F;mysql&amp;#x2F;binlog&amp;#x2F;mysql‐bin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;##注意5.7以及更高版本需要配置本项:server‐id&amp;#x3D;123454(自定义,保证唯一性);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;###binlog格式,有3种statement,row,mixed&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;binlog‐format&amp;#x3D;ROW&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;###表示每1次执行写入就与硬盘同步,会影响性能,为0时表示,事务提交时mysql不做刷盘操作,由系统决定&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sync‐binlog&amp;#x3D;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;关闭进程指令：ps aux |grep ‘mysql*’&lt;br&gt;
+关闭 mysql 的所有进程&lt;/p&gt;
+&lt;p&gt;启动 mysql: systemctl start mysqld&lt;/p&gt;
+&lt;h3 id=&#34;error-you-have-enabled-the-binary-log-but-you-havent-provided-the-mandatory-server-id&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#error-you-have-enabled-the-binary-log-but-you-havent-provided-the-mandatory-server-id&#34;&gt;#&lt;/a&gt; [ERROR] You have enabled the binary log, but you haven’t provided the mandatory server-id.&lt;/h3&gt;
+&lt;p&gt;报错的原因：&lt;/p&gt;
+&lt;p&gt;在设置 bin log 日志的时候，没有设置 server_id 参数。server-id 参数用于在复制中，为主库和备库提供一个独立的 ID，以区分主库和备库；开启二进制文件的时候，需要设置这个参数。&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;[root@mysql bin]# vi &amp;#x2F;etc&amp;#x2F;my.cnf&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#add&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysqld]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;log-bin&amp;#x3D;mysql-bin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;server-id&amp;#x3D;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;access-denied-for-user-root-to-database-xxxx&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#access-denied-for-user-root-to-database-xxxx&#34;&gt;#&lt;/a&gt; Access denied for user ‘root’@’%’ to database ‘XXXX’&lt;/h3&gt;
+&lt;p&gt;解决方法&lt;br&gt;
+最后发现是 user 表中’root’@’%’没有 grant 的权限&lt;br&gt;
+可以用如下命令查看：&lt;/p&gt;
+&lt;p&gt;可以看到现在这两个权限都是 N&lt;br&gt;
+ 然后我们更新它们为 Y，然后重启 mysql&lt;/p&gt;
+&lt;p&gt;update mysql.user set Grant_priv=‘Y’,Super_priv=‘Y’ where user = ‘root’ and host = ‘%’;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/</guid>
+            <title>IDEA Statistic插件使用,代码统计</title>
+            <link>http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/</link>
+            <category>IDEA</category>
+            <category>Statistic</category>
+            <pubDate>Mon, 14 Sep 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;IDEA 插件 Statistic 使用，主要代码行数，将代码数量统计并直观展示出来.&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;1插件安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1插件安装&#34;&gt;#&lt;/a&gt; 1. 插件安装&lt;/h3&gt;
+&lt;p&gt;IDEA–&amp;gt;file–&amp;gt;settings–&amp;gt;plugins–&amp;gt; 搜索插件 (Statistic)&lt;/p&gt;
+&lt;img src=&#34;/img/image-20200914103816130.png&#34; alt=&#34;image-20200914103816130&#34; style=&#34;zoom:67%;&#34; / srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20200914103816130.png&#34; class=&#34;lozad post-image&#34;&gt;
+&lt;p&gt;我这里已经安装，还未重启 IDE, 点击 Install 安装插件，安装完成后根据提重启 IDE&lt;/p&gt;
+&lt;h3 id=&#34;2插件使用&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2插件使用&#34;&gt;#&lt;/a&gt; 2. 插件使用&lt;/h3&gt;
+&lt;p&gt;重启 IDE 后，在屏幕下方会有一个 statistic 按钮，点击后可以看到如下页面:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20200916110627597.png&#34; alt=&#34;image-20200916110627597&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20200916110627597.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;单击 refresh 按钮后可以查看实时代码统计情况:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20200916110737414.png&#34; alt=&#34;image-20200916110737414&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20200916110737414.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20200916111558837.png&#34; alt=&#34;image-20200916111558837&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20200916111558837.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/09/Linux/Centos-staticIP/</guid>
+            <title>Centos设置静态ip</title>
+            <link>http://xinghuohan.cn/2020/09/09/Linux/Centos-staticIP/</link>
+            <category>Linux</category>
+            <category>Centos</category>
+            <pubDate>Wed, 09 Sep 2020 22:23:46 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Centos 设置静态 IP&lt;/p&gt;
+&lt;p&gt;Vmware workstation 中的 centos ip 地址会在没重启的情况下发生变化。 虚拟机的 IP 租约过期后，IP 就会自动重新分配，从而造成 IP 地址自行变化。&lt;/p&gt;
+&lt;p&gt;为了应用方便，需要设置 centos 的固定 ip。 版本 centos7&lt;/p&gt;
+&lt;p&gt;设置步骤 1.ifconfig 找到当前的 centos 的 ip&lt;/p&gt;
+&lt;p&gt;2. 进入文件 vim /etc/sysconfig/network-scripts/ifcfg-ens33&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;TYPE=Ethernet&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;PROXY_METHOD=none&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;BROWSER_ONLY=no&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;BOOTPROTO=static&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;DEFROUTE=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV4_FAILURE_FATAL=no&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6INIT=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_AUTOCONF=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_DEFROUTE=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_FAILURE_FATAL=no&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPV6_ADDR_GEN_MODE=stable-privacy&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;NAME=ens33&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=529b576d-4e86-4dd1-9446-43ab40dbfd27&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;DEVICE=ens33&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ONBOOT=yes&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;IPADDR=192.168.88.88&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;NETMASK=255.255.255.0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;GATEWAY=192.168.88.2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;DNS1=192.168.88.2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;3. 重启网络服务 使用命令 systemctl restart network.service&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;--关闭网络管理器NetwokManager&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl stop NetworkManager&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl disable NetworkManager&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service network restart&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</guid>
+            <title>IDEA 远程调试</title>
+            <link>http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</link>
+            <category>IDEA</category>
+            <category>远程调试</category>
+            <pubDate>Tue, 08 Sep 2020 22:55:59 +0800</pubDate>
+            <description><![CDATA[ &lt;h3 id=&#34;本机调试&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#本机调试&#34;&gt;#&lt;/a&gt; &lt;strong&gt;本机调试&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;此处不做过多解释，相信考虑远程 debug 调试的，肯定对本机调试是有一定了解的。说下自己在本机调试 spring Boot 项目时遇到的项目长时间卡顿，这个时候可能是因为本机环境中 debug 断点太多，去除一下后即可正常启动；&lt;/p&gt;
+&lt;h3 id=&#34;远程调试&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#远程调试&#34;&gt;#&lt;/a&gt; &lt;strong&gt;远程调试&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;远程调试一个大前提就是我们需要保证远程代码和本地代码一致；&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;此处部署为 war 包项目&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在远程环境中要开启允许远程 debug 调试&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;windows 环境–》bin 目录–》 &lt;code&gt;startup.bat&lt;/code&gt;  增加设置 (此处设置 debug 端口为 address=8081，可以根据实际条件自行设置)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;SET CATALINA_OPTS&amp;#x3D;-server -Xdebug -Xnoagent -Djava.compiler&amp;#x3D;NONE -Xrunjdwp:transport&amp;#x3D;dt_socket,server&amp;#x3D;y,suspend&amp;#x3D;n,address&amp;#x3D;8081&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;Linux 环境中–》 &lt;code&gt;catalina.sh&lt;/code&gt;  文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;CATALINA_OPTS&amp;#x3D;&amp;quot;-Xdebug -Xrunjdwp:transport&amp;#x3D;dt_socket,suspend&amp;#x3D;n,server&amp;#x3D;y,address&amp;#x3D;8081&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;IDEA 中创建 debug 调试&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;全部设置完成后，重启项目&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809175100811.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809175100811.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;然后 idea 中 debug 启动刚才新建的服务，在本机代码中打断点，发起相应请求即可进入 debug 模式；&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;若项目为 jar 项目应该使用&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809175123597.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809175123597.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/08/java/javaDesignPatterns/</guid>
+            <title>Java设计模式</title>
+            <link>http://xinghuohan.cn/2020/09/08/java/javaDesignPatterns/</link>
+            <category>Java</category>
+            <category>设计模式</category>
+            <pubDate>Tue, 08 Sep 2020 22:44:44 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;java 设计模式：设计模式是被大多数人反复使用，在软件开发过程中所面临的一般问题的解决方案。是大多数人员经过较长时间所总结出来的的一套代码设计经验的总结；&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;什么是设计模式（ &lt;code&gt;Desin Pattern&lt;/code&gt; ）&lt;/p&gt;
+&lt;p&gt;设计模式是被大多数人反复使用，在软件开发过程中所面临的一般问题的解决方案。是大多数人员经过较长时间所总结出来的的一套代码设计经验的总结；&lt;/p&gt;
+&lt;p&gt;为什么使用设计模式？&lt;/p&gt;
+&lt;p&gt;使用设计模式可以提高代码的重用性，一定程度保证代码的可靠性，也可以帮助阅读代码的人员快速理解；&lt;/p&gt;
+&lt;p&gt;设计模式种类&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;创建型模式（5）：工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式。&lt;/li&gt;
+&lt;li&gt;结构型模式（7）：适配器模式、装饰器模式、代理模式、外观模式、桥接模式、组合模式、享元模式。&lt;/li&gt;
+&lt;li&gt;行为型模式（11）：策略模式、模板方法模式、观察者模式、迭代子模式、责任链模式、命令模式、备忘录模式、状态模式、访问者模式、中介者模式、解释器模式。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;设计模式遵循的原则&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设计模式遵循的原则&#34;&gt;#&lt;/a&gt; 设计模式遵循的原则&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;开闭原则（Open Close Principle）：对扩展开放，对修改关闭。&lt;/li&gt;
+&lt;li&gt;里氏代换原则（Liskov Substitution Principle）：只有当衍生类可以替换掉基类，软件单位的功能不受影响时，基类才能真正被复用，而衍生类也能够在基类的基础上增加新的行为。&lt;/li&gt;
+&lt;li&gt;依赖倒转原则（Dependence Inversion Principle）：这个是开闭原则的基础，对接口编程，依赖于抽象而不依赖于具体。&lt;/li&gt;
+&lt;li&gt;接口隔离原则（Interface Segregation Principle）：使用多个隔离的接口来降低耦合度。&lt;/li&gt;
+&lt;li&gt;迪米特法则（最少知道法则）（Demeter Principle）：一个实体应当尽量少的与其他实体之间发生相互作用，使得系统功能模块相对独立。&lt;/li&gt;
+&lt;li&gt;合成复用原则（Composite Reuse Principle）：原则是尽量使用合成 / 聚合的方式，而不是使用继承。继承实际上破坏了类的封装性，超类的方法可能会被子类修改，&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;单例模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#单例模式&#34;&gt;#&lt;/a&gt; 单例模式&lt;/h2&gt;
+&lt;p&gt;单例模式主要适用于在整个系统中，我们只需要一个（有且仅有一个），若存在多个，可能会出现一些不应有的状况，比如资源占用过多、与预期值不同等后果。主要用在配置文件、线程池、缓存、日志对象等；&lt;/p&gt;
+&lt;p&gt;分类：&lt;/p&gt;
+&lt;h3 id=&#34;饿汉模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#饿汉模式&#34;&gt;#&lt;/a&gt; 饿汉模式&lt;/h3&gt;
+&lt;p&gt;主要特点是，在类文件加载的时候就会创建，不论是否有无方法对其进行调用。&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;package com.sunfy.singleton;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#x2F;*&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; * static 静态的成员，是类所有，这样的对象会在类加载时就会创建类的唯一一个实例（饿汉模式）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; *&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;public class Singleton &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;1.将构造方法私有化，不允许外部直接创建对象&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private Singleton()&amp;#123;        &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;2.创建类的唯一实例，使用private(控制访问，安全考虑) static修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private static Singleton instance&amp;#x3D;new Singleton();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;3.提供一个用于获取实例的方法，使用public static（改为类所有，可以直接点）修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    public static Singleton getInstance()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        return instance;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;懒汉模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#懒汉模式&#34;&gt;#&lt;/a&gt; 懒汉模式&lt;/h3&gt;
+&lt;p&gt;主要特点是：加载类文件时不会进行创建，只有当调用该对象时才会创建，而且只有第一次调用时会创建。&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;package com.sunfy.singleton;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#x2F;*&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; * 懒汉模式&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; *&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;public class Singleton2 &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;1.将构造方式私有化，不允许外边直接创建对象&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private Singleton2()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;2.声明类的唯一实例，使用private static修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;  只是声明，没有直接进行创建，当第一次获取的时候会创建&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    private static Singleton2 instance;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#x2F;&amp;#x2F;3.提供一个用于获取实例的方法，使用public static修饰&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    public static Singleton2 getInstance()&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        if(instance&amp;#x3D;&amp;#x3D;null)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            instance&amp;#x3D;new Singleton2();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        return instance;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;二者区别&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#二者区别&#34;&gt;#&lt;/a&gt; 二者区别&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;饿汉模式的特点是加载类时比较慢，但运行时获取对象的速度比较快，线程安全&lt;/li&gt;
+&lt;li&gt;懒汉模式的特点是加载类时比较快，但运行时获取对象的速度比较慢，线程不安全&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;代理模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#代理模式&#34;&gt;#&lt;/a&gt; 代理模式&lt;/h2&gt;
+&lt;p&gt;— 未完待续…&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/04/15/git/gitBase/</guid>
+            <title>Git基本操作</title>
+            <link>http://xinghuohan.cn/2020/04/15/git/gitBase/</link>
+            <category>git</category>
+            <pubDate>Wed, 15 Apr 2020 21:54:02 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;git 基本操作，本博客只是最基本操作说明和相应图解&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/git/50.png&#34; alt=&#34;image-20200908222733250&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/git/50.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Git 下载&lt;/p&gt;
+&lt;p&gt;git 下载安装地址：&lt;a href=&#34;https://git-scm.com/downloads&#34;&gt;https://git-scm.com/downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;安装过程基本属于一路 next，这里不做介绍，主要介绍 git 的操作命令&lt;/p&gt;
+&lt;p&gt;Git 工作流程&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809111904278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809111904278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;git 基本命令&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 将当前目录初始化为一个git仓库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git init&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 在当前目录下创建&lt;span class=&#34;built_in&#34;&gt;test&lt;/span&gt;目录，并初始化为一个git仓库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git init test&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 查看本地仓库中文件状态&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git status&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 将本地文件添加至暂存区&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 当前目录下的所有文件全部添加&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git add -A&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 只将当前选中的文件添加至暂存区&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git add [filename]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 将暂存区文件提交至本地仓库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git commit -m &amp;quot;提交备注&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 将本地仓库关联至远程仓库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git remote add orgin https://github.com/xxxxx/xxx&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 提交本地仓库至远程仓库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git push origin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 此时由于本地仓库没有找到上游仓库位置，git会提示设置上游仓库命令&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git push --set-upstream origin master&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;##################################################&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 至此，git仓库就已经提交完成，在远程仓库中可以看到和本地仓库同步的内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 当再次修改本地仓库内容后，可以直接使用 &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git add -A;git commit -m &amp;quot;提交备注&amp;quot;;git push;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 用以上命令进行代码提交同步&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;##################################################&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 上图中右侧位置是已经存在远程仓库，在本地并没有创建仓库而是直接使用以下命令获取远程仓库内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; git clone [远程仓库地址]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt; #&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 然后就可以通过上述的git基本命令就行git操作&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
  ]]></description>
         </item>
     </channel>

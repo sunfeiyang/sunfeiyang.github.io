@@ -13,24 +13,24 @@
         <category>IDEA</category>
         <category>Statistic</category>
         <category>远程调试</category>
+        <category>CentOS</category>
+        <category>JDK</category>
         <category>Centos</category>
         <category>Ubuntu</category>
-        <category>CentOS</category>
         <category>VMware</category>
         <category>git</category>
         <category>Java</category>
-        <category>MQ</category>
+        <category>设计模式</category>
         <category>tools</category>
         <category>IO</category>
-        <category>设计模式</category>
+        <category>MQ</category>
         <category>MyBatis</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
         <category>Zookeeper</category>
+        <category>Spring</category>
         <category>Redis</category>
         <category>shiro</category>
-        <category>Spring</category>
-        <category>JDK</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/12/08/Linux/Centos-JDK/</guid>
             <title>CentOS安装JDK的几种方法及配置环境变量</title>
@@ -112,8 +112,8 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH&lt;/p&gt;
             <title>Linux常用命令</title>
             <link>http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</link>
             <category>Linux</category>
-            <category>Ubuntu</category>
             <category>CentOS</category>
+            <category>Ubuntu</category>
             <pubDate>Wed, 14 Oct 2020 13:05:50 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;Linux 系统常用基本命令&lt;/p&gt;
 &lt;a id=&#34;more&#34;&gt;&lt;/a&gt;

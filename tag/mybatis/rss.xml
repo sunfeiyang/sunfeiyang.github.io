@@ -13,24 +13,24 @@
         <category>IDEA</category>
         <category>Statistic</category>
         <category>远程调试</category>
+        <category>CentOS</category>
+        <category>JDK</category>
         <category>Centos</category>
         <category>Ubuntu</category>
-        <category>CentOS</category>
         <category>VMware</category>
         <category>git</category>
         <category>Java</category>
-        <category>MQ</category>
+        <category>设计模式</category>
         <category>tools</category>
         <category>IO</category>
-        <category>设计模式</category>
+        <category>MQ</category>
         <category>MyBatis</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
         <category>Zookeeper</category>
+        <category>Spring</category>
         <category>Redis</category>
         <category>shiro</category>
-        <category>Spring</category>
-        <category>JDK</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/10/22/java/MyBatis/MyBatisResourceBuild/</guid>
             <title>MyBatis源码编译环境构建</title>
