@@ -135,6 +135,8 @@
 &lt;p&gt;&lt;img src=&#34;/img/image-20201220151854087.png&#34; alt=&#34;image-20201220151854087&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201220151854087.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;修改npm全局安装包的位置解决eacces权限拒绝问题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#修改npm全局安装包的位置解决eacces权限拒绝问题&#34;&gt;#&lt;/a&gt; 修改 npm 全局安装包的位置，解决 EACCES 权限拒绝问题&lt;/h3&gt;
 &lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 查看当前npm的默认位置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;npm config ls&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 修改npm使用新的全局安装路径&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;npm config set prefix &amp;#x27;your url&amp;#x27;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;redis桌面可视化访问工具&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#redis桌面可视化访问工具&#34;&gt;#&lt;/a&gt; redis 桌面可视化访问工具&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 参考工具&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;https://snapcraft.io/redis-desktop-manager&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
  ]]></description>
         </item>
         <item>
