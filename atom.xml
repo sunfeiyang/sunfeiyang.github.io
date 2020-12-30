@@ -6,7 +6,7 @@
   <link href="http://xinghuohan.cn/atom.xml" rel="self"/>
   
   <link href="http://xinghuohan.cn/"/>
-  <updated>2020-12-20T07:38:39.969Z</updated>
+  <updated>2020-12-30T02:41:25.210Z</updated>
   <id>http://xinghuohan.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一个项目push到多个远程Git仓库</title>
+    <link href="http://xinghuohan.cn/2020/12/30/tools/gitPush/"/>
+    <id>http://xinghuohan.cn/2020/12/30/tools/gitPush/</id>
+    <published>2020-12-30T02:31:18.643Z</published>
+    <updated>2020-12-30T02:41:25.210Z</updated>
+    
+    <content type="html"><![CDATA[<p>git 项目同时提交至多个远程仓库<a id="more"></a></p><p>我创建了一个项目，然后通过下面的命令  <code>push</code>  到了 Git Hub 上。如何再将这个项目  <code>push</code>  到其他远程仓库呢？</p><pre class="highlight"><span class="line">git remote add github https:&#x2F;&#x2F;github.com&#x2F;zxbetter&#x2F;test.git</span><br><span class="line">git push -u github master</span><br></pre><h4 id="方法一-使用-git-remote-add-命令"><a class="markdownIt-Anchor" href="#方法一-使用-git-remote-add-命令">#</a> 方法一：使用  <code>git remote add</code>  命令</h4><p>1.1# 如下命令查看远程仓库的情况，可以看到只有一个叫  <code>github</code>  的远程仓库。</p><pre class="highlight"><span class="line">git remote</span><br><span class="line">github</span><br><span class="line"></span><br><span class="line">git remote -v</span><br><span class="line">github  https:&#x2F;&#x2F;github.com&#x2F;zxbetter&#x2F;test.git (fetch)</span><br><span class="line">github  https:&#x2F;&#x2F;github.com&#x2F;zxbetter&#x2F;test.git (push)</span><br></pre><p>1.2# 使用如下命令再添加一个远程仓库（这里以码云为例）</p><pre class="highlight"><span class="line">git remote add oschina https:&#x2F;&#x2F;git.oschina.net&#x2F;zxbetter&#x2F;test.git</span><br></pre><p>1.3# 再次查看远程仓库的情况，可以看到已经有两个远程仓库了。然后再使用相应的命令  <code>push</code>  到对应的仓库就行了。<em>这种方法的缺点是每次要  <code>push</code>  两次。</em></p><pre class="highlight"><span class="line">git remote</span><br><span class="line">github</span><br><span class="line">oschina</span><br><span class="line"></span><br><span class="line">git remote -v</span><br><span class="line">github  https:&#x2F;&#x2F;github.com&#x2F;zxbetter&#x2F;test.git (fetch)</span><br><span class="line">github  https:&#x2F;&#x2F;github.com&#x2F;zxbetter&#x2F;test.git (push)</span><br><span class="line">oschina https:&#x2F;&#x2F;git.oschina.net&#x2F;zxbetter&#x2F;test.git (fetch)</span><br><span class="line">oschina https:&#x2F;&#x2F;git.oschina.net&#x2F;zxbetter&#x2F;test.git (push)</span><br></pre><h4 id="方法二-使用-git-remote-set-url-命令"><a class="markdownIt-Anchor" href="#方法二-使用-git-remote-set-url-命令">#</a> 方法二：使用  <code>git remote set-url</code>  命令</h4><p>2.1# 删除方法一的  <code>oschina</code>  远程仓库。</p><pre class="highlight"><span class="line">git remote rm oschina</span><br></pre><p>2.2# 使用如下命令添加远程仓库。</p><pre class="highlight"><span class="line">git remote set-url --add github https:&#x2F;&#x2F;git.oschina.net&#x2F;zxbetter&#x2F;test.git</span><br></pre><p>2.3# 查看远程仓库情况。可以看到  <code>github</code>  远程仓库有两个  <code>push</code>  地址。<em>这种方法的好处是每次只需要  <code>push</code>  一次就行了。</em></p><pre class="highlight"><span class="line">git remote -v</span><br><span class="line">github  https:&#x2F;&#x2F;github.com&#x2F;zxbetter&#x2F;test.git (fetch)</span><br><span class="line">github  https:&#x2F;&#x2F;github.com&#x2F;zxbetter&#x2F;test.git (push)</span><br><span class="line">github  https:&#x2F;&#x2F;git.oschina.net&#x2F;zxbetter&#x2F;test.git (push)</span><br></pre><h4 id="方法三-修改配置文件"><a class="markdownIt-Anchor" href="#方法三-修改配置文件">#</a> 方法三：修改配置文件</h4><p>打开  <code>.git/config</code>  找到  <code>[remote &quot;github&quot;]</code> ，添加对应的  <code>url</code>  即可，效果如下。这种方法其实和方法二是一样的。</p><pre class="highlight"><span class="line">[remote &quot;github&quot;]</span><br><span class="line">    url &#x3D; https:&#x2F;&#x2F;github.com&#x2F;zxbetter&#x2F;test.git</span><br><span class="line">    fetch &#x3D; +refs&#x2F;heads&#x2F;*:refs&#x2F;remotes&#x2F;github&#x2F;*</span><br><span class="line">    url &#x3D; https:&#x2F;&#x2F;git.oschina.net&#x2F;zxbetter&#x2F;test.git</span><br></pre><h4 id="关于-git-pull"><a class="markdownIt-Anchor" href="#关于-git-pull">#</a> 关于  <code>git pull</code></h4><p>方法二和三在  <code>push</code>  的时候比较方便。但是在  <code>pull</code>  的时候只能从方法三中的第一个  <code>url</code>  地址拉取代码。而方法一则不存在这种问题（可能要解决冲突）。<br>所以，如果只进行  <code>push</code>  操作，推荐方法二和三，如果也要进行  <code>pull</code>  操作，推荐方法一。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;git 项目同时提交至多个远程仓库</summary>
+    
+    
+    
+    <category term="tools" scheme="http://xinghuohan.cn/categories/tools/"/>
+    
+    
+    <category term="git" scheme="http://xinghuohan.cn/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo配合git hub个人博客环境搭建</title>

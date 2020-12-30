@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Sun, 20 Dec 2020 15:32:18 +0800</pubDate>
-        <lastBuildDate>Sun, 20 Dec 2020 15:32:18 +0800</lastBuildDate>
+        <pubDate>Wed, 30 Dec 2020 10:31:18 +0800</pubDate>
+        <lastBuildDate>Wed, 30 Dec 2020 10:31:18 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -31,6 +31,37 @@
         <category>Spring</category>
         <category>Redis</category>
         <category>shiro</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/12/30/tools/gitPush/</guid>
+            <title>一个项目push到多个远程Git仓库</title>
+            <link>http://xinghuohan.cn/2020/12/30/tools/gitPush/</link>
+            <category>git</category>
+            <pubDate>Wed, 30 Dec 2020 10:31:18 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;git 项目同时提交至多个远程仓库&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我创建了一个项目，然后通过下面的命令  &lt;code&gt;push&lt;/code&gt;  到了 Git Hub 上。如何再将这个项目  &lt;code&gt;push&lt;/code&gt;  到其他远程仓库呢？&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;git remote add github https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;zxbetter&amp;#x2F;test.git&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git push -u github master&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;方法一-使用-git-remote-add-命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方法一-使用-git-remote-add-命令&#34;&gt;#&lt;/a&gt; 方法一：使用  &lt;code&gt;git remote add&lt;/code&gt;  命令&lt;/h4&gt;
+&lt;p&gt;1.1# 如下命令查看远程仓库的情况，可以看到只有一个叫  &lt;code&gt;github&lt;/code&gt;  的远程仓库。&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;git remote&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;github&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git remote -v&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;github  https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;zxbetter&amp;#x2F;test.git (fetch)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;github  https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;zxbetter&amp;#x2F;test.git (push)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;1.2# 使用如下命令再添加一个远程仓库（这里以码云为例）&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;git remote add oschina https:&amp;#x2F;&amp;#x2F;git.oschina.net&amp;#x2F;zxbetter&amp;#x2F;test.git&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;1.3# 再次查看远程仓库的情况，可以看到已经有两个远程仓库了。然后再使用相应的命令  &lt;code&gt;push&lt;/code&gt;  到对应的仓库就行了。&lt;em&gt;这种方法的缺点是每次要  &lt;code&gt;push&lt;/code&gt;  两次。&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;git remote&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;github&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;oschina&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git remote -v&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;github  https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;zxbetter&amp;#x2F;test.git (fetch)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;github  https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;zxbetter&amp;#x2F;test.git (push)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;oschina https:&amp;#x2F;&amp;#x2F;git.oschina.net&amp;#x2F;zxbetter&amp;#x2F;test.git (fetch)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;oschina https:&amp;#x2F;&amp;#x2F;git.oschina.net&amp;#x2F;zxbetter&amp;#x2F;test.git (push)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;方法二-使用-git-remote-set-url-命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方法二-使用-git-remote-set-url-命令&#34;&gt;#&lt;/a&gt; 方法二：使用  &lt;code&gt;git remote set-url&lt;/code&gt;  命令&lt;/h4&gt;
+&lt;p&gt;2.1# 删除方法一的  &lt;code&gt;oschina&lt;/code&gt;  远程仓库。&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;git remote rm oschina&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;2.2# 使用如下命令添加远程仓库。&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;git remote set-url --add github https:&amp;#x2F;&amp;#x2F;git.oschina.net&amp;#x2F;zxbetter&amp;#x2F;test.git&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;2.3# 查看远程仓库情况。可以看到  &lt;code&gt;github&lt;/code&gt;  远程仓库有两个  &lt;code&gt;push&lt;/code&gt;  地址。&lt;em&gt;这种方法的好处是每次只需要  &lt;code&gt;push&lt;/code&gt;  一次就行了。&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;git remote -v&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;github  https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;zxbetter&amp;#x2F;test.git (fetch)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;github  https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;zxbetter&amp;#x2F;test.git (push)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;github  https:&amp;#x2F;&amp;#x2F;git.oschina.net&amp;#x2F;zxbetter&amp;#x2F;test.git (push)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;方法三-修改配置文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方法三-修改配置文件&#34;&gt;#&lt;/a&gt; 方法三：修改配置文件&lt;/h4&gt;
+&lt;p&gt;打开  &lt;code&gt;.git/config&lt;/code&gt;  找到  &lt;code&gt;[remote &amp;quot;github&amp;quot;]&lt;/code&gt; ，添加对应的  &lt;code&gt;url&lt;/code&gt;  即可，效果如下。这种方法其实和方法二是一样的。&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;[remote &amp;quot;github&amp;quot;]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    url &amp;#x3D; https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;zxbetter&amp;#x2F;test.git&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    fetch &amp;#x3D; +refs&amp;#x2F;heads&amp;#x2F;*:refs&amp;#x2F;remotes&amp;#x2F;github&amp;#x2F;*&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    url &amp;#x3D; https:&amp;#x2F;&amp;#x2F;git.oschina.net&amp;#x2F;zxbetter&amp;#x2F;test.git&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;关于-git-pull&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#关于-git-pull&#34;&gt;#&lt;/a&gt; 关于  &lt;code&gt;git pull&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;方法二和三在  &lt;code&gt;push&lt;/code&gt;  的时候比较方便。但是在  &lt;code&gt;pull&lt;/code&gt;  的时候只能从方法三中的第一个  &lt;code&gt;url&lt;/code&gt;  地址拉取代码。而方法一则不存在这种问题（可能要解决冲突）。&lt;br&gt;
+所以，如果只进行  &lt;code&gt;push&lt;/code&gt;  操作，推荐方法二和三，如果也要进行  &lt;code&gt;pull&lt;/code&gt;  操作，推荐方法一。&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/12/20/tools/boke-build/</guid>
             <title>Hexo配合git hub个人博客环境搭建</title>
