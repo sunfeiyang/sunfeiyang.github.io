@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;idea&#34; category</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2020-09-13T16:00:00.000Z</updated>
+    <category term="DB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="IDEA" />
+    <category term="Statistic" />
+    <category term="远程调试" />
+    <category term="CentOS" />
+    <category term="JDK" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="VMware" />
+    <category term="Java" />
+    <category term="设计模式" />
+    <category term="tools" />
+    <category term="git" />
+    <category term="IO" />
+    <category term="MQ" />
+    <category term="MyBatis" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="Spring" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <entry>
+        <id>http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/</id>
+        <title>IDEA Statistic插件使用,代码统计</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/"/>
+        <content type="html">&lt;p&gt;IDEA 插件 Statistic 使用，主要代码行数，将代码数量统计并直观展示出来.&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;1插件安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1插件安装&#34;&gt;#&lt;/a&gt; 1. 插件安装&lt;/h3&gt;
+&lt;p&gt;IDEA–&amp;gt;file–&amp;gt;settings–&amp;gt;plugins–&amp;gt; 搜索插件 (Statistic)&lt;/p&gt;
+&lt;img src=&#34;/img/image-20200914103816130.png&#34; alt=&#34;image-20200914103816130&#34; style=&#34;zoom:67%;&#34; / srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20200914103816130.png&#34; class=&#34;lozad post-image&#34;&gt;
+&lt;p&gt;我这里已经安装，还未重启 IDE, 点击 Install 安装插件，安装完成后根据提重启 IDE&lt;/p&gt;
+&lt;h3 id=&#34;2插件使用&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2插件使用&#34;&gt;#&lt;/a&gt; 2. 插件使用&lt;/h3&gt;
+&lt;p&gt;重启 IDE 后，在屏幕下方会有一个 statistic 按钮，点击后可以看到如下页面:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20200916110627597.png&#34; alt=&#34;image-20200916110627597&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20200916110627597.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;单击 refresh 按钮后可以查看实时代码统计情况:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20200916110737414.png&#34; alt=&#34;image-20200916110737414&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20200916110737414.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20200916111558837.png&#34; alt=&#34;image-20200916111558837&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20200916111558837.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+</content>
+        <category term="IDEA" />
+        <category term="Statistic" />
+        <updated>2020-09-13T16:00:00.000Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</id>
+        <title>IDEA 远程调试</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/"/>
+        <content type="html">&lt;h3 id=&#34;本机调试&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#本机调试&#34;&gt;#&lt;/a&gt; &lt;strong&gt;本机调试&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;此处不做过多解释，相信考虑远程 debug 调试的，肯定对本机调试是有一定了解的。说下自己在本机调试 spring Boot 项目时遇到的项目长时间卡顿，这个时候可能是因为本机环境中 debug 断点太多，去除一下后即可正常启动；&lt;/p&gt;
+&lt;h3 id=&#34;远程调试&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#远程调试&#34;&gt;#&lt;/a&gt; &lt;strong&gt;远程调试&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;远程调试一个大前提就是我们需要保证远程代码和本地代码一致；&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;此处部署为 war 包项目&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在远程环境中要开启允许远程 debug 调试&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;windows 环境–》bin 目录–》 &lt;code&gt;startup.bat&lt;/code&gt;  增加设置 (此处设置 debug 端口为 address=8081，可以根据实际条件自行设置)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;SET CATALINA_OPTS&amp;#x3D;-server -Xdebug -Xnoagent -Djava.compiler&amp;#x3D;NONE -Xrunjdwp:transport&amp;#x3D;dt_socket,server&amp;#x3D;y,suspend&amp;#x3D;n,address&amp;#x3D;8081&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;Linux 环境中–》 &lt;code&gt;catalina.sh&lt;/code&gt;  文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;CATALINA_OPTS&amp;#x3D;&amp;quot;-Xdebug -Xrunjdwp:transport&amp;#x3D;dt_socket,suspend&amp;#x3D;n,server&amp;#x3D;y,address&amp;#x3D;8081&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;IDEA 中创建 debug 调试&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;全部设置完成后，重启项目&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809175100811.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809175100811.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;然后 idea 中 debug 启动刚才新建的服务，在本机代码中打断点，发起相应请求即可进入 debug 模式；&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;若项目为 jar 项目应该使用&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190809175123597.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190809175123597.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+</content>
+        <category term="IDEA" />
+        <category term="远程调试" />
+        <updated>2020-09-08T14:55:59.089Z</updated>
+    </entry>
+</feed>

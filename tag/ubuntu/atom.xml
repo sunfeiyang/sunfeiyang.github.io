@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;ubuntu&#34; tag</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2020-12-20T05:40:09.728Z</updated>
+    <category term="DB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="IDEA" />
+    <category term="Statistic" />
+    <category term="远程调试" />
+    <category term="CentOS" />
+    <category term="JDK" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="VMware" />
+    <category term="Java" />
+    <category term="设计模式" />
+    <category term="tools" />
+    <category term="git" />
+    <category term="IO" />
+    <category term="MQ" />
+    <category term="MyBatis" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="Spring" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <entry>
+        <id>http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/</id>
+        <title>Ubuntu系统安装后做的系统优化</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/"/>
+        <content type="html">&lt;p&gt;Ubuntu 系统在安装后应该做的一些基本优化配置，包括了系统基本的软件安装以及桌面样式优化等相关内容。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;添加用户并赋予sudo权限&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#添加用户并赋予sudo权限&#34;&gt;#&lt;/a&gt; 添加用户并赋予 sudo 权限&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 1. 添加用户&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo adduser username &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 2. 添加sudo权限&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo usermod -G sudo username &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 3.添加root权限&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 如果需要让此用户有root权限，执行命令：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo vim /etc/sudoers&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 修改文件如下：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; User privilege specification&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;root ALL=(ALL) ALL&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;username ALL=(ALL) ALL&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 保存退出，username 用户就拥有了root权限。&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;开机挂载磁盘&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#开机挂载磁盘&#34;&gt;#&lt;/a&gt; 开机挂载磁盘&lt;/h3&gt;
+&lt;p&gt;开机挂在需要编辑的文件为： &lt;code&gt;/etc/fstab&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;非系统盘在刚开机时不会自动挂在非系统盘，想要在开机加载非系统盘需要做如下设置&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; /etc/fstab: static file system information.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; Use &lt;span class=&#34;string&#34;&gt;&amp;#x27;blkid&amp;#x27;&lt;/span&gt; to &lt;span class=&#34;built_in&#34;&gt;print&lt;/span&gt; the universally unique identifier &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; a&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; device; this may be used with UUID= as a more robust way to name devices&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; that works even &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; disks are added and removed. See fstab(5).&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; &amp;lt;file system&amp;gt; &amp;lt;mount point&amp;gt;   &amp;lt;&lt;span class=&#34;built_in&#34;&gt;type&lt;/span&gt;&amp;gt;  &amp;lt;options&amp;gt;       &amp;lt;dump&amp;gt;  &amp;lt;pass&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; / was on /dev/sdb2 during installation&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=c3a3e15c-a5c8-4ea2-a569-fc2804d1c723 /        ext4    errors=remount-ro 0       1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; /boot/efi was on /dev/sdb1 during installation&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=343E-5C25  /boot/efi       vfat    umask=0077      0       1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/swapfile                            none            swap    sw              0       0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;#####以上内容为文件中原有内容&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=f86192d0-f81b-474c-aa58-5e978ddb1307 /media/sunfy/ubuntu  ext4    defaults 0       0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=99651901-f991-41b7-af94-3974d192f6f8 /media/sunfy/project ext4    defaults 0       0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UUID=0d159994-e3ba-40f6-9f2d-a8b477746826 /media/sunfy/Folder  ext4    defaults 0       0&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;文件内容填写内容来源&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#文件内容填写内容来源&#34;&gt;#&lt;/a&gt; 文件内容填写内容来源&lt;/h4&gt;
+&lt;h5 id=&#34;使用命令查看分区&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#使用命令查看分区&#34;&gt;#&lt;/a&gt; 使用命令查看分区&lt;/h5&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo fdisk -l  &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h5 id=&#34;查询挂载硬盘uuid&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查询挂载硬盘uuid&#34;&gt;#&lt;/a&gt; 查询挂载硬盘 &lt;code&gt;UUID&lt;/code&gt;&lt;/h5&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo blkid /dev/sda2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h5 id=&#34;其余字段解析&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#其余字段解析&#34;&gt;#&lt;/a&gt; 其余字段解析&lt;/h5&gt;
+&lt;p&gt;第一个数字：0 表示开机不检查磁盘，1 表示开机检查磁盘；&lt;br&gt;
+第二个数字：0 表示交换分区，1 代表启动分区（Linux），2 表示普通分区&lt;br&gt;
+我挂载的分区是在 Win 系统下创建的分区，磁盘格式为 ntfs&lt;/p&gt;
+&lt;h3 id=&#34;gnome插件安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#gnome插件安装&#34;&gt;#&lt;/a&gt; gnome 插件安装&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 官方网站 https://extensions.gnome.org/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 可以安装一些基本的有效的插件，更方便使用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get update&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get upgrade&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install chrome-gnome-shell &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 安装插件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 应用间切换动画&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Coverflow Alt-Tab&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; cpu监控查看&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cpufreq&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 系统dock高度自定义&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Dash to Dock &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 几个常用按键切换提示&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Lock Keys&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 系统基本内容监控，包括cpu、磁盘、系统、风扇、网速等&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Vitals&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;安装微信-qq等&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装微信-qq等&#34;&gt;#&lt;/a&gt; 安装微信、QQ 等&lt;/h3&gt;
+&lt;h4 id=&#34;1安装前准备&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1安装前准备&#34;&gt;#&lt;/a&gt; 1. 安装前准备&lt;/h4&gt;
+&lt;p&gt;安装必要的工具及 deepin-wine 依赖&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo apt install wget g++ git     #如已安装可自行跳过&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;2安装deepin-wine&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2安装deepin-wine&#34;&gt;#&lt;/a&gt; 2. 安装 deepin-wine&lt;/h4&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;git clone &amp;quot;https://gitee.com/wszqkzqk/deepin-wine-for-ubuntu.git&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cd deepin-wine                    #切换到下载目录&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo ./install.sh                 #执行安装&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;deepin-wine 容器安装完成，然后获取到 deb 安装直接双击安装即可。&lt;/p&gt;
+&lt;h4 id=&#34;3托盘悬浮&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3托盘悬浮&#34;&gt;#&lt;/a&gt; 3. 托盘悬浮&lt;/h4&gt;
+&lt;p&gt;正常安装后 wine 窗口为独立窗口，为了便于美观建议安装如下插件：&lt;/p&gt;
+&lt;p&gt;Gnome Shell 插件：&lt;a href=&#34;https://link.zhihu.com/?target=https%3A//extensions.gnome.org/extension/1031/topicons/&#34;&gt;TopIcons Plus&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;4卸载方法&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#4卸载方法&#34;&gt;#&lt;/a&gt; 4. 卸载方法&lt;/h4&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;uninstall.sh&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 卸载具体软件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt remove deepin.com.qq.im&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;5系统非中文语言环境时软件设置为中文&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#5系统非中文语言环境时软件设置为中文&#34;&gt;#&lt;/a&gt; 5. 系统非中文语言环境时软件设置为中文&lt;/h4&gt;
+&lt;p&gt;修改 &lt;code&gt;/opt/deepinwine/tools/run.sh&lt;/code&gt;  文件，将  &lt;code&gt;WINE_CMD &lt;/code&gt; 那一行修改为  &lt;code&gt;WINE_CMD=&amp;quot;LC_ALL=zh_CN.UTF-8 deepin-wine&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo vim /opt/deepinwine/tools/run.sh       #打开文件进行修改&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;6软件更新&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#6软件更新&#34;&gt;#&lt;/a&gt; 6. 软件更新&lt;/h4&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;wget -qO- https://deepin-wine.i-m.dev/setup.sh | sudo sh&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install deepin.com.qq.office      #安装/更新TIM&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install deepin.com.qq.im          #安装/更新QQ&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install deepin.com.wechat         #安装/更新微信&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;7解决微信中文乱码&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#7解决微信中文乱码&#34;&gt;#&lt;/a&gt; 7. 解决微信中文乱码&lt;/h4&gt;
+&lt;p&gt;1. 下载字体包 &lt;code&gt;msyh.ttc&lt;/code&gt; ：&lt;br&gt;
+&lt;a href=&#34;https://www.lanzous.com/i5wivmd&#34;&gt;链接&lt;/a&gt;&lt;br&gt;
+下载后解压，&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;cp msyh.ttc ~/.deepinwine/Deepin-WeChat/drive_c/windows/Fonts&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;2. 修改注册序列表&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;gedit ~/.deepinwine/Deepin-WeChat/system.reg&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;修改 &lt;code&gt;MS Shell Dlg&lt;/code&gt;  和 &lt;code&gt;MS Shell Dlg2&lt;/code&gt;  的值如下&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;MS Shell Dlg&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;MS Shell Dlg 2&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;3. 注册字体&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;gedit msyh_config.reg&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;将一下内容添加在 &lt;code&gt;msyh_config.reg&lt;/code&gt;  中&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;REGEDIT4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\FontLink\SystemLink]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Lucida Sans Unicode&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Microsoft Sans Serif&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;MS Sans Serif&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Tahoma&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Tahoma Bold&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyhbd.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Arial&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;quot;Arial Black&amp;quot;&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;msyh.ttc&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12345678910&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;4. 注册&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;deepin-wine regedit msyh_config.reg&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;然后在重启微信就成功了。目前阶段没有出现问题。后续有问题进行更新。&lt;/p&gt;
+&lt;h3 id=&#34;安装vmware&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装vmware&#34;&gt;#&lt;/a&gt; 安装 VMware&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 查看安装的虚拟机&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;vmware-installer -l&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 安装&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt update &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt install gcc&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt install build-essential&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo bash  VMware-Workstation-Full-15.5.2-15785246.x86_64.bundle&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 卸载&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;vmware-installer -u vmware-workstation。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;激活密钥&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware永久激活密钥&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UG5J2-0ME12-M89WY-NPWXX-WQH88&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;GA590-86Y05-4806Y-X4PEE-ZV8E0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;YA18K-0WY8P-H85DY-L4NZG-X7RAD&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UA5DR-2ZD4H-089FY-6YQ5T-YPRX6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;B806Y-86Y05-GA590-X4PEE-ZV8E0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ZF582-0NW5N-H8D2P-0XZEE-Z22VA&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware Workstation Pro 15 激活许可证&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UY758-0RXEQ-M81WP-8ZM7Z-Y3HDA&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VF750-4MX5Q-488DQ-9WZE9-ZY2D6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UU54R-FVD91-488PP-7NNGC-ZFAX6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;YC74H-FGF92-081VZ-R5QNG-P6RY4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;YC34H-6WWDK-085MQ-JYPNX-NZRA2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware Workstation Pro 14 激活许可证&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware Workstation Pro 12 激活许可证&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5A02H-AU243-TZJ49-GTC7K-3C61N&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VF5XA-FNDDJ-085GZ-4NXZ9-N20E6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;UC5MR-8NE16-H81WY-R7QGV-QG2D8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ZG1WH-ATY96-H80QP-X7PEX-Y30V4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;AA3E0-0VDE1-0893Z-KGZ59-QGAVF&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware Workstation Pro 10 激活许可证&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1Z0G9-67285-FZG78-ZL3Q2-234JG&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4C4EK-89KDL-5ZFP9-1LA5P-2A0J0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;HY086-4T01N-CZ3U0-CV0QM-13DNU&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMware Workstation Pro 16 许可证密钥，批量永久激活！ &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ZF3R0-FHED2-M80TY-8QYGC-NPKYF &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;YF390-0HF8P-M81RQ-2DXQE-M2UT6 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ZF71R-DMX85-08DQY-8YMNC-PPHV8 &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;安装typora&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装typora&#34;&gt;#&lt;/a&gt; 安装 Typora&lt;/h3&gt;
+&lt;h4 id=&#34;步骤&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#步骤&#34;&gt;#&lt;/a&gt; 步骤：&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;设置密钥&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;或&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;添加 Typora 的远程仓库&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;sudo add-apt-repository &#39;deb https://typora.io/linux ./&#39;&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;更新&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;sudo apt-get update&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;安装&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;sudo apt-get install typora&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;应用程序列表与默认应用程序&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#应用程序列表与默认应用程序&#34;&gt;#&lt;/a&gt; 应用程序列表与默认应用程序&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 应用程序列表&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/usr/local/aaplications&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 出现openwith清单中，添加参数后即可在应用程序列表中就能看到对应的应用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Exec一行中添加 %F&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;中文输入法安装步骤&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#中文输入法安装步骤&#34;&gt;#&lt;/a&gt; 中文输入法安装步骤&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 安装fcitx-googlepinyin（谷歌输入法）&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install fcitx-googlepinyin&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;设置 language support，打开后如果中文环境会提示安装对应环境的语言，点击安装&lt;/p&gt;
+&lt;p&gt;安装好后就能进入语言支持界面，最下面一行 Keyboard input method system，默认是 &lt;code&gt;iBus&lt;/code&gt; ，点击下拉单切换到 fcitx（系统初始没有 &lt;code&gt;fctix&lt;/code&gt; ，安装 &lt;code&gt;fcitx-googlepinyin&lt;/code&gt;  的时候会装好 &lt;code&gt;fcitx&lt;/code&gt; ）。然后重启电脑。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201220151823562.png&#34; alt=&#34;image-20201220151823562&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201220151823562.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;重启之后在右上角状态栏点击键盘图标，在下拉单里选择倒数第三个 Configure 进入配置界面。&lt;/p&gt;
+&lt;p&gt;输入 pinyin 搜索到系统现有的拼音输入法。选择 Google Pinyin 并点击 OK 确认。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201220151854087.png&#34; alt=&#34;image-20201220151854087&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201220151854087.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;修改npm全局安装包的位置解决eacces权限拒绝问题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#修改npm全局安装包的位置解决eacces权限拒绝问题&#34;&gt;#&lt;/a&gt; 修改 npm 全局安装包的位置，解决 EACCES 权限拒绝问题&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 查看当前npm的默认位置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;npm config ls&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 修改npm使用新的全局安装路径&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;npm config set prefix &amp;#x27;your url&amp;#x27;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;redis桌面可视化访问工具&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#redis桌面可视化访问工具&#34;&gt;#&lt;/a&gt; redis 桌面可视化访问工具&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 参考工具&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;https://snapcraft.io/redis-desktop-manager&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+</content>
+        <category term="Ubuntu" />
+        <updated>2020-12-20T05:40:09.728Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/</id>
+        <title>Ubuntu截图工具</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/"/>
+        <content type="html">&lt;p&gt;Linux 系统 Ubuntu 截图工具推荐使用&lt;/p&gt;
+&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;h3 id=&#34;前言&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h3&gt;
+&lt;p&gt;Windows 上习惯了 QQ 的截图工具，本工具类似 QQ 截图工具功能，在习惯 QQ 截图的情况下可以很方便的使用。效果图：&lt;img src=&#34;/img/image-20201020151914799.png&#34; alt=&#34;image-20201020151914799&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020151914799.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;安装过程&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装过程&#34;&gt;#&lt;/a&gt; 安装过程&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install flameshot&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;启动命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#启动命令&#34;&gt;#&lt;/a&gt; 启动命令&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;flameshot gui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;设置快捷方式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设置快捷方式&#34;&gt;#&lt;/a&gt; 设置快捷方式&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201020152205127.png&#34; alt=&#34;image-20201020152205127&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152205127.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;本机操作系统版本为 Ubuntu 20.04, 不同版本可能设置快捷键位置名称有些不同，可以自行根据系统版本设置&lt;/p&gt;
+&lt;p&gt;具体设置&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201020152406303.png&#34; alt=&#34;image-20201020152406303&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152406303.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;软件设置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#软件设置&#34;&gt;#&lt;/a&gt; 软件设置&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201020152618648.png&#34; alt=&#34;image-20201020152618648&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152618648.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+</content>
+        <category term="Linux" />
+        <category term="Ubuntu" />
+        <updated>2020-10-20T07:16:03.159Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/</id>
+        <title>Ubuntu桌面被删除后</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/"/>
+        <content type="html">&lt;p&gt;Ubuntu 桌面被误删除，Ubuntu 在重启时会校验当前设置路径是否存在，不存在会默认设置一个路径，我 Ubuntu20.04 版本删除桌面文件夹被删除后，将桌面路径默认为根目录，导致桌面一下子出现了很多文件，为了恢复桌面的清爽，而进行如下操作。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;终端打开自己根目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进入隐藏文件夹 .config&lt;img src=&#34;/img/image-20201016154927244.png&#34; alt=&#34;image-20201016154927244&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016154927244.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+   &lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;-- 查看当前目录下所有文件&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ls -la&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;编辑文件 vim user-dirs.dirs &lt;img src=&#34;/img/image-20201016155127768.png&#34; alt=&#34;image-20201016155127768&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016155127768.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进行如下修改，此处修改的路径需要自己先行在对应路径创建文件夹，然后重启即可。&lt;img src=&#34;/img/image-20201016155252812.png&#34; alt=&#34;image-20201016155252812&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016155252812.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+        <category term="Ubuntu" />
+        <updated>2020-10-16T07:37:31.201Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</id>
+        <title>Linux常用命令</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/"/>
+        <content type="html">&lt;p&gt;Linux 系统常用基本命令&lt;/p&gt;
+&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;h3 id=&#34;ack-待查询字符串&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ack-待查询字符串&#34;&gt;#&lt;/a&gt; ack  [待查询字符串]&lt;/h3&gt;
+&lt;p&gt;搜索当前文件夹内所有文件中对应的字符（递归查询）&lt;/p&gt;
+&lt;h3 id=&#34;unar-待解压文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#unar-待解压文件&#34;&gt;#&lt;/a&gt; unar  [待解压文件]&lt;/h3&gt;
+&lt;p&gt;解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题&lt;/p&gt;
+</content>
+        <category term="Linux" />
+        <category term="CentOS" />
+        <category term="Ubuntu" />
+        <updated>2020-10-14T05:05:50.142Z</updated>
+    </entry>
+</feed>
