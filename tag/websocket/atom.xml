@@ -28,6 +28,7 @@
     <category term="Spring" />
     <category term="Redis" />
     <category term="shiro" />
+    <category term="Docker" />
     <entry>
         <id>http://xinghuohan.cn/2020/11/18/java/WebSocket/springBootToWebSocket/</id>
         <title>SpringBoot集成WebSocket通信</title>

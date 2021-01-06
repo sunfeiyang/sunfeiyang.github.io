@@ -3,7 +3,7 @@
     <id>http://xinghuohan.cn</id>
     <title>sunfy</title>
     <link href="http://xinghuohan.cn" />
-    <updated>2021-01-05T00:57:56.291Z</updated>
+    <updated>2021-01-06T03:48:19.154Z</updated>
     <category term="DB" />
     <category term="MySQL" />
     <category term="Linux" />
@@ -28,6 +28,55 @@
     <category term="Spring" />
     <category term="Redis" />
     <category term="shiro" />
+    <category term="Docker" />
+    <entry>
+        <id>http://xinghuohan.cn/2021/01/06/Linux/Centos-Docker/</id>
+        <title>CentOS安装Docker图形化工具</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2021/01/06/Linux/Centos-Docker/"/>
+        <content type="html">&lt;p&gt;CentOS 安装 Docker 图形化工具&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;一docker图形化工具&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#一docker图形化工具&#34;&gt;#&lt;/a&gt; 一.Docker 图形化工具&lt;/h2&gt;
+&lt;p&gt;​    docker 图形页面管理工具常用的有三种，DockerUI ，Portainer ，Shipyard 。DockerUI 是 Portainer 的前身，这三个工具通过 docker api 来获取管理的资源信息。平时我们常常对着 shell 对着这些命令行客户端，审美会很疲劳，如果有漂亮的图形化界面可以直观查看 docker 资源信息，也是非常方便的。今天我们就搭建单机版的三种常用图形页面管理工具。这三种图形化管理工具以 Portainer 最为受欢迎。&lt;/p&gt;
+&lt;h2 id=&#34;二dockerui&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#二dockerui&#34;&gt;#&lt;/a&gt; 二.DockerUI&lt;/h2&gt;
+&lt;p&gt;轻量级图形页面管理之 DockerUI&lt;/p&gt;
+&lt;p&gt;1. 查看 dockerui 镜像&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker search dockerui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921161812839-1161447728.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921161812839-1161447728.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2. 选择喜欢的 dockerui 风格镜像，下载&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker pull abh1nav&amp;#x2F;dockerui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;3. 启动 dockerui 容器，这里需要注意带上 privileged 参数，提升权限&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker run -d --privileged --name dockerui -p 9000:9000 -v &amp;#x2F;var&amp;#x2F;run&amp;#x2F;docker.sock:&amp;#x2F;var&amp;#x2F;run&amp;#x2F;docker.sock abh1nav&amp;#x2F;dockerui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;前往网页查看之前，你需要打开服务器的 9000 端口：   firewall-cmd --permanent --zone=public --add-port=9000/tcpfirewall-cmd --reload&lt;/p&gt;
+&lt;p&gt;4. 浏览器查看 dockerui：&lt;a href=&#34;http://192.168.2.119:9000/&#34;&gt;http://192.168.2.119:9000&lt;/a&gt;   或者 curl &lt;a href=&#34;http://192.168.2.119:9000&#34;&gt;http://192.168.2.119:9000&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921160841743-448633112.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921160841743-448633112.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;三shipyard&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#三shipyard&#34;&gt;#&lt;/a&gt; 三.Shipyard&lt;/h2&gt;
+&lt;p&gt;轻量级图形页面管理之 Shipyard&lt;/p&gt;
+&lt;h2 id=&#34;img&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#img&#34;&gt;#&lt;/a&gt; &lt;img src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;四portainer&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#四portainer&#34;&gt;#&lt;/a&gt; 四.Portainer&lt;/h2&gt;
+&lt;p&gt;轻量级图形页面管理之 Portainer&lt;/p&gt;
+&lt;p&gt;1. 查看 portainer 镜像&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker search portainer&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921161723460-1361137261.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921161723460-1361137261.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2. 选择喜欢的 portainer 风格镜像，下载&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker pull portainer&amp;#x2F;portainer &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;3. 启动 dockerui 容器&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker run -d --name portainerUI -p 9000:9000 -v &amp;#x2F;var&amp;#x2F;run&amp;#x2F;docker.sock:&amp;#x2F;var&amp;#x2F;run&amp;#x2F;docker.sock portainer&amp;#x2F;portainer&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;4. 浏览器访问 &lt;a href=&#34;http://192.168.2.119:9000/&#34;&gt;http://192.168.2.119:9000&lt;/a&gt; , 设置一个密码即可，点击创建用户&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921162528714-901461854.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921162528714-901461854.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/u=1997667158,3125340408&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/u=1997667158,3125340408&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;我们搭建的是单机版，直接选择 Local ，点击连接&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921162717769-145855775.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921162717769-145855775.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/u=1266655624,1442914627&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/u=1266655624,1442914627&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;现在就可以使用了，点击 Local 进入仪表盘主页面。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921165040584-1231389831.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921165040584-1231389831.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;容器页面&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921164941854-544053238.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921164941854-544053238.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/u=1156235942,926832626&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/u=1156235942,926832626&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/u=3237575840,3806081523&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/u=3237575840,3806081523&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+</content>
+        <category term="CentOS" />
+        <category term="Docker" />
+        <updated>2021-01-06T03:48:19.154Z</updated>
+    </entry>
     <entry>
         <id>http://xinghuohan.cn/2021/01/05/Linux/Linux-PlanTask/</id>
         <title>Linux执行定时任务</title>
@@ -461,32 +510,15 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH&lt;/p&gt;
 &lt;h1 id=&#34;一-安装yum-repo&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#一-安装yum-repo&#34;&gt;#&lt;/a&gt; 一、安装 YUM Repo&lt;/h1&gt;
 &lt;h3 id=&#34;1-由于centos-的yum源中没有mysql需要到mysql的官网下载yum-repo配置文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-由于centos-的yum源中没有mysql需要到mysql的官网下载yum-repo配置文件&#34;&gt;#&lt;/a&gt; 1、由于 CentOS 的 yum 源中没有 mysql，需要到 mysql 的官网下载 yum repo 配置文件。&lt;/h3&gt;
 &lt;p&gt;下载命令：&lt;/p&gt;
-&lt;p&gt;wget &lt;a href=&#34;https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm&#34;&gt;https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;2-然后进行repo的安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-然后进行repo的安装&#34;&gt;#&lt;/a&gt; 2、然后进行 repo 的安装：&lt;/h3&gt;
-&lt;p&gt;rpm -ivh mysql57-community-release-el7-9.noarch.rpm&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;rpm -ivh mysql57-community-release-el7-9.noarch.rpm&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;p&gt;执行完成后会在 /etc/yum.repos.d/ 目录下生成两个 repo 文件 mysql-community.repo mysql-community-source.repo&lt;/p&gt;
 &lt;h1 id=&#34;二-使用yum命令即可完成安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#二-使用yum命令即可完成安装&#34;&gt;#&lt;/a&gt; 二、使用 yum 命令即可完成安装&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;注意：必须进入到 /etc/yum.repos.d/ 目录后再执行以下脚本&lt;/strong&gt;&lt;/p&gt;
-&lt;h3 id=&#34;1-安装命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-安装命令&#34;&gt;#&lt;/a&gt; 1、安装命令：&lt;/h3&gt;
-&lt;p&gt;yum install mysql-server&lt;/p&gt;
-&lt;h3 id=&#34;2-启动msyql&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-启动msyql&#34;&gt;#&lt;/a&gt; 2、启动 msyql：&lt;/h3&gt;
-&lt;p&gt;systemctl start mysqld #启动 MySQL&lt;/p&gt;
-&lt;h3 id=&#34;3-获取安装时的临时密码在第一次登录时就是用这个密码&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3-获取安装时的临时密码在第一次登录时就是用这个密码&#34;&gt;#&lt;/a&gt; 3、获取安装时的临时密码（在第一次登录时就是用这个密码）：&lt;/h3&gt;
-&lt;p&gt;grep ‘temporary password’ /var/log/mysqld.log&lt;/p&gt;
-&lt;h3 id=&#34;4-倘若没有获取临时密码则&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#4-倘若没有获取临时密码则&#34;&gt;#&lt;/a&gt; 4、倘若没有获取临时密码，则&lt;/h3&gt;
-&lt;p&gt;4.1、删除原来安装过的 mysql 残留的数据&lt;/p&gt;
-&lt;p&gt;rm -rf /var/lib/mysql&lt;/p&gt;
-&lt;p&gt;4.2. 再启动 mysql&lt;/p&gt;
-&lt;p&gt;systemctl start mysqld #启动 MySQL&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 1、安装命令：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;yum install mysql-server&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 2、启动msyql：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl start mysqld #启动MySQL&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 3、获取安装时的临时密码（在第一次登录时就是用这个密码）：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;grep &amp;#x27;temporary password&amp;#x27; /var/log/mysqld.log&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 4、倘若没有获取临时密码，则&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4.1、删除原来安装过的mysql残留的数据&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;rm -rf /var/lib/mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4.2.再启动mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl start mysqld #启动MySQL&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;h1 id=&#34;三-登录&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#三-登录&#34;&gt;#&lt;/a&gt; 三、登录：&lt;/h1&gt;
-&lt;h3 id=&#34;1-方式一已验证&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-方式一已验证&#34;&gt;#&lt;/a&gt; 1、方式一（已验证）：&lt;/h3&gt;
-&lt;p&gt;mysql -u root -p&lt;/p&gt;
-&lt;p&gt;然后输入密码（刚刚获取的临时密码）&lt;/p&gt;
-&lt;h3 id=&#34;2-方式二未验证&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-方式二未验证&#34;&gt;#&lt;/a&gt; 2、方式二（未验证）：&lt;/h3&gt;
-&lt;p&gt;进入 mysql 数据库&lt;/p&gt;
-&lt;p&gt;root@test:/home# mysql -uroot -proot  &amp;lt;uroot 是用户名，proot 是密码&amp;gt;&lt;/p&gt;
-&lt;p&gt;如：&lt;/p&gt;
-&lt;p&gt;root@test:/home# mysql -root -XXXX&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 1、方式一（已验证）：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql -u root -p&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;然后输入密码（刚刚获取的临时密码）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 2、方式二（未验证）：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;进入mysql数据库&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;root@test:/home# mysql -uroot -proot  &amp;lt;uroot是用户名，proot是密码&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;如：&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;root@test:/home# mysql -root -XXXX&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;3-若登录不了则进行以下配置跳过登录验证&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3-若登录不了则进行以下配置跳过登录验证&#34;&gt;#&lt;/a&gt; 3、若登录不了，则进行以下配置，跳过登录验证&lt;/h3&gt;
 &lt;p&gt;3.1、重置密码的第一步就是跳过 MySQL 的密码认证过程，方法如下：&lt;/p&gt;
 &lt;p&gt;3.2、vim /etc/my.cnf (注：windows 下修改的是 my.ini)&lt;/p&gt;
@@ -505,15 +537,15 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190417161754664.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaGl1c2Rhc2hp,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190417161754664.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaGl1c2Rhc2hp,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;3-解决办法&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3-解决办法&#34;&gt;#&lt;/a&gt; 3、解决办法：&lt;/h3&gt;
 &lt;p&gt;3.1、查看 mysql 初始的密码策略，&lt;/p&gt;
-&lt;p&gt;输入语句 “SHOW VARIABLES LIKE ‘validate_password%’;” 进行查看，&lt;/p&gt;
+ &lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;输入语句 “ SHOW VARIABLES LIKE &amp;#x27;validate_password%&amp;#x27;; ” 进行查看，&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;p&gt;如下图：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190417161937367.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaGl1c2Rhc2hp,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190417161937367.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaGl1c2Rhc2hp,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;3.2、首先需要设置密码的验证强度等级，设置 validate_password_policy 的全局参数为 LOW 即可，&lt;/p&gt;
-&lt;p&gt;输入设值语句 “set global validate_password_policy=LOW;” 进行设值，&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;输入设值语句 “ set global validate_password_policy=LOW; ” 进行设值，&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;p&gt;3.3、当前密码长度为 8 ，如果不介意的话就不用修改了，按照通用的来讲，设置为 6 位的密码，设置 validate_password_length 的全局参数为 6 即可，&lt;/p&gt;
-&lt;p&gt;输入设值语句 “set global validate_password_length=6;” 进行设值，&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;输入设值语句 “ set global validate_password_length=6; ” 进行设值，&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;p&gt;3.4、现在可以为 mysql 设置简单密码了，只要满足六位的长度即可，&lt;/p&gt;
-&lt;p&gt;输入修改语句 “ALTER USER ‘root’@‘localhost’ IDENTIFIED BY ‘123456’;” 可以看到修改成功，表示密码策略修改成功了！！！&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;输入修改语句 “ ALTER USER &amp;#x27;root&amp;#x27;@&amp;#x27;localhost&amp;#x27; IDENTIFIED BY &amp;#x27;123456&amp;#x27;; ” 可以看到修改成功，表示密码策略修改成功了！！！&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;p&gt;3.5、注：在默认密码的长度最小值为 4 ，由 大 / 小写字母各一个 + 阿拉伯数字一个 + 特殊字符一个，&lt;/p&gt;
 &lt;p&gt;只要设置密码的长度小于 3 ，都将自动设值为 4 ，&lt;/p&gt;
 &lt;p&gt;3.6、关于 mysql 密码策略相关参数；&lt;/p&gt;
@@ -528,50 +560,20 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH&lt;/p&gt;
 &lt;p&gt;2/STRONG：验证长度、数字、大小写、特殊字符、字典文件；&lt;/p&gt;
 &lt;p&gt;6）、validate_password_special_char_count 整个密码中至少要包含特殊字符的个数；&lt;/p&gt;
 &lt;h1 id=&#34;五-修改密码&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#五-修改密码&#34;&gt;#&lt;/a&gt; 五、修改密码&lt;/h1&gt;
-&lt;h3 id=&#34;1-方式一已验证-2&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-方式一已验证-2&#34;&gt;#&lt;/a&gt; 1、方式一（已验证）：&lt;/h3&gt;
-&lt;p&gt;ALTER USER ‘root’@‘localhost’ IDENTIFIED BY ‘@abcd123456’;&lt;/p&gt;
-&lt;h3 id=&#34;2-方式二未验证-2&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-方式二未验证-2&#34;&gt;#&lt;/a&gt; 2、方式二（未验证）&lt;/h3&gt;
-&lt;p&gt;set password=password(“yourpassword”);&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 1、方式一（已验证）：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ALTER USER &amp;#x27;root&amp;#x27;@&amp;#x27;localhost&amp;#x27; IDENTIFIED BY &amp;#x27;@abcd123456&amp;#x27;; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 2、方式二（未验证）&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;set password=password(&amp;quot;yourpassword&amp;quot;); &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;h1 id=&#34;六-开启远程控制&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#六-开启远程控制&#34;&gt;#&lt;/a&gt; 六、开启远程控制&lt;/h1&gt;
 &lt;p&gt;MySQL 默认是没有开启远程控制的，必须添加远程访问的用户，即默认是只能自己访问，别的机器是访问不了的。&lt;/p&gt;
-&lt;h3 id=&#34;1-方式一已验证-3&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-方式一已验证-3&#34;&gt;#&lt;/a&gt; 1、方式一（已验证）：&lt;/h3&gt;
-&lt;p&gt;1.1、连接服务器: mysql -u root -p&lt;/p&gt;
-&lt;p&gt;1.2、看当前所有数据库：show databases;&lt;/p&gt;
-&lt;p&gt;1.3、进入 mysql 数据库：use mysql;&lt;/p&gt;
-&lt;p&gt;1.4、查看 mysql 数据库中所有的表：show tables;&lt;/p&gt;
-&lt;p&gt;1.5、查看 user 表中的数据：select Host, User,Password from user;&lt;/p&gt;
-&lt;p&gt;1.6、修改 user 表中的 Host:  update user set Host=’%’ where User=‘root’;&lt;/p&gt;
-&lt;p&gt;​        说明： % 代表任意的客户端，可替换成具体 IP 地址。&lt;/p&gt;
-&lt;p&gt;1.7、最后刷新一下：flush privileges;&lt;/p&gt;
-&lt;p&gt;​    **1.**&lt;strong&gt;8、注意：一定要记得在写 sql 的时候要在语句完成后加上 &amp;quot;;&amp;quot;&lt;/strong&gt;&lt;/p&gt;
-&lt;h3 id=&#34;2-方式二未验证-3&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-方式二未验证-3&#34;&gt;#&lt;/a&gt; 2、方式二（未验证）：&lt;/h3&gt;
+&lt;h3 id=&#34;1-方式一已验证&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-方式一已验证&#34;&gt;#&lt;/a&gt; 1、方式一（已验证）：&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;1.1、连接服务器: mysql -u root -p&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.2、看当前所有数据库：show databases;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.3、进入mysql数据库：use mysql;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.4、查看mysql数据库中所有的表：show tables;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.5、查看user表中的数据：select Host, User,Password from user;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.6、修改user表中的Host:  update user set Host=&amp;#x27;%&amp;#x27; where User=&amp;#x27;root&amp;#x27;; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;说明： % 代表任意的客户端,可替换成具体IP地址。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.7、最后刷新一下：flush privileges;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.8、注意：一定要记得在写sql的时候要在语句完成后加上&amp;quot; ; &amp;quot;**&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;2-方式二未验证&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-方式二未验证&#34;&gt;#&lt;/a&gt; 2、方式二（未验证）：&lt;/h3&gt;
 &lt;h3 id=&#34;1-使用-grant-命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-使用-grant-命令&#34;&gt;#&lt;/a&gt; 1、使用 grant 命令&lt;/h3&gt;
-&lt;p&gt;grant all privileges on 数据库名。表名 to 创建的用户名 (root)@&amp;quot;%&amp;quot; identified by “密码”;&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;grant all privileges on 数据库名.表名 to 创建的用户名(root)@&amp;quot;%&amp;quot; identified by &amp;quot;密码&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;2-格式说明&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-格式说明&#34;&gt;#&lt;/a&gt; 2、格式说明：&lt;/h3&gt;
 &lt;p&gt;数据库名。表名 如果写成 *.* 代表授权所有的数据库 flush privileges; #刷新刚才的内容&lt;/p&gt;
 &lt;p&gt;如：&lt;/p&gt;
-&lt;p&gt;grant all privileges on &lt;em&gt;.&lt;/em&gt; to root@“113.123.123.1” identified by “123456789”;&lt;/p&gt;
-&lt;p&gt;@ 后面是访问 mysql 的客户端 IP 地址（或是 主机名） % 代表任意的客户端，如果填写 localhost 为本地访问（那此用户就不能远程访问该 mysql 数据库了）&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;grant all privileges on *.* to root@&amp;quot;113.123.123.1&amp;quot; identified by &amp;quot;123456789&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;@ 后面是访问mysql的客户端IP地址（或是 主机名） % 代表任意的客户端，如果填写 localhost 为本地访问（那此用户就不能远程访问该mysql数据库了）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
 &lt;h1 id=&#34;七-其他配置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#七-其他配置&#34;&gt;#&lt;/a&gt; 七、其他配置&lt;/h1&gt;
-&lt;h3 id=&#34;1-设置安全选项&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-设置安全选项&#34;&gt;#&lt;/a&gt; 1、设置安全选项：&lt;/h3&gt;
-&lt;p&gt;mysql_secure_installation&lt;/p&gt;
-&lt;h3 id=&#34;2-关闭mysql&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-关闭mysql&#34;&gt;#&lt;/a&gt; 2、关闭 MySQL&lt;/h3&gt;
-&lt;p&gt;systemctl stop mysqld&lt;/p&gt;
-&lt;h3 id=&#34;3-重启mysql&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3-重启mysql&#34;&gt;#&lt;/a&gt; 3、重启 MySQL&lt;/h3&gt;
-&lt;p&gt;systemctl restart mysqld&lt;/p&gt;
-&lt;h3 id=&#34;4-查看mysql运行状态&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#4-查看mysql运行状态&#34;&gt;#&lt;/a&gt; 4、查看 MySQL 运行状态&lt;/h3&gt;
-&lt;p&gt;systemctl status mysqld&lt;/p&gt;
-&lt;h3 id=&#34;5-设置开机启动&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#5-设置开机启动&#34;&gt;#&lt;/a&gt; 5、设置开机启动&lt;/h3&gt;
-&lt;p&gt;systemctl enable mysqld&lt;/p&gt;
-&lt;h3 id=&#34;6-关闭开机启动&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#6-关闭开机启动&#34;&gt;#&lt;/a&gt; 6、关闭开机启动&lt;/h3&gt;
-&lt;p&gt;systemctl disable mysqld&lt;/p&gt;
-&lt;h3 id=&#34;7-配置默认编码为utf8&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#7-配置默认编码为utf8&#34;&gt;#&lt;/a&gt; 7、配置默认编码为 utf8：&lt;/h3&gt;
-&lt;p&gt;vi /etc/my.cnf #添加 [mysqld] character_set_server=utf8 init_connect=‘SET NAMES utf8’&lt;/p&gt;
-&lt;p&gt;其他默认配置文件路径：&lt;/p&gt;
-&lt;p&gt;配置文件：/etc/my.cnf 日志文件：/var/log//var/log/mysqld.log 服务启动脚本：/usr/lib/systemd/system/mysqld.service socket 文件：/var/run/mysqld/mysqld.pid&lt;/p&gt;
-&lt;h3 id=&#34;8-查看版本&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#8-查看版本&#34;&gt;#&lt;/a&gt; 8、查看版本&lt;/h3&gt;
-&lt;p&gt;select version();&lt;/p&gt;
-</content>
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 1、设置安全选项：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql_secure_installation&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 2、关闭MySQL&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl stop mysqld &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 3、重启MySQL&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl restart mysqld &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 4、查看MySQL运行状态&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl status mysqld &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 5、设置开机启动&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl enable mysqld &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 6、关闭开机启动&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl disable mysqld &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 7、配置默认编码为utf8：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;vi /etc/my.cnf #添加 [mysqld] character_set_server=utf8 init_connect=&amp;#x27;SET NAMES utf8&amp;#x27;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;其他默认配置文件路径： &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;配置文件：/etc/my.cnf 日志文件：/var/log//var/log/mysqld.log 服务启动脚本：/usr/lib/systemd/system/mysqld.service socket文件：/var/run/mysqld/mysqld.pid&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 8、查看版本&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;select version();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;</content>
         <category term="DB" />
         <category term="MySQL" />
         <category term="Linux" />
@@ -1362,23 +1364,5 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH&lt;/p&gt;
         <category term="Java" />
         <category term="shiro" />
         <updated>2020-10-20T02:23:34.008Z</updated>
-    </entry>
-    <entry>
-        <id>http://xinghuohan.cn/2020/10/16/Linux/VmWarekernelModuleUpdater/</id>
-        <title>Linux系统下VMware kernel Module Updater弹框，Install失败</title>
-        <link rel="alternate" href="http://xinghuohan.cn/2020/10/16/Linux/VmWarekernelModuleUpdater/"/>
-        <content type="html">&lt;p&gt;Ubuntu 系统更新后，打开 VMware 提示需要更新安装，点击安装失败问题解决&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;提示框&lt;img src=&#34;/img/image-20201016160643674.png&#34; alt=&#34;image-20201016160643674&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016160643674.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;安装失败&lt;img src=&#34;/img/image-20201016160730834.png&#34; alt=&#34;image-20201016160730834&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016160730834.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;--处理方法&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;--打开终端执行如下代码&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VMWARE_VERSION=workstation-15.5.1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;TMP_FOLDER=/tmp/patch-vmware&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;rm -fdr $TMP_FOLDER&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mkdir -p $TMP_FOLDER&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cd $TMP_FOLDER&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git clone https://github.com/mkubecek/vmware-host-modules.git&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cd $TMP_FOLDER/vmware-host-modules&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git checkout $VMWARE_VERSION&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git fetch&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;make&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-- 执行如下代码时需要输入管理员密码，输入完成后执行当前代码，但是后续的代码会终止，需要手动拷贝未执行其余命令继续操作，全部命令执行完成后，VMware即可正常使用&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo make install&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo rm /usr/lib/vmware/lib/libz.so.1/libz.so.1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo ln -s /lib/x86_64-linux-gnu/libz.so.1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/usr/lib/vmware/lib/libz.so.1/libz.so.1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo /etc/init.d/vmware restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-        <category term="VMware" />
-        <updated>2020-10-16T08:03:05.580Z</updated>
     </entry>
 </feed>

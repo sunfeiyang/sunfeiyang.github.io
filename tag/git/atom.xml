@@ -28,6 +28,7 @@
     <category term="Spring" />
     <category term="Redis" />
     <category term="shiro" />
+    <category term="Docker" />
     <entry>
         <id>http://xinghuohan.cn/2020/12/30/tools/gitPush/</id>
         <title>一个项目push到多个远程Git仓库</title>

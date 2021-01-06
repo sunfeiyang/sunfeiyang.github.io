@@ -28,6 +28,7 @@
     <category term="Spring" />
     <category term="Redis" />
     <category term="shiro" />
+    <category term="Docker" />
     <entry>
         <id>http://xinghuohan.cn/2020/12/20/tools/boke-build/</id>
         <title>Hexo配合git hub个人博客环境搭建</title>

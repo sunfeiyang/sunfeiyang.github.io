@@ -28,6 +28,7 @@
     <category term="Spring" />
     <category term="Redis" />
     <category term="shiro" />
+    <category term="Docker" />
     <entry>
         <id>http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/</id>
         <title>IDEA Statistic插件使用,代码统计</title>
