@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/</loc>
+    
+    <lastmod>2021-01-06</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2021/01/05/Linux/Linux-PlanTask/</loc>
+    
+    <lastmod>2021-01-06</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xinghuohan.cn/2021/01/06/Linux/Centos-Docker/</loc>
     
     <lastmod>2021-01-06</lastmod>
@@ -16,23 +30,9 @@
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/2021/01/05/Linux/Linux-PlanTask/</loc>
-    
-    <lastmod>2021-01-05</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xinghuohan.cn/2020/12/30/tools/gitPush/</loc>
     
     <lastmod>2020-12-30</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/</loc>
-    
-    <lastmod>2020-12-29</lastmod>
     
   </url>
   
