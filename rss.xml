@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Wed, 06 Jan 2021 11:48:19 +0800</pubDate>
-        <lastBuildDate>Wed, 06 Jan 2021 11:48:19 +0800</lastBuildDate>
+        <pubDate>Wed, 06 Jan 2021 15:48:02 +0800</pubDate>
+        <lastBuildDate>Wed, 06 Jan 2021 15:48:02 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -32,6 +32,83 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Docker</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/01/06/tools/dockerEdit/</guid>
+            <title>Docker 修改MySQL配置</title>
+            <link>http://xinghuohan.cn/2021/01/06/tools/dockerEdit/</link>
+            <category>Docker</category>
+            <pubDate>Wed, 06 Jan 2021 15:48:02 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Docker 修改 MySQL 配置 &lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;docker-修改mysql配置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker-修改mysql配置&#34;&gt;#&lt;/a&gt; Docker 修改 MySQL 配置&lt;/h1&gt;
+&lt;p&gt;作者：YoungJ&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;前言：大部分程序员在刚使用 docker 时，按照教程迅速的就装完了 mysql，在使用的过程中出现各种问题：比如中文乱码、 &lt;code&gt;com.mysql.jdbc.PacketTooBigException: Packet for query is too large (1053 &amp;gt; 1024).&lt;/code&gt;  等等，最简单的方式通过 sql 去设置，但每次重启又还原了，那么本文就是通过 docker 下 MySQL 的配置去解决该问题。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;从安装说起，获取镜像&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;docker pull mysql:5.7.18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查看镜像&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;docker images&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190806154125457.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190806154125457.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;运行 docker 容器&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;docker run -d -p 3306:3306 --name mymysql -e MYSQL_ROOT_PASSWORD=123456 mysql:5.7.18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;(* 这里没有设置挂载外部的配置)&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查看容器是否启动成功&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;docker ps&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190806154209392.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190806154209392.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进入容器&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;docker exec -it 1383f2e49cb7 /bin/bash&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190806154239219.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190806154239219.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查看配置&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;more /etc/mysql/mysql.conf.d/mysqld.cnf&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;（* 如果你执行到这步提示没有该文件，别着急，往下看）&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编辑配置&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;第一种方式：将配置从容器中 copy 到宿主机（之前文章讲到过，可以去看下，如果没有该文件，那这一步省略，稍后直接将我写好的配置放到容器中就好）&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;docker cp mysql:/etc/mysql/mysql.conf.d/mysqld.cnf /root/mysqld.cnf&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;mysqld.cnf 脚本如下：&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; Copyright (c) 2014, 2016, Oracle and/or its affiliates. All rights reserved.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; This program is free software; you can redistribute it and/or modify&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; it under the terms of the GNU General Public License as published by&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; the Free Software Foundation; version 2 of the License.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; This program is distributed &lt;span class=&#34;keyword&#34;&gt;in&lt;/span&gt; the hope that it will be useful,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; but WITHOUT ANY WARRANTY; without even the implied warranty of&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; GNU General Public License &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; more details.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; You should have received a copy of the GNU General Public License&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; along with this program; &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; not, write to the Free Software&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; The MySQL  Server configuration file.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; For explanations see&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; http://dev.mysql.com/doc/mysql/en/server-system-variables.html&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysqld]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;pid-file        = /var/run/mysqld/mysqld.pid&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;socket          = /var/run/mysqld/mysqld.sock&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;datadir         = /var/lib/mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;log&lt;/span&gt;-error      = /var/&lt;span class=&#34;built_in&#34;&gt;log&lt;/span&gt;/mysql/error.log&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; By default we only accept connections from localhost&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;bind&lt;/span&gt;-address   = 127.0.0.1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; Disabling symbolic-links is recommended to prevent assorted security risks&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;symbolic-links=0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;character_set_server=utf8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;init_connect=&amp;#x27;SET NAMES utf8&amp;#x27;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;max_allowed_packet = 20M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysql]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;default-character-set = utf8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysql.server]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;default-character-set = utf8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysqld_safe]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;default-character-set = utf8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[client]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;default-character-set = utf8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;将修改后的配置copy到容器&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;docker cp /root/mysqld.cnf mymysql:/etc/mysql/mysql.conf.d/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;(* mymysql是你容器的name,不清楚的可以通过docker ps看到)&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;另一种方式，直接编辑&lt;br&gt;
+在使用 docker 容器时，有时候里边没有安装 vim，敲 vim 命令时提示说：vim: command not found，这个时候就需要安装 vim，可是当你敲 apt-get install vim 命令时，提示：&lt;br&gt;
+Reading package lists… Done&lt;br&gt;
+Building dependency tree&lt;br&gt;
+Reading state information… Done&lt;br&gt;
+E: Unable to locate package vim&lt;br&gt;
+ 这时候需要敲：&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;apt-get update&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;这个命令的作用是：同步 /etc/apt/sources.list 和 /etc/apt/sources.list.d 中列出的源的索引，这样才能获取到最新的软件包。&lt;br&gt;
+等更新完毕以后再敲命令：&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;apt-get install vim&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;vim /etc/mysql/mysql.conf.d/mysqld.cnf&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;接下来重启容器就可以了（可以参考之前的文章）&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;docker restart 1383f2e49cb7 &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/06/Linux/Centos-Docker/</guid>
             <title>CentOS安装Docker图形化工具</title>
