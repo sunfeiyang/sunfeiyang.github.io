@@ -5,14 +5,13 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Mon, 14 Sep 2020 00:00:00 +0800</pubDate>
-        <lastBuildDate>Mon, 14 Sep 2020 00:00:00 +0800</lastBuildDate>
+        <pubDate>Fri, 08 Jan 2021 16:15:21 +0800</pubDate>
+        <lastBuildDate>Fri, 08 Jan 2021 16:15:21 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
         <category>IDEA</category>
         <category>Statistic</category>
-        <category>远程调试</category>
         <category>CentOS</category>
         <category>JDK</category>
         <category>Centos</category>
@@ -32,6 +31,22 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Docker</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/01/08/IDEA/IDEA-translation/</guid>
+            <title>IDEA 翻译</title>
+            <link>http://xinghuohan.cn/2021/01/08/IDEA/IDEA-translation/</link>
+            <category>IDEA</category>
+            <pubDate>Fri, 08 Jan 2021 16:15:21 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;IDEA 翻译，插件安装及对应的代码消息提醒实时翻译&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;插件下载&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#插件下载&#34;&gt;#&lt;/a&gt; 插件下载&lt;/h3&gt;
+&lt;p&gt;插件名称 &lt;code&gt;translation&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210108162128978.png&#34; alt=&#34;image-20210108162128978&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210108162128978.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;插件设置&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210108162236494.png&#34; alt=&#34;image-20210108162236494&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210108162236494.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;勾选下面的其他内容，才会实时翻译&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210108162315892.png&#34; alt=&#34;image-20210108162315892&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210108162315892.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/</guid>
             <title>IDEA Statistic插件使用,代码统计</title>
@@ -57,7 +72,6 @@
             <title>IDEA 远程调试</title>
             <link>http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</link>
             <category>IDEA</category>
-            <category>远程调试</category>
             <pubDate>Tue, 08 Sep 2020 22:55:59 +0800</pubDate>
             <description><![CDATA[ &lt;h3 id=&#34;本机调试&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#本机调试&#34;&gt;#&lt;/a&gt; &lt;strong&gt;本机调试&lt;/strong&gt;&lt;/h3&gt;
 &lt;p&gt;此处不做过多解释，相信考虑远程 debug 调试的，肯定对本机调试是有一定了解的。说下自己在本机调试 spring Boot 项目时遇到的项目长时间卡顿，这个时候可能是因为本机环境中 debug 断点太多，去除一下后即可正常启动；&lt;/p&gt;
