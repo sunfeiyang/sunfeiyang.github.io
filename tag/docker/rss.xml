@@ -31,6 +31,7 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Docker</category>
+        <category>JRebel</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/06/tools/dockerEdit/</guid>
             <title>Docker 修改MySQL配置</title>

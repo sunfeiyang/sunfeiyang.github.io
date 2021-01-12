@@ -1,0 +1,19 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "sunfy • All posts by \"jrebel\" tag",
+    "description": "",
+    "home_page_url": "http://xinghuohan.cn",
+    "items": [
+        {
+            "id": "http://xinghuohan.cn/2019/12/14/IDEA/IDEA-JRebel/",
+            "url": "http://xinghuohan.cn/2019/12/14/IDEA/IDEA-JRebel/",
+            "title": "IDEA JRebel 破解最简单的使用",
+            "date_published": "2019-12-13T16:00:00.000Z",
+            "content_html": "<p>JRebel</p>\n<p>JRebel 是一款 JVM 插件，它使得 Java 代码修改后不用重启系统，立即生效。IDEA 上原生是不支持热部署的，一般更新了 Java 文件后要手动重启 Tomcat 服务器，才能生效，浪费时间浪费生命。<a id=\"more\"></a></p>\n<p>目前对于 idea 热部署最好的解决方案就是安装 JRebel 插件。</p>\n<h2 id=\"简单破解\"><a class=\"markdownIt-Anchor\" href=\"#简单破解\">#</a> 简单破解</h2>\n<ul>\n<li>步骤 1: 生成一个 GUID：\n<ul>\n<li>生成 GUID 网站如下</li>\n<li><img src=\"/img/image-20210112092008958.png\" alt=\"image-20210112092008958\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210112092008958.png\" class=\"lozad post-image\"></li>\n<li><a href=\"https://www.guidgen.com/\">在线生成 GUID 地址</a></li>\n</ul>\n</li>\n<li>步骤 2: 根据反向代理服务器地址拼接激活地址\n<ul>\n<li GUID=\"\">服务器地址： <a href=\"https://jrebel.qekang.com/\">https://jrebel.qekang.com/</a></li>\n</ul>\n</li>\n</ul>\n<p>如果失效刷新 GUID 替换就可以！</p>\n<p>步骤 3: 打开 jrebel 激活面板。选择 Connect to online licensing service .</p>\n<p><img src=\"/img/image-20210112092413865.png\" alt=\"image-20210112092413865\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210112092413865.png\" class=\"lozad post-image\"></p>\n<p>激活成功的界面：</p>\n<p><img src=\"/img/image-20210112092457213.png\" alt=\"image-20210112092457213\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210112092457213.png\" class=\"lozad post-image\"></p>\n",
+            "tags": [
+                "IDEA",
+                "JRebel"
+            ]
+        }
+    ]
+}

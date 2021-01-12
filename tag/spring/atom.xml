@@ -28,6 +28,7 @@
     <category term="Redis" />
     <category term="shiro" />
     <category term="Docker" />
+    <category term="JRebel" />
     <entry>
         <id>http://xinghuohan.cn/2020/09/25/java/designpattern/observer/</id>
         <title>java设计模式之观察者模式</title>

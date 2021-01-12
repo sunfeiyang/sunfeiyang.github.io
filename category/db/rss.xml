@@ -31,6 +31,7 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Docker</category>
+        <category>JRebel</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/12/08/DB/MySQl-install/</guid>
             <title>CentOS安装MySql5.7</title>

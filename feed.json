@@ -5,16 +5,6 @@
     "home_page_url": "http://xinghuohan.cn",
     "items": [
         {
-            "id": "http://xinghuohan.cn/2021/01/08/IDEA/IDEA-translation/",
-            "url": "http://xinghuohan.cn/2021/01/08/IDEA/IDEA-translation/",
-            "title": "IDEA 翻译",
-            "date_published": "2021-01-08T08:15:21.858Z",
-            "content_html": "<p>IDEA 翻译，插件安装及对应的代码消息提醒实时翻译<a id=\"more\"></a></p>\n<h3 id=\"插件下载\"><a class=\"markdownIt-Anchor\" href=\"#插件下载\">#</a> 插件下载</h3>\n<p>插件名称 <code>translation</code></p>\n<p><img src=\"/img/image-20210108162128978.png\" alt=\"image-20210108162128978\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210108162128978.png\" class=\"lozad post-image\"></p>\n<p>插件设置</p>\n<p><img src=\"/img/image-20210108162236494.png\" alt=\"image-20210108162236494\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210108162236494.png\" class=\"lozad post-image\"></p>\n<p>勾选下面的其他内容，才会实时翻译</p>\n<p><img src=\"/img/image-20210108162315892.png\" alt=\"image-20210108162315892\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210108162315892.png\" class=\"lozad post-image\"></p>\n",
-            "tags": [
-                "IDEA"
-            ]
-        },
-        {
             "id": "http://xinghuohan.cn/2021/01/06/tools/dockerEdit/",
             "url": "http://xinghuohan.cn/2021/01/06/tools/dockerEdit/",
             "title": "Docker 修改MySQL配置",
@@ -219,6 +209,17 @@
             "tags": [
                 "Java",
                 "MyBatis"
+            ]
+        },
+        {
+            "id": "http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/",
+            "url": "http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/",
+            "title": "Ubuntu截图工具",
+            "date_published": "2020-10-20T07:16:03.159Z",
+            "content_html": "<p>Linux 系统 Ubuntu 截图工具推荐使用</p>\n<a id=\"more\"></a>\n<h3 id=\"前言\"><a class=\"markdownIt-Anchor\" href=\"#前言\">#</a> 前言</h3>\n<p>Windows 上习惯了 QQ 的截图工具，本工具类似 QQ 截图工具功能，在习惯 QQ 截图的情况下可以很方便的使用。效果图：<img src=\"/img/image-20201020151914799.png\" alt=\"image-20201020151914799\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20201020151914799.png\" class=\"lozad post-image\"></p>\n<h3 id=\"安装过程\"><a class=\"markdownIt-Anchor\" href=\"#安装过程\">#</a> 安装过程</h3>\n<pre class=\"highlight\"><span class=\"line\">sudo apt-get install flameshot</span><br></pre>\n<h3 id=\"启动命令\"><a class=\"markdownIt-Anchor\" href=\"#启动命令\">#</a> 启动命令</h3>\n<pre class=\"highlight\"><span class=\"line\">flameshot gui</span><br></pre>\n<h3 id=\"设置快捷方式\"><a class=\"markdownIt-Anchor\" href=\"#设置快捷方式\">#</a> 设置快捷方式</h3>\n<p><img src=\"/img/image-20201020152205127.png\" alt=\"image-20201020152205127\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20201020152205127.png\" class=\"lozad post-image\"></p>\n<p>本机操作系统版本为 Ubuntu 20.04, 不同版本可能设置快捷键位置名称有些不同，可以自行根据系统版本设置</p>\n<p>具体设置</p>\n<p><img src=\"/img/image-20201020152406303.png\" alt=\"image-20201020152406303\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20201020152406303.png\" class=\"lozad post-image\"></p>\n<h3 id=\"软件设置\"><a class=\"markdownIt-Anchor\" href=\"#软件设置\">#</a> 软件设置</h3>\n<p><img src=\"/img/image-20201020152618648.png\" alt=\"image-20201020152618648\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20201020152618648.png\" class=\"lozad post-image\"></p>\n",
+            "tags": [
+                "Linux",
+                "Ubuntu"
             ]
         }
     ]

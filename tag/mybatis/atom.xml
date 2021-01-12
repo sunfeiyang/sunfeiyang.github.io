@@ -28,6 +28,7 @@
     <category term="Redis" />
     <category term="shiro" />
     <category term="Docker" />
+    <category term="JRebel" />
     <entry>
         <id>http://xinghuohan.cn/2020/10/22/java/MyBatis/MyBatisResourceBuild/</id>
         <title>MyBatis源码编译环境构建</title>

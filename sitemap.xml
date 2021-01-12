@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xinghuohan.cn/2021/01/08/IDEA/IDEA-translation/</loc>
+    <loc>http://xinghuohan.cn/2020/05/14/IDEA/IDEA-translation/</loc>
     
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/11/14/IDEA/IDEA-Statistic/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/12/14/IDEA/IDEA-JRebel/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
     
   </url>
   
@@ -225,17 +239,10 @@
     
   </url>
   
-  <url>
-    <loc>http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/</loc>
-    
-    <lastmod>2020-09-16</lastmod>
-    
-  </url>
-  
 
   <url>
     <loc>http://xinghuohan.cn/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -243,168 +250,175 @@
   
   <url>
     <loc>http://xinghuohan.cn/tags/DB/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/MySQL/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/Linux/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/IDEA/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/Statistic/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/CentOS/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/JDK/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/Centos/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/Ubuntu/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/VMware/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/Java/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/tools/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/git/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/IO/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/MQ/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/MyBatis/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/SpringBoot/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/WebSocket/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/Zookeeper/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/Spring/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/Redis/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/shiro/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/tags/Docker/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/tags/JRebel/</loc>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -413,35 +427,35 @@
   
   <url>
     <loc>http://xinghuohan.cn/categories/DB/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/categories/IDEA/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/categories/Linux/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/categories/Java/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://xinghuohan.cn/categories/tools/</loc>
-    <lastmod>2021-01-08</lastmod>
+    <lastmod>2021-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>

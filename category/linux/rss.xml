@@ -31,6 +31,7 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Docker</category>
+        <category>JRebel</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/06/Linux/Centos-Docker/</guid>
             <title>CentOS安装Docker图形化工具</title>

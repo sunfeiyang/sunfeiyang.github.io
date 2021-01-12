@@ -31,6 +31,7 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Docker</category>
+        <category>JRebel</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/</guid>
             <title>Ubuntu系统安装后做的系统优化</title>

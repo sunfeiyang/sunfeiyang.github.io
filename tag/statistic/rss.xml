@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Mon, 14 Sep 2020 00:00:00 +0800</pubDate>
-        <lastBuildDate>Mon, 14 Sep 2020 00:00:00 +0800</lastBuildDate>
+        <pubDate>Thu, 14 Nov 2019 00:00:00 +0800</pubDate>
+        <lastBuildDate>Thu, 14 Nov 2019 00:00:00 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -31,13 +31,14 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Docker</category>
+        <category>JRebel</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2019/11/14/IDEA/IDEA-Statistic/</guid>
             <title>IDEA Statistic插件使用,代码统计</title>
-            <link>http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/</link>
+            <link>http://xinghuohan.cn/2019/11/14/IDEA/IDEA-Statistic/</link>
             <category>IDEA</category>
             <category>Statistic</category>
-            <pubDate>Mon, 14 Sep 2020 00:00:00 +0800</pubDate>
+            <pubDate>Thu, 14 Nov 2019 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;IDEA 插件 Statistic 使用，主要代码行数，将代码数量统计并直观展示出来.&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;1插件安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1插件安装&#34;&gt;#&lt;/a&gt; 1. 插件安装&lt;/h3&gt;
 &lt;p&gt;IDEA–&amp;gt;file–&amp;gt;settings–&amp;gt;plugins–&amp;gt; 搜索插件 (Statistic)&lt;/p&gt;

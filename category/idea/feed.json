@@ -5,27 +5,6 @@
     "home_page_url": "http://xinghuohan.cn",
     "items": [
         {
-            "id": "http://xinghuohan.cn/2021/01/08/IDEA/IDEA-translation/",
-            "url": "http://xinghuohan.cn/2021/01/08/IDEA/IDEA-translation/",
-            "title": "IDEA 翻译",
-            "date_published": "2021-01-08T08:15:21.858Z",
-            "content_html": "<p>IDEA 翻译，插件安装及对应的代码消息提醒实时翻译<a id=\"more\"></a></p>\n<h3 id=\"插件下载\"><a class=\"markdownIt-Anchor\" href=\"#插件下载\">#</a> 插件下载</h3>\n<p>插件名称 <code>translation</code></p>\n<p><img src=\"/img/image-20210108162128978.png\" alt=\"image-20210108162128978\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210108162128978.png\" class=\"lozad post-image\"></p>\n<p>插件设置</p>\n<p><img src=\"/img/image-20210108162236494.png\" alt=\"image-20210108162236494\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210108162236494.png\" class=\"lozad post-image\"></p>\n<p>勾选下面的其他内容，才会实时翻译</p>\n<p><img src=\"/img/image-20210108162315892.png\" alt=\"image-20210108162315892\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210108162315892.png\" class=\"lozad post-image\"></p>\n",
-            "tags": [
-                "IDEA"
-            ]
-        },
-        {
-            "id": "http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/",
-            "url": "http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/",
-            "title": "IDEA Statistic插件使用,代码统计",
-            "date_published": "2020-09-13T16:00:00.000Z",
-            "content_html": "<p>IDEA 插件 Statistic 使用，主要代码行数，将代码数量统计并直观展示出来.<a id=\"more\"></a></p>\n<h3 id=\"1插件安装\"><a class=\"markdownIt-Anchor\" href=\"#1插件安装\">#</a> 1. 插件安装</h3>\n<p>IDEA–&gt;file–&gt;settings–&gt;plugins–&gt; 搜索插件 (Statistic)</p>\n<img src=\"/img/image-20200914103816130.png\" alt=\"image-20200914103816130\" style=\"zoom:67%;\" / srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200914103816130.png\" class=\"lozad post-image\">\n<p>我这里已经安装，还未重启 IDE, 点击 Install 安装插件，安装完成后根据提重启 IDE</p>\n<h3 id=\"2插件使用\"><a class=\"markdownIt-Anchor\" href=\"#2插件使用\">#</a> 2. 插件使用</h3>\n<p>重启 IDE 后，在屏幕下方会有一个 statistic 按钮，点击后可以看到如下页面:</p>\n<p><img src=\"/img/image-20200916110627597.png\" alt=\"image-20200916110627597\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200916110627597.png\" class=\"lozad post-image\"></p>\n<p>单击 refresh 按钮后可以查看实时代码统计情况:</p>\n<p><img src=\"/img/image-20200916110737414.png\" alt=\"image-20200916110737414\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200916110737414.png\" class=\"lozad post-image\"></p>\n<p><img src=\"/img/image-20200916111558837.png\" alt=\"image-20200916111558837\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200916111558837.png\" class=\"lozad post-image\"></p>\n",
-            "tags": [
-                "IDEA",
-                "Statistic"
-            ]
-        },
-        {
             "id": "http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/",
             "url": "http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/",
             "title": "IDEA 远程调试",
@@ -33,6 +12,38 @@
             "content_html": "<h3 id=\"本机调试\"><a class=\"markdownIt-Anchor\" href=\"#本机调试\">#</a> <strong>本机调试</strong></h3>\n<p>此处不做过多解释，相信考虑远程 debug 调试的，肯定对本机调试是有一定了解的。说下自己在本机调试 spring Boot 项目时遇到的项目长时间卡顿，这个时候可能是因为本机环境中 debug 断点太多，去除一下后即可正常启动；</p>\n<h3 id=\"远程调试\"><a class=\"markdownIt-Anchor\" href=\"#远程调试\">#</a> <strong>远程调试</strong></h3>\n<p>远程调试一个大前提就是我们需要保证远程代码和本地代码一致；</p>\n<hr>\n<p><strong>此处部署为 war 包项目</strong></p>\n<p>在远程环境中要开启允许远程 debug 调试</p>\n<ol>\n<li>windows 环境–》bin 目录–》 <code>startup.bat</code>  增加设置 (此处设置 debug 端口为 address=8081，可以根据实际条件自行设置)</li>\n</ol>\n<pre class=\"highlight\"><span class=\"line\">SET CATALINA_OPTS&#x3D;-server -Xdebug -Xnoagent -Djava.compiler&#x3D;NONE -Xrunjdwp:transport&#x3D;dt_socket,server&#x3D;y,suspend&#x3D;n,address&#x3D;8081</span><br></pre>\n<ol>\n<li>Linux 环境中–》 <code>catalina.sh</code>  文件</li>\n</ol>\n<pre class=\"highlight\"><span class=\"line\">CATALINA_OPTS&#x3D;&quot;-Xdebug -Xrunjdwp:transport&#x3D;dt_socket,suspend&#x3D;n,server&#x3D;y,address&#x3D;8081&quot;</span><br></pre>\n<p>IDEA 中创建 debug 调试</p>\n<p><img src=\"https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"https://img-blog.csdnimg.cn/20190809174957123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70\" class=\"lozad post-image\"><img src=\"https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"https://img-blog.csdnimg.cn/20190809175016989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70\" class=\"lozad post-image\"><img src=\"https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"https://img-blog.csdnimg.cn/2019080917503035.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NmeTEwMjYxMQ==,size_16,color_FFFFFF,t_70\" class=\"lozad post-image\"></p>\n<ol>\n<li>\n<p>全部设置完成后，重启项目</p>\n</li>\n<li>\n<p><img src=\"https://img-blog.csdnimg.cn/20190809175100811.png\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"https://img-blog.csdnimg.cn/20190809175100811.png\" class=\"lozad post-image\"></p>\n</li>\n<li></li>\n</ol>\n<p>然后 idea 中 debug 启动刚才新建的服务，在本机代码中打断点，发起相应请求即可进入 debug 模式；</p>\n<hr>\n<p>若项目为 jar 项目应该使用</p>\n<p><img src=\"https://img-blog.csdnimg.cn/20190809175123597.png\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"https://img-blog.csdnimg.cn/20190809175123597.png\" class=\"lozad post-image\"></p>\n",
             "tags": [
                 "IDEA"
+            ]
+        },
+        {
+            "id": "http://xinghuohan.cn/2020/05/14/IDEA/IDEA-translation/",
+            "url": "http://xinghuohan.cn/2020/05/14/IDEA/IDEA-translation/",
+            "title": "IDEA 翻译",
+            "date_published": "2020-05-13T16:00:00.000Z",
+            "content_html": "<p>IDEA 翻译，插件安装及对应的代码消息提醒实时翻译<a id=\"more\"></a></p>\n<h3 id=\"插件下载\"><a class=\"markdownIt-Anchor\" href=\"#插件下载\">#</a> 插件下载</h3>\n<p>插件名称 <code>translation</code></p>\n<p><img src=\"/img/image-20210108162128978.png\" alt=\"image-20210108162128978\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210108162128978.png\" class=\"lozad post-image\"></p>\n<p>插件设置</p>\n<p><img src=\"/img/image-20210108162236494.png\" alt=\"image-20210108162236494\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210108162236494.png\" class=\"lozad post-image\"></p>\n<p>勾选下面的其他内容，才会实时翻译</p>\n<p><img src=\"/img/image-20210108162315892.png\" alt=\"image-20210108162315892\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210108162315892.png\" class=\"lozad post-image\"></p>\n",
+            "tags": [
+                "IDEA"
+            ]
+        },
+        {
+            "id": "http://xinghuohan.cn/2019/12/14/IDEA/IDEA-JRebel/",
+            "url": "http://xinghuohan.cn/2019/12/14/IDEA/IDEA-JRebel/",
+            "title": "IDEA JRebel 破解最简单的使用",
+            "date_published": "2019-12-13T16:00:00.000Z",
+            "content_html": "<p>JRebel</p>\n<p>JRebel 是一款 JVM 插件，它使得 Java 代码修改后不用重启系统，立即生效。IDEA 上原生是不支持热部署的，一般更新了 Java 文件后要手动重启 Tomcat 服务器，才能生效，浪费时间浪费生命。<a id=\"more\"></a></p>\n<p>目前对于 idea 热部署最好的解决方案就是安装 JRebel 插件。</p>\n<h2 id=\"简单破解\"><a class=\"markdownIt-Anchor\" href=\"#简单破解\">#</a> 简单破解</h2>\n<ul>\n<li>步骤 1: 生成一个 GUID：\n<ul>\n<li>生成 GUID 网站如下</li>\n<li><img src=\"/img/image-20210112092008958.png\" alt=\"image-20210112092008958\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210112092008958.png\" class=\"lozad post-image\"></li>\n<li><a href=\"https://www.guidgen.com/\">在线生成 GUID 地址</a></li>\n</ul>\n</li>\n<li>步骤 2: 根据反向代理服务器地址拼接激活地址\n<ul>\n<li GUID=\"\">服务器地址： <a href=\"https://jrebel.qekang.com/\">https://jrebel.qekang.com/</a></li>\n</ul>\n</li>\n</ul>\n<p>如果失效刷新 GUID 替换就可以！</p>\n<p>步骤 3: 打开 jrebel 激活面板。选择 Connect to online licensing service .</p>\n<p><img src=\"/img/image-20210112092413865.png\" alt=\"image-20210112092413865\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210112092413865.png\" class=\"lozad post-image\"></p>\n<p>激活成功的界面：</p>\n<p><img src=\"/img/image-20210112092457213.png\" alt=\"image-20210112092457213\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210112092457213.png\" class=\"lozad post-image\"></p>\n",
+            "tags": [
+                "IDEA",
+                "JRebel"
+            ]
+        },
+        {
+            "id": "http://xinghuohan.cn/2019/11/14/IDEA/IDEA-Statistic/",
+            "url": "http://xinghuohan.cn/2019/11/14/IDEA/IDEA-Statistic/",
+            "title": "IDEA Statistic插件使用,代码统计",
+            "date_published": "2019-11-13T16:00:00.000Z",
+            "content_html": "<p>IDEA 插件 Statistic 使用，主要代码行数，将代码数量统计并直观展示出来.<a id=\"more\"></a></p>\n<h3 id=\"1插件安装\"><a class=\"markdownIt-Anchor\" href=\"#1插件安装\">#</a> 1. 插件安装</h3>\n<p>IDEA–&gt;file–&gt;settings–&gt;plugins–&gt; 搜索插件 (Statistic)</p>\n<img src=\"/img/image-20200914103816130.png\" alt=\"image-20200914103816130\" style=\"zoom:67%;\" / srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200914103816130.png\" class=\"lozad post-image\">\n<p>我这里已经安装，还未重启 IDE, 点击 Install 安装插件，安装完成后根据提重启 IDE</p>\n<h3 id=\"2插件使用\"><a class=\"markdownIt-Anchor\" href=\"#2插件使用\">#</a> 2. 插件使用</h3>\n<p>重启 IDE 后，在屏幕下方会有一个 statistic 按钮，点击后可以看到如下页面:</p>\n<p><img src=\"/img/image-20200916110627597.png\" alt=\"image-20200916110627597\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200916110627597.png\" class=\"lozad post-image\"></p>\n<p>单击 refresh 按钮后可以查看实时代码统计情况:</p>\n<p><img src=\"/img/image-20200916110737414.png\" alt=\"image-20200916110737414\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200916110737414.png\" class=\"lozad post-image\"></p>\n<p><img src=\"/img/image-20200916111558837.png\" alt=\"image-20200916111558837\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200916111558837.png\" class=\"lozad post-image\"></p>\n",
+            "tags": [
+                "IDEA",
+                "Statistic"
             ]
         }
     ]

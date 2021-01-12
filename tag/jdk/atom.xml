@@ -28,6 +28,7 @@
     <category term="Redis" />
     <category term="shiro" />
     <category term="Docker" />
+    <category term="JRebel" />
     <entry>
         <id>http://xinghuohan.cn/2021/01/05/Linux/Linux-PlanTask/</id>
         <title>Linux执行定时任务</title>

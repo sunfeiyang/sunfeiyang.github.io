@@ -5,10 +5,10 @@
     "home_page_url": "http://xinghuohan.cn",
     "items": [
         {
-            "id": "http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/",
-            "url": "http://xinghuohan.cn/2020/09/14/IDEA/IDEA-Statistic/",
+            "id": "http://xinghuohan.cn/2019/11/14/IDEA/IDEA-Statistic/",
+            "url": "http://xinghuohan.cn/2019/11/14/IDEA/IDEA-Statistic/",
             "title": "IDEA Statistic插件使用,代码统计",
-            "date_published": "2020-09-13T16:00:00.000Z",
+            "date_published": "2019-11-13T16:00:00.000Z",
             "content_html": "<p>IDEA 插件 Statistic 使用，主要代码行数，将代码数量统计并直观展示出来.<a id=\"more\"></a></p>\n<h3 id=\"1插件安装\"><a class=\"markdownIt-Anchor\" href=\"#1插件安装\">#</a> 1. 插件安装</h3>\n<p>IDEA–&gt;file–&gt;settings–&gt;plugins–&gt; 搜索插件 (Statistic)</p>\n<img src=\"/img/image-20200914103816130.png\" alt=\"image-20200914103816130\" style=\"zoom:67%;\" / srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200914103816130.png\" class=\"lozad post-image\">\n<p>我这里已经安装，还未重启 IDE, 点击 Install 安装插件，安装完成后根据提重启 IDE</p>\n<h3 id=\"2插件使用\"><a class=\"markdownIt-Anchor\" href=\"#2插件使用\">#</a> 2. 插件使用</h3>\n<p>重启 IDE 后，在屏幕下方会有一个 statistic 按钮，点击后可以看到如下页面:</p>\n<p><img src=\"/img/image-20200916110627597.png\" alt=\"image-20200916110627597\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200916110627597.png\" class=\"lozad post-image\"></p>\n<p>单击 refresh 按钮后可以查看实时代码统计情况:</p>\n<p><img src=\"/img/image-20200916110737414.png\" alt=\"image-20200916110737414\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200916110737414.png\" class=\"lozad post-image\"></p>\n<p><img src=\"/img/image-20200916111558837.png\" alt=\"image-20200916111558837\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20200916111558837.png\" class=\"lozad post-image\"></p>\n",
             "tags": [
                 "IDEA",
