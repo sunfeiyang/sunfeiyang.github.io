@@ -2,7 +2,119 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xinghuohan.cn/2020/05/14/IDEA/IDEA-translation/</loc>
+    <loc>http://xinghuohan.cn/2019/12/06/java/redis/redisCache/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/11/23/java/redis/redisCluster/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/11/20/java/redis/redisCommand2/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/10/19/java/redis/redisCommand/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/11/15/java/MyBatis/MyBatisResourceBuild/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/11/26/tools/renameFileSuffix/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2020/07/13/tools/gitPush/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/06/15/tools/gitBase/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2021/01/06/tools/dockerEdit/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/05/02/tools/boke-build/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/09/16/Linux/ubuntu-start-init/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2020/06/09/Linux/Linux-PlanTask/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/06/09/Linux/Centos-staticIP/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/08/03/Linux/Centos-JDK/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2020/08/14/Linux/Centos-Docker/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/08/14/IDEA/IDEA-translation/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/12/06/IDEA/IDEA-debug/</loc>
     
     <lastmod>2021-01-12</lastmod>
     
@@ -23,72 +135,9 @@
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/2020/09/08/IDEA/IDEA-debug/</loc>
-    
-    <lastmod>2021-01-08</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2021/01/06/tools/dockerEdit/</loc>
-    
-    <lastmod>2021-01-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/12/20/Linux/ubuntu-start-init/</loc>
-    
-    <lastmod>2021-01-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2021/01/05/Linux/Linux-PlanTask/</loc>
-    
-    <lastmod>2021-01-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2021/01/06/Linux/Centos-Docker/</loc>
-    
-    <lastmod>2021-01-06</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xinghuohan.cn/2020/12/08/DB/MySQl-install/</loc>
     
     <lastmod>2021-01-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/12/30/tools/gitPush/</loc>
-    
-    <lastmod>2020-12-30</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/04/15/tools/gitBase/</loc>
-    
-    <lastmod>2020-12-20</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/12/20/tools/boke-build/</loc>
-    
-    <lastmod>2020-12-20</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/12/08/Linux/Centos-JDK/</loc>
-    
-    <lastmod>2020-12-08</lastmod>
     
   </url>
   
@@ -142,41 +191,6 @@
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/2020/11/17/java/redis/redisCache/</loc>
-    
-    <lastmod>2020-11-17</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/11/06/java/redis/redisCluster/</loc>
-    
-    <lastmod>2020-11-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/11/02/java/redis/redisCommand2/</loc>
-    
-    <lastmod>2020-11-03</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/10/31/java/redis/redisCommand/</loc>
-    
-    <lastmod>2020-11-01</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/10/22/java/MyBatis/MyBatisResourceBuild/</loc>
-    
-    <lastmod>2020-10-22</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/</loc>
     
     <lastmod>2020-10-20</lastmod>
@@ -212,21 +226,7 @@
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/2020/10/13/tools/renameFileSuffix/</loc>
-    
-    <lastmod>2020-10-13</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xinghuohan.cn/2020/09/25/java/designpattern/observer/</loc>
-    
-    <lastmod>2020-09-25</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/09/09/Linux/Centos-staticIP/</loc>
     
     <lastmod>2020-09-25</lastmod>
     

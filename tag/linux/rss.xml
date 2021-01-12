@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Tue, 05 Jan 2021 08:57:56 +0800</pubDate>
-        <lastBuildDate>Tue, 05 Jan 2021 08:57:56 +0800</lastBuildDate>
+        <pubDate>Tue, 08 Dec 2020 13:37:15 +0800</pubDate>
+        <lastBuildDate>Tue, 08 Dec 2020 13:37:15 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -32,50 +32,6 @@
         <category>shiro</category>
         <category>Docker</category>
         <category>JRebel</category>
-        <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2021/01/05/Linux/Linux-PlanTask/</guid>
-            <title>Linux执行定时任务</title>
-            <link>http://xinghuohan.cn/2021/01/05/Linux/Linux-PlanTask/</link>
-            <category>Linux</category>
-            <category>JDK</category>
-            <pubDate>Tue, 05 Jan 2021 08:57:56 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;测试环境为 CentOS7&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;一、通过定时任务备份 mysql 数据库&lt;/p&gt;
-&lt;h3 id=&#34;前提条件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#前提条件&#34;&gt;#&lt;/a&gt; 前提条件：&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;首先在备份机上安装 mysql 的客户端，或者直接安装 mysql 也可以。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;开始备份&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#开始备份&#34;&gt;#&lt;/a&gt; 开始备份&lt;/h3&gt;
-&lt;h4 id=&#34;1-创建备份文件存储路径&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-创建备份文件存储路径&#34;&gt;#&lt;/a&gt; 1、 创建备份文件存储路径&lt;/h4&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;mkdir /data/backup/test/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;2-创建备份脚本&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-创建备份脚本&#34;&gt;#&lt;/a&gt; 2、创建备份脚本&lt;/h4&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;vim backup.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;p&gt;写入 shell：&lt;/p&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; -u用户名 -p密码 这两者中间不能添加空格，存在空格会备份失败&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysqldump -h 需要备份数据库所在机器ip -u用户名 -p密码 备份的数据库名 --opt -Q -R --skip-lock-tables &amp;gt; 备份文件所在路径&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;p&gt;实例：&lt;/p&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 此处的文件保存路径一定要写绝对路径，相对路径会有问题&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysqldump -h 192.168.0.11 -uroot -p123456 test --opt -Q -R --skip-lock-tables &amp;gt; /data/backup/test/test_$(date +%Y%m%d_%H%M%S).sql&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;p&gt;在创建成功之后可以先运行测试一下看看，相应的路径下面是否有备份的 sql 文件生成。&lt;/p&gt;
-&lt;h4 id=&#34;3-创建定时任务&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3-创建定时任务&#34;&gt;#&lt;/a&gt; 3、创建定时任务&lt;/h4&gt;
-&lt;h5 id=&#34;31安装-crontab&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#31安装-crontab&#34;&gt;#&lt;/a&gt; 3.1 安装 &lt;a href=&#34;https://www.baidu.com/s?wd=cron&amp;amp;tn=24004469_oem_dg&amp;amp;rsv_dl=gh_pl_sl_csd&#34;&gt;cron&lt;/a&gt;tab&lt;/h5&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;查看crontab是否安装&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;crontab -l&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;no crontab &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; root  未安装&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;安装crontab&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;yum -y install vixie-cron     # crontabs的核心依赖&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;yum install crontabs&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;服务状态控制&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond start //启动服务 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond stop //关闭服务 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond restart //重启服务 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond reload //重新载入配置 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond status //查看状态&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;或者使用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service crond start &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service crond stop &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service crond restart &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service crond reload &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service crond status&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;开机启动&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;vim /etc/rc.d/rc.local&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond start&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;h5 id=&#34;32加入计划任务&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#32加入计划任务&#34;&gt;#&lt;/a&gt; 3.2 加入计划任务&lt;/h5&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;crontab -e&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 1 * * * sh /data/backup.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;p&gt;查看计划任务是否执行：&lt;/p&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;命令类似tomcat的日志查看&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tail -f /var/log/cron&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;p&gt;至此，其实定时备份已经完成了，不过还可以有个小优化，在每次执行备份的时候检查一下，多长时间之外的备份文件就不要了，不然备份文件日积月累会越来越多，把磁盘挤爆。。。。&lt;/p&gt;
-&lt;p&gt;在 backup.sh 中加入下面语句：&lt;/p&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;rm -rf $(find /data/backup/ -mtime +30 -name &amp;quot;*.sql&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;p&gt;这样就能只备份最近一个月的文件了。&lt;/p&gt;
-&lt;h3 id=&#34;配置参数说明&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#配置参数说明&#34;&gt;#&lt;/a&gt; 配置参数说明&lt;/h3&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;基本格式 :&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;*　　*　　*　　*　　*　　command&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;分　时　日　月　周　命令&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第1列表示分钟1～59 每分钟用*或者 */1表示&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第2列表示小时1～23（0表示0点）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第3列表示日期1～31&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第4列表示月份1～12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第5列标识号星期0～6（0表示星期天）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第6列要运行的命令&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;crontab文件的一些例子：&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;30 21 * * * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;上面的例子表示每晚的21:30重启apache。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;45 4 1,10,22 * * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;上面的例子表示每月1、10、22日的4 : 45重启apache。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10 1 * * 6,0 /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;上面的例子表示每周六、周日的1 : 10重启apache。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0,30 18-23 * * * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;上面的例子表示在每天18 : 00至23 : 00之间每隔30分钟重启apache。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 23 * * 6 /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;上面的例子表示每星期六的11 : 00 pm重启apache。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;* */1 * * * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;每一小时重启apache&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;* 23-7/1 * * * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;晚上11点到早上7点之间，每隔一小时重启apache&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 11 4 * mon-wed /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;每月的4号与每周一到周三的11点重启apache&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 4 1 jan * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;一月一号的4点重启apache&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;可能出现的问题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#可能出现的问题&#34;&gt;#&lt;/a&gt; 可能出现的问题&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;/img/image-20210106132325967.png&#34; alt=&#34;image-20210106132325967&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210106132325967.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;p&gt;定时任务执行时提示错误 &lt;code&gt;0x004b#012&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;需要修改一个配置&lt;/p&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;vim /etc/postfix/main.cf&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/img/image-20210106132521335.png&#34; alt=&#34;image-20210106132521335&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210106132521335.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
- ]]></description>
-        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/12/08/DB/MySQl-install/</guid>
             <title>CentOS安装MySql5.7</title>
@@ -222,12 +178,56 @@
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/09/09/Linux/Centos-staticIP/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/06/09/Linux/Linux-PlanTask/</guid>
+            <title>Linux执行定时任务</title>
+            <link>http://xinghuohan.cn/2020/06/09/Linux/Linux-PlanTask/</link>
+            <category>Linux</category>
+            <category>JDK</category>
+            <pubDate>Tue, 09 Jun 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;测试环境为 CentOS7&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;一、通过定时任务备份 mysql 数据库&lt;/p&gt;
+&lt;h3 id=&#34;前提条件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#前提条件&#34;&gt;#&lt;/a&gt; 前提条件：&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;首先在备份机上安装 mysql 的客户端，或者直接安装 mysql 也可以。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;开始备份&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#开始备份&#34;&gt;#&lt;/a&gt; 开始备份&lt;/h3&gt;
+&lt;h4 id=&#34;1-创建备份文件存储路径&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-创建备份文件存储路径&#34;&gt;#&lt;/a&gt; 1、 创建备份文件存储路径&lt;/h4&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;mkdir /data/backup/test/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;2-创建备份脚本&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-创建备份脚本&#34;&gt;#&lt;/a&gt; 2、创建备份脚本&lt;/h4&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;vim backup.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;写入 shell：&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; -u用户名 -p密码 这两者中间不能添加空格，存在空格会备份失败&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysqldump -h 需要备份数据库所在机器ip -u用户名 -p密码 备份的数据库名 --opt -Q -R --skip-lock-tables &amp;gt; 备份文件所在路径&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;实例：&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 此处的文件保存路径一定要写绝对路径，相对路径会有问题&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysqldump -h 192.168.0.11 -uroot -p123456 test --opt -Q -R --skip-lock-tables &amp;gt; /data/backup/test/test_$(date +%Y%m%d_%H%M%S).sql&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;在创建成功之后可以先运行测试一下看看，相应的路径下面是否有备份的 sql 文件生成。&lt;/p&gt;
+&lt;h4 id=&#34;3-创建定时任务&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3-创建定时任务&#34;&gt;#&lt;/a&gt; 3、创建定时任务&lt;/h4&gt;
+&lt;h5 id=&#34;31安装-crontab&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#31安装-crontab&#34;&gt;#&lt;/a&gt; 3.1 安装 &lt;a href=&#34;https://www.baidu.com/s?wd=cron&amp;amp;tn=24004469_oem_dg&amp;amp;rsv_dl=gh_pl_sl_csd&#34;&gt;cron&lt;/a&gt;tab&lt;/h5&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;查看crontab是否安装&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;crontab -l&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;no crontab &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; root  未安装&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;安装crontab&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;yum -y install vixie-cron     # crontabs的核心依赖&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;yum install crontabs&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;服务状态控制&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond start //启动服务 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond stop //关闭服务 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond restart //重启服务 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond reload //重新载入配置 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond status //查看状态&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;或者使用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service crond start &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service crond stop &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service crond restart &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service crond reload &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;service crond status&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;开机启动&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;vim /etc/rc.d/rc.local&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/sbin/service crond start&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h5 id=&#34;32加入计划任务&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#32加入计划任务&#34;&gt;#&lt;/a&gt; 3.2 加入计划任务&lt;/h5&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;crontab -e&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 1 * * * sh /data/backup.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;查看计划任务是否执行：&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;命令类似tomcat的日志查看&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tail -f /var/log/cron&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;至此，其实定时备份已经完成了，不过还可以有个小优化，在每次执行备份的时候检查一下，多长时间之外的备份文件就不要了，不然备份文件日积月累会越来越多，把磁盘挤爆。。。。&lt;/p&gt;
+&lt;p&gt;在 backup.sh 中加入下面语句：&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;rm -rf $(find /data/backup/ -mtime +30 -name &amp;quot;*.sql&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;这样就能只备份最近一个月的文件了。&lt;/p&gt;
+&lt;h3 id=&#34;配置参数说明&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#配置参数说明&#34;&gt;#&lt;/a&gt; 配置参数说明&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;基本格式 :&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;*　　*　　*　　*　　*　　command&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;分　时　日　月　周　命令&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第1列表示分钟1～59 每分钟用*或者 */1表示&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第2列表示小时1～23（0表示0点）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第3列表示日期1～31&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第4列表示月份1～12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第5列标识号星期0～6（0表示星期天）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;第6列要运行的命令&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;crontab文件的一些例子：&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;30 21 * * * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;上面的例子表示每晚的21:30重启apache。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;45 4 1,10,22 * * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;上面的例子表示每月1、10、22日的4 : 45重启apache。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10 1 * * 6,0 /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;上面的例子表示每周六、周日的1 : 10重启apache。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0,30 18-23 * * * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;上面的例子表示在每天18 : 00至23 : 00之间每隔30分钟重启apache。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 23 * * 6 /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;上面的例子表示每星期六的11 : 00 pm重启apache。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;* */1 * * * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;每一小时重启apache&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;* 23-7/1 * * * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;晚上11点到早上7点之间，每隔一小时重启apache&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 11 4 * mon-wed /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;每月的4号与每周一到周三的11点重启apache&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;0 4 1 jan * /usr/local/etc/rc.d/lighttpd restart&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;一月一号的4点重启apache&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;可能出现的问题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#可能出现的问题&#34;&gt;#&lt;/a&gt; 可能出现的问题&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210106132325967.png&#34; alt=&#34;image-20210106132325967&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210106132325967.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;定时任务执行时提示错误 &lt;code&gt;0x004b#012&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;需要修改一个配置&lt;/p&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;vim /etc/postfix/main.cf&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210106132521335.png&#34; alt=&#34;image-20210106132521335&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210106132521335.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2019/06/09/Linux/Centos-staticIP/</guid>
             <title>Centos设置静态ip</title>
-            <link>http://xinghuohan.cn/2020/09/09/Linux/Centos-staticIP/</link>
+            <link>http://xinghuohan.cn/2019/06/09/Linux/Centos-staticIP/</link>
             <category>Linux</category>
             <category>Centos</category>
-            <pubDate>Wed, 09 Sep 2020 22:23:46 +0800</pubDate>
+            <pubDate>Sun, 09 Jun 2019 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;Centos 设置静态 IP&lt;/p&gt;
 &lt;p&gt;Vmware workstation 中的 centos ip 地址会在没重启的情况下发生变化。 虚拟机的 IP 租约过期后，IP 就会自动重新分配，从而造成 IP 地址自行变化。&lt;/p&gt;
 &lt;p&gt;为了应用方便，需要设置 centos 的固定 ip。 版本 centos7&lt;/p&gt;

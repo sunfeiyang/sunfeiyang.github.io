@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.png">
+  <title>sunfy</title>
+  
+  
+  <meta property="og:title" content="高并发Redis缓存那些事儿">
+  
+  
+  <meta property="og:url" content="http://xinghuohan.cn/2019/12/06/java/redis/redisCache/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.png">
+  
+  
+  <meta property="og:img" content="&lt;p&gt;Redis 缓存常见问题及相应问题的解决方案">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-12-06">
+  <meta property="og:article:modified_time" content="2021-01-12">
+  <meta property="og:article:author" content="sunfy">
+  
+  
+  <meta property="og:article:tag" content="Java">
+  
+  <meta property="og:article:tag" content="Redis">
+  
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="sunfy" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.png">
+      
+      <span class="navbar-logo-dsc">sunfy</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      高并发Redis缓存那些事儿
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-12-05T16:00:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-12-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Java/" class="post-meta-link">Java</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.7k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Java/" class="post-meta-link">Java</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Redis/" class="post-meta-link">Redis</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>Redis 缓存常见问题及相应问题的解决方案<a id="more"></a></p>
+<h2 id="缓存穿透"><a class="markdownIt-Anchor" href="#缓存穿透">#</a> 缓存穿透</h2>
+<p>查询一个根本不存在的数据， 缓存层和存储层都不会命中， 通常出于容错的考虑， 如果从存储层查不到数据则不写入缓存层。缓存穿透将导致不存在的数据每次请求都要到存储层去查询， 失去了缓存保护后端存储的意义。</p>
+<h3 id="基本原因"><a class="markdownIt-Anchor" href="#基本原因">#</a> 基本原因</h3>
+<ol>
+<li>自身业务代码或者数据出现问题。</li>
+<li>一些恶意攻击、 爬虫等造成大量空命中。</li>
+</ol>
+<h3 id="解决方案"><a class="markdownIt-Anchor" href="#解决方案">#</a> 解决方案</h3>
+<ol>
+<li>
+<p>缓存空对象</p>
+<pre class="highlight"><span class="line"><span class="function">String <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 从缓存中获取数据</span></span><br><span class="line">    String cacheValue = cache.get(key);</span><br><span class="line">    <span class="comment">// 缓存为空</span></span><br><span class="line">    <span class="keyword">if</span> (StringUtils.isBlank(cacheValue)) &#123;</span><br><span class="line">        <span class="comment">// 从存储中获取</span></span><br><span class="line">        String storageValue = storage.get(key);</span><br><span class="line">        cache.set(key, storageValue);</span><br><span class="line">        <span class="comment">// 如果存储数据为空， 需要设置一个过期时间(300秒)</span></span><br><span class="line">        <span class="keyword">if</span> (storageValue == <span class="keyword">null</span>) &#123;</span><br><span class="line">            cache.expire(key, <span class="number">60</span> * <span class="number">5</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> storageValue;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 缓存非空</span></span><br><span class="line">        <span class="keyword">return</span> cacheValue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+</li>
+<li>
+<p>布隆过滤器：<strong>一个大型的位数组和几个不一样的无偏 hash 函数</strong>。</p>
+<p><img src="/img/image-20201117131001593.png" alt="image-20201117131001593" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201117131001593.png" class="lozad post-image"></p>
+<p><img src="/img/image-20201117131021438.png" alt="image-20201117131021438" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201117131021438.png" class="lozad post-image"></p>
+<p>示例代码</p>
+<pre class="highlight"><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.redisson<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>redisson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.6.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre>
+<pre class="highlight"><span class="line"><span class="keyword">import</span> org.redisson.Redisson;</span><br><span class="line"><span class="keyword">import</span> org.redisson.api.RBloomFilter;</span><br><span class="line"><span class="keyword">import</span> org.redisson.api.RedissonClient;</span><br><span class="line"><span class="keyword">import</span> org.redisson.config.Config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedissonBloomFilter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Config config = <span class="keyword">new</span> Config();</span><br><span class="line">        config.useSingleServer().setAddress(<span class="string">&quot;redis://localhost:6379&quot;</span>);</span><br><span class="line">        <span class="comment">//构造Redisson</span></span><br><span class="line">        RedissonClient redisson = Redisson.create(config);</span><br><span class="line"></span><br><span class="line">        RBloomFilter&lt;String&gt; bloomFilter = redisson.getBloomFilter(<span class="string">&quot;nameList&quot;</span>);</span><br><span class="line">        <span class="comment">//初始化布隆过滤器：预计元素为100000000L,误差率为3%,根据这两个参数会计算出底层的bit数组大小</span></span><br><span class="line">        bloomFilter.tryInit(<span class="number">100000000L</span>,<span class="number">0.03</span>);</span><br><span class="line">        <span class="comment">//将zhuge插入到布隆过滤器中</span></span><br><span class="line">        bloomFilter.add(<span class="string">&quot;zhuge&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//判断下面号码是否在布隆过滤器中</span></span><br><span class="line">        System.out.println(bloomFilter.contains(<span class="string">&quot;guojia&quot;</span>));<span class="comment">//false</span></span><br><span class="line">        System.out.println(bloomFilter.contains(<span class="string">&quot;baiqi&quot;</span>));<span class="comment">//false</span></span><br><span class="line">        System.out.println(bloomFilter.contains(<span class="string">&quot;zhuge&quot;</span>));<span class="comment">//true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+<p>使用布隆过滤器需要把所有数据提前放入布隆过滤器，并且在增加数据时也要往布隆过滤器里放。</p>
+<pre class="highlight"><span class="line"><span class="comment">//初始化布隆过滤器</span></span><br><span class="line">RBloomFilter&lt;String&gt; bloomFilter = redisson.getBloomFilter(<span class="string">&quot;nameList&quot;</span>);</span><br><span class="line"><span class="comment">//初始化布隆过滤器：预计元素为100000000L,误差率为3%</span></span><br><span class="line">bloomFilter.tryInit(<span class="number">100000000L</span>,<span class="number">0.03</span>);</span><br><span class="line">        </span><br><span class="line"><span class="comment">//把所有数据存入布隆过滤器</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (String key: keys) &#123;</span><br><span class="line">        bloomFilter.put(key);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">String <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 从布隆过滤器这一级缓存判断下key是否存在</span></span><br><span class="line">    Boolean exist = bloomFilter.contains(key);</span><br><span class="line">    <span class="keyword">if</span>(!exist)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从缓存中获取数据</span></span><br><span class="line">    String cacheValue = cache.get(key);</span><br><span class="line">    <span class="comment">// 缓存为空</span></span><br><span class="line">    <span class="keyword">if</span> (StringUtils.isBlank(cacheValue)) &#123;</span><br><span class="line">        <span class="comment">// 从存储中获取</span></span><br><span class="line">        String storageValue = storage.get(key);</span><br><span class="line">        cache.set(key, storageValue);</span><br><span class="line">        <span class="comment">// 如果存储数据为空， 需要设置一个过期时间(300秒)</span></span><br><span class="line">        <span class="keyword">if</span> (storageValue == <span class="keyword">null</span>) &#123;</span><br><span class="line">            cache.expire(key, <span class="number">60</span> * <span class="number">5</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> storageValue;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 缓存非空</span></span><br><span class="line">        <span class="keyword">return</span> cacheValue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+<p><strong>注意：布隆过滤器不能删除数据，如果要删除得重新初始化数据。</strong></p>
+</li>
+</ol>
+<h2 id="缓存失效缓存击穿"><a class="markdownIt-Anchor" href="#缓存失效缓存击穿">#</a> 缓存失效（缓存击穿）</h2>
+<p>由于大批量缓存在同一时间失效可能导致大量请求同时穿透缓存直达数据库，可能会造成数据库瞬间压力过大甚至挂掉。</p>
+<p>批量缓存数据时增加一个随机过期时间，保证不会在同一时刻有大量的缓存失效。</p>
+<pre class="highlight"><span class="line"><span class="function">String <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 从缓存中获取数据</span></span><br><span class="line">    String cacheValue = cache.get(key);</span><br><span class="line">    <span class="comment">// 缓存为空</span></span><br><span class="line">    <span class="keyword">if</span> (StringUtils.isBlank(cacheValue)) &#123;</span><br><span class="line">        <span class="comment">// 从存储中获取</span></span><br><span class="line">        String storageValue = storage.get(key);</span><br><span class="line">        cache.set(key, storageValue);</span><br><span class="line">        <span class="comment">//设置一个过期时间(300到600之间的一个随机数)</span></span><br><span class="line">        <span class="keyword">int</span> expireTime = <span class="keyword">new</span> Random().nextInt(<span class="number">300</span>)  + <span class="number">300</span>;</span><br><span class="line">        <span class="keyword">if</span> (storageValue == <span class="keyword">null</span>) &#123;</span><br><span class="line">            cache.expire(key, expireTime);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> storageValue;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 缓存非空</span></span><br><span class="line">        <span class="keyword">return</span> cacheValue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+<h2 id="缓存雪崩"><a class="markdownIt-Anchor" href="#缓存雪崩">#</a> 缓存雪崩</h2>
+<p>缓存层支撑不住或宕掉后， 流量会像奔逃的野牛一样， 打向后端存储层。</p>
+<h3 id="预防和解决"><a class="markdownIt-Anchor" href="#预防和解决">#</a> 预防和解决</h3>
+<ol>
+<li>缓存层服务高可用性，比如使用 Redis Sentinel 或 Redis Cluster。</li>
+<li>依赖隔离组件为后端限流熔断并降级。比如使用 Sentinel 或 <code>Hystrix</code>  限流降级组件</li>
+<li>提前演练。 在项目上线前， 演练缓存层宕掉后， 应用以及后端的负载情况以及可能出现的问题， 在此基础上做一些预案设定。</li>
+</ol>
+<h2 id="热点缓存key重建优化"><a class="markdownIt-Anchor" href="#热点缓存key重建优化">#</a> 热点缓存 key 重建优化</h2>
+<h3 id="问题"><a class="markdownIt-Anchor" href="#问题">#</a> 问题</h3>
+<p>缓存失效的瞬间， 有大量线程来重建缓存， 造成后端负载加大， 甚至可能会让应用崩溃。</p>
+<h3 id="解决方案-2"><a class="markdownIt-Anchor" href="#解决方案-2">#</a> 解决方案</h3>
+<p>解决这个问题主要就是要避免大量线程同时重建缓存。我们可以利用互斥锁来解决，此方法只允许一个线程重建缓存， 其他线程等待重建缓存的线程执行完， 重新从缓存获取数据即可。</p>
+<pre class="highlight"><span class="line"><span class="comment">// 伪代码</span></span><br><span class="line"><span class="function">String <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 从Redis中获取数据</span></span><br><span class="line">    String value = redis.get(key);</span><br><span class="line">    <span class="comment">// 如果value为空， 则开始重构缓存</span></span><br><span class="line">    <span class="keyword">if</span> (value == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 只允许一个线程重建缓存， 使用nx， 并设置过期时间ex</span></span><br><span class="line">        String mutexKey = <span class="string">&quot;mutext:key:&quot;</span> + key;</span><br><span class="line">        <span class="keyword">if</span> (redis.set(mutexKey, <span class="string">&quot;1&quot;</span>, <span class="string">&quot;ex 180&quot;</span>, <span class="string">&quot;nx&quot;</span>)) &#123;</span><br><span class="line">             <span class="comment">// 从数据源获取数据</span></span><br><span class="line">            value = db.get(key);</span><br><span class="line">            <span class="comment">// 回写Redis， 并设置过期时间</span></span><br><span class="line">            redis.setex(key, timeout, value);</span><br><span class="line">            <span class="comment">// 删除key_mutex</span></span><br><span class="line">            redis.delete(mutexKey);</span><br><span class="line">        &#125;<span class="comment">// 其他线程休息50毫秒后重试</span></span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">50</span>);</span><br><span class="line">            get(key);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre>
+<h2 id="缓存与数据库双写不一致"><a class="markdownIt-Anchor" href="#缓存与数据库双写不一致">#</a> 缓存与数据库双写不一致</h2>
+<p>高并发情况下，同时操作数据库与缓存会存在数据不一致性问题。</p>
+<h3 id="双写不一致"><a class="markdownIt-Anchor" href="#双写不一致">#</a> 双写不一致</h3>
+<p><img src="/img/image-20201117131812003.png" alt="image-20201117131812003" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201117131812003.png" class="lozad post-image"></p>
+<h3 id="读写并发不一致"><a class="markdownIt-Anchor" href="#读写并发不一致">#</a> 读写并发不一致</h3>
+<p><img src="/img/image-20201117131856465.png" alt="image-20201117131856465" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201117131856465.png" class="lozad post-image"></p>
+<h3 id="解决方案-3"><a class="markdownIt-Anchor" href="#解决方案-3">#</a> 解决方案：</h3>
+<p>1、并发几率很小的数据 (如个人维度的订单数据、用户数据等)，这种几乎不用考虑这个问题，很少会发生缓存不一致，可以给缓存数据加上过期时间，每隔一段时间触发读的主动更新即可。</p>
+<p>2、并发很高，如果业务上能容忍短时间的缓存数据不一致 (如商品名称，商品分类菜单等)，缓存加上过期时间依然可以解决大部分业务对于缓存的要求。</p>
+<p>3、如果不能容忍缓存数据不一致，可以通过加<strong>读写锁</strong>保证并发读写或写写的时候按顺序排好队，<strong>读读的时候相当于无锁</strong>。</p>
+<p>4、也可以用阿里开源的 canal 通过监听数据库的 binlog 日志及时的去修改缓存，但是引入了新的中间件，增加了系统的复杂度。</p>
+<p><img src="/img/image-20201117132005635.png" alt="image-20201117132005635" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201117132005635.png" class="lozad post-image"></p>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结">#</a> 总结</h3>
+<p>以上我们针对的都是<strong>读多写少</strong>的情况加入缓存提高性能，如果<strong>写多读多</strong>的情况又不能容忍缓存数据不一致，那就没必要加缓存了，可以直接操作数据库。放入缓存的数据应该是对实时性、一致性要求不是很高的数据。切记不要为了用缓存，同时又要保证绝对的一致性做大量的过度设计和控制，增加系统复杂性！</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/about">sunfy</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/2019/12/06/java/redis/redisCache/">http://xinghuohan.cn/2019/12/06/java/redis/redisCache/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/12/14/IDEA/IDEA-JRebel/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">IDEA JRebel 破解最简单的使用 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/12/06/IDEA/IDEA-debug/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">IDEA 远程调试 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F"><span class="toc-text"> 缓存穿透</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%9B%A0"><span class="toc-text"> 基本原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text"> 解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF"><span class="toc-text"> 缓存失效（缓存击穿）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="toc-text"> 缓存雪崩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E9%98%B2%E5%92%8C%E8%A7%A3%E5%86%B3"><span class="toc-text"> 预防和解决</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E7%82%B9%E7%BC%93%E5%AD%98key%E9%87%8D%E5%BB%BA%E4%BC%98%E5%8C%96"><span class="toc-text"> 热点缓存 key 重建优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-text"> 问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-2"><span class="toc-text"> 解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text"> 缓存与数据库双写不一致</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text"> 双写不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%86%99%E5%B9%B6%E5%8F%91%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text"> 读写并发不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-3"><span class="toc-text"> 解决方案：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.png" class="author-img">
+
+<p class="author-name">sunfy</p>
+<p class="author-description">sunfy个人博客</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>34</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>25</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F"><span class="toc-text"> 缓存穿透</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%9B%A0"><span class="toc-text"> 基本原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text"> 解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF"><span class="toc-text"> 缓存失效（缓存击穿）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="toc-text"> 缓存雪崩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E9%98%B2%E5%92%8C%E8%A7%A3%E5%86%B3"><span class="toc-text"> 预防和解决</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E7%82%B9%E7%BC%93%E5%AD%98key%E9%87%8D%E5%BB%BA%E4%BC%98%E5%8C%96"><span class="toc-text"> 热点缓存 key 重建优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-text"> 问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-2"><span class="toc-text"> 解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text"> 缓存与数据库双写不一致</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text"> 双写不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%86%99%E5%B9%B6%E5%8F%91%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text"> 读写并发不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-3"><span class="toc-text"> 解决方案：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/DB">
+        <div class="categories-list-item">
+          DB
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/IDEA">
+        <div class="categories-list-item">
+          IDEA
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">9</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">14</span>
+        </div>
+      </a>
+    
+      <a href="/categories/tools">
+        <div class="categories-list-item">
+          tools
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\IDEA" title="IDEA"><div class="tags-list-item">IDEA</div></a>
+    
+    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    
+    <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
+    
+    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
+    
+    <a href="\tags\tools" title="tools"><div class="tags-list-item">tools</div></a>
+    
+    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
+    
+    <a href="\tags\Zookeeper" title="Zookeeper"><div class="tags-list-item">Zookeeper</div></a>
+    
+    <a href="\tags\MQ" title="MQ"><div class="tags-list-item">MQ</div></a>
+    
+    <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
+    
+    <a href="\tags\git" title="git"><div class="tags-list-item">git</div></a>
+    
+    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\JDK" title="JDK"><div class="tags-list-item">JDK</div></a>
+    
+    <a href="\tags\SpringBoot" title="SpringBoot"><div class="tags-list-item">SpringBoot</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F"><span class="toc-text"> 缓存穿透</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E5%9B%A0"><span class="toc-text"> 基本原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text"> 解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF"><span class="toc-text"> 缓存失效（缓存击穿）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="toc-text"> 缓存雪崩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E9%98%B2%E5%92%8C%E8%A7%A3%E5%86%B3"><span class="toc-text"> 预防和解决</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E7%82%B9%E7%BC%93%E5%AD%98key%E9%87%8D%E5%BB%BA%E4%BC%98%E5%8C%96"><span class="toc-text"> 热点缓存 key 重建优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-text"> 问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-2"><span class="toc-text"> 解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text"> 缓存与数据库双写不一致</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%86%99%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text"> 双写不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%86%99%E5%B9%B6%E5%8F%91%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-text"> 读写并发不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-3"><span class="toc-text"> 解决方案：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-01-06</div>
+        <a href="/2021/01/06/tools/dockerEdit/"><div class="recent-posts-item-content">Docker 修改MySQL配置</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-08</div>
+        <a href="/2020/12/08/DB/MySQl-install/"><div class="recent-posts-item-content">CentOS安装MySql5.7</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-01</div>
+        <a href="/2020/12/01/java/MQ/RabbitMQWokers/"><div class="recent-posts-item-content">RabbitMQ主要工作模式</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-28</div>
+        <a href="/2020/11/28/java/MQ/RabbitMQBase/"><div class="recent-posts-item-content">MQ入门和RabbitMQ基础</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2021
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">sunfy </a>
+      </div>
+    </div>
+
+    
+    
+    
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>

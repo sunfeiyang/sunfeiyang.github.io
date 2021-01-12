@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Wed, 06 Jan 2021 11:48:19 +0800</pubDate>
-        <lastBuildDate>Wed, 06 Jan 2021 11:48:19 +0800</lastBuildDate>
+        <pubDate>Wed, 14 Oct 2020 13:05:50 +0800</pubDate>
+        <lastBuildDate>Wed, 14 Oct 2020 13:05:50 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -33,12 +33,28 @@
         <category>Docker</category>
         <category>JRebel</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2021/01/06/Linux/Centos-Docker/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</guid>
+            <title>Linux常用命令</title>
+            <link>http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</link>
+            <category>Linux</category>
+            <category>CentOS</category>
+            <category>Ubuntu</category>
+            <pubDate>Wed, 14 Oct 2020 13:05:50 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Linux 系统常用基本命令&lt;/p&gt;
+&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;h3 id=&#34;ack-待查询字符串&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ack-待查询字符串&#34;&gt;#&lt;/a&gt; ack  [待查询字符串]&lt;/h3&gt;
+&lt;p&gt;搜索当前文件夹内所有文件中对应的字符（递归查询）&lt;/p&gt;
+&lt;h3 id=&#34;unar-待解压文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#unar-待解压文件&#34;&gt;#&lt;/a&gt; unar  [待解压文件]&lt;/h3&gt;
+&lt;p&gt;解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/08/14/Linux/Centos-Docker/</guid>
             <title>CentOS安装Docker图形化工具</title>
-            <link>http://xinghuohan.cn/2021/01/06/Linux/Centos-Docker/</link>
+            <link>http://xinghuohan.cn/2020/08/14/Linux/Centos-Docker/</link>
             <category>CentOS</category>
             <category>Docker</category>
-            <pubDate>Wed, 06 Jan 2021 11:48:19 +0800</pubDate>
+            <pubDate>Fri, 14 Aug 2020 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;CentOS 安装 Docker 图形化工具&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;一docker图形化工具&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#一docker图形化工具&#34;&gt;#&lt;/a&gt; 一.Docker 图形化工具&lt;/h2&gt;
 &lt;p&gt;​    docker 图形页面管理工具常用的有三种，DockerUI ，Portainer ，Shipyard 。DockerUI 是 Portainer 的前身，这三个工具通过 docker api 来获取管理的资源信息。平时我们常常对着 shell 对着这些命令行客户端，审美会很疲劳，如果有漂亮的图形化界面可以直观查看 docker 资源信息，也是非常方便的。今天我们就搭建单机版的三种常用图形页面管理工具。这三种图形化管理工具以 Portainer 最为受欢迎。&lt;/p&gt;
@@ -81,12 +97,12 @@
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/12/08/Linux/Centos-JDK/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2019/08/03/Linux/Centos-JDK/</guid>
             <title>CentOS安装JDK的几种方法及配置环境变量</title>
-            <link>http://xinghuohan.cn/2020/12/08/Linux/Centos-JDK/</link>
+            <link>http://xinghuohan.cn/2019/08/03/Linux/Centos-JDK/</link>
             <category>CentOS</category>
             <category>JDK</category>
-            <pubDate>Tue, 08 Dec 2020 14:13:12 +0800</pubDate>
+            <pubDate>Sat, 03 Aug 2019 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;CentOS 安装 JDK 的几种方法及配置环境变量&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;一、下载 jdk&lt;/p&gt;
 &lt;p&gt;jdk 下载地址：&lt;a href=&#34;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&#34;&gt;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&lt;/a&gt;&lt;/p&gt;
@@ -157,28 +173,12 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH&lt;/p&gt;
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</guid>
-            <title>Linux常用命令</title>
-            <link>http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</link>
-            <category>Linux</category>
-            <category>CentOS</category>
-            <category>Ubuntu</category>
-            <pubDate>Wed, 14 Oct 2020 13:05:50 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;Linux 系统常用基本命令&lt;/p&gt;
-&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
-&lt;h3 id=&#34;ack-待查询字符串&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ack-待查询字符串&#34;&gt;#&lt;/a&gt; ack  [待查询字符串]&lt;/h3&gt;
-&lt;p&gt;搜索当前文件夹内所有文件中对应的字符（递归查询）&lt;/p&gt;
-&lt;h3 id=&#34;unar-待解压文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#unar-待解压文件&#34;&gt;#&lt;/a&gt; unar  [待解压文件]&lt;/h3&gt;
-&lt;p&gt;解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/09/09/Linux/Centos-staticIP/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2019/06/09/Linux/Centos-staticIP/</guid>
             <title>Centos设置静态ip</title>
-            <link>http://xinghuohan.cn/2020/09/09/Linux/Centos-staticIP/</link>
+            <link>http://xinghuohan.cn/2019/06/09/Linux/Centos-staticIP/</link>
             <category>Linux</category>
             <category>Centos</category>
-            <pubDate>Wed, 09 Sep 2020 22:23:46 +0800</pubDate>
+            <pubDate>Sun, 09 Jun 2019 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;Centos 设置静态 IP&lt;/p&gt;
 &lt;p&gt;Vmware workstation 中的 centos ip 地址会在没重启的情况下发生变化。 虚拟机的 IP 租约过期后，IP 就会自动重新分配，从而造成 IP 地址自行变化。&lt;/p&gt;
 &lt;p&gt;为了应用方便，需要设置 centos 的固定 ip。 版本 centos7&lt;/p&gt;

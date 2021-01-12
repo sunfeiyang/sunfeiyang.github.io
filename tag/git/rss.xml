@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Wed, 30 Dec 2020 10:31:18 +0800</pubDate>
-        <lastBuildDate>Wed, 30 Dec 2020 10:31:18 +0800</lastBuildDate>
+        <pubDate>Mon, 13 Jul 2020 00:00:00 +0800</pubDate>
+        <lastBuildDate>Mon, 13 Jul 2020 00:00:00 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -33,11 +33,11 @@
         <category>Docker</category>
         <category>JRebel</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/12/30/tools/gitPush/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/07/13/tools/gitPush/</guid>
             <title>一个项目push到多个远程Git仓库</title>
-            <link>http://xinghuohan.cn/2020/12/30/tools/gitPush/</link>
+            <link>http://xinghuohan.cn/2020/07/13/tools/gitPush/</link>
             <category>git</category>
-            <pubDate>Wed, 30 Dec 2020 10:31:18 +0800</pubDate>
+            <pubDate>Mon, 13 Jul 2020 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;git 项目同时提交至多个远程仓库&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;我创建了一个项目，然后通过下面的命令  &lt;code&gt;push&lt;/code&gt;  到了 Git Hub 上。如何再将这个项目  &lt;code&gt;push&lt;/code&gt;  到其他远程仓库呢？&lt;/p&gt;
 &lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;git remote add github https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;zxbetter&amp;#x2F;test.git&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;git push -u github master&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
@@ -64,11 +64,11 @@
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/04/15/tools/gitBase/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2019/06/15/tools/gitBase/</guid>
             <title>Git基本操作</title>
-            <link>http://xinghuohan.cn/2020/04/15/tools/gitBase/</link>
+            <link>http://xinghuohan.cn/2019/06/15/tools/gitBase/</link>
             <category>git</category>
-            <pubDate>Wed, 15 Apr 2020 21:54:02 +0800</pubDate>
+            <pubDate>Sat, 15 Jun 2019 21:54:02 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;git 基本操作，本博客只是最基本操作说明和相应图解&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/git/50.png&#34; alt=&#34;image-20200908222733250&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/git/50.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Git 下载&lt;/p&gt;

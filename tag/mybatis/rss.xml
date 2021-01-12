@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Thu, 22 Oct 2020 13:27:02 +0800</pubDate>
-        <lastBuildDate>Thu, 22 Oct 2020 13:27:02 +0800</lastBuildDate>
+        <pubDate>Fri, 15 Nov 2019 00:00:00 +0800</pubDate>
+        <lastBuildDate>Fri, 15 Nov 2019 00:00:00 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -33,12 +33,12 @@
         <category>Docker</category>
         <category>JRebel</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/10/22/java/MyBatis/MyBatisResourceBuild/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2019/11/15/java/MyBatis/MyBatisResourceBuild/</guid>
             <title>MyBatis源码编译环境构建</title>
-            <link>http://xinghuohan.cn/2020/10/22/java/MyBatis/MyBatisResourceBuild/</link>
+            <link>http://xinghuohan.cn/2019/11/15/java/MyBatis/MyBatisResourceBuild/</link>
             <category>Java</category>
             <category>MyBatis</category>
-            <pubDate>Thu, 22 Oct 2020 13:27:02 +0800</pubDate>
+            <pubDate>Fri, 15 Nov 2019 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;MyBatis 源码阅读环境编译，能够更方便阅读源码，可以切换源码版本！&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;1-源码下载&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-源码下载&#34;&gt;#&lt;/a&gt; 1、源码下载&lt;/h3&gt;
 &lt;p&gt;下载地址：&lt;a href=&#34;https://github.com/mybatis/mybatis-3&#34;&gt;https://github.com/mybatis/mybatis-3&lt;/a&gt;&lt;/p&gt;
