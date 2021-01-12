@@ -15,6 +15,17 @@
                 "SpringBoot",
                 "WebSocket"
             ]
+        },
+        {
+            "id": "http://xinghuohan.cn/2020/10/06/java/Spring/springBoot/springBootAutoConf/",
+            "url": "http://xinghuohan.cn/2020/10/06/java/Spring/springBoot/springBootAutoConf/",
+            "title": "SpringBoot自动装配原理",
+            "date_published": "2020-10-05T16:00:00.000Z",
+            "content_html": "<p>配置文件到底能写什么？怎么写？自动配置原理；</p>\n<p><a href=\"https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties\">配置文件属性参照</a><a id=\"more\"></a></p>\n",
+            "tags": [
+                "Java",
+                "SpringBoot"
+            ]
         }
     ]
 }
