@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Tue, 20 Oct 2020 15:16:03 +0800</pubDate>
-        <lastBuildDate>Tue, 20 Oct 2020 15:16:03 +0800</lastBuildDate>
+        <pubDate>Fri, 16 Oct 2020 15:37:31 +0800</pubDate>
+        <lastBuildDate>Fri, 16 Oct 2020 15:37:31 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -32,30 +32,6 @@
         <category>shiro</category>
         <category>Docker</category>
         <category>JRebel</category>
-        <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/</guid>
-            <title>Ubuntu截图工具</title>
-            <link>http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/</link>
-            <category>Linux</category>
-            <category>Ubuntu</category>
-            <pubDate>Tue, 20 Oct 2020 15:16:03 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;Linux 系统 Ubuntu 截图工具推荐使用&lt;/p&gt;
-&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
-&lt;h3 id=&#34;前言&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h3&gt;
-&lt;p&gt;Windows 上习惯了 QQ 的截图工具，本工具类似 QQ 截图工具功能，在习惯 QQ 截图的情况下可以很方便的使用。效果图：&lt;img src=&#34;/img/image-20201020151914799.png&#34; alt=&#34;image-20201020151914799&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020151914799.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;安装过程&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装过程&#34;&gt;#&lt;/a&gt; 安装过程&lt;/h3&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install flameshot&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;启动命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#启动命令&#34;&gt;#&lt;/a&gt; 启动命令&lt;/h3&gt;
-&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;flameshot gui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;设置快捷方式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设置快捷方式&#34;&gt;#&lt;/a&gt; 设置快捷方式&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;/img/image-20201020152205127.png&#34; alt=&#34;image-20201020152205127&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152205127.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;p&gt;本机操作系统版本为 Ubuntu 20.04, 不同版本可能设置快捷键位置名称有些不同，可以自行根据系统版本设置&lt;/p&gt;
-&lt;p&gt;具体设置&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/image-20201020152406303.png&#34; alt=&#34;image-20201020152406303&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152406303.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;软件设置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#软件设置&#34;&gt;#&lt;/a&gt; 软件设置&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;/img/image-20201020152618648.png&#34; alt=&#34;image-20201020152618648&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152618648.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
- ]]></description>
-        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/</guid>
             <title>Ubuntu桌面被删除后</title>
@@ -96,6 +72,30 @@
 &lt;p&gt;搜索当前文件夹内所有文件中对应的字符（递归查询）&lt;/p&gt;
 &lt;h3 id=&#34;unar-待解压文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#unar-待解压文件&#34;&gt;#&lt;/a&gt; unar  [待解压文件]&lt;/h3&gt;
 &lt;p&gt;解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2019/09/28/Linux/UbuntuFlameshot/</guid>
+            <title>Ubuntu截图工具</title>
+            <link>http://xinghuohan.cn/2019/09/28/Linux/UbuntuFlameshot/</link>
+            <category>Linux</category>
+            <category>Ubuntu</category>
+            <pubDate>Sat, 28 Sep 2019 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Linux 系统 Ubuntu 截图工具推荐使用&lt;/p&gt;
+&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;h3 id=&#34;前言&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h3&gt;
+&lt;p&gt;Windows 上习惯了 QQ 的截图工具，本工具类似 QQ 截图工具功能，在习惯 QQ 截图的情况下可以很方便的使用。效果图：&lt;img src=&#34;/img/image-20201020151914799.png&#34; alt=&#34;image-20201020151914799&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020151914799.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;安装过程&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装过程&#34;&gt;#&lt;/a&gt; 安装过程&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install flameshot&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;启动命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#启动命令&#34;&gt;#&lt;/a&gt; 启动命令&lt;/h3&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;flameshot gui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;设置快捷方式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设置快捷方式&#34;&gt;#&lt;/a&gt; 设置快捷方式&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201020152205127.png&#34; alt=&#34;image-20201020152205127&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152205127.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;本机操作系统版本为 Ubuntu 20.04, 不同版本可能设置快捷键位置名称有些不同，可以自行根据系统版本设置&lt;/p&gt;
+&lt;p&gt;具体设置&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201020152406303.png&#34; alt=&#34;image-20201020152406303&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152406303.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;软件设置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#软件设置&#34;&gt;#&lt;/a&gt; 软件设置&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20201020152618648.png&#34; alt=&#34;image-20201020152618648&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201020152618648.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>

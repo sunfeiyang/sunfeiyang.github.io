@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xinghuohan.cn/2020/10/06/java/Spring/springBoot/springBootAutoConf/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/09/28/Linux/UbuntuFlameshot/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/09/06/IDEA/IDEA-debug/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/2019/11/22/DB/MySQl-install/</loc>
+    
+    <lastmod>2021-01-12</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xinghuohan.cn/2019/12/06/java/redis/redisCache/</loc>
     
     <lastmod>2021-01-12</lastmod>
@@ -114,13 +142,6 @@
   </url>
   
   <url>
-    <loc>http://xinghuohan.cn/2019/12/06/IDEA/IDEA-debug/</loc>
-    
-    <lastmod>2021-01-12</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xinghuohan.cn/2019/11/14/IDEA/IDEA-Statistic/</loc>
     
     <lastmod>2021-01-12</lastmod>
@@ -131,13 +152,6 @@
     <loc>http://xinghuohan.cn/2019/12/14/IDEA/IDEA-JRebel/</loc>
     
     <lastmod>2021-01-12</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/12/08/DB/MySQl-install/</loc>
-    
-    <lastmod>2021-01-06</lastmod>
     
   </url>
   
@@ -187,13 +201,6 @@
     <loc>http://xinghuohan.cn/2020/11/18/java/WebSocket/springBootToWebSocket/</loc>
     
     <lastmod>2020-11-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2020/10/20/Linux/UbuntuFlameshot/</loc>
-    
-    <lastmod>2020-10-20</lastmod>
     
   </url>
   
