@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xinghuohan.cn/2021/01/18/java/Untitled/</loc>
-    
-    <lastmod>2021-01-18</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xinghuohan.cn/2020/11/02/java/javaSPI/</loc>
     
     <lastmod>2021-01-18</lastmod>
@@ -298,6 +291,13 @@
   </url>
   
   <url>
+    <loc>http://xinghuohan.cn/tags/JRebel/</loc>
+    <lastmod>2021-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://xinghuohan.cn/tags/Statistic/</loc>
     <lastmod>2021-01-18</lastmod>
     <changefreq>daily</changefreq>
@@ -306,6 +306,13 @@
   
   <url>
     <loc>http://xinghuohan.cn/tags/CentOS/</loc>
+    <lastmod>2021-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/tags/Docker/</loc>
     <lastmod>2021-01-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -348,6 +355,13 @@
   
   <url>
     <loc>http://xinghuohan.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2021-01-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/tags/SPI/</loc>
     <lastmod>2021-01-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -425,27 +439,6 @@
   
   <url>
     <loc>http://xinghuohan.cn/tags/shiro/</loc>
-    <lastmod>2021-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/tags/Docker/</loc>
-    <lastmod>2021-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/tags/JRebel/</loc>
-    <lastmod>2021-01-18</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/tags/SPI/</loc>
     <lastmod>2021-01-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
