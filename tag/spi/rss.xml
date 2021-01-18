@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Mon, 02 Nov 2020 00:00:00 +0800</pubDate>
-        <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0800</lastBuildDate>
+        <pubDate>Mon, 18 Jan 2021 15:34:55 +0800</pubDate>
+        <lastBuildDate>Mon, 18 Jan 2021 15:34:55 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -33,6 +33,20 @@
         <category>Docker</category>
         <category>JRebel</category>
         <category>SPI</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/01/18/java/Untitled/</guid>
+            <title>代码高亮测试</title>
+            <link>http://xinghuohan.cn/2021/01/18/java/Untitled/</link>
+            <category>Java</category>
+            <category>SPI</category>
+            <pubDate>Mon, 18 Jan 2021 15:34:55 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;SPI ，全称为 Service Provider Interface，是一种服务发现机制。在 ClassPath 路径下的 META-INF/services 文件夹查找文件，自动加载文件里所定义的类。&lt;/p&gt;
+&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;h2 id=&#34;&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#&#34;&gt;#&lt;/a&gt; &lt;/h2&gt;
+&lt;hr&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;lt;figure&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;class=&amp;quot;highlight&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;yaml&amp;quot;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;lt;table&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;lt;tbody&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;string&#34;&gt;&amp;lt;td&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;class=&amp;quot;gutter&amp;quot;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;string&#34;&gt;&amp;lt;pre&amp;gt;&amp;lt;span&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;class=&amp;quot;line&amp;quot;&amp;gt;1&amp;lt;/span&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/pre&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;string&#34;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;string&#34;&gt;&amp;lt;td&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;class=&amp;quot;code&amp;quot;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;string&#34;&gt;&amp;lt;pre&amp;gt;&amp;lt;span&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;class=&amp;quot;line&amp;quot;&amp;gt;&amp;lt;span&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;class=&amp;quot;attr&amp;quot;&amp;gt;hello:&amp;lt;/span&amp;gt;&amp;lt;span&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;class=&amp;quot;string&amp;quot;&amp;gt;hexo&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;br&amp;gt;&amp;lt;/pre&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;string&#34;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;lt;/tbody&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;lt;/table&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;string&#34;&gt;&amp;lt;/figure&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;
+&lt;pre class=&#34;highlight&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;hello:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;hexo&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt; ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/11/02/java/javaSPI/</guid>
             <title>深入理解 Java SPI机制</title>

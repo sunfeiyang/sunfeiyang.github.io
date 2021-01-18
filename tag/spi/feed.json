@@ -5,6 +5,17 @@
     "home_page_url": "http://xinghuohan.cn",
     "items": [
         {
+            "id": "http://xinghuohan.cn/2021/01/18/java/Untitled/",
+            "url": "http://xinghuohan.cn/2021/01/18/java/Untitled/",
+            "title": "代码高亮测试",
+            "date_published": "2021-01-18T07:34:55.138Z",
+            "content_html": "<p>SPI ，全称为 Service Provider Interface，是一种服务发现机制。在 ClassPath 路径下的 META-INF/services 文件夹查找文件，自动加载文件里所定义的类。</p>\n<a id=\"more\"></a>\n<h2 id=\"\"><a class=\"markdownIt-Anchor\" href=\"#\">#</a> </h2>\n<hr>\n<pre class=\"highlight\"><span class=\"line\"><span class=\"string\">&lt;figure</span> <span class=\"string\">class=&quot;highlight</span> <span class=\"string\">yaml&quot;&gt;</span></span><br><span class=\"line\"><span class=\"string\">&lt;table&gt;</span></span><br><span class=\"line\"><span class=\"string\">&lt;tbody&gt;</span></span><br><span class=\"line\"><span class=\"string\">&lt;tr&gt;</span></span><br><span class=\"line\">  <span class=\"string\">&lt;td</span> <span class=\"string\">class=&quot;gutter&quot;&gt;</span></span><br><span class=\"line\">    <span class=\"string\">&lt;pre&gt;&lt;span</span> <span class=\"string\">class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;</span></span><br><span class=\"line\">  <span class=\"string\">&lt;/td&gt;</span></span><br><span class=\"line\">  <span class=\"string\">&lt;td</span> <span class=\"string\">class=&quot;code&quot;&gt;</span></span><br><span class=\"line\">    <span class=\"string\">&lt;pre&gt;&lt;span</span> <span class=\"string\">class=&quot;line&quot;&gt;&lt;span</span> <span class=\"string\">class=&quot;attr&quot;&gt;hello:&lt;/span&gt;&lt;span</span> <span class=\"string\">class=&quot;string&quot;&gt;hexo&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;</span></span><br><span class=\"line\">  <span class=\"string\">&lt;/td&gt;</span></span><br><span class=\"line\"><span class=\"string\">&lt;/tr&gt;</span></span><br><span class=\"line\"><span class=\"string\">&lt;/tbody&gt;</span></span><br><span class=\"line\"><span class=\"string\">&lt;/table&gt;</span></span><br><span class=\"line\"><span class=\"string\">&lt;/figure&gt;</span></span><br></pre>\n<pre class=\"highlight\"><span class=\"line\"><span class=\"attr\">hello:</span> <span class=\"string\">hexo</span></span><br></pre>",
+            "tags": [
+                "Java",
+                "SPI"
+            ]
+        },
+        {
             "id": "http://xinghuohan.cn/2020/11/02/java/javaSPI/",
             "url": "http://xinghuohan.cn/2020/11/02/java/javaSPI/",
             "title": "深入理解 Java SPI机制",
