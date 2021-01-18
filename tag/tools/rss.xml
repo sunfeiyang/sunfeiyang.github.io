@@ -32,6 +32,7 @@
         <category>shiro</category>
         <category>Docker</category>
         <category>JRebel</category>
+        <category>SPI</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/11/26/tools/renameFileSuffix/</guid>
             <title>批量修改文件后缀名</title>

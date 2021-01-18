@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.png">
+  <title>sunfy</title>
+  
+  
+  <meta property="og:title" content="深入理解 Java SPI机制">
+  
+  
+  <meta property="og:url" content="http://xinghuohan.cn/2020/11/02/java/javaSPI/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.png">
+  
+  
+  <meta property="og:img" content="&lt;p&gt;SPI ，全称为 Service Provider Interface，是一种服务发现机制。在 ClassPath 路径下的 META-INF/services 文件夹查找文件，自动加载文件里所定义的类。&lt;/p&gt;">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-11-02">
+  <meta property="og:article:modified_time" content="2021-01-18">
+  <meta property="og:article:author" content="sunfy">
+  
+  
+  <meta property="og:article:tag" content="Java">
+  
+  <meta property="og:article:tag" content="SPI">
+  
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="sunfy" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.png">
+      
+      <span class="navbar-logo-dsc">sunfy</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      深入理解 Java SPI机制
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-11-01T16:00:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-11-02</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Java/" class="post-meta-link">Java</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.5k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Java/" class="post-meta-link">Java</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/SPI/" class="post-meta-link">SPI</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>SPI ，全称为 Service Provider Interface，是一种服务发现机制。在 ClassPath 路径下的 META-INF/services 文件夹查找文件，自动加载文件里所定义的类。</p>
+<a id="more"></a>
+<h1 id="一-什么是spi"><a class="markdownIt-Anchor" href="#一-什么是spi">#</a> 一、什么是 SPI</h1>
+<p>SPI ，全称为 Service Provider Interface，是一种服务发现机制。通过在 ClassPath 路径下的 META-INF/services 文件夹查找文件，自动加载文件里所定义的类。</p>
+<p>这一机制为很多框架扩展提供了可能，比如在 Dubbo、JDBC 中都使用到了 SPI 机制。我们先通过一个很简单的例子来看下它是怎么用的。</p>
+<h4 id="1-例子"><a class="markdownIt-Anchor" href="#1-例子">#</a> 1、例子</h4>
+<p>首先，我们需要定义一个接口，Animal</p>
+<pre class="highlight"><span class="line"><span class="keyword">package</span> com.sunfy.Animal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">noise</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre>
+<p>然后，定义两个实现类，没任何具体业务，简单输出一句话。</p>
+<pre class="highlight"><span class="line"><span class="keyword">package</span> com.sunfy.Animal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dog</span> <span class="keyword">implements</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">noise</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;wang&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">--------------------------------------------</span><br><span class="line">    </span><br><span class="line"><span class="keyword">package</span> com.sunfy.Animal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Cat</span> <span class="keyword">implements</span> <span class="title">Animal</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">noise</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;miao&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre>
+<p>最后呢，要在 ClassPath 路径下配置添加一个文件。文件名字是接口的全限定类名，内容是实现类的全限定类名，多个实现类用换行符分隔。<br>
+文件路径如下：</p>
+<p><img src="/img/image-20210117225311670.png" alt="image-20210117225311670" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210117225311670.png" class="lozad post-image"></p>
+<p>SPI 配置文件位置</p>
+<p>内容就是实现类的全限定类名：</p>
+<pre class="highlight"><span class="line"><span class="selector-tag">com</span><span class="selector-class">.sunfy</span><span class="selector-class">.Animal</span><span class="selector-class">.Cat</span></span><br><span class="line"><span class="selector-tag">com</span><span class="selector-class">.sunfy</span><span class="selector-class">.Animal</span><span class="selector-class">.Dog</span></span><br></pre>
+<h4 id="2-测试"><a class="markdownIt-Anchor" href="#2-测试">#</a> 2、测试</h4>
+<p>然后我们就可以通过 <code>ServiceLoader.load或者Service.providers</code>  方法拿到实现类的实例。其中， <code>Service.providers</code>  包位于 <code>sun.misc.Service</code> ，而 <code>ServiceLoader.load</code>  包位于 <code>java.util.ServiceLoader</code> 。</p>
+<pre class="highlight"><span class="line"><span class="keyword">package</span> com.sunfy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sunfy.Animal.Animal;</span><br><span class="line"><span class="keyword">import</span> sun.misc.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.ServiceLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpiDemoMain</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Spi机制获取Animal接口所有的实现类，在不修改业务代码的基础上，很方便的进行数据扩展</span></span><br><span class="line">        ServiceLoader&lt;Animal&gt; animals = ServiceLoader.load(Animal.class);</span><br><span class="line">        animals.forEach(animal -&gt; animal.noise());</span><br><span class="line">        System.out.println(<span class="string">&quot;--------------------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Iterator&lt;Animal&gt; providers = Service.providers(Animal.class);</span><br><span class="line">        ServiceLoader&lt;Animal&gt; load = ServiceLoader.load(Animal.class);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(providers.hasNext()) &#123;</span><br><span class="line">            Animal animal = providers.next();</span><br><span class="line">            animal.noise();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;--------------------------------&quot;</span>);</span><br><span class="line">        Iterator&lt;Animal&gt; iterator = load.iterator();</span><br><span class="line">        <span class="keyword">while</span>(iterator.hasNext()) &#123;</span><br><span class="line">            Animal animal = iterator.next();</span><br><span class="line">            animal.noise();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre>
+<p>两种方式的输出结果是一致的：</p>
+<pre class="highlight"><span class="line"><span class="selector-tag">miao</span></span><br><span class="line"><span class="selector-tag">wang</span></span><br><span class="line"><span class="selector-tag">--------------------------------</span></span><br><span class="line"><span class="selector-tag">miao</span></span><br><span class="line"><span class="selector-tag">wang</span></span><br><span class="line"><span class="selector-tag">--------------------------------</span></span><br><span class="line"><span class="selector-tag">miao</span></span><br><span class="line"><span class="selector-tag">wang</span></span><br></pre>
+<h1 id="二-源码分析"><a class="markdownIt-Anchor" href="#二-源码分析">#</a> 二、源码分析</h1>
+<p>我们看到一个位于 <code>sun.misc包</code> ，一个位于 <code>java.util包</code> ，sun 包下的源码看不到。我们就以 ServiceLoader.load 为例，通过源码看看它里面到底怎么做的。</p>
+<h4 id="1-serviceloader"><a class="markdownIt-Anchor" href="#1-serviceloader">#</a> 1、ServiceLoader</h4>
+<p>首先，我们先来了解下 ServiceLoader，看看它的类结构。</p>
+<pre class="highlight"><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceLoader</span>&lt;<span class="title">S</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">Iterable</span>&lt;<span class="title">S</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 配置文件路径</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PREFIX = <span class="string">&quot;META-INF/services/&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The class or interface representing the service being loaded</span></span><br><span class="line">    <span class="comment">// 加载的服务类或接口</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Class&lt;S&gt; service;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The class loader used to locate, load, and instantiate providers</span></span><br><span class="line">    <span class="comment">// 类加载器</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ClassLoader loader;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The access control context taken when the ServiceLoader is created</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AccessControlContext acc;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Cached providers, in instantiation order</span></span><br><span class="line">    <span class="comment">// 已加载的服务类集合</span></span><br><span class="line">    <span class="keyword">private</span> LinkedHashMap&lt;String,S&gt; providers = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The current lazy-lookup iterator</span></span><br><span class="line">    <span class="comment">// 当前的惰性查找迭代器</span></span><br><span class="line">    <span class="keyword">private</span> LazyIterator lookupIterator;</span><br></pre>
+<h4 id="2-load"><a class="markdownIt-Anchor" href="#2-load">#</a> 2、Load</h4>
+<p>load 方法创建了一些属性，重要的是实例化了内部类，LazyIterator。最后返回 ServiceLoader 的实例。</p>
+<pre class="highlight"><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reload</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    providers.clear();</span><br><span class="line">    <span class="comment">// 实例化ServiceLoader&lt;S&gt; 内部类</span></span><br><span class="line">    lookupIterator = <span class="keyword">new</span> LazyIterator(service, loader);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">ServiceLoader</span><span class="params">(Class&lt;S&gt; svc, ClassLoader cl)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// svc，要加载类接口 非空校验</span></span><br><span class="line">    service = Objects.requireNonNull(svc, <span class="string">&quot;Service interface cannot be null&quot;</span>);</span><br><span class="line">    <span class="comment">// 返回用于委托的系统类加载器</span></span><br><span class="line">    loader = (cl == <span class="keyword">null</span>) ? ClassLoader.getSystemClassLoader() : cl;</span><br><span class="line">    <span class="comment">// 获取系统安全性接口，及访问权限</span></span><br><span class="line">    acc = (System.getSecurityManager() != <span class="keyword">null</span>) ? AccessController.getContext() : <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">// 重新加载系统接口</span></span><br><span class="line">    reload();</span><br><span class="line">&#125;</span><br></pre>
+<h4 id="3-查找实现类"><a class="markdownIt-Anchor" href="#3-查找实现类">#</a> 3、查找实现类</h4>
+<p>查找实现类和创建实现类的过程，都在 LazyIterator 完成。当我们调用 iterator.hasNext 和 iterator.next 方法的时候，实际上调用的都是 LazyIterator 的相应方法。</p>
+<pre class="highlight"><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;S&gt; <span class="function">ServiceLoader&lt;S&gt; <span class="title">load</span><span class="params">(Class&lt;S&gt; service,</span></span></span><br><span class="line"><span class="function"><span class="params">                                        ClassLoader loader)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 调用load方法，最终还是调用ServiceLoader初始化方法，调用---》new LazyIterator(service, loader)</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ServiceLoader&lt;&gt;(service, loader);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;S&gt; <span class="function">ServiceLoader&lt;S&gt; <span class="title">load</span><span class="params">(Class&lt;S&gt; service)</span> </span>&#123;</span><br><span class="line">    ClassLoader cl = Thread.currentThread().getContextClassLoader();</span><br><span class="line">    <span class="keyword">return</span> ServiceLoader.load(service, cl);</span><br><span class="line">&#125;</span><br></pre>
+<pre class="highlight"><span class="line"><span class="function"><span class="keyword">public</span> Iterator&lt;S&gt; <span class="title">iterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Iterator&lt;S&gt;() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> lookupIterator.hasNext();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> S <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> lookupIterator.next();</span><br><span class="line">        &#125;</span><br><span class="line">        .......</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre>
+<p>所以，我们重点关注 lookupIterator.hasNext () 方法，它最终会调用到 hasNextService。</p>
+<pre class="highlight"><span class="line"><span class="comment">//sunfy- SPI核心的获取实现类的方法</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">hasNextService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 类名不等于Null,代表类已经加载完成</span></span><br><span class="line">    <span class="keyword">if</span> (nextName != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (configs == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 待加载文件路径</span></span><br><span class="line">            <span class="comment">// PREFIX = &quot;META-INF/services/&quot;</span></span><br><span class="line">            <span class="comment">// service.getName() 为自定义的类的全限定名</span></span><br><span class="line">            <span class="comment">// META-INF/services/com.sunfy.Animal.Animal</span></span><br><span class="line">            String fullName = PREFIX + service.getName();</span><br><span class="line">            <span class="comment">// 判断是否有传入类的加载器，如果传入则使用传入的，否则使用默认的类加载器加载</span></span><br><span class="line">            <span class="keyword">if</span> (loader == <span class="keyword">null</span>)</span><br><span class="line">                configs = ClassLoader.getSystemResources(fullName);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                configs = loader.getResources(fullName);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException x) &#123;</span><br><span class="line">            fail(service, <span class="string">&quot;Error locating configuration files&quot;</span>, x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> ((pending == <span class="keyword">null</span>) || !pending.hasNext()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!configs.hasMoreElements()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将给定URL的内容解析为提供程序配置文件。</span></span><br><span class="line">    	<span class="comment">// parse方法中，真正的解析文件，读取文件内容，并将读取内容封装后返回（此处只是读取到类的全限定名，还没有创建类对象）</span></span><br><span class="line">        pending = parse(service, configs.nextElement());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 拿到第一个实现类的类名</span></span><br><span class="line">    nextName = pending.next();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre>
+<p><img src="/img/image-20210118093328741.png" alt="image-20210118093328741" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210118093328741.png" class="lozad post-image"></p>
+<p><img src="/img/image-20210118093511722.png" alt="image-20210118093511722" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210118093511722.png" class="lozad post-image"></p>
+<h4 id="4-创建实例"><a class="markdownIt-Anchor" href="#4-创建实例">#</a> 4、创建实例</h4>
+<p>当然，调用 next 方法的时候，实际调用到的是，lookupIterator.nextService。它通过反射的方式，创建实现类的实例并返回。</p>
+<pre class="highlight"><span class="line"><span class="function"><span class="keyword">public</span> S <span class="title">next</span><span class="params">()</span> <span class="keyword">throws</span> ServiceConfigurationError </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.hasNext()) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        String var1 = <span class="keyword">this</span>.nextName;</span><br><span class="line">        <span class="keyword">this</span>.nextName = <span class="keyword">null</span>;</span><br><span class="line">        Class var2 = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            var2 = Class.forName(var1, <span class="keyword">false</span>, <span class="keyword">this</span>.loader);</span><br><span class="line">            ......</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">-------------------------</span><br><span class="line"># 无论调用的是哪种便利的方法，都会在next的遍历方法中调用Class.forName()反射生成最终的我们所需要的类对象</span><br></pre>
+<p>看到这儿，我想已经很清楚了。获取到类的实例，我们自然就可以对它为所欲为了！</p>
+<p><img src="/img/image-20210118095331736.png" alt="image-20210118095331736" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210118095331736.png" class="lozad post-image"></p>
+<h1 id="三-jdbc中的应用"><a class="markdownIt-Anchor" href="#三-jdbc中的应用">#</a> 三、JDBC 中的应用</h1>
+<p>我们开头说，SPI 机制为很多框架的扩展提供了可能，其实 JDBC 就应用到了这一机制。回忆一下 JDBC 获取数据库连接的过程。在早期版本中，需要先设置数据库驱动的连接，再通过 DriverManager.getConnection 获取一个 Connection。</p>
+<pre class="highlight"><span class="line"><span class="built_in">String</span> url = <span class="string">&quot;jdbc:mysql:///consult?serverTimezone=UTC&quot;</span>;</span><br><span class="line"><span class="built_in">String</span> user = <span class="string">&quot;root&quot;</span>;</span><br><span class="line"><span class="built_in">String</span> password = <span class="string">&quot;root&quot;</span>;</span><br><span class="line"></span><br><span class="line">Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">Connection connection = DriverManager.getConnection(url, user, password);</span><br></pre>
+<p>在较新版本中，设置数据库驱动连接，这一步骤就不再需要，那么它是怎么分辨是哪种数据库的呢？答案就是 SPI 机制。</p>
+<h4 id="1-加载"><a class="markdownIt-Anchor" href="#1-加载">#</a> 1、加载</h4>
+<p>我们把目光回到 <code>DriverManager</code>  类，它在静态代码块里面做了一件比较重要的事。很明显，它已经通过 SPI 机制， 把数据库驱动连接初始化了。</p>
+<pre class="highlight"><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DriverManager</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        loadInitialDrivers();</span><br><span class="line">        <span class="built_in">println</span>(<span class="string">&quot;JDBC DriverManager initialized&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+<p>具体过程还得看 loadInitialDrivers，它在里面查找的是 Driver 接口的服务类，所以它的文件路径就是：META-INF/services/java.sql.Driver。</p>
+<pre class="highlight"><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DriverManager</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loadInitialDrivers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        AccessController.doPrivileged(<span class="keyword">new</span> PrivilegedAction&lt;Void&gt;() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> Void <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="comment">//很明显，它要加载Driver接口的服务类，Driver接口的包为:java.sql.Driver</span></span><br><span class="line">                <span class="comment">//所以它要找的就是META-INF/services/java.sql.Driver文件</span></span><br><span class="line">                ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver.class);</span><br><span class="line">                Iterator&lt;Driver&gt; driversIterator = loadedDrivers.iterator();</span><br><span class="line">                <span class="keyword">try</span>&#123;</span><br><span class="line">                    <span class="comment">//查到之后创建对象</span></span><br><span class="line">                    <span class="keyword">while</span>(driversIterator.hasNext()) &#123;</span><br><span class="line">                        driversIterator.next();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span>(Throwable t) &#123;</span><br><span class="line">                    <span class="comment">// Do nothing</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+<p>那么，这个文件哪里有呢？我们来看 MySQL 的 jar 包，就是这个文件，文件内容为： <code>com.mysql.cj.jdbc.Driver</code> 。</p>
+<p><img src="/img/image-20210118104816954.png" alt="image-20210118104816954" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210118104816954.png" class="lozad post-image"></p>
+<p><img src="/img/image-20210118102603390.png" alt="image-20210118102603390" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210118102603390.png" class="lozad post-image"></p>
+<p>MySQL SPI 文件</p>
+<h4 id="2-创建实例"><a class="markdownIt-Anchor" href="#2-创建实例">#</a> 2、创建实例</h4>
+<p>上一步已经找到了 MySQL 中的 com.mysql.cj.jdbc.Driver 全限定类名，当调用 next 方法时，就会创建这个类的实例。它就完成了一件事，向 DriverManager 注册自身的实例。</p>
+<pre class="highlight"><span class="line"><span class="keyword">package</span> com.mysql.jdbc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Driver</span> <span class="keyword">extends</span> <span class="title">NonRegisteringDriver</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">sql</span>.<span class="title">Driver</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//注册</span></span><br><span class="line">            <span class="comment">//调用DriverManager类的注册方法</span></span><br><span class="line">            <span class="comment">//往registeredDrivers集合中加入实例</span></span><br><span class="line">            java.sql.DriverManager.registerDriver(<span class="keyword">new</span> Driver());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException E) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;Can&#x27;t register driver!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Driver</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// Required for Class.forName().newInstance()</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+<h4 id="3-创建connection"><a class="markdownIt-Anchor" href="#3-创建connection">#</a> 3、创建 Connection</h4>
+<p>在 DriverManager.getConnection () 方法就是创建连接的地方，它通过循环已注册的数据库驱动程序，调用其 connect 方法，获取连接并返回。</p>
+<pre class="highlight"><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        String url, java.util.Properties info, Class&lt;?&gt; caller)</span> <span class="keyword">throws</span> SQLException </span>&#123;   </span><br><span class="line">    <span class="comment">//registeredDrivers中就包含com.mysql.cj.jdbc.Driver实例</span></span><br><span class="line">    <span class="keyword">for</span>(DriverInfo aDriver : registeredDrivers) &#123;</span><br><span class="line">        <span class="keyword">if</span>(isDriverAllowed(aDriver.driver, callerCL)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">//调用connect方法创建连接</span></span><br><span class="line">                Connection con = aDriver.driver.connect(url, info);</span><br><span class="line">                <span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> (con);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">catch</span> (SQLException ex) &#123;</span><br><span class="line">                <span class="keyword">if</span> (reason == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    reason = ex;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            println(<span class="string">&quot;    skipping: &quot;</span> + aDriver.getClass().getName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+<h4 id="4-再扩展"><a class="markdownIt-Anchor" href="#4-再扩展">#</a> 4、再扩展</h4>
+<p>既然我们知道 JDBC 是这样创建数据库连接的，我们能不能再扩展一下呢？如果我们自己也创建一个 java.sql.Driver 文件，自定义实现类 MyDriver，那么，在获取连接的前后就可以动态修改一些信息。</p>
+<p>还是先在项目 ClassPath 下创建文件，文件内容为自定义驱动类 <code>com.viewscenes.netsupervisor.spi.MyDriver</code></p>
+<p>自定义数据库驱动程序</p>
+<p>我们的 MyDriver 实现类，继承自 MySQL 中的 NonRegisteringDriver，还要实现 java.sql.Driver 接口。这样，在调用 connect 方法的时候，就会调用到此类，但实际创建的过程还靠 MySQL 完成。</p>
+<pre class="highlight"><span class="line"><span class="keyword">package</span> com.viewscenes.netsupervisor.spi</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyDriver</span> <span class="keyword">extends</span> <span class="title">NonRegisteringDriver</span> <span class="keyword">implements</span> <span class="title">Driver</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            java.sql.DriverManager.registerDriver(<span class="keyword">new</span> MyDriver());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException E) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;Can&#x27;t register driver!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyDriver</span><span class="params">()</span><span class="keyword">throws</span> SQLException </span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Connection <span class="title">connect</span><span class="params">(String url, Properties info)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;准备创建数据库连接.url:&quot;</span>+url);</span><br><span class="line">        System.out.println(<span class="string">&quot;JDBC配置信息：&quot;</span>+info);</span><br><span class="line">        info.setProperty(<span class="string">&quot;user&quot;</span>, <span class="string">&quot;root&quot;</span>);</span><br><span class="line">        Connection connection =  <span class="keyword">super</span>.connect(url, info);</span><br><span class="line">        System.out.println(<span class="string">&quot;数据库连接创建完成!&quot;</span>+connection.toString());</span><br><span class="line">        <span class="keyword">return</span> connection;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">--------------------输出结果---------------------</span><br><span class="line">准备创建数据库连接.url:jdbc:mysql:<span class="comment">///consult?serverTimezone=UTC</span></span><br><span class="line">JDBC配置信息：&#123;user=root, password=root&#125;</span><br><span class="line">数据库连接创建完成!com.mysql.cj.jdbc.ConnectionImpl@<span class="number">7</span>cf10a6f</span><br></pre>
+<h1 id="四-其他应用场景"><a class="markdownIt-Anchor" href="#四-其他应用场景">#</a> 四、其他应用场景</h1>
+<h4 id="shardingsphere"><a class="markdownIt-Anchor" href="#shardingsphere">#</a> ShardingSphere</h4>
+<p>分布式数据库中间件中使用了非常多的 SPI 来提高 ShardingSphere 的可扩展性</p>
+<p><img src="/img/image-20210118104256438.png" alt="image-20210118104256438" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210118104256438.png" class="lozad post-image"></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/about">sunfy</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/2020/11/02/java/javaSPI/">http://xinghuohan.cn/2020/11/02/java/javaSPI/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2020/11/18/java/WebSocket/springBootToWebSocket/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">SpringBoot集成WebSocket通信 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2020/10/20/java/shiro/shirotoUse/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">shiro入门基础教程 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AFspi"><span class="toc-text"> 一、什么是 SPI</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BE%8B%E5%AD%90"><span class="toc-text"> 1、例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B5%8B%E8%AF%95"><span class="toc-text"> 2、测试</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-text"> 二、源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-serviceloader"><span class="toc-text"> 1、ServiceLoader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-load"><span class="toc-text"> 2、Load</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%9F%A5%E6%89%BE%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text"> 3、查找实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-text"> 4、创建实例</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89-jdbc%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text"> 三、JDBC 中的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%A0%E8%BD%BD"><span class="toc-text"> 1、加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-text"> 2、创建实例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%88%9B%E5%BB%BAconnection"><span class="toc-text"> 3、创建 Connection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%86%8D%E6%89%A9%E5%B1%95"><span class="toc-text"> 4、再扩展</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B-%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text"> 四、其他应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#shardingsphere"><span class="toc-text"> ShardingSphere</span></a></li></ol></li></ol></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.png" class="author-img">
+
+<p class="author-name">sunfy</p>
+<p class="author-description">sunfy个人博客</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>36</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>5</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>26</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AFspi"><span class="toc-text"> 一、什么是 SPI</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BE%8B%E5%AD%90"><span class="toc-text"> 1、例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B5%8B%E8%AF%95"><span class="toc-text"> 2、测试</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-text"> 二、源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-serviceloader"><span class="toc-text"> 1、ServiceLoader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-load"><span class="toc-text"> 2、Load</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%9F%A5%E6%89%BE%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text"> 3、查找实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-text"> 4、创建实例</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89-jdbc%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text"> 三、JDBC 中的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%A0%E8%BD%BD"><span class="toc-text"> 1、加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-text"> 2、创建实例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%88%9B%E5%BB%BAconnection"><span class="toc-text"> 3、创建 Connection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%86%8D%E6%89%A9%E5%B1%95"><span class="toc-text"> 4、再扩展</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B-%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text"> 四、其他应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#shardingsphere"><span class="toc-text"> ShardingSphere</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/DB">
+        <div class="categories-list-item">
+          DB
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/IDEA">
+        <div class="categories-list-item">
+          IDEA
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">9</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/tools">
+        <div class="categories-list-item">
+          tools
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\IDEA" title="IDEA"><div class="tags-list-item">IDEA</div></a>
+    
+    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    
+    <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
+    
+    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
+    
+    <a href="\tags\git" title="git"><div class="tags-list-item">git</div></a>
+    
+    <a href="\tags\JDK" title="JDK"><div class="tags-list-item">JDK</div></a>
+    
+    <a href="\tags\SpringBoot" title="SpringBoot"><div class="tags-list-item">SpringBoot</div></a>
+    
+    <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
+    
+    <a href="\tags\MQ" title="MQ"><div class="tags-list-item">MQ</div></a>
+    
+    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
+    
+    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
+    
+    <a href="\tags\tools" title="tools"><div class="tags-list-item">tools</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\Zookeeper" title="Zookeeper"><div class="tags-list-item">Zookeeper</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AFspi"><span class="toc-text"> 一、什么是 SPI</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BE%8B%E5%AD%90"><span class="toc-text"> 1、例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B5%8B%E8%AF%95"><span class="toc-text"> 2、测试</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-text"> 二、源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-serviceloader"><span class="toc-text"> 1、ServiceLoader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-load"><span class="toc-text"> 2、Load</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%9F%A5%E6%89%BE%E5%AE%9E%E7%8E%B0%E7%B1%BB"><span class="toc-text"> 3、查找实现类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-text"> 4、创建实例</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89-jdbc%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text"> 三、JDBC 中的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%A0%E8%BD%BD"><span class="toc-text"> 1、加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-text"> 2、创建实例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%88%9B%E5%BB%BAconnection"><span class="toc-text"> 3、创建 Connection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%86%8D%E6%89%A9%E5%B1%95"><span class="toc-text"> 4、再扩展</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B-%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text"> 四、其他应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#shardingsphere"><span class="toc-text"> ShardingSphere</span></a></li></ol></li></ol></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-01-06</div>
+        <a href="/2021/01/06/tools/dockerEdit/"><div class="recent-posts-item-content">Docker 修改MySQL配置</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-01</div>
+        <a href="/2020/12/01/java/MQ/RabbitMQWokers/"><div class="recent-posts-item-content">RabbitMQ主要工作模式</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-28</div>
+        <a href="/2020/11/28/java/MQ/RabbitMQBase/"><div class="recent-posts-item-content">MQ入门和RabbitMQ基础</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-25</div>
+        <a href="/2020/11/25/java/IOModule/BIO-NIO-AIO/"><div class="recent-posts-item-content">BIO-NIO-AIO 模型</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2019 -
+          
+          2021
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">sunfy </a>
+      </div>
+    </div>
+
+    
+    
+    
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
