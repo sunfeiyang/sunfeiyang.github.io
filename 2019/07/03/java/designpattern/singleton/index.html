@@ -252,10 +252,10 @@
 <p>分类：</p>
 <h3 id="饿汉模式"><a class="markdownIt-Anchor" href="#饿汉模式">#</a> 饿汉模式</h3>
 <p>主要特点是，在类文件加载的时候就会创建，不论是否有无方法对其进行调用。</p>
-<pre class="highlight"><span class="line">package com.sunfy.singleton;</span><br><span class="line">&#x2F;*</span><br><span class="line"> * static 静态的成员，是类所有，这样的对象会在类加载时就会创建类的唯一一个实例（饿汉模式）</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class Singleton &#123;</span><br><span class="line">    &#x2F;&#x2F;1.将构造方法私有化，不允许外部直接创建对象</span><br><span class="line">    private Singleton()&#123;        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;2.创建类的唯一实例，使用private(控制访问，安全考虑) static修饰</span><br><span class="line">    private static Singleton instance&#x3D;new Singleton();</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;3.提供一个用于获取实例的方法，使用public static（改为类所有，可以直接点）修饰</span><br><span class="line">    public static Singleton getInstance()&#123;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.sunfy.singleton;</span><br><span class="line">&#x2F;*</span><br><span class="line"> * static 静态的成员，是类所有，这样的对象会在类加载时就会创建类的唯一一个实例（饿汉模式）</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class Singleton &#123;</span><br><span class="line">    &#x2F;&#x2F;1.将构造方法私有化，不允许外部直接创建对象</span><br><span class="line">    private Singleton()&#123;        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;2.创建类的唯一实例，使用private(控制访问，安全考虑) static修饰</span><br><span class="line">    private static Singleton instance&#x3D;new Singleton();</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;3.提供一个用于获取实例的方法，使用public static（改为类所有，可以直接点）修饰</span><br><span class="line">    public static Singleton getInstance()&#123;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="懒汉模式"><a class="markdownIt-Anchor" href="#懒汉模式">#</a> 懒汉模式</h3>
 <p>主要特点是：加载类文件时不会进行创建，只有当调用该对象时才会创建，而且只有第一次调用时会创建。</p>
-<pre class="highlight"><span class="line">package com.sunfy.singleton;</span><br><span class="line">&#x2F;*</span><br><span class="line"> * 懒汉模式</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class Singleton2 &#123;</span><br><span class="line">    &#x2F;&#x2F;1.将构造方式私有化，不允许外边直接创建对象</span><br><span class="line">    private Singleton2()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;2.声明类的唯一实例，使用private static修饰</span><br><span class="line">    &#x2F;&#x2F;  只是声明，没有直接进行创建，当第一次获取的时候会创建</span><br><span class="line">    private static Singleton2 instance;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;3.提供一个用于获取实例的方法，使用public static修饰</span><br><span class="line">    public static Singleton2 getInstance()&#123;</span><br><span class="line">        if(instance&#x3D;&#x3D;null)&#123;</span><br><span class="line">            instance&#x3D;new Singleton2();</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.sunfy.singleton;</span><br><span class="line">&#x2F;*</span><br><span class="line"> * 懒汉模式</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class Singleton2 &#123;</span><br><span class="line">    &#x2F;&#x2F;1.将构造方式私有化，不允许外边直接创建对象</span><br><span class="line">    private Singleton2()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;2.声明类的唯一实例，使用private static修饰</span><br><span class="line">    &#x2F;&#x2F;  只是声明，没有直接进行创建，当第一次获取的时候会创建</span><br><span class="line">    private static Singleton2 instance;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;3.提供一个用于获取实例的方法，使用public static修饰</span><br><span class="line">    public static Singleton2 getInstance()&#123;</span><br><span class="line">        if(instance&#x3D;&#x3D;null)&#123;</span><br><span class="line">            instance&#x3D;new Singleton2();</span><br><span class="line">        &#125;</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="二者区别"><a class="markdownIt-Anchor" href="#二者区别">#</a> 二者区别</h3>
 <ul>
 <li>饿汉模式的特点是加载类时比较慢，但运行时获取对象的速度比较快，线程安全</li>
@@ -403,11 +403,11 @@
     
     <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
     
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
     <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
     
-    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\MyBatis" title="MyBatis"><div class="tags-list-item">MyBatis</div></a>
     
     <a href="\tags\MQ" title="MQ"><div class="tags-list-item">MQ</div></a>
     
@@ -421,7 +421,7 @@
     
     <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
     
-    <a href="\tags\JDK" title="JDK"><div class="tags-list-item">JDK</div></a>
+    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
     
   </div>
 </div>

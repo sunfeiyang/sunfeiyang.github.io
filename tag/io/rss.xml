@@ -24,8 +24,8 @@
         <category>tools</category>
         <category>git</category>
         <category>MQ</category>
-        <category>MyBatis</category>
         <category>IO</category>
+        <category>MyBatis</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
         <category>Zookeeper</category>

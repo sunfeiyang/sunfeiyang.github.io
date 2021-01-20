@@ -238,19 +238,19 @@
 <ol>
 <li>
 <p>配置 JAVA 环境，检验环境：保证是 <code>jdk7</code>  及以上即可</p>
-<pre class="highlight"><span class="line">java -version        </span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">java -version        </span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>下载并解压 Zookeeper</p>
-<pre class="highlight"><span class="line">wget https://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz tar -zxvf apache-zookeeper-3.5.8-bin.tar.gz cd  apache-zookeeper-3.5.8-bin     </span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz tar -zxvf apache-zookeeper-3.5.8-bin.tar.gz cd  apache-zookeeper-3.5.8-bin     </span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>重命名 <code> zoo_sample.cfg</code>  文件</p>
-<pre class="highlight"><span class="line">cp conf/zoo_sample.cfg conf/zoo-1.cfg </span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp conf/zoo_sample.cfg conf/zoo-1.cfg </span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>修改配置文件 <code>zoo-1.cfg</code> ，原配置文件里有的，修改成下面的值，没有的则加上</p>
-<pre class="highlight"><span class="line"><span class="meta">#</span><span class="bash"> vim conf/zoo-1.cfg</span></span><br><span class="line">dataDir=/usr/local/data/zookeeper-1</span><br><span class="line">clientPort=2181</span><br><span class="line">server.1=127.0.0.1:2001:3001:participant// participant 可以不用写，默认就是participant</span><br><span class="line">server.2=127.0.0.1:2002:3002:participant</span><br><span class="line">server.3=127.0.0.1:2003:3003:participant</span><br><span class="line">server.4=127.0.0.1:2004:3004:observer</span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> vim conf/zoo-1.cfg</span></span><br><span class="line">dataDir=/usr/local/data/zookeeper-1</span><br><span class="line">clientPort=2181</span><br><span class="line">server.1=127.0.0.1:2001:3001:participant// participant 可以不用写，默认就是participant</span><br><span class="line">server.2=127.0.0.1:2002:3002:participant</span><br><span class="line">server.3=127.0.0.1:2003:3003:participant</span><br><span class="line">server.4=127.0.0.1:2004:3004:observer</span><br></pre></td></tr></table></figure>
 <p><strong>配置说明</strong></p>
 <ul>
 <li><code>tickTime</code> ：用于配置 Zookeeper 中最小时间单位的长度，很多运行时的时间间隔都是使用 tickTime 的倍数来表示的。</li>
@@ -263,22 +263,22 @@
 </li>
 <li>
 <p>再从 <code>zoo-1.cfg</code>  复制三个配置文件 <code>zoo-2.cfg</code> ， <code>zoo-3.cfg</code>  和 <code>zoo-4.cfg</code> ，只需修改 <code>dataDir</code>  和 <code>clientPort</code>  不同即可</p>
-<pre class="highlight"><span class="line">cp conf/zoo1.cfg conf/zoo2.cfg</span><br><span class="line">cp conf/zoo1.cfg conf/zoo3.cfg</span><br><span class="line">cp conf/zoo1.cfg conf/zoo4.cfg</span><br><span class="line"></span><br><span class="line">vim conf/zoo2.cfg</span><br><span class="line">dataDir=/usr/local/data/zookeeper2</span><br><span class="line">clientPort=2182</span><br><span class="line">vim conf/zoo3.cfg</span><br><span class="line">dataDir=/usr/local/data/zookeeper3</span><br><span class="line">clientPort=2183</span><br><span class="line">vim conf/zoo4.cfg</span><br><span class="line">dataDir=/usr/local/data/zookeeper4</span><br><span class="line">clientPort=2184</span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp conf/zoo1.cfg conf/zoo2.cfg</span><br><span class="line">cp conf/zoo1.cfg conf/zoo3.cfg</span><br><span class="line">cp conf/zoo1.cfg conf/zoo4.cfg</span><br><span class="line"></span><br><span class="line">vim conf/zoo2.cfg</span><br><span class="line">dataDir=/usr/local/data/zookeeper2</span><br><span class="line">clientPort=2182</span><br><span class="line">vim conf/zoo3.cfg</span><br><span class="line">dataDir=/usr/local/data/zookeeper3</span><br><span class="line">clientPort=2183</span><br><span class="line">vim conf/zoo4.cfg</span><br><span class="line">dataDir=/usr/local/data/zookeeper4</span><br><span class="line">clientPort=2184</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>标识 Server ID，创建四个文件夹 <code>/usr/local/data/zookeeper-1</code> ， <code>/usr/local/data/zookeeper-2</code> ， <code>/usr/local/data/zookeeper-3</code> ， <code>/usr/local/data/zookeeper-4</code> ，在每个目录中创建文件 <code>myid</code>  文件，写入当前实例的 server id，即 1，2，3，4</p>
-<pre class="highlight"><span class="line">cd /usr/local/data/zookeeper-1</span><br><span class="line"> vim myid</span><br><span class="line"> 1 </span><br><span class="line"> cd /usr/local/data/zookeeper-2</span><br><span class="line"> vim myid</span><br><span class="line"> 2 </span><br><span class="line"> cd /usr/local/data/zookeeper-3</span><br><span class="line"> vim myid</span><br><span class="line"> 3 </span><br><span class="line">cd /usr/local/data/zookeeper-4</span><br><span class="line">vim myid</span><br><span class="line">4</span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /usr/local/data/zookeeper-1</span><br><span class="line"> vim myid</span><br><span class="line"> 1 </span><br><span class="line"> cd /usr/local/data/zookeeper-2</span><br><span class="line"> vim myid</span><br><span class="line"> 2 </span><br><span class="line"> cd /usr/local/data/zookeeper-3</span><br><span class="line"> vim myid</span><br><span class="line"> 3 </span><br><span class="line">cd /usr/local/data/zookeeper-4</span><br><span class="line">vim myid</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>启动三个 Zookeeper 实例</p>
-<pre class="highlight"><span class="line">bin/zkServer.sh start conf/zoo1.cfg</span><br><span class="line">bin/zkServer.sh start conf/zoo2.cfg</span><br><span class="line">bin/zkServer.sh start conf/zoo3.cfg</span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/zkServer.sh start conf/zoo1.cfg</span><br><span class="line">bin/zkServer.sh start conf/zoo2.cfg</span><br><span class="line">bin/zkServer.sh start conf/zoo3.cfg</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>检测集群状态，也可以直接用命令  <code>zkServer.sh   status conf/zoo1.cfg</code>   进行每台服务的状态查询</p>
 </li>
 </ol>
 <p><img src="/img/image-20201121113004525.png" alt="image-20201121113004525" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201121113004525.png" class="lozad post-image"></p>
-<pre class="highlight"><span class="line">bin/zkCli.sh -server ip1:port1,ip2:port2,ip3:port3 </span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bin/zkCli.sh -server ip1:port1,ip2:port2,ip3:port3 </span><br></pre></td></tr></table></figure>
 <p>可以通过 查看 / Zookeeper/config  节点数据来查看集群配置</p>
 <h3 id="zookeeper典型使用场景实战"><a class="markdownIt-Anchor" href="#zookeeper典型使用场景实战">#</a> Zookeeper 典型使用场景实战</h3>
 <ol>
@@ -437,11 +437,11 @@
     
     <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
     
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
     <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
     
-    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\MyBatis" title="MyBatis"><div class="tags-list-item">MyBatis</div></a>
     
     <a href="\tags\MQ" title="MQ"><div class="tags-list-item">MQ</div></a>
     
@@ -455,7 +455,7 @@
     
     <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
     
-    <a href="\tags\JDK" title="JDK"><div class="tags-list-item">JDK</div></a>
+    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
     
   </div>
 </div>

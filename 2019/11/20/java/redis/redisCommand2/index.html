@@ -231,7 +231,7 @@
 <h2 id="redis持久化"><a class="markdownIt-Anchor" href="#redis持久化">#</a> Redis 持久化</h2>
 <h3 id="rdb快照snapshot"><a class="markdownIt-Anchor" href="#rdb快照snapshot">#</a> RDB 快照（snapShot）</h3>
 <p>基本设置</p>
-<pre class="highlight"><span class="line"><span class="meta">#</span><span class="bash"> 在redis配置文件中做如下配置即可，redis在满足配置时就会自动进行持久化到本地文件中</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 60秒内至少改动1000个键值对，就会触发</span></span><br><span class="line">save 60 1000 </span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存的为二进制内容</span></span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在redis配置文件中做如下配置即可，redis在满足配置时就会自动进行持久化到本地文件中</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 60秒内至少改动1000个键值对，就会触发</span></span><br><span class="line">save 60 1000 </span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存的为二进制内容</span></span><br></pre></td></tr></table></figure>
 <p>save 和 bgsave</p>
 <table>
 <thead>
@@ -271,11 +271,11 @@
 </table>
 <h3 id="aofappend-only-file"><a class="markdownIt-Anchor" href="#aofappend-only-file">#</a> AOF(append-only file)</h3>
 <p>基本配置</p>
-<pre class="highlight"><span class="line">appendonly yes</span><br><span class="line"><span class="meta">#</span><span class="bash"> 具体配置项说明</span></span><br><span class="line">appendfsync always：每次有新命令追加到 AOF 文件时就执行一次 fsync ，非常慢，也非常安全。</span><br><span class="line">appendfsync everysec：每秒 fsync 一次，足够快，并且在故障时只会丢失 1 秒钟的数据。</span><br><span class="line">appendfsync no：从不 fsync ，将数据交给操作系统来处理。更快，也更不安全的选择。</span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">appendonly yes</span><br><span class="line"><span class="meta">#</span><span class="bash"> 具体配置项说明</span></span><br><span class="line">appendfsync always：每次有新命令追加到 AOF 文件时就执行一次 fsync ，非常慢，也非常安全。</span><br><span class="line">appendfsync everysec：每秒 fsync 一次，足够快，并且在故障时只会丢失 1 秒钟的数据。</span><br><span class="line">appendfsync no：从不 fsync ，将数据交给操作系统来处理。更快，也更不安全的选择。</span><br></pre></td></tr></table></figure>
 <p>aof 保存的是最新的 set 操作命令</p>
 <h3 id="aof重写"><a class="markdownIt-Anchor" href="#aof重写">#</a> AOF 重写</h3>
 <p>基本配置</p>
-<pre class="highlight"><span class="line"><span class="meta">#</span><span class="bash"> aof重写会将一些无用命令重新合并，最终数据肯定还是和原先的一致</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> aof文件至少要达到64M才会自动重写，文件太小恢复速度本来就很快，重写的意义不大</span></span><br><span class="line">auto-aof-rewrite-min-size 64mb   </span><br><span class="line"><span class="meta">#</span><span class="bash"> aof文件自上一次重写后文件大小增长了100%则再次触发重写</span></span><br><span class="line">auto-aof-rewrite-percentage 100  </span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> aof重写会将一些无用命令重新合并，最终数据肯定还是和原先的一致</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> aof文件至少要达到64M才会自动重写，文件太小恢复速度本来就很快，重写的意义不大</span></span><br><span class="line">auto-aof-rewrite-min-size 64mb   </span><br><span class="line"><span class="meta">#</span><span class="bash"> aof文件自上一次重写后文件大小增长了100%则再次触发重写</span></span><br><span class="line">auto-aof-rewrite-percentage 100  </span><br></pre></td></tr></table></figure>
 <p>AOF 还可以手动重写，进入 redis 客户端执行命令<strong> bgrewriteaof</strong> 重写 AOF</p>
 <p>注意，<strong>AOF 重写 redis 会 fork 出一个子进程去做 (与 bgsave 命令类似)，不会对 redis 正常命令处理有太多影响</strong></p>
 <h3 id="rdb和aof对比"><a class="markdownIt-Anchor" href="#rdb和aof对比">#</a> RDB 和 AOF 对比</h3>
@@ -312,7 +312,7 @@
 </table>
 <h3 id="redis40后的混合持久化"><a class="markdownIt-Anchor" href="#redis40后的混合持久化">#</a> Redis4.0 后的混合持久化</h3>
 <p>基本配置</p>
-<pre class="highlight"><span class="line"><span class="meta">#</span><span class="bash"> 混合持久化是基于aof持久化的优化，使用混合持久化必须先开启aof</span></span><br><span class="line">aof-use-rdb-preamble yes   </span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 混合持久化是基于aof持久化的优化，使用混合持久化必须先开启aof</span></span><br><span class="line">aof-use-rdb-preamble yes   </span><br></pre></td></tr></table></figure>
 <h3 id="redis数据备份策略"><a class="markdownIt-Anchor" href="#redis数据备份策略">#</a> Redis 数据备份策略</h3>
 <ol>
 <li>写 crontab 定时脚本，每个小时复制一份 Redis 持久化文件</li>
@@ -325,7 +325,7 @@
 <h2 id="redis主从架构"><a class="markdownIt-Anchor" href="#redis主从架构">#</a> Redis 主从架构</h2>
 <p><img src="/img/image-20201102105859265.png" alt="image-20201102105859265" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201102105859265.png" class="lozad post-image"></p>
 <h3 id="基本配置"><a class="markdownIt-Anchor" href="#基本配置">#</a> 基本配置</h3>
-<pre class="highlight"><span class="line">1、复制一份redis.conf文件</span><br><span class="line"></span><br><span class="line">2、将相关配置修改为如下值：</span><br><span class="line">port 6380</span><br><span class="line">pidfile /var/run/redis_6380.pid  # 把pid进程号写入pidfile配置的文件</span><br><span class="line">logfile &quot;6380.log&quot;</span><br><span class="line">dir /usr/local/redis-5.0.3/data/6380  # 指定数据存放目录</span><br><span class="line"></span><br><span class="line">3、配置主从复制</span><br><span class="line">replicaof 192.168.0.60 6379   # 从本机6379的redis实例复制数据，Redis 5.0之前使用slaveof</span><br><span class="line">replica-read-only yes  # 配置从节点只读</span><br><span class="line"></span><br><span class="line">4、启动从节点</span><br><span class="line">redis-server redis.conf</span><br><span class="line"></span><br><span class="line">5、连接从节点</span><br><span class="line">redis-cli -p 6380</span><br><span class="line"></span><br><span class="line">6、测试在6379实例上写数据，6380实例是否能及时同步新修改数据</span><br><span class="line"></span><br><span class="line">7、可以自己再配置一个6381的从节点</span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">1、复制一份redis.conf文件</span><br><span class="line"></span><br><span class="line">2、将相关配置修改为如下值：</span><br><span class="line">port 6380</span><br><span class="line">pidfile /var/run/redis_6380.pid  # 把pid进程号写入pidfile配置的文件</span><br><span class="line">logfile &quot;6380.log&quot;</span><br><span class="line">dir /usr/local/redis-5.0.3/data/6380  # 指定数据存放目录</span><br><span class="line"></span><br><span class="line">3、配置主从复制</span><br><span class="line">replicaof 192.168.0.60 6379   # 从本机6379的redis实例复制数据，Redis 5.0之前使用slaveof</span><br><span class="line">replica-read-only yes  # 配置从节点只读</span><br><span class="line"></span><br><span class="line">4、启动从节点</span><br><span class="line">redis-server redis.conf</span><br><span class="line"></span><br><span class="line">5、连接从节点</span><br><span class="line">redis-cli -p 6380</span><br><span class="line"></span><br><span class="line">6、测试在6379实例上写数据，6380实例是否能及时同步新修改数据</span><br><span class="line"></span><br><span class="line">7、可以自己再配置一个6381的从节点</span><br></pre></td></tr></table></figure>
 <h3 id="全量复制"><a class="markdownIt-Anchor" href="#全量复制">#</a> 全量复制</h3>
 <p>从节点首次同步数据或长时间断开链接，主节点和从节点之前数据差超过了 master 节点缓存队列中的数据时会采用全量复制</p>
 <h3 id="部分复制"><a class="markdownIt-Anchor" href="#部分复制">#</a> 部分复制</h3>
@@ -335,7 +335,7 @@
 <h2 id="redis哨兵高可用架构"><a class="markdownIt-Anchor" href="#redis哨兵高可用架构">#</a> Redis 哨兵高可用架构</h2>
 <p><img src="/img/image-20201102110615982.png" alt="image-20201102110615982" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20201102110615982.png" class="lozad post-image"></p>
 <p>基本配置</p>
-<pre class="highlight"><span class="line">1、复制一份sentinel.conf文件</span><br><span class="line">cp sentinel.conf sentinel-26379.conf</span><br><span class="line"></span><br><span class="line">2、将相关配置修改为如下值：</span><br><span class="line">port 26379</span><br><span class="line">daemonize yes</span><br><span class="line">pidfile &quot;/var/run/redis-sentinel-26379.pid&quot;</span><br><span class="line">logfile &quot;26379.log&quot;</span><br><span class="line">dir &quot;/usr/local/redis-5.0.3/data&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> sentinel monitor &lt;master-redis-name&gt; &lt;master-redis-ip&gt; &lt;master-redis-port&gt; &lt;quorum&gt;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> quorum是一个数字，指明当有多少个sentinel认为一个master失效时(值一般为：sentinel总数/2 + 1)，master才算真正失效</span></span><br><span class="line">sentinel monitor mymaster 192.168.0.60 6379 2   # mymaster这个名字随便取，客户端访问时会用到</span><br><span class="line"></span><br><span class="line">3、启动sentinel哨兵实例</span><br><span class="line">src/redis-sentinel sentinel-26379.conf</span><br><span class="line"></span><br><span class="line">4、查看sentinel的info信息</span><br><span class="line">src/redis-cli -p 26379</span><br><span class="line">127.0.0.1:26379&gt;info</span><br><span class="line">可以看到Sentinel的info里已经识别出了redis的主从</span><br><span class="line"></span><br><span class="line">5、可以自己再配置两个sentinel，端口26380和26381，注意上述配置文件里的对应数字都要修改</span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">1、复制一份sentinel.conf文件</span><br><span class="line">cp sentinel.conf sentinel-26379.conf</span><br><span class="line"></span><br><span class="line">2、将相关配置修改为如下值：</span><br><span class="line">port 26379</span><br><span class="line">daemonize yes</span><br><span class="line">pidfile &quot;/var/run/redis-sentinel-26379.pid&quot;</span><br><span class="line">logfile &quot;26379.log&quot;</span><br><span class="line">dir &quot;/usr/local/redis-5.0.3/data&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> sentinel monitor &lt;master-redis-name&gt; &lt;master-redis-ip&gt; &lt;master-redis-port&gt; &lt;quorum&gt;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> quorum是一个数字，指明当有多少个sentinel认为一个master失效时(值一般为：sentinel总数/2 + 1)，master才算真正失效</span></span><br><span class="line">sentinel monitor mymaster 192.168.0.60 6379 2   # mymaster这个名字随便取，客户端访问时会用到</span><br><span class="line"></span><br><span class="line">3、启动sentinel哨兵实例</span><br><span class="line">src/redis-sentinel sentinel-26379.conf</span><br><span class="line"></span><br><span class="line">4、查看sentinel的info信息</span><br><span class="line">src/redis-cli -p 26379</span><br><span class="line">127.0.0.1:26379&gt;info</span><br><span class="line">可以看到Sentinel的info里已经识别出了redis的主从</span><br><span class="line"></span><br><span class="line">5、可以自己再配置两个sentinel，端口26380和26381，注意上述配置文件里的对应数字都要修改</span><br></pre></td></tr></table></figure>
 <h2 id="操作中遇到的问题"><a class="markdownIt-Anchor" href="#操作中遇到的问题">#</a> 操作中遇到的问题</h2>
 <ol>
 <li>配置主从模式时，要注意主节点不能配置 replicaof</li>
@@ -483,11 +483,11 @@
     
     <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
     
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
     <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
     
-    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\MyBatis" title="MyBatis"><div class="tags-list-item">MyBatis</div></a>
     
     <a href="\tags\MQ" title="MQ"><div class="tags-list-item">MQ</div></a>
     
@@ -501,7 +501,7 @@
     
     <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
     
-    <a href="\tags\JDK" title="JDK"><div class="tags-list-item">JDK</div></a>
+    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
     
   </div>
 </div>

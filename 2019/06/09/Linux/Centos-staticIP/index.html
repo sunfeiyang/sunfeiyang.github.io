@@ -230,9 +230,9 @@
 <p>为了应用方便，需要设置 centos 的固定 ip。 版本 centos7</p>
 <p>设置步骤 1.ifconfig 找到当前的 centos 的 ip</p>
 <p>2. 进入文件 vim /etc/sysconfig/network-scripts/ifcfg-ens33</p>
-<pre class="highlight"><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=ens33</span><br><span class="line">UUID=529b576d-4e86-4dd1-9446-43ab40dbfd27</span><br><span class="line">DEVICE=ens33</span><br><span class="line">ONBOOT=yes</span><br><span class="line">IPADDR=192.168.88.88</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.88.2</span><br><span class="line">DNS1=192.168.88.2</span><br><span class="line"></span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=ens33</span><br><span class="line">UUID=529b576d-4e86-4dd1-9446-43ab40dbfd27</span><br><span class="line">DEVICE=ens33</span><br><span class="line">ONBOOT=yes</span><br><span class="line">IPADDR=192.168.88.88</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.88.2</span><br><span class="line">DNS1=192.168.88.2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>3. 重启网络服务 使用命令 systemctl restart network.service</p>
-<pre class="highlight"><span class="line">--关闭网络管理器NetwokManager</span><br><span class="line">systemctl stop NetworkManager</span><br><span class="line">systemctl disable NetworkManager</span><br><span class="line">service network restart</span><br></pre>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">--关闭网络管理器NetwokManager</span><br><span class="line">systemctl stop NetworkManager</span><br><span class="line">systemctl disable NetworkManager</span><br><span class="line">service network restart</span><br></pre></td></tr></table></figure>
 
   </div>
   <div>
@@ -375,11 +375,11 @@
     
     <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
     
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
     <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
     
-    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\MyBatis" title="MyBatis"><div class="tags-list-item">MyBatis</div></a>
     
     <a href="\tags\MQ" title="MQ"><div class="tags-list-item">MQ</div></a>
     
@@ -393,7 +393,7 @@
     
     <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
     
-    <a href="\tags\JDK" title="JDK"><div class="tags-list-item">JDK</div></a>
+    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
     
   </div>
 </div>
