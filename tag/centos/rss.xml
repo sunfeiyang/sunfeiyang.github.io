@@ -20,16 +20,16 @@
         <category>Ubuntu</category>
         <category>VMware</category>
         <category>Java</category>
-        <category>设计模式</category>
         <category>SPI</category>
         <category>tools</category>
         <category>git</category>
-        <category>IO</category>
         <category>MQ</category>
         <category>MyBatis</category>
+        <category>IO</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
         <category>Zookeeper</category>
+        <category>设计模式</category>
         <category>Spring</category>
         <category>Redis</category>
         <category>shiro</category>

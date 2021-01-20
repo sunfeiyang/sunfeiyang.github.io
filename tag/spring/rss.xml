@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Fri, 25 Sep 2020 16:32:07 +0800</pubDate>
-        <lastBuildDate>Fri, 25 Sep 2020 16:32:07 +0800</lastBuildDate>
+        <pubDate>Wed, 10 Jul 2019 00:00:00 +0800</pubDate>
+        <lastBuildDate>Wed, 10 Jul 2019 00:00:00 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -20,26 +20,26 @@
         <category>Ubuntu</category>
         <category>VMware</category>
         <category>Java</category>
-        <category>设计模式</category>
         <category>SPI</category>
         <category>tools</category>
         <category>git</category>
-        <category>IO</category>
         <category>MQ</category>
         <category>MyBatis</category>
+        <category>IO</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
         <category>Zookeeper</category>
+        <category>设计模式</category>
         <category>Spring</category>
         <category>Redis</category>
         <category>shiro</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/09/25/java/designpattern/observer/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2019/07/10/java/designpattern/observer/</guid>
             <title>java设计模式之观察者模式</title>
-            <link>http://xinghuohan.cn/2020/09/25/java/designpattern/observer/</link>
+            <link>http://xinghuohan.cn/2019/07/10/java/designpattern/observer/</link>
             <category>设计模式</category>
             <category>Spring</category>
-            <pubDate>Fri, 25 Sep 2020 16:32:07 +0800</pubDate>
+            <pubDate>Wed, 10 Jul 2019 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;Java 设计模式，眼观六路，耳听八方，观察者很忙，随时监控着关注对象的一举一动。观察者模式解决了基于一对多对象结构关系间的互动问题，使观察者（多方买家）专主动为被动，被观察者（单方商家）转被动为主动，此情此景，需动静结合，先后有序，以【一方动多方静】取代【多方动一方静】的模式，大大的提高了沟通效率。&lt;!--header--&gt;&lt;/p&gt;
 &lt;p&gt;先来看个图:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/image-20200925163924556.png&#34; alt=&#34;image-20200925163924556&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20200925163924556.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;

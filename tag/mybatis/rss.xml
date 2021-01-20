@@ -20,23 +20,23 @@
         <category>Ubuntu</category>
         <category>VMware</category>
         <category>Java</category>
-        <category>设计模式</category>
         <category>SPI</category>
         <category>tools</category>
         <category>git</category>
-        <category>IO</category>
         <category>MQ</category>
         <category>MyBatis</category>
+        <category>IO</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
         <category>Zookeeper</category>
+        <category>设计模式</category>
         <category>Spring</category>
         <category>Redis</category>
         <category>shiro</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2021/01/19/java/Netty/NettyBase/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/01/19/java/Netty-IOModule/NettyBase/</guid>
             <title>Netty入门示例及核心功能了解</title>
-            <link>http://xinghuohan.cn/2021/01/19/java/Netty/NettyBase/</link>
+            <link>http://xinghuohan.cn/2021/01/19/java/Netty-IOModule/NettyBase/</link>
             <category>Java</category>
             <category>MyBatis</category>
             <pubDate>Tue, 19 Jan 2021 08:50:49 +0800</pubDate>
