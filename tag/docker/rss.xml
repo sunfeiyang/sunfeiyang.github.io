@@ -222,6 +222,8 @@ E: Unable to locate package vim&lt;br&gt;
             <category>Docker</category>
             <pubDate>Fri, 14 Aug 2020 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;docker 客户端非常简单，我们可以直接输入 docker 命令来查看到 Docker 客户端的所有命令选项。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;docker服务器重启&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker服务器重启&#34;&gt;#&lt;/a&gt; docker 服务器重启&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;service docker restart&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;docker&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker&#34;&gt;#&lt;/a&gt; docker&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;/img/image-20210122101233015.png&#34; alt=&#34;image-20210122101233015&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122101233015.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;可以通过命令 &lt;strong&gt;docker command --help&lt;/strong&gt; 更深入的了解指定的 Docker 命令使用方法。&lt;/p&gt;
@@ -233,7 +235,7 @@ E: Unable to locate package vim&lt;br&gt;
 &lt;h3 id=&#34;新建并启动容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#新建并启动容器&#34;&gt;#&lt;/a&gt; 新建并启动容器&lt;/h3&gt;
 &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker run &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker run ‐d ‐p 8761:8761 microservice‐eureka‐server:0.0.1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 使用 -v 可以挂载一个主机上的目录到容器的目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker run ‐p 8761:8761 ‐v /log:/container‐log microservice‐eureka‐server:0.0.1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;启动容器已创建的&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#启动容器已创建的&#34;&gt;#&lt;/a&gt; 启动容器（已创建的）&lt;/h3&gt;
-&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker start xxxx&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker start &amp;lt;CONTAINER ID&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;查看启动容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查看启动容器&#34;&gt;#&lt;/a&gt; 查看启动容器&lt;/h3&gt;
 &lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker ps&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;查看所有容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查看所有容器&#34;&gt;#&lt;/a&gt; 查看所有容器&lt;/h3&gt;
@@ -277,7 +279,9 @@ E: Unable to locate package vim&lt;br&gt;
 &lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker rm -f 1e560fca3906&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.runoob.com/wp-content/uploads/2016/05/docker-container-rmi.png&#34;&gt;&lt;img src=&#34;/img/docker-container-rmi.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/docker-container-rmi.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;下面的命令可以清理掉所有处于终止状态的容器。&lt;/p&gt;
-&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker container prune&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt; ]]></description>
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker container prune&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;设置容器自动启动&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设置容器自动启动&#34;&gt;#&lt;/a&gt; 设置容器自动启动&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 在运行docker容器时可以加如下参数来保证每次docker服务重启后容器也自动重启：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker run --restart=always&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 如果已经启动了则可以使用如下命令：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker update --restart=always &amp;lt;CONTAINER ID&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt; ]]></description>
         </item>
     </channel>
 </rss>
