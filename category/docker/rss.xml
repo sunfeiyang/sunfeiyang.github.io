@@ -168,6 +168,54 @@ E: Unable to locate package vim&lt;br&gt;
  ]]></description>
         </item>
         <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/02/Docker/Centos-Docker/</guid>
+            <title>CentOS安装Docker图形化工具</title>
+            <link>http://xinghuohan.cn/2020/09/02/Docker/Centos-Docker/</link>
+            <category>CentOS</category>
+            <category>Docker</category>
+            <pubDate>Wed, 02 Sep 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;CentOS 安装 Docker 图形化工具&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;一docker图形化工具&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#一docker图形化工具&#34;&gt;#&lt;/a&gt; 一.Docker 图形化工具&lt;/h2&gt;
+&lt;p&gt;​    docker 图形页面管理工具常用的有三种，DockerUI ，Portainer ，Shipyard 。DockerUI 是 Portainer 的前身，这三个工具通过 docker api 来获取管理的资源信息。平时我们常常对着 shell 对着这些命令行客户端，审美会很疲劳，如果有漂亮的图形化界面可以直观查看 docker 资源信息，也是非常方便的。今天我们就搭建单机版的三种常用图形页面管理工具。这三种图形化管理工具以 Portainer 最为受欢迎。&lt;/p&gt;
+&lt;h2 id=&#34;二dockerui&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#二dockerui&#34;&gt;#&lt;/a&gt; 二.DockerUI&lt;/h2&gt;
+&lt;p&gt;轻量级图形页面管理之 DockerUI&lt;/p&gt;
+&lt;p&gt;1. 查看 dockerui 镜像&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker search dockerui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921161812839-1161447728.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921161812839-1161447728.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2. 选择喜欢的 dockerui 风格镜像，下载&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker pull abh1nav&amp;#x2F;dockerui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3. 启动 dockerui 容器，这里需要注意带上 privileged 参数，提升权限&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker run -d --privileged --name dockerui -p 9000:9000 -v &amp;#x2F;var&amp;#x2F;run&amp;#x2F;docker.sock:&amp;#x2F;var&amp;#x2F;run&amp;#x2F;docker.sock abh1nav&amp;#x2F;dockerui&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;前往网页查看之前，你需要打开服务器的 9000 端口：   firewall-cmd --permanent --zone=public --add-port=9000/tcpfirewall-cmd --reload&lt;/p&gt;
+&lt;p&gt;4. 浏览器查看 dockerui：&lt;a href=&#34;http://192.168.2.119:9000/&#34;&gt;http://192.168.2.119:9000&lt;/a&gt;   或者 curl &lt;a href=&#34;http://192.168.2.119:9000&#34;&gt;http://192.168.2.119:9000&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921160841743-448633112.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921160841743-448633112.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;三shipyard&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#三shipyard&#34;&gt;#&lt;/a&gt; 三.Shipyard&lt;/h2&gt;
+&lt;p&gt;轻量级图形页面管理之 Shipyard&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;四portainer&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#四portainer&#34;&gt;#&lt;/a&gt; 四.Portainer&lt;/h2&gt;
+&lt;p&gt;轻量级图形页面管理之 Portainer&lt;/p&gt;
+&lt;p&gt;1. 查看 portainer 镜像&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker search portainer&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921161723460-1361137261.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921161723460-1361137261.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2. 选择喜欢的 portainer 风格镜像，下载&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker pull portainer&amp;#x2F;portainer &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3. 启动 dockerui 容器&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[root@localhost ~]# docker run -d --name portainerUI -p 9000:9000 -v &amp;#x2F;var&amp;#x2F;run&amp;#x2F;docker.sock:&amp;#x2F;var&amp;#x2F;run&amp;#x2F;docker.sock portainer&amp;#x2F;portainer&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;4. 浏览器访问 &lt;a href=&#34;http://192.168.2.119:9000/&#34;&gt;http://192.168.2.119:9000&lt;/a&gt; , 设置一个密码即可，点击创建用户&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921162528714-901461854.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921162528714-901461854.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/u=1997667158,3125340408&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/u=1997667158,3125340408&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;我们搭建的是单机版，直接选择 Local ，点击连接&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921162717769-145855775.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921162717769-145855775.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/u=1266655624,1442914627&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/u=1266655624,1442914627&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;现在就可以使用了，点击 Local 进入仪表盘主页面。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921165040584-1231389831.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921165040584-1231389831.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;容器页面&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921164941854-544053238.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921164941854-544053238.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/u=1156235942,926832626&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/u=1156235942,926832626&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/u=3237575840,3806081523&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/u=3237575840,3806081523&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/08/14/Docker/dockerBase/</guid>
             <title>docker基本命令</title>
             <link>http://xinghuohan.cn/2020/08/14/Docker/dockerBase/</link>
