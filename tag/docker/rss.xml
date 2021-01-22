@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Wed, 06 Jan 2021 15:48:02 +0800</pubDate>
-        <lastBuildDate>Wed, 06 Jan 2021 15:48:02 +0800</lastBuildDate>
+        <pubDate>Thu, 21 Jan 2021 17:17:15 +0800</pubDate>
+        <lastBuildDate>Thu, 21 Jan 2021 17:17:15 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -34,9 +34,66 @@
         <category>Redis</category>
         <category>shiro</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2021/01/06/tools/dockerEdit/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/01/21/Docker/dockerBuildFormIdea/</guid>
+            <title>idea 利用 docker插件打包上传</title>
+            <link>http://xinghuohan.cn/2021/01/21/Docker/dockerBuildFormIdea/</link>
+            <category>IDEA</category>
+            <category>Docker</category>
+            <pubDate>Thu, 21 Jan 2021 17:17:15 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;idea 利用 docker 插件打包上传镜像 &lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;1idea环境准备&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1idea环境准备&#34;&gt;#&lt;/a&gt; 1：idea 环境准备&lt;/h2&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;点击 file&amp;gt;settings&amp;gt;plugins&amp;gt;搜索docker下载  如下图&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122095457335.png&#34; alt=&#34;image-20210122095457335&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122095457335.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2docker服务环境准备&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2docker服务环境准备&#34;&gt;#&lt;/a&gt; 2：docker 服务环境准备&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;正常安装 docker 环境&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第一步：配置 Docker，开启远程访问（注：仅供学习参考，实际生产环境万万不可，会产生很大的安全风险），默认端口是 2375，也可以修改为其他端口&lt;/p&gt;
+&lt;p&gt;1、修改 /lib/systemd/system/docker.service 文件&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;vim /lib/systemd/system/docker.service&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在 &lt;code&gt;ExecStart&lt;/code&gt;  后面追加  &lt;code&gt;-H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122095822612.png&#34; alt=&#34;image-20210122095822612&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122095822612.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;修改完保存退出命令 :wq&lt;/p&gt;
+&lt;p&gt;2、重新加载配置文件，重启 docker，使得刚才的配置生效&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;重新加载配置文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl daemon-reload&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;重启docker服务&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl restart docker&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3、使用 curl 命令检查是否开启&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;curl下载docker的服务信息&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;curl http://127.0.0.1:2375/info&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果有返回说明，就证明开启成功了，可以看到我的 Docker 版本，镜像加速器地址等其他信息，但是这时候远程可能依然访问不了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122095914492.png&#34; alt=&#34;image-20210122095914492&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122095914492.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;开放端口后，可以远程访问，直接在服务器中也可以验证&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122100013090.png&#34; alt=&#34;image-20210122100013090&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100013090.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3idea远程连接docker&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3idea远程连接docker&#34;&gt;#&lt;/a&gt; 3：idea 远程连接 docker&lt;/h2&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;点击 file&amp;gt;settings&amp;gt;docker  如下图&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意我所标记的地方，地址填写 docker 访问地址，端口 2375 为固定的，记得服务器需要开放端口，不然连接不上。&lt;br&gt;
+连接成功下面会显示：Connection successful； 表示连接成功&lt;br&gt;
+&lt;img src=&#34;/img/image-20210122100131336.png&#34; alt=&#34;image-20210122100131336&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100131336.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;连接成功后 idea 下方会有一个 docker 窗口，可以镜像和容器进行操作，如下图&lt;br&gt;
+&lt;img src=&#34;/img/image-20210122100155280.png&#34; alt=&#34;image-20210122100155280&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100155280.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+&lt;strong&gt; 以上表示 idea 已经远程成功连接 docker&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;4利用idea远程发布springboot项目&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#4利用idea远程发布springboot项目&#34;&gt;#&lt;/a&gt; 4：利用 idea 远程发布 springboot 项目&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;1：新建 Dockerfile 文件，注意文件位置，和文件名称一定不能搞错，文件在项目的根目录下，与 src 同级&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;配置文件可以在打包时指定位置&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Dokcerfile 文件内容&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight java&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;#打包需要用到的jdk&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;FROM openjdk:&lt;span class=&#34;number&#34;&gt;8&lt;/span&gt;-jdk-alpine&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#前面是idea打包的jar包路径，路径不能错，  后面是 添加到docker的jar包名称，可自定义&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ADD /target/eureka-server1-&lt;span class=&#34;number&#34;&gt;0.0&lt;/span&gt;.&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;-SNAPSHOT.jar eureka-server1-&lt;span class=&#34;number&#34;&gt;0.0&lt;/span&gt;.&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;-SNAPSHOT.jar&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#容器的端口映射&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;EXPOSE &lt;span class=&#34;number&#34;&gt;10001&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;10001&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#运行jar命令&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ENTRYPOINT [&lt;span class=&#34;string&#34;&gt;&amp;quot;java&amp;quot;&lt;/span&gt;,&lt;span class=&#34;string&#34;&gt;&amp;quot;-jar&amp;quot;&lt;/span&gt;,&lt;span class=&#34;string&#34;&gt;&amp;quot;/eureka-server1-0.0.1-SNAPSHOT.jar&amp;quot;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;Dockerfile 文件位置&lt;/strong&gt;&lt;br&gt;
+&lt;img src=&#34;/img/image-20210122100252540.png&#34; alt=&#34;image-20210122100252540&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100252540.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2：项目添加 docker 运行并上传&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;2.1：首先点击下图1下拉选择 Edit Configurations&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2.2：点击如下图2位置的加号。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;3：dockeer 参数设置&lt;/strong&gt;&lt;br&gt;
+&lt;img src=&#34;/img/image-20210122100515829.png&#34; alt=&#34;image-20210122100515829&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100515829.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4：直接运行 dockerfile 配置自动上传&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122100642183.png&#34; alt=&#34;image-20210122100642183&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100642183.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/01/06/Docker/dockerEdit/</guid>
             <title>Docker 修改MySQL配置</title>
-            <link>http://xinghuohan.cn/2021/01/06/tools/dockerEdit/</link>
+            <link>http://xinghuohan.cn/2021/01/06/Docker/dockerEdit/</link>
+            <category>MySQL</category>
             <category>Docker</category>
             <pubDate>Wed, 06 Jan 2021 15:48:02 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;Docker 修改 MySQL 配置 &lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
@@ -111,12 +168,12 @@ E: Unable to locate package vim&lt;br&gt;
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/08/14/Linux/Centos-Docker/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/02/Docker/Centos-Docker/</guid>
             <title>CentOS安装Docker图形化工具</title>
-            <link>http://xinghuohan.cn/2020/08/14/Linux/Centos-Docker/</link>
+            <link>http://xinghuohan.cn/2020/09/02/Docker/Centos-Docker/</link>
             <category>CentOS</category>
             <category>Docker</category>
-            <pubDate>Fri, 14 Aug 2020 00:00:00 +0800</pubDate>
+            <pubDate>Wed, 02 Sep 2020 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;CentOS 安装 Docker 图形化工具&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;一docker图形化工具&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#一docker图形化工具&#34;&gt;#&lt;/a&gt; 一.Docker 图形化工具&lt;/h2&gt;
 &lt;p&gt;​    docker 图形页面管理工具常用的有三种，DockerUI ，Portainer ，Shipyard 。DockerUI 是 Portainer 的前身，这三个工具通过 docker api 来获取管理的资源信息。平时我们常常对着 shell 对着这些命令行客户端，审美会很疲劳，如果有漂亮的图形化界面可以直观查看 docker 资源信息，也是非常方便的。今天我们就搭建单机版的三种常用图形页面管理工具。这三种图形化管理工具以 Portainer 最为受欢迎。&lt;/p&gt;
@@ -134,7 +191,7 @@ E: Unable to locate package vim&lt;br&gt;
 &lt;p&gt;&lt;img src=&#34;/img/1385722-20180921160841743-448633112.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921160841743-448633112.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;三shipyard&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#三shipyard&#34;&gt;#&lt;/a&gt; 三.Shipyard&lt;/h2&gt;
 &lt;p&gt;轻量级图形页面管理之 Shipyard&lt;/p&gt;
-&lt;h2 id=&#34;img&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#img&#34;&gt;#&lt;/a&gt; &lt;img src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;四portainer&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#四portainer&#34;&gt;#&lt;/a&gt; 四.Portainer&lt;/h2&gt;
 &lt;p&gt;轻量级图形页面管理之 Portainer&lt;/p&gt;
 &lt;p&gt;1. 查看 portainer 镜像&lt;/p&gt;
@@ -157,6 +214,70 @@ E: Unable to locate package vim&lt;br&gt;
 &lt;p&gt;&lt;img src=&#34;/img/u=1156235942,926832626&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/u=1156235942,926832626&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/u=3237575840,3806081523&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/u=3237575840,3806081523&amp;amp;fm=173&amp;amp;app=25&amp;amp;f=JPEG&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
  ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/08/14/Docker/dockerBase/</guid>
+            <title>docker基本命令</title>
+            <link>http://xinghuohan.cn/2020/08/14/Docker/dockerBase/</link>
+            <category>Docker</category>
+            <pubDate>Fri, 14 Aug 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;docker 客户端非常简单，我们可以直接输入 docker 命令来查看到 Docker 客户端的所有命令选项。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;docker&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker&#34;&gt;#&lt;/a&gt; docker&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122101233015.png&#34; alt=&#34;image-20210122101233015&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122101233015.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;可以通过命令 &lt;strong&gt;docker command --help&lt;/strong&gt; 更深入的了解指定的 Docker 命令使用方法。&lt;/p&gt;
+&lt;p&gt;例如我们要查看 &lt;strong&gt;docker stats&lt;/strong&gt; 指令的具体使用方法：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker stats --help&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122101335591.png&#34; alt=&#34;image-20210122101335591&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122101335591.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;获取镜像&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#获取镜像&#34;&gt;#&lt;/a&gt; 获取镜像&lt;/h3&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker pull xxxx&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;新建并启动容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#新建并启动容器&#34;&gt;#&lt;/a&gt; 新建并启动容器&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker run &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker run ‐d ‐p 8761:8761 microservice‐eureka‐server:0.0.1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 使用 -v 可以挂载一个主机上的目录到容器的目录&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker run ‐p 8761:8761 ‐v /log:/container‐log microservice‐eureka‐server:0.0.1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;启动容器已创建的&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#启动容器已创建的&#34;&gt;#&lt;/a&gt; 启动容器（已创建的）&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker start xxxx&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;查看启动容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查看启动容器&#34;&gt;#&lt;/a&gt; 查看启动容器&lt;/h3&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker ps&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;查看所有容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查看所有容器&#34;&gt;#&lt;/a&gt; 查看所有容器&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker ps -a&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;停止容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#停止容器&#34;&gt;#&lt;/a&gt; 停止容器&lt;/h3&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker stop &amp;lt;容器 ID&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;重启容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#重启容器&#34;&gt;#&lt;/a&gt; 重启容器&lt;/h3&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker restart &amp;lt;容器 ID&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;进入容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#进入容器&#34;&gt;#&lt;/a&gt; 进入容器&lt;/h3&gt;
+&lt;p&gt;在使用 &lt;strong&gt;-d&lt;/strong&gt; 参数时，容器启动后会进入后台。此时想要进入容器，可以通过以下指令进入：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;docker attach&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;docker exec&lt;/strong&gt;：推荐大家使用 docker exec 命令，因为此退出容器终端，不会导致容器的停止。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;attach 命令&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;下面演示了使用 docker attach 命令。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;$ docker attach 1e560fca3906 &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.runoob.com/wp-content/uploads/2016/05/docker-attach.png&#34;&gt;&lt;img src=&#34;/img/docker-attach.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/docker-attach.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt; 如果从这个容器退出，会导致容器的停止。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;exec 命令&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;下面演示了使用 docker exec 命令。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker exec -it 243c32535da7 &amp;#x2F;bin&amp;#x2F;bash&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.runoob.com/wp-content/uploads/2016/05/docker-exec.png&#34;&gt;&lt;img src=&#34;/img/docker-exec.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/docker-exec.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt; 如果从这个容器退出，容器不会停止，这就是为什么推荐大家使用 &lt;strong&gt;docker exec&lt;/strong&gt; 的原因。&lt;/p&gt;
+&lt;p&gt;更多参数说明请使用 &lt;strong&gt;docker exec --help&lt;/strong&gt; 命令查看。&lt;/p&gt;
+&lt;h3 id=&#34;导出和导入容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#导出和导入容器&#34;&gt;#&lt;/a&gt; 导出和导入容器&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;导出容器&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果要导出本地某个容器，可以使用 &lt;strong&gt;docker export&lt;/strong&gt; 命令。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker export 1e560fca3906 &amp;gt; ubuntu.tar&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;导出容器 1e560fca3906 快照到本地文件 ubuntu.tar。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.runoob.com/wp-content/uploads/2016/05/docker-export.png&#34;&gt;&lt;img src=&#34;/img/docker-export.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/docker-export.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这样将导出容器快照到本地文件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;导入容器快照&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可以使用 docker import 从容器快照文件中再导入为镜像，以下实例将快照文件 ubuntu.tar 导入到镜像 test/ubuntu:v1:&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;cat docker&amp;#x2F;ubuntu.tar | docker import - test&amp;#x2F;ubuntu:v1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.runoob.com/wp-content/uploads/2016/05/docker-import.png&#34;&gt;&lt;img src=&#34;/img/docker-import.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/docker-import.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;此外，也可以通过指定 URL 或者某个目录来导入，例如：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker import http:&amp;#x2F;&amp;#x2F;example.com&amp;#x2F;exampleimage.tgz example&amp;#x2F;imagerepo&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;删除容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#删除容器&#34;&gt;#&lt;/a&gt; 删除容器&lt;/h3&gt;
+&lt;p&gt;删除容器使用 &lt;strong&gt;docker rm&lt;/strong&gt; 命令：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker rm -f 1e560fca3906&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.runoob.com/wp-content/uploads/2016/05/docker-container-rmi.png&#34;&gt;&lt;img src=&#34;/img/docker-container-rmi.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/docker-container-rmi.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下面的命令可以清理掉所有处于终止状态的容器。&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker container prune&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt; ]]></description>
         </item>
     </channel>
 </rss>

@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Sat, 14 Dec 2019 00:00:00 +0800</pubDate>
-        <lastBuildDate>Sat, 14 Dec 2019 00:00:00 +0800</lastBuildDate>
+        <pubDate>Thu, 21 Jan 2021 17:17:15 +0800</pubDate>
+        <lastBuildDate>Thu, 21 Jan 2021 17:17:15 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -33,6 +33,62 @@
         <category>Spring</category>
         <category>Redis</category>
         <category>shiro</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/01/21/Docker/dockerBuildFormIdea/</guid>
+            <title>idea 利用 docker插件打包上传</title>
+            <link>http://xinghuohan.cn/2021/01/21/Docker/dockerBuildFormIdea/</link>
+            <category>IDEA</category>
+            <category>Docker</category>
+            <pubDate>Thu, 21 Jan 2021 17:17:15 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;idea 利用 docker 插件打包上传镜像 &lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;1idea环境准备&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1idea环境准备&#34;&gt;#&lt;/a&gt; 1：idea 环境准备&lt;/h2&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;点击 file&amp;gt;settings&amp;gt;plugins&amp;gt;搜索docker下载  如下图&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122095457335.png&#34; alt=&#34;image-20210122095457335&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122095457335.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2docker服务环境准备&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2docker服务环境准备&#34;&gt;#&lt;/a&gt; 2：docker 服务环境准备&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;正常安装 docker 环境&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第一步：配置 Docker，开启远程访问（注：仅供学习参考，实际生产环境万万不可，会产生很大的安全风险），默认端口是 2375，也可以修改为其他端口&lt;/p&gt;
+&lt;p&gt;1、修改 /lib/systemd/system/docker.service 文件&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;vim /lib/systemd/system/docker.service&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在 &lt;code&gt;ExecStart&lt;/code&gt;  后面追加  &lt;code&gt;-H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122095822612.png&#34; alt=&#34;image-20210122095822612&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122095822612.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;修改完保存退出命令 :wq&lt;/p&gt;
+&lt;p&gt;2、重新加载配置文件，重启 docker，使得刚才的配置生效&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;重新加载配置文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl daemon-reload&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;重启docker服务&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl restart docker&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3、使用 curl 命令检查是否开启&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;curl下载docker的服务信息&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;curl http://127.0.0.1:2375/info&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果有返回说明，就证明开启成功了，可以看到我的 Docker 版本，镜像加速器地址等其他信息，但是这时候远程可能依然访问不了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122095914492.png&#34; alt=&#34;image-20210122095914492&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122095914492.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;开放端口后，可以远程访问，直接在服务器中也可以验证&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122100013090.png&#34; alt=&#34;image-20210122100013090&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100013090.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3idea远程连接docker&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3idea远程连接docker&#34;&gt;#&lt;/a&gt; 3：idea 远程连接 docker&lt;/h2&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;点击 file&amp;gt;settings&amp;gt;docker  如下图&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意我所标记的地方，地址填写 docker 访问地址，端口 2375 为固定的，记得服务器需要开放端口，不然连接不上。&lt;br&gt;
+连接成功下面会显示：Connection successful； 表示连接成功&lt;br&gt;
+&lt;img src=&#34;/img/image-20210122100131336.png&#34; alt=&#34;image-20210122100131336&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100131336.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;连接成功后 idea 下方会有一个 docker 窗口，可以镜像和容器进行操作，如下图&lt;br&gt;
+&lt;img src=&#34;/img/image-20210122100155280.png&#34; alt=&#34;image-20210122100155280&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100155280.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+&lt;strong&gt; 以上表示 idea 已经远程成功连接 docker&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;4利用idea远程发布springboot项目&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#4利用idea远程发布springboot项目&#34;&gt;#&lt;/a&gt; 4：利用 idea 远程发布 springboot 项目&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;1：新建 Dockerfile 文件，注意文件位置，和文件名称一定不能搞错，文件在项目的根目录下，与 src 同级&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;配置文件可以在打包时指定位置&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Dokcerfile 文件内容&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight java&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;#打包需要用到的jdk&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;FROM openjdk:&lt;span class=&#34;number&#34;&gt;8&lt;/span&gt;-jdk-alpine&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#前面是idea打包的jar包路径，路径不能错，  后面是 添加到docker的jar包名称，可自定义&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ADD /target/eureka-server1-&lt;span class=&#34;number&#34;&gt;0.0&lt;/span&gt;.&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;-SNAPSHOT.jar eureka-server1-&lt;span class=&#34;number&#34;&gt;0.0&lt;/span&gt;.&lt;span class=&#34;number&#34;&gt;1&lt;/span&gt;-SNAPSHOT.jar&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#容器的端口映射&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;EXPOSE &lt;span class=&#34;number&#34;&gt;10001&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;10001&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#运行jar命令&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ENTRYPOINT [&lt;span class=&#34;string&#34;&gt;&amp;quot;java&amp;quot;&lt;/span&gt;,&lt;span class=&#34;string&#34;&gt;&amp;quot;-jar&amp;quot;&lt;/span&gt;,&lt;span class=&#34;string&#34;&gt;&amp;quot;/eureka-server1-0.0.1-SNAPSHOT.jar&amp;quot;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;Dockerfile 文件位置&lt;/strong&gt;&lt;br&gt;
+&lt;img src=&#34;/img/image-20210122100252540.png&#34; alt=&#34;image-20210122100252540&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100252540.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2：项目添加 docker 运行并上传&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;2.1：首先点击下图1下拉选择 Edit Configurations&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2.2：点击如下图2位置的加号。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;3：dockeer 参数设置&lt;/strong&gt;&lt;br&gt;
+&lt;img src=&#34;/img/image-20210122100515829.png&#34; alt=&#34;image-20210122100515829&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100515829.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4：直接运行 dockerfile 配置自动上传&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210122100642183.png&#34; alt=&#34;image-20210122100642183&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122100642183.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/12/14/IDEA/IDEA-JRebel/</guid>
             <title>IDEA JRebel 破解最简单的使用</title>

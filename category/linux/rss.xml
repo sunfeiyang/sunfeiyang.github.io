@@ -94,12 +94,12 @@
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/08/14/Linux/Centos-Docker/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/02/Docker/Centos-Docker/</guid>
             <title>CentOS安装Docker图形化工具</title>
-            <link>http://xinghuohan.cn/2020/08/14/Linux/Centos-Docker/</link>
+            <link>http://xinghuohan.cn/2020/09/02/Docker/Centos-Docker/</link>
             <category>CentOS</category>
             <category>Docker</category>
-            <pubDate>Fri, 14 Aug 2020 00:00:00 +0800</pubDate>
+            <pubDate>Wed, 02 Sep 2020 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;CentOS 安装 Docker 图形化工具&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;一docker图形化工具&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#一docker图形化工具&#34;&gt;#&lt;/a&gt; 一.Docker 图形化工具&lt;/h2&gt;
 &lt;p&gt;​    docker 图形页面管理工具常用的有三种，DockerUI ，Portainer ，Shipyard 。DockerUI 是 Portainer 的前身，这三个工具通过 docker api 来获取管理的资源信息。平时我们常常对着 shell 对着这些命令行客户端，审美会很疲劳，如果有漂亮的图形化界面可以直观查看 docker 资源信息，也是非常方便的。今天我们就搭建单机版的三种常用图形页面管理工具。这三种图形化管理工具以 Portainer 最为受欢迎。&lt;/p&gt;
@@ -117,7 +117,7 @@
 &lt;p&gt;&lt;img src=&#34;/img/1385722-20180921160841743-448633112.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921160841743-448633112.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;三shipyard&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#三shipyard&#34;&gt;#&lt;/a&gt; 三.Shipyard&lt;/h2&gt;
 &lt;p&gt;轻量级图形页面管理之 Shipyard&lt;/p&gt;
-&lt;h2 id=&#34;img&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#img&#34;&gt;#&lt;/a&gt; &lt;img src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1385722-20180921163444930-1449197767.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;四portainer&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#四portainer&#34;&gt;#&lt;/a&gt; 四.Portainer&lt;/h2&gt;
 &lt;p&gt;轻量级图形页面管理之 Portainer&lt;/p&gt;
 &lt;p&gt;1. 查看 portainer 镜像&lt;/p&gt;
