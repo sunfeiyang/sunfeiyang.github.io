@@ -10,22 +10,23 @@
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
+        <category>CentOS</category>
+        <category>Docker</category>
         <category>IDEA</category>
         <category>JRebel</category>
         <category>Statistic</category>
-        <category>CentOS</category>
-        <category>Docker</category>
         <category>JDK</category>
         <category>Centos</category>
         <category>Ubuntu</category>
         <category>VMware</category>
+        <category>Desk</category>
         <category>Java</category>
         <category>SPI</category>
         <category>tools</category>
         <category>git</category>
         <category>MQ</category>
-        <category>IO</category>
         <category>MyBatis</category>
+        <category>IO</category>
         <category>SpringBoot</category>
         <category>WebSocket</category>
         <category>Zookeeper</category>
@@ -241,7 +242,7 @@
 &lt;p&gt;1. 执行命令：&lt;/p&gt;
 &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;wget -O- https://deepin-wine.i-m.dev/setup.sh | sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;2. 执行命令：&lt;/p&gt;
-&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install deepin.com.weixin.work&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install deepin.com.weixin.work&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 微信&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install com.qq.weixin.deepin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; QQ&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install com.qq.im.deepin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;com.dingtalk.deepin                  com.qq.video.deepin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;com.foxmail.deepin                   com.qq.weixin.deepin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;com.freepiano.deepin                 com.qq.weixin.work.deepin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;com.iqiyi.deepin                     com.taobao.aliclient.qianniu.deepin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;com.meituxiuxiu.deepin               com.taobao.wangwang.deepin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;com.qq.im.deepin                     com.utau.deepin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;com.qq.music.deepin    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin-app-store-runtime  deepin-libwine-dbg        deepin-voice-recorder&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin-calculator         deepin-libwine-dev        deepin-wine&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin.com.qq.im          deepin-menu               deepin-wine32-tools&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin.com.qq.office      deepin-movie              deepin-wine5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin.com.wechat         deepin-music              deepin-wine5-i386&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin-deb-installer      deepin-notifications      deepin-wine-binfmt&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin-fonts-wine         deepin-picker             deepin-wine-helper&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin-gettext-tools      deepin-screen-recorder    deepin-wine-helper64&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin-icon-theme         deepin-screenshot         deepin-wine-plugin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin-image-viewer       deepin-shortcut-viewer    deepnano&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;deepin-libwine            deepin-terminal           deepnano-data&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;上述两条命令执行完，企业微信已经安装成功，接下来的步骤自行选择&lt;/p&gt;
 &lt;p&gt;但是字体是为楷体，看着难受，下面是修改字体；&lt;/p&gt;
 &lt;p&gt;1、在目录 /usr/share/fonts 创建 windows 目录，consola.ttf 和 msyh.ttf 拷贝到 ubuntu 下的 /usr/share/fonts/windows 下，记得给 windows 目录和.ttf 文件修改权限．（consola.ttf 文件我已上传资源，msyh.ttf 上传时提示已存在）&lt;/p&gt;

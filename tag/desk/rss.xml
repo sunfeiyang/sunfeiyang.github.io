@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>sunfy • Posts by &#34;desk&#34; tag</title>
+        <link>http://xinghuohan.cn</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Mon, 02 Mar 2020 00:00:00 +0800</pubDate>
+        <lastBuildDate>Mon, 02 Mar 2020 00:00:00 +0800</lastBuildDate>
+        <category>DB</category>
+        <category>MySQL</category>
+        <category>Linux</category>
+        <category>CentOS</category>
+        <category>Docker</category>
+        <category>IDEA</category>
+        <category>JRebel</category>
+        <category>Statistic</category>
+        <category>JDK</category>
+        <category>Centos</category>
+        <category>Ubuntu</category>
+        <category>VMware</category>
+        <category>Desk</category>
+        <category>Java</category>
+        <category>SPI</category>
+        <category>tools</category>
+        <category>git</category>
+        <category>MQ</category>
+        <category>MyBatis</category>
+        <category>IO</category>
+        <category>SpringBoot</category>
+        <category>WebSocket</category>
+        <category>Zookeeper</category>
+        <category>设计模式</category>
+        <category>Spring</category>
+        <category>Redis</category>
+        <category>shiro</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/03/02/desk/npmInstall/</guid>
+            <title>前端基础插件</title>
+            <link>http://xinghuohan.cn/2020/03/02/desk/npmInstall/</link>
+            <category>Desk</category>
+            <pubDate>Mon, 02 Mar 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;前端基本开发环境安装，node、npm、cnpm、@angular&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;安装nodejs&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装nodejs&#34;&gt;#&lt;/a&gt; 安装 nodejs&lt;/h2&gt;
+&lt;p&gt;第一步，去 nodejs 官网 &lt;a href=&#34;https://nodejs.org/&#34;&gt;https://nodejs.org&lt;/a&gt; 看最新的版本号；&lt;img src=&#34;/img/image-20210123213318414.png&#34; alt=&#34;image-20210123213318414&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210123213318414.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;求稳的话建议选 LTS 版。&lt;/p&gt;
+&lt;p&gt;第二步，添加源后安装&lt;br&gt;
+重点来了，nodejs 的每个大版本号都有相对应的源，比如这里的 14.x.x 版本的源是 https://deb.nodesource.com/setup_14.x。&lt;/p&gt;
+&lt;p&gt;所以在终端执行：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;稍等片刻，源已经添加完毕，再执行：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install -y nodejs&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;等待安装完成。&lt;/p&gt;
+&lt;h2 id=&#34;安装npm&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装npm&#34;&gt;#&lt;/a&gt; 安装 npm&lt;/h2&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo apt install npm&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210123213822768.png&#34; alt=&#34;image-20210123213822768&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210123213822768.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;淘宝npm镜像-cnpm&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#淘宝npm镜像-cnpm&#34;&gt;#&lt;/a&gt; 淘宝 npm 镜像 cnpm&lt;/h2&gt;
+&lt;p&gt;国内直接使用 npm 的官方镜像是非常慢的，这里推荐使用淘宝 NPM 镜像。&lt;/p&gt;
+&lt;p&gt;淘宝 NPM 镜像是一个完整 &lt;a href=&#34;http://npmjs.org&#34;&gt;npmjs.org&lt;/a&gt; 镜像，可以用此代替官方版本 (只读)，同步频率目前为 10 分钟 一次以保证尽量与官方服务同步。&lt;/p&gt;
+&lt;p&gt;用 npm 安装 cnm&lt;/p&gt;
+&lt;figure class=&#34;highlight sql&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;npm &lt;span class=&#34;keyword&#34;&gt;install&lt;/span&gt; -g cnpm &lt;span class=&#34;comment&#34;&gt;--registry=https://registry.npm.taobao.org&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&#34;错误&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#错误&#34;&gt;#&lt;/a&gt; 错误&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210123214230438.png&#34; alt=&#34;image-20210123214230438&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210123214230438.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;错误原因&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#错误原因&#34;&gt;#&lt;/a&gt; 错误原因&lt;/h2&gt;
+&lt;p&gt;找到报错的文件，会看到它的所有者是  &lt;code&gt;root&lt;/code&gt; 。&lt;br&gt;
+之前用  &lt;code&gt;root&lt;/code&gt;  进行了局部的安装操作，导致这个文件的所有者是  &lt;code&gt;root&lt;/code&gt;  ，还包括  &lt;code&gt;.npm&lt;/code&gt;  文件夹下部分文件夹的所有权，也是  &lt;code&gt;root&lt;/code&gt; ，普通用户当然就无权访问了。就会报权限错误。&lt;/p&gt;
+&lt;h2 id=&#34;解决办法&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#解决办法&#34;&gt;#&lt;/a&gt; 解决办法&lt;/h2&gt;
+&lt;p&gt;就是把用户目录下的  &lt;code&gt;.npm&lt;/code&gt;  文件夹所有权都改成当前用户即可。&lt;br&gt;
+比如：当前用户名为 sunfy&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo chown -R sunfy ~/.npm&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&#34;安装angular&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装angular&#34;&gt;#&lt;/a&gt; 安装 Angular&lt;/h2&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;npm install -g @angular/cli&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210123214609372.png&#34; alt=&#34;image-20210123214609372&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210123214609372.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;npm安装后提示命令不存在&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#npm安装后提示命令不存在&#34;&gt;#&lt;/a&gt; npm 安装后提示命令不存在&lt;/h2&gt;
+&lt;p&gt;解决方案：用一个通用的命令配置环境变量&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;echo -e &amp;quot;export PATH&amp;#x3D;$(npm prefix -g)&amp;#x2F;bin:$PATH&amp;quot; &amp;gt;&amp;gt; ~&amp;#x2F;.bashrc &amp;amp;&amp;amp; source ~&amp;#x2F;.bashrc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt; ]]></description>
+        </item>
+    </channel>
+</rss>
