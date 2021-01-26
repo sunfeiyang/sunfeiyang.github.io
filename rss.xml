@@ -2036,6 +2036,36 @@ E: Unable to locate package vim&lt;br&gt;
 &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 查看当前npm的默认位置&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;npm config ls&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 修改npm使用新的全局安装路径&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;npm config set prefix &amp;#x27;your url&amp;#x27;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;redis桌面可视化访问工具&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#redis桌面可视化访问工具&#34;&gt;#&lt;/a&gt; redis 桌面可视化访问工具&lt;/h3&gt;
 &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 参考工具&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;https://snapcraft.io/redis-desktop-manager&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;ubuntu-2004-下安装easyconnect记录&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ubuntu-2004-下安装easyconnect记录&#34;&gt;#&lt;/a&gt; Ubuntu 20.04 下安装 easyconnect 记录&lt;/h3&gt;
+&lt;p&gt;1、easyconnect 在 Ubuntu 20 下无法打开；&lt;br&gt;
+2、在解决第一个问题后在 easyconnect 登陆过程中闪退。&lt;/p&gt;
+&lt;p&gt;解决方案主要参考了以下两个博客&lt;br&gt;
+&lt;a href=&#34;https://www.cnblogs.com/cocode/p/12890684.html&#34;&gt; Ubuntu 20.04 下 EasyConnect 兼容性问题临时解决方案&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://bbs.sangfor.com.cn/forum.php?mod=viewthread&amp;amp;tid=111229&#34;&gt; Ubuntu 18.04 系统解决 EasyConnect 登录后闪退问题&lt;/a&gt;&lt;br&gt;
+ easyconnect 下载：&lt;br&gt;
+&lt;a href=&#34;https://sslvpn.zjweu.edu.cn/com/installClient.html&#34;&gt;https://sslvpn.zjweu.edu.cn/com/installClient.html&lt;/a&gt;&lt;br&gt;
+ 流程：&lt;br&gt;
+首先是解决 easyconnect 不兼容 Ubuntu 20 的问题&lt;br&gt;
+ 1、&lt;a href=&#34;https://packages.ubuntu.com/eoan/libpango-1.0-0&#34;&gt;https://packages.ubuntu.com/eoan/libpango-1.0-0&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://packages.ubuntu.com/eoan/libpangocairo-1.0-0&#34;&gt;https://packages.ubuntu.com/eoan/libpangocairo-1.0-0&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://packages.ubuntu.com/eoan/libpangoft2-1.0-0&#34;&gt;https://packages.ubuntu.com/eoan/libpangoft2-1.0-0&lt;/a&gt;&lt;br&gt;
+ 或者使用下面网盘下载&lt;br&gt;
+ &lt;code&gt;https://wws.lanzous.com/b01nmd4sh 密码:76yn&lt;/code&gt; &lt;br&gt;
+ 分别下载这三个包。&lt;br&gt;
+使用命令行进入下载的三个包所在的目录，用命令&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;dpkg -X  libpangoxxxx  ./ &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;解压下载的三个.deb 包&lt;br&gt;
+ 2、进入解压的目录&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;cd&lt;/span&gt; usr/lib/x86_64-linux-gnu&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3、将解压得到的.so 文件拷贝到 easyconnect 目录下&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo cp * /usr/share/sangfor/EasyConnect&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;4、此时在 &lt;code&gt;/usr/share/sangfor/EasyConnect&lt;/code&gt;  目录下输入命令&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;$ ldd EasyConnect | grep pango&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;显示应为（ &lt;code&gt;libpango&lt;/code&gt; &lt;a href=&#34;http://xn--rcrm18ivzkd1hm7hlv9aei6bf2j.so&#34;&gt; 应链接到复制过去的.so&lt;/a&gt;）：&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;libpangocairo-1.0.so.0 =&amp;gt; /usr/share/sangfor/EasyConnect/./libpangocairo-1.0.so.0 (0x00007f16ce009000)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	libpango-1.0.so.0 =&amp;gt; /usr/share/sangfor/EasyConnect/./libpango-1.0.so.0 (0x00007f16cde72000)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	libpangoft2-1.0.so.0 =&amp;gt; /usr/share/sangfor/EasyConnect/./libpangoft2-1.0.so.0 (0x00007f16cc1cb000)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后便可以正常打开 easyconnect。可能会遇到闪退问题，此时在登录进度条大概 70% 左右执行命令&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo /bin/bash /usr/share/sangfor/EasyConnect/resources/shell/sslservice.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可以解决登录几秒后闪退问题&lt;/p&gt;
  ]]></description>
         </item>
         <item>
