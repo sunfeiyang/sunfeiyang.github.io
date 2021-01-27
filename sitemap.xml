@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xinghuohan.cn/2019/05/12/Server/Tomcat-startTwice/</loc>
+    
+    <lastmod>2021-01-27</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xinghuohan.cn/2020/03/11/Linux/ubuntu-windowsZipCode/</loc>
     
     <lastmod>2021-01-27</lastmod>
@@ -535,6 +542,13 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>http://xinghuohan.cn/tags/Tomcat/</loc>
+    <lastmod>2021-01-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
@@ -581,6 +595,13 @@
   
   <url>
     <loc>http://xinghuohan.cn/categories/tools/</loc>
+    <lastmod>2021-01-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/categories/Server/</loc>
     <lastmod>2021-01-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
