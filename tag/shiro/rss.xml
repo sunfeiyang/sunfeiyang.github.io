@@ -35,6 +35,7 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>Tomcat</category>
+        <category>MongoDB</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/10/20/java/shiro/shirotoUse/</guid>
             <title>shiro入门基础教程</title>

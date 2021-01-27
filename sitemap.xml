@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xinghuohan.cn/2020/06/14/DB/MongoDB-config/</loc>
+    
+    <lastmod>2021-01-27</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xinghuohan.cn/2019/05/19/tools/link/</loc>
     
     <lastmod>2021-01-27</lastmod>
@@ -551,6 +558,13 @@
   
   <url>
     <loc>http://xinghuohan.cn/tags/Tomcat/</loc>
+    <lastmod>2021-01-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/tags/MongoDB/</loc>
     <lastmod>2021-01-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
