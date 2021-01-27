@@ -1074,6 +1074,25 @@
   </entry>
   
   <entry>
+    <title>常用技术链接</title>
+    <link href="http://xinghuohan.cn/2019/05/19/tools/link/"/>
+    <id>http://xinghuohan.cn/2019/05/19/tools/link/</id>
+    <published>2019-05-19T13:54:02.000Z</published>
+    <updated>2021-01-27T09:07:53.767Z</updated>
+    
+    <content type="html"><![CDATA[<p>有用的技术链接地址，或对应的插件官方地址<a id="more"></a></p><h3 id="spring"><a class="markdownIt-Anchor" href="#spring">#</a> Spring</h3><ul><li><a href="https://spring.io/">Spring</a>  <a href="https://repo.spring.io/webapp/#/home">webapp</a></li><li><a href="https://spring.io/projects/spring-boot">Spring Boot</a></li><li><a href="https://spring.io/projects/spring-cloud">Spring Cloud</a><ul><li><a href="https://cloud.spring.io/spring-cloud-gateway/2.1.x/multi/multi_spring-cloud-gateway.html">Spring Cloud Gateway</a></li><li><a href="https://docs.spring.io/spring-cloud-security/docs/current/reference/html/">Spring Cloud security</a></li><li><a href="https://docs.spring.io/spring-cloud-netflix/docs/current/reference/html/">Spring Cloud Netflix</a>   — ribbon</li><li><a href="https://docs.spring.io/spring-cloud-openfeign/docs/2.2.5.RELEASE/reference/html/">Spring Cloud OpenFeign</a></li><li><a href="https://spring-cloud-alibaba-group.github.io/github-pages/hoxton/en-us/index.html">Spring Cloud Alibaba</a><ul><li><a href="https://nacos.io/zh-cn/">Nacos</a>.</li><li><a href="https://sentinelguard.io/zh-cn/">Sentinel</a></li></ul></li></ul></li></ul><p><a href="https://zookeeper.apache.org/">Zookeeper</a></p><p><a href="https://www.mongodb.com/2">mongoDB</a></p><p><a href="https://shardingsphere.apache.org/">ShardingSphere</a></p><p><a href="https://shiro.apache.org/">Shiro</a></p><p><a href="https://nginx.org/">Nginx</a></p><p><a href="https://www.docker.com/">docker</a></p><p><a href="http://dubbo.apache.org/zh/">dubbo</a></p><p><a href="http://seata.io/zh-cn/">seata</a></p><h3 id="gc日志分析"><a class="markdownIt-Anchor" href="#gc日志分析">#</a> GC 日志分析</h3><ul><li><a href="https://gceasy.io/">GCeasy</a></li></ul><h3 id="jwt"><a class="markdownIt-Anchor" href="#jwt">#</a> JWT</h3><ul><li><a href="https://jwt.io/">JWT</a></li></ul><h3 id="数据结构模拟"><a class="markdownIt-Anchor" href="#数据结构模拟">#</a> 数据结构模拟</h3><ul><li><a href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">列表</a></li></ul><p><img src="/img/image-20210127162629136.png" alt="image-20210127162629136" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210127162629136.png" class="lozad post-image"></p><ul><li><a href="https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html">B+</a></li><li><a href="https://www.cs.usfca.edu/~galles/visualization/BTree.html">B</a></li><li><a href="https://www.cs.usfca.edu/~galles/visualization/RedBlack.html">Red-Black</a></li></ul><h3 id="orm"><a class="markdownIt-Anchor" href="#orm">#</a> ORM</h3><ul><li><a href="https://mybatis.org/mybatis-3/zh/index.html">MyBatis</a></li><li><a href="https://mp.baomidou.com/#/">MyBatisPlus</a></li></ul><h3 id="other"><a class="markdownIt-Anchor" href="#other">#</a> Other</h3><ul><li><a href="https://hexo.io/zh-cn/docs/index.html">HEXO</a></li><li><a href="https://leetcode-cn.com/">力扣</a></li><li><a href="http://patorjk.com/software/taag/#p=display&amp;h=2&amp;v=2&amp;f=3D%20Diagonal&amp;t=sunfy%0A">生成字母（代码输出）</a></li><li><a href="https://www.iconfont.cn/">阿里巴巴矢量图库</a></li></ul>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;有用的技术链接地址，或对应的插件官方地址</summary>
+    
+    
+    
+    <category term="tools" scheme="http://xinghuohan.cn/categories/tools/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Tomcat下项目被启动两次为问题</title>
     <link href="http://xinghuohan.cn/2019/05/12/Server/Tomcat-startTwice/"/>
     <id>http://xinghuohan.cn/2019/05/12/Server/Tomcat-startTwice/</id>

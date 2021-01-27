@@ -119,6 +119,71 @@
  ]]></description>
         </item>
         <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2019/05/19/tools/link/</guid>
+            <title>常用技术链接</title>
+            <link>http://xinghuohan.cn/2019/05/19/tools/link/</link>
+            <pubDate>Sun, 19 May 2019 21:54:02 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;有用的技术链接地址，或对应的插件官方地址&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;spring&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#spring&#34;&gt;#&lt;/a&gt; Spring&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://spring.io/&#34;&gt;Spring&lt;/a&gt;  &lt;a href=&#34;https://repo.spring.io/webapp/#/home&#34;&gt;webapp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://spring.io/projects/spring-boot&#34;&gt;Spring Boot&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://spring.io/projects/spring-cloud&#34;&gt;Spring Cloud&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://cloud.spring.io/spring-cloud-gateway/2.1.x/multi/multi_spring-cloud-gateway.html&#34;&gt;Spring Cloud Gateway&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.spring.io/spring-cloud-security/docs/current/reference/html/&#34;&gt;Spring Cloud security&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.spring.io/spring-cloud-netflix/docs/current/reference/html/&#34;&gt;Spring Cloud Netflix&lt;/a&gt;   — ribbon&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.spring.io/spring-cloud-openfeign/docs/2.2.5.RELEASE/reference/html/&#34;&gt;Spring Cloud OpenFeign&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://spring-cloud-alibaba-group.github.io/github-pages/hoxton/en-us/index.html&#34;&gt;Spring Cloud Alibaba&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://nacos.io/zh-cn/&#34;&gt;Nacos&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://sentinelguard.io/zh-cn/&#34;&gt;Sentinel&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://zookeeper.apache.org/&#34;&gt;Zookeeper&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.mongodb.com/2&#34;&gt;mongoDB&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://shardingsphere.apache.org/&#34;&gt;ShardingSphere&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://shiro.apache.org/&#34;&gt;Shiro&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://nginx.org/&#34;&gt;Nginx&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.docker.com/&#34;&gt;docker&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://dubbo.apache.org/zh/&#34;&gt;dubbo&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://seata.io/zh-cn/&#34;&gt;seata&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;gc日志分析&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#gc日志分析&#34;&gt;#&lt;/a&gt; GC 日志分析&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://gceasy.io/&#34;&gt;GCeasy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;jwt&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#jwt&#34;&gt;#&lt;/a&gt; JWT&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://jwt.io/&#34;&gt;JWT&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;数据结构模拟&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#数据结构模拟&#34;&gt;#&lt;/a&gt; 数据结构模拟&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cs.usfca.edu/~galles/visualization/Algorithms.html&#34;&gt;列表&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210127162629136.png&#34; alt=&#34;image-20210127162629136&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210127162629136.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html&#34;&gt;B+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cs.usfca.edu/~galles/visualization/BTree.html&#34;&gt;B&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cs.usfca.edu/~galles/visualization/RedBlack.html&#34;&gt;Red-Black&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;orm&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#orm&#34;&gt;#&lt;/a&gt; ORM&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://mybatis.org/mybatis-3/zh/index.html&#34;&gt;MyBatis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://mp.baomidou.com/#/&#34;&gt;MyBatisPlus&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;other&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#other&#34;&gt;#&lt;/a&gt; Other&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://hexo.io/zh-cn/docs/index.html&#34;&gt;HEXO&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://leetcode-cn.com/&#34;&gt;力扣&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://patorjk.com/software/taag/#p=display&amp;amp;h=2&amp;amp;v=2&amp;amp;f=3D%20Diagonal&amp;amp;t=sunfy%0A&#34;&gt;生成字母（代码输出）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.iconfont.cn/&#34;&gt;阿里巴巴矢量图库&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+ ]]></description>
+        </item>
+        <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/05/02/tools/boke-build/</guid>
             <title>Hexo配合git hub个人博客环境搭建</title>
             <link>http://xinghuohan.cn/2019/05/02/tools/boke-build/</link>
