@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Wed, 27 Jan 2021 14:54:33 +0800</pubDate>
-        <lastBuildDate>Wed, 27 Jan 2021 14:54:33 +0800</lastBuildDate>
+        <pubDate>Fri, 16 Oct 2020 15:37:31 +0800</pubDate>
+        <lastBuildDate>Fri, 16 Oct 2020 15:37:31 +0800</lastBuildDate>
         <category>DB</category>
         <category>MySQL</category>
         <category>Linux</category>
@@ -35,11 +35,90 @@
         <category>Redis</category>
         <category>shiro</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2021/01/27/Linux/ubuntu-windowsZipCode/</guid>
-            <title>Ubuntu系统解决Windows下Zip解压中文乱码问题</title>
-            <link>http://xinghuohan.cn/2021/01/27/Linux/ubuntu-windowsZipCode/</link>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/</guid>
+            <title>Ubuntu桌面被删除后</title>
+            <link>http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/</link>
             <category>Ubuntu</category>
-            <pubDate>Wed, 27 Jan 2021 14:54:33 +0800</pubDate>
+            <pubDate>Fri, 16 Oct 2020 15:37:31 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Ubuntu 桌面被误删除，Ubuntu 在重启时会校验当前设置路径是否存在，不存在会默认设置一个路径，我 Ubuntu20.04 版本删除桌面文件夹被删除后，将桌面路径默认为根目录，导致桌面一下子出现了很多文件，为了恢复桌面的清爽，而进行如下操作。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;终端打开自己根目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进入隐藏文件夹 .config&lt;img src=&#34;/img/image-20201016154927244.png&#34; alt=&#34;image-20201016154927244&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016154927244.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+   &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;-- 查看当前目录下所有文件&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ls -la&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;编辑文件 vim user-dirs.dirs &lt;img src=&#34;/img/image-20201016155127768.png&#34; alt=&#34;image-20201016155127768&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016155127768.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进行如下修改，此处修改的路径需要自己先行在对应路径创建文件夹，然后重启即可。&lt;img src=&#34;/img/image-20201016155252812.png&#34; alt=&#34;image-20201016155252812&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016155252812.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</guid>
+            <title>Linux常用命令</title>
+            <link>http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</link>
+            <category>Linux</category>
+            <category>CentOS</category>
+            <category>Ubuntu</category>
+            <pubDate>Wed, 14 Oct 2020 13:05:50 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Linux 系统常用基本命令&lt;/p&gt;
+&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;h3 id=&#34;ack-待查询字符串&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ack-待查询字符串&#34;&gt;#&lt;/a&gt; ack  [待查询字符串]&lt;/h3&gt;
+&lt;p&gt;搜索当前文件夹内所有文件中对应的字符（递归查询）&lt;/p&gt;
+&lt;h3 id=&#34;unar-待解压文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#unar-待解压文件&#34;&gt;#&lt;/a&gt; unar  [待解压文件]&lt;/h3&gt;
+&lt;p&gt;解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/09/16/Linux/ubuntu-easyconnect/</guid>
+            <title>Ubuntu系统安装easyconnect</title>
+            <link>http://xinghuohan.cn/2020/09/16/Linux/ubuntu-easyconnect/</link>
+            <category>Ubuntu</category>
+            <pubDate>Wed, 16 Sep 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Ubuntu 系统在升级 20.04 后不兼容 easyconnect 问题处理&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;ubuntu-2004-下安装easyconnect记录&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ubuntu-2004-下安装easyconnect记录&#34;&gt;#&lt;/a&gt; Ubuntu 20.04 下安装 easyconnect 记录&lt;/h3&gt;
+&lt;p&gt;1、easyconnect 在 Ubuntu 20 下无法打开；&lt;br&gt;
+2、在解决第一个问题后在 easyconnect 登陆过程中闪退。&lt;/p&gt;
+&lt;p&gt;解决方案主要参考了以下两个博客&lt;br&gt;
+&lt;a href=&#34;https://www.cnblogs.com/cocode/p/12890684.html&#34;&gt; Ubuntu 20.04 下 EasyConnect 兼容性问题临时解决方案&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://bbs.sangfor.com.cn/forum.php?mod=viewthread&amp;amp;tid=111229&#34;&gt; Ubuntu 18.04 系统解决 EasyConnect 登录后闪退问题&lt;/a&gt;&lt;br&gt;
+流程：&lt;br&gt;
+首先是解决 easyconnect 不兼容 Ubuntu 20 的问题&lt;br&gt;
+ 1、&lt;a href=&#34;https://packages.ubuntu.com/eoan/libpango-1.0-0&#34;&gt;https://packages.ubuntu.com/eoan/libpango-1.0-0&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://packages.ubuntu.com/eoan/libpangocairo-1.0-0&#34;&gt;https://packages.ubuntu.com/eoan/libpangocairo-1.0-0&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://packages.ubuntu.com/eoan/libpangoft2-1.0-0&#34;&gt;https://packages.ubuntu.com/eoan/libpangoft2-1.0-0&lt;/a&gt;&lt;br&gt;
+ 或者使用下面网盘下载&lt;br&gt;
+ &lt;code&gt;https://wws.lanzous.com/b01nmd4sh 密码:76yn&lt;/code&gt; &lt;br&gt;
+ 分别下载这三个包。&lt;br&gt;
+使用命令行进入下载的三个包所在的目录，用命令&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;dpkg -X  libpangoxxxx  ./ &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;解压下载的三个.deb 包&lt;br&gt;
+ 2、进入解压的目录&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;cd&lt;/span&gt; usr/lib/x86_64-linux-gnu&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3、将解压得到的.so 文件拷贝到 easyconnect 目录下&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo cp * /usr/share/sangfor/EasyConnect&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;4、此时在 &lt;code&gt;/usr/share/sangfor/EasyConnect&lt;/code&gt;  目录下输入命令&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;$ ldd EasyConnect | grep pango&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;显示应为（ &lt;code&gt;libpango&lt;/code&gt; &lt;a href=&#34;http://xn--rcrm18ivzkd1hm7hlv9aei6bf2j.so&#34;&gt; 应链接到复制过去的.so&lt;/a&gt;）：&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;libpangocairo-1.0.so.0 =&amp;gt; /usr/share/sangfor/EasyConnect/./libpangocairo-1.0.so.0 (0x00007f16ce009000)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	libpango-1.0.so.0 =&amp;gt; /usr/share/sangfor/EasyConnect/./libpango-1.0.so.0 (0x00007f16cde72000)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	libpangoft2-1.0.so.0 =&amp;gt; /usr/share/sangfor/EasyConnect/./libpangoft2-1.0.so.0 (0x00007f16cc1cb000)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后便可以正常打开 easyconnect。可能会遇到闪退问题，此时在登录进度条大概 70% 左右执行命令&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo /bin/bash /usr/share/sangfor/EasyConnect/resources/shell/sslservice.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可以解决登录几秒后闪退问题&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/03/11/Linux/ubuntu-windowsZipCode/</guid>
+            <title>Ubuntu系统解决Windows下Zip解压中文乱码问题</title>
+            <link>http://xinghuohan.cn/2020/03/11/Linux/ubuntu-windowsZipCode/</link>
+            <category>Ubuntu</category>
+            <pubDate>Wed, 11 Mar 2020 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;解决 Ubuntu 中解压 Windows 下的 zip 文件时乱码问题&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;三种方法 :&lt;/p&gt;
 &lt;h3 id=&#34;1通过指定字符集解压&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1通过指定字符集解压&#34;&gt;#&lt;/a&gt; 1. 通过指定字符集解压:&lt;/h3&gt;
@@ -145,85 +224,6 @@ ZIP 在压缩与解压缩的时候默认使用了系统的本地编码，如 win
 &lt;p&gt;用 &lt;code&gt;iconv&lt;/code&gt;  试着把该文件从 latin1, ascii 转成 utf-8, iso88592, gb2312 各种错！最后试着转到 GB18030，发现居然能转过去，只是转过去后仍然是乱码。此时我灵机一动，该不会原本就是这个编码吧？然后回到我的 zsh，发现果然在 zsh 打印的信息里显示了正确的中文！我屮艸芔茻，花了一个小时终于见到曙光了。这时候，一句：&lt;/p&gt;
 &lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;iconv -f gb18030 -t utf-8 besttrace4linux.txt -o readme.txt&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;哇！世界从未如此美好，成功！至此，知道&lt;strong&gt;用 vim 查看编码是会骗人的&lt;/strong&gt;！！！&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/</guid>
-            <title>Ubuntu桌面被删除后</title>
-            <link>http://xinghuohan.cn/2020/10/16/Linux/UbuntuAboutDesktop/</link>
-            <category>Ubuntu</category>
-            <pubDate>Fri, 16 Oct 2020 15:37:31 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;Ubuntu 桌面被误删除，Ubuntu 在重启时会校验当前设置路径是否存在，不存在会默认设置一个路径，我 Ubuntu20.04 版本删除桌面文件夹被删除后，将桌面路径默认为根目录，导致桌面一下子出现了很多文件，为了恢复桌面的清爽，而进行如下操作。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;终端打开自己根目录&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;进入隐藏文件夹 .config&lt;img src=&#34;/img/image-20201016154927244.png&#34; alt=&#34;image-20201016154927244&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016154927244.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-   &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;-- 查看当前目录下所有文件&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ls -la&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;
-&lt;p&gt;编辑文件 vim user-dirs.dirs &lt;img src=&#34;/img/image-20201016155127768.png&#34; alt=&#34;image-20201016155127768&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016155127768.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;进行如下修改，此处修改的路径需要自己先行在对应路径创建文件夹，然后重启即可。&lt;img src=&#34;/img/image-20201016155252812.png&#34; alt=&#34;image-20201016155252812&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20201016155252812.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</guid>
-            <title>Linux常用命令</title>
-            <link>http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</link>
-            <category>Linux</category>
-            <category>CentOS</category>
-            <category>Ubuntu</category>
-            <pubDate>Wed, 14 Oct 2020 13:05:50 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;Linux 系统常用基本命令&lt;/p&gt;
-&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
-&lt;h3 id=&#34;ack-待查询字符串&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ack-待查询字符串&#34;&gt;#&lt;/a&gt; ack  [待查询字符串]&lt;/h3&gt;
-&lt;p&gt;搜索当前文件夹内所有文件中对应的字符（递归查询）&lt;/p&gt;
-&lt;h3 id=&#34;unar-待解压文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#unar-待解压文件&#34;&gt;#&lt;/a&gt; unar  [待解压文件]&lt;/h3&gt;
-&lt;p&gt;解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/09/16/Linux/ubuntu-easyconnect/</guid>
-            <title>Ubuntu系统安装easyconnect</title>
-            <link>http://xinghuohan.cn/2020/09/16/Linux/ubuntu-easyconnect/</link>
-            <category>Ubuntu</category>
-            <pubDate>Wed, 16 Sep 2020 00:00:00 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;Ubuntu 系统在升级 20.04 后不兼容 easyconnect 问题处理&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;ubuntu-2004-下安装easyconnect记录&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ubuntu-2004-下安装easyconnect记录&#34;&gt;#&lt;/a&gt; Ubuntu 20.04 下安装 easyconnect 记录&lt;/h3&gt;
-&lt;p&gt;1、easyconnect 在 Ubuntu 20 下无法打开；&lt;br&gt;
-2、在解决第一个问题后在 easyconnect 登陆过程中闪退。&lt;/p&gt;
-&lt;p&gt;解决方案主要参考了以下两个博客&lt;br&gt;
-&lt;a href=&#34;https://www.cnblogs.com/cocode/p/12890684.html&#34;&gt; Ubuntu 20.04 下 EasyConnect 兼容性问题临时解决方案&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://bbs.sangfor.com.cn/forum.php?mod=viewthread&amp;amp;tid=111229&#34;&gt; Ubuntu 18.04 系统解决 EasyConnect 登录后闪退问题&lt;/a&gt;&lt;br&gt;
-流程：&lt;br&gt;
-首先是解决 easyconnect 不兼容 Ubuntu 20 的问题&lt;br&gt;
- 1、&lt;a href=&#34;https://packages.ubuntu.com/eoan/libpango-1.0-0&#34;&gt;https://packages.ubuntu.com/eoan/libpango-1.0-0&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://packages.ubuntu.com/eoan/libpangocairo-1.0-0&#34;&gt;https://packages.ubuntu.com/eoan/libpangocairo-1.0-0&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://packages.ubuntu.com/eoan/libpangoft2-1.0-0&#34;&gt;https://packages.ubuntu.com/eoan/libpangoft2-1.0-0&lt;/a&gt;&lt;br&gt;
- 或者使用下面网盘下载&lt;br&gt;
- &lt;code&gt;https://wws.lanzous.com/b01nmd4sh 密码:76yn&lt;/code&gt; &lt;br&gt;
- 分别下载这三个包。&lt;br&gt;
-使用命令行进入下载的三个包所在的目录，用命令&lt;/p&gt;
-&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;dpkg -X  libpangoxxxx  ./ &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;解压下载的三个.deb 包&lt;br&gt;
- 2、进入解压的目录&lt;/p&gt;
-&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;cd&lt;/span&gt; usr/lib/x86_64-linux-gnu&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;3、将解压得到的.so 文件拷贝到 easyconnect 目录下&lt;/p&gt;
-&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo cp * /usr/share/sangfor/EasyConnect&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;4、此时在 &lt;code&gt;/usr/share/sangfor/EasyConnect&lt;/code&gt;  目录下输入命令&lt;/p&gt;
-&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;$ ldd EasyConnect | grep pango&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;显示应为（ &lt;code&gt;libpango&lt;/code&gt; &lt;a href=&#34;http://xn--rcrm18ivzkd1hm7hlv9aei6bf2j.so&#34;&gt; 应链接到复制过去的.so&lt;/a&gt;）：&lt;/p&gt;
-&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;libpangocairo-1.0.so.0 =&amp;gt; /usr/share/sangfor/EasyConnect/./libpangocairo-1.0.so.0 (0x00007f16ce009000)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	libpango-1.0.so.0 =&amp;gt; /usr/share/sangfor/EasyConnect/./libpango-1.0.so.0 (0x00007f16cde72000)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	libpangoft2-1.0.so.0 =&amp;gt; /usr/share/sangfor/EasyConnect/./libpangoft2-1.0.so.0 (0x00007f16cc1cb000)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;然后便可以正常打开 easyconnect。可能会遇到闪退问题，此时在登录进度条大概 70% 左右执行命令&lt;/p&gt;
-&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo /bin/bash /usr/share/sangfor/EasyConnect/resources/shell/sslservice.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;可以解决登录几秒后闪退问题&lt;/p&gt;
  ]]></description>
         </item>
         <item>
