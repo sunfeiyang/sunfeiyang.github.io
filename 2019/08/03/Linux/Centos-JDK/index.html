@@ -25,7 +25,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-08-03">
-  <meta property="og:article:modified_time" content="2021-01-12">
+  <meta property="og:article:modified_time" content="2021-01-28">
   <meta property="og:article:author" content="sunfy">
   
   
@@ -232,51 +232,51 @@
 <p>jdk 下载地址：<a target="_blank" rel="noopener" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a></p>
 <p>下载 jdk-8u152-linux-x64.rpm 或 jdk-8u152-linux-x64.tar.gz (根据自己的系统位数选择对应的包)</p>
 <p>如图：</p>
-<p><img src="https://img-blog.csdn.net/20171208160937265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171208160937265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" class="lozad post-image"></p>
+<p><img src="/img/image-20210128110454225.png" alt="image-20210128110454225" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210128110454225.png" class="lozad post-image"></p>
 <p>二、安装 jdk</p>
 <p>因为我安装的 CentOS7.4 系统自带 jdk1.8，所以为了演示如何安装 jdk，我需要先卸载系统自带的 jdk</p>
 <p>查看当前系统 jdk 的版本：java -version</p>
-<p><img src="https://img-blog.csdn.net/20171208141244900?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171208141244900?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" class="lozad post-image"></p>
+<p><img src="/img/image-20210128110524600.png" alt="image-20210128110524600" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210128110524600.png" class="lozad post-image"></p>
 <p>列举匹配已安装的 java 的软件包：yum list installed | grep java</p>
-<p><img src="https://img-blog.csdn.net/20171208141352075?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171208141352075?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" class="lozad post-image"></p>
+<p><img src="/img/image-20210128110535711.png" alt="image-20210128110535711" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210128110535711.png" class="lozad post-image"></p>
 <p>卸载安装的 jdk：(yum 命令参考：<a target="_blank" rel="noopener" href="http://man.linuxde.net/yum">http://man.linuxde.net/yum</a>)</p>
 <p>yum -y remove java-1.7.0-openjdk*</p>
 <p>yum -y remove java-1.8.0-openjdk*</p>
-<p><img src="https://img-blog.csdn.net/20171208142625386?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171208142625386?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" class="lozad post-image"></p>
-<p><img src="https://img-blog.csdn.net/20171208142644577?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171208142644577?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" class="lozad post-image"></p>
+<p><img src="/img/20171208142625386" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171208142625386" class="lozad post-image"></p>
+<p><img src="/img/20171208142644577" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171208142644577" class="lozad post-image"></p>
 <p>当结果出现了完毕！，就表示卸载成功。</p>
 <p>安装 jdk (介绍三种方法)</p>
 <p>方法一：利用 yum 源来安装 jdk（此方法不需要配置环境变量）</p>
 <p>查看 yum 库中的 java 安装包 ：yum -y list java*</p>
-<p><img src="https://img-blog.csdn.net/20171208143606277?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171208143606277?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" class="lozad post-image"></p>
+<p><img src="/img/20171208143606277" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171208143606277" class="lozad post-image"></p>
 <p>安装需要的 jdk 版本的所有 java 程序：yum -y install java-1.8.0-openjdk*</p>
 <p>(安装完之后，默认的安装目录是在: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64)</p>
-<p><img src="https://img-blog.csdn.net/20171208143844407?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171208143844407?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" class="lozad post-image"></p>
+<p><img src="/img/20171208143844407" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171208143844407" class="lozad post-image"></p>
 <p>当结果出现了完毕！即安装完成。</p>
 <p>查看 java 版本：java -version</p>
-<p><img src="https://img-blog.csdn.net/20171208144426251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171208144426251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" class="lozad post-image"></p>
+<p><img src="/img/20171208144426251" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171208144426251" class="lozad post-image"></p>
 <p>方法二：用 rpm 安装 jdk (可以使用 man rpm 命令查看 rpm 的帮助文档)</p>
 <p>使用 Xftp 将下载好的 jdk-8u152-linux-x64.rpm 上传到 CentOs 上去，我这里放到了 /home/lisonglin 下</p>
-<p><img src="https://img-blog.csdn.net/20171208161556789?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171208161556789?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" class="lozad post-image"></p>
+<p><img src="/img/20171208161556789" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171208161556789" class="lozad post-image"></p>
 <p>使用 rpm 命令安装： rpm -ivh jdk-8u152-linux-x64.rpm</p>
 <p>(默认安装在 /usr/java 目录下，不用配置环境变量)</p>
-<p><img src="https://img-blog.csdn.net/20171213105005772" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171213105005772" class="lozad post-image"></p>
+<p><img src="/img/20171213105005772" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171213105005772" class="lozad post-image"></p>
 <p>方法三：手动解压 JDK 的压缩包，然后设置环境变量</p>
 <p>使用 Xftp 将下载好的 jdk-8u152-linux-x64.tar.gz 上传到 CentOs 上去，我这里放到了 /home/lisonglin 下</p>
-<p><img src="https://img-blog.csdn.net/20171213112053683" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171213112053683" class="lozad post-image"></p>
+<p><img src="/img/20171213112053683" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171213112053683" class="lozad post-image"></p>
 <p>先将之前使用 rpm 方式安装的 jdk 卸载掉 (如果没有安装过可跳过此步骤)</p>
 <p>查询之前安装的 jdk 名称：rpm -qa | grep jdk</p>
 <p>卸载 jdk：rpm -e --nodeps jdk1.8  (此处也可以使用全名 jdk1.8-1.8.0_152-fcs.x86_64)</p>
-<p><img src="https://img-blog.csdn.net/20171213112433031" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171213112433031" class="lozad post-image"></p>
+<p><img src="/img/20171213112433031" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171213112433031" class="lozad post-image"></p>
 <p>卸载完成！</p>
 <p>1、复制安装包到 /usr/java 目录中 (目录可以自己选)：cp jdk-8u152-linux-x64.tar.gz/usr/java</p>
 <p>2、切换到 /usr/java 目录下：cd /usr/java</p>
 <p>3、解压缩包：tar -zxvf jdk-8u152-linux-x64.tar.gz</p>
-<p><img src="https://img-blog.csdn.net/20171213113924553" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171213113924553" class="lozad post-image"></p>
+<p><img src="/img/20171213113924553" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171213113924553" class="lozad post-image"></p>
 <p>解压成功（表式 JDK 已安装成功，可查看 jdk 的文件夹）</p>
-<p><img src="https://img-blog.csdn.net/20171213114305546" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171213114305546" class="lozad post-image"></p>
+<p><img src="/img/20171213114305546" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171213114305546" class="lozad post-image"></p>
 <p>此时 java -version 命令还不能使用：</p>
-<p><img src="https://img-blog.csdn.net/20171213114609823" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171213114609823" class="lozad post-image"></p>
+<p><img src="/img/20171213114609823" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171213114609823" class="lozad post-image"></p>
 <p>4、配置环境变量</p>
 <p>使用 vim /etc/profile 编辑 profile 文件 输入： vim /etc/profile</p>
 <p>向文件里面追加以下内容：</p>
@@ -293,7 +293,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
 <p>特别注意：环境变量值的结尾没有任何符号，不同值之间用：隔开（windows 中用；）。</p>
 <p>5、使配置文件生效：source /etc/profile</p>
 <p>6、测试配置是否成功</p>
-<p><img src="https://img-blog.csdn.net/20171213135856977" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdn.net/20171213135856977" class="lozad post-image"></p>
+<p><img src="/img/20171213135856977" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171213135856977" class="lozad post-image"></p>
 
   </div>
   <div>
@@ -349,7 +349,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
 <p class="author-description">人生在勤，不索何获</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>51</span>
+    <span>53</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -404,7 +404,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
       <a href="/categories/Linux">
         <div class="categories-list-item">
           Linux
-          <span class="categories-list-item-badge">11</span>
+          <span class="categories-list-item-badge">13</span>
         </div>
       </a>
     
@@ -453,6 +453,8 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
     
     <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
     
+    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
+    
     <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
     
     <a href="\tags\SpringBoot" title="SpringBoot"><div class="tags-list-item">SpringBoot</div></a>
@@ -460,8 +462,6 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
     <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
     
     <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
     
     <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
     

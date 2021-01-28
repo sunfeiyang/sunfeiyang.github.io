@@ -101,6 +101,83 @@
  ]]></description>
         </item>
         <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/04/21/Linux/Centos-vim/</guid>
+            <title>CentOS 修改vim的Tab为4个空格</title>
+            <link>http://xinghuohan.cn/2020/04/21/Linux/Centos-vim/</link>
+            <category>CentOS</category>
+            <pubDate>Tue, 21 Apr 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;CentOS 根目录（/）下会有很多不同的子目录&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;演示环境&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#演示环境&#34;&gt;#&lt;/a&gt; 演示环境&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[root@hwc ~]# cat /etc/redhat-release&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;CentOS Linux release 7.6.1810 (Core)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;操作步骤&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#操作步骤&#34;&gt;#&lt;/a&gt; 操作步骤&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;编辑&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;#x2F;etc&amp;#x2F;vimrc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;文件&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;vim /etc/vimrc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在文件最后添加以下内容&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;set ts=4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;set autoindent&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;set softtabstop=4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;set shiftwidth=4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;set noexpandtab&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;set pastetoggle=&amp;lt;F9&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;set nu&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;说明&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#说明&#34;&gt;#&lt;/a&gt; 说明&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;ts: (ts 是 tabstop 的缩写) 一个 tab 显示多少个空格的长度，vim 默认 8。&lt;/li&gt;
+&lt;li&gt;autoindent: 前行有缩进时，后续的新行将会自动缩进到相同的位置。&lt;/li&gt;
+&lt;li&gt;softtabstop: 编辑模式的时候按退格键的时候退回缩进的长度。&lt;/li&gt;
+&lt;li&gt;shiftwidth: 每一级缩进的长度，一般设置成跟 softtabstop 一样。&lt;/li&gt;
+&lt;li&gt;expandtab: 缩进用空格来表示。&lt;/li&gt;
+&lt;li&gt;noexpandtab: 缩进用制表符表示。&lt;/li&gt;
+&lt;li&gt;pastetoggle：开启粘贴模式，换行不自动缩进&lt;/li&gt;
+&lt;li&gt;set nu: 默认显示行号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;注：expandtab /noexpandtab 二选一。&lt;/strong&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/04/03/Linux/Centos-directory/</guid>
+            <title>CentOS根目录下各目录介绍</title>
+            <link>http://xinghuohan.cn/2020/04/03/Linux/Centos-directory/</link>
+            <category>CentOS</category>
+            <pubDate>Fri, 03 Apr 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;CentOS 根目录（/）下会有很多不同的子目录&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;bin&lt;/strong&gt; : 存放普通用户可执行的指令，即使在单用户模式下也能够执行处理&lt;/li&gt;
+&lt;li&gt;**boot ：** 开机引导目录，包括 Linux 内核文件与开机所需要的文件&lt;/li&gt;
+&lt;li&gt;**dev ：** 设备目录，所有的硬件设备及周边均放置在这个设备目录中&lt;/li&gt;
+&lt;li&gt;**etc：** 各种配置文件目录，大部分配置属性均存放在这里&lt;/li&gt;
+&lt;li&gt;**home：** 这里主要存放你的个人数据，具体每个用户的设置文件，用户的桌面文件夹，还有用户的数据都放在这里。每个用户都有自己的用户目录，位置为：/home/ 用户名。当然，root 用户除外。&lt;/li&gt;
+&lt;li&gt;**lib：** 开机时常用的动态链接库，bin 及 sbin 指令也会调用对应的 lib 库&lt;/li&gt;
+&lt;li&gt;**lib64：** 开机时常用的动态链接库 64 位，bin 及 sbin 指令也会调用对应的 lib 库&lt;/li&gt;
+&lt;li&gt;**lost+found：** 是一个特殊目录，用途是用来存放文件系统错误导致文件丢失后找回数据的；如果你不小心删除了 lost+found 目录，不用使用 mkdir 命令创建 lost+found 目录，应该使用 mklost+found 命令创建 lost+found 目录。&lt;/li&gt;
+&lt;li&gt;**media：** 可移除设备挂载目录，类似软盘 U 盘 光盘等临时挂放目录&lt;/li&gt;
+&lt;li&gt;**mnt：** 用户临时挂载其他的文件系统，额外的设备可挂载在这里，相对临时而言&lt;/li&gt;
+&lt;li&gt;**opt：** 第三方软件安装目录，现在习惯性的放置在 /usr/local 中&lt;/li&gt;
+&lt;li&gt;**proc：** 虚拟文件系统，通常是内存中的映射，特别注意在误删除数据文件后，比如 DB，只要系 统不重启，还是有很大几率能将数据找回来&lt;/li&gt;
+&lt;li&gt;**root：** 系统管理员主目录，除 root 之外，其他用户均放置在 /home 目录下&lt;/li&gt;
+&lt;li&gt;**run：** 系统运行是所需文件，以前防止在 /var/run 中，后来拆分成独立的 /run 目录。重启后重新生成对应的目录数据&lt;/li&gt;
+&lt;li&gt;**sbin：** 只有 root 才能运行的管理指令，跟 bin 类似，但只属于 root 管理员&lt;/li&gt;
+&lt;li&gt;**srv：** 服务启动后需要访问的数据目录，&lt;/li&gt;
+&lt;li&gt;**sys：** 跟 proc 一样虚拟文件系统，记录核心系统硬件信息&lt;/li&gt;
+&lt;li&gt;**tmp：** 存放临时文件目录，所有用户对该目录均可读写&lt;/li&gt;
+&lt;li&gt;**usr：** 应用程序放置目录，&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;var&lt;/strong&gt; ：存放系统执行过程经常改变的文件，&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;vmlinuz :&lt;/strong&gt; 是可引导的，压缩的 linux 内核，“vm” 代表的 “virtual memory”, 一般是一个软连接.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;还有一个重要的目录就是：/var/log/ 目录，主要存放的是系统日志文件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;**/var/log/message 😗* 系统启动后的信息和错误日志，是 Linux 中最常用的日志之一&lt;/li&gt;
+&lt;li&gt;**/var/log/secure 😗* 与安全相关的日志信息&lt;/li&gt;
+&lt;li&gt;**/var/log/maillog 😗* 与邮件相关的日志信息&lt;/li&gt;
+&lt;li&gt;**/var/log/cron 😗* 与定时任务相关的日志信息&lt;/li&gt;
+&lt;li&gt;**/var/log/spooler 😗* 与 UUCP 和 news 设备相关的日志信息&lt;/li&gt;
+&lt;li&gt;**/var/log/boot.log 😗* 守护进程启动和停止相关的日志消息&lt;/li&gt;
+&lt;/ul&gt;
+ ]]></description>
+        </item>
+        <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/08/03/Linux/Centos-JDK/</guid>
             <title>CentOS安装JDK的几种方法及配置环境变量</title>
             <link>http://xinghuohan.cn/2019/08/03/Linux/Centos-JDK/</link>
@@ -112,51 +189,51 @@
 &lt;p&gt;jdk 下载地址：&lt;a href=&#34;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&#34;&gt;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;下载 jdk-8u152-linux-x64.rpm 或 jdk-8u152-linux-x64.tar.gz (根据自己的系统位数选择对应的包)&lt;/p&gt;
 &lt;p&gt;如图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171208160937265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171208160937265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210128110454225.png&#34; alt=&#34;image-20210128110454225&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210128110454225.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;二、安装 jdk&lt;/p&gt;
 &lt;p&gt;因为我安装的 CentOS7.4 系统自带 jdk1.8，所以为了演示如何安装 jdk，我需要先卸载系统自带的 jdk&lt;/p&gt;
 &lt;p&gt;查看当前系统 jdk 的版本：java -version&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171208141244900?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171208141244900?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210128110524600.png&#34; alt=&#34;image-20210128110524600&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210128110524600.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;列举匹配已安装的 java 的软件包：yum list installed | grep java&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171208141352075?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171208141352075?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210128110535711.png&#34; alt=&#34;image-20210128110535711&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210128110535711.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;卸载安装的 jdk：(yum 命令参考：&lt;a href=&#34;http://man.linuxde.net/yum&#34;&gt;http://man.linuxde.net/yum&lt;/a&gt;)&lt;/p&gt;
 &lt;p&gt;yum -y remove java-1.7.0-openjdk*&lt;/p&gt;
 &lt;p&gt;yum -y remove java-1.8.0-openjdk*&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171208142625386?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171208142625386?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171208142644577?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171208142644577?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171208142625386&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171208142625386&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171208142644577&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171208142644577&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;当结果出现了完毕！，就表示卸载成功。&lt;/p&gt;
 &lt;p&gt;安装 jdk (介绍三种方法)&lt;/p&gt;
 &lt;p&gt;方法一：利用 yum 源来安装 jdk（此方法不需要配置环境变量）&lt;/p&gt;
 &lt;p&gt;查看 yum 库中的 java 安装包 ：yum -y list java*&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171208143606277?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171208143606277?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171208143606277&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171208143606277&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;安装需要的 jdk 版本的所有 java 程序：yum -y install java-1.8.0-openjdk*&lt;/p&gt;
 &lt;p&gt;(安装完之后，默认的安装目录是在: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.151-1.b12.el7_4.x86_64)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171208143844407?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171208143844407?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171208143844407&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171208143844407&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;当结果出现了完毕！即安装完成。&lt;/p&gt;
 &lt;p&gt;查看 java 版本：java -version&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171208144426251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171208144426251?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171208144426251&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171208144426251&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;方法二：用 rpm 安装 jdk (可以使用 man rpm 命令查看 rpm 的帮助文档)&lt;/p&gt;
 &lt;p&gt;使用 Xftp 将下载好的 jdk-8u152-linux-x64.rpm 上传到 CentOs 上去，我这里放到了 /home/lisonglin 下&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171208161556789?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171208161556789?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzI3ODY4NzM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171208161556789&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171208161556789&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;使用 rpm 命令安装： rpm -ivh jdk-8u152-linux-x64.rpm&lt;/p&gt;
 &lt;p&gt;(默认安装在 /usr/java 目录下，不用配置环境变量)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171213105005772&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171213105005772&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171213105005772&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171213105005772&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;方法三：手动解压 JDK 的压缩包，然后设置环境变量&lt;/p&gt;
 &lt;p&gt;使用 Xftp 将下载好的 jdk-8u152-linux-x64.tar.gz 上传到 CentOs 上去，我这里放到了 /home/lisonglin 下&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171213112053683&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171213112053683&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171213112053683&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171213112053683&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;先将之前使用 rpm 方式安装的 jdk 卸载掉 (如果没有安装过可跳过此步骤)&lt;/p&gt;
 &lt;p&gt;查询之前安装的 jdk 名称：rpm -qa | grep jdk&lt;/p&gt;
 &lt;p&gt;卸载 jdk：rpm -e --nodeps jdk1.8  (此处也可以使用全名 jdk1.8-1.8.0_152-fcs.x86_64)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171213112433031&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171213112433031&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171213112433031&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171213112433031&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;卸载完成！&lt;/p&gt;
 &lt;p&gt;1、复制安装包到 /usr/java 目录中 (目录可以自己选)：cp jdk-8u152-linux-x64.tar.gz/usr/java&lt;/p&gt;
 &lt;p&gt;2、切换到 /usr/java 目录下：cd /usr/java&lt;/p&gt;
 &lt;p&gt;3、解压缩包：tar -zxvf jdk-8u152-linux-x64.tar.gz&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171213113924553&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171213113924553&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171213113924553&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171213113924553&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;解压成功（表式 JDK 已安装成功，可查看 jdk 的文件夹）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171213114305546&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171213114305546&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171213114305546&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171213114305546&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;此时 java -version 命令还不能使用：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171213114609823&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171213114609823&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171213114609823&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171213114609823&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;4、配置环境变量&lt;/p&gt;
 &lt;p&gt;使用 vim /etc/profile 编辑 profile 文件 输入： vim /etc/profile&lt;/p&gt;
 &lt;p&gt;向文件里面追加以下内容：&lt;/p&gt;
@@ -173,7 +250,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH&lt;/p&gt;
 &lt;p&gt;特别注意：环境变量值的结尾没有任何符号，不同值之间用：隔开（windows 中用；）。&lt;/p&gt;
 &lt;p&gt;5、使配置文件生效：source /etc/profile&lt;/p&gt;
 &lt;p&gt;6、测试配置是否成功&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://img-blog.csdn.net/20171213135856977&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdn.net/20171213135856977&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20171213135856977&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171213135856977&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
