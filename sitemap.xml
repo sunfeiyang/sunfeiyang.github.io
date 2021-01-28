@@ -44,6 +44,13 @@
   </url>
   
   <url>
+    <loc>http://xinghuohan.cn/2021/01/21/Docker/dockerBuildFormIdea/</loc>
+    
+    <lastmod>2021-01-27</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xinghuohan.cn/2019/05/12/Server/Tomcat-startTwice/</loc>
     
     <lastmod>2021-01-27</lastmod>
@@ -122,13 +129,6 @@
   
   <url>
     <loc>http://xinghuohan.cn/2020/08/14/Docker/dockerBase/</loc>
-    
-    <lastmod>2021-01-22</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/2021/01/21/Docker/dockerBuildFormIdea/</loc>
     
     <lastmod>2021-01-22</lastmod>
     
@@ -389,6 +389,13 @@
   </url>
   
   <url>
+    <loc>http://xinghuohan.cn/tags/MongoDB/</loc>
+    <lastmod>2021-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://xinghuohan.cn/tags/MySQL/</loc>
     <lastmod>2021-01-28</lastmod>
     <changefreq>daily</changefreq>
@@ -460,6 +467,13 @@
   
   <url>
     <loc>http://xinghuohan.cn/tags/VMware/</loc>
+    <lastmod>2021-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://xinghuohan.cn/tags/Tomcat/</loc>
     <lastmod>2021-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -570,20 +584,6 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>http://xinghuohan.cn/tags/Tomcat/</loc>
-    <lastmod>2021-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/tags/MongoDB/</loc>
-    <lastmod>2021-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
   
   <url>
@@ -615,6 +615,13 @@
   </url>
   
   <url>
+    <loc>http://xinghuohan.cn/categories/Server/</loc>
+    <lastmod>2021-01-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://xinghuohan.cn/categories/Desk/</loc>
     <lastmod>2021-01-28</lastmod>
     <changefreq>daily</changefreq>
@@ -630,13 +637,6 @@
   
   <url>
     <loc>http://xinghuohan.cn/categories/tools/</loc>
-    <lastmod>2021-01-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://xinghuohan.cn/categories/Server/</loc>
     <lastmod>2021-01-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

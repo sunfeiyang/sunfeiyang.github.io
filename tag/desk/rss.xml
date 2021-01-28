@@ -8,6 +8,7 @@
         <pubDate>Mon, 02 Mar 2020 00:00:00 +0800</pubDate>
         <lastBuildDate>Mon, 02 Mar 2020 00:00:00 +0800</lastBuildDate>
         <category>DB</category>
+        <category>MongoDB</category>
         <category>MySQL</category>
         <category>Linux</category>
         <category>CentOS</category>
@@ -19,6 +20,7 @@
         <category>Centos</category>
         <category>Ubuntu</category>
         <category>VMware</category>
+        <category>Tomcat</category>
         <category>Desk</category>
         <category>Java</category>
         <category>SPI</category>
@@ -34,8 +36,6 @@
         <category>Spring</category>
         <category>Redis</category>
         <category>shiro</category>
-        <category>Tomcat</category>
-        <category>MongoDB</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/03/02/desk/npmInstall/</guid>
             <title>前端基础插件</title>
