@@ -36,6 +36,7 @@
         <category>Spring</category>
         <category>Redis</category>
         <category>shiro</category>
+        <category>jmeter</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/06/14/DB/MongoDB-config/</guid>
             <title>MongoDB 通过配置文件启动</title>
