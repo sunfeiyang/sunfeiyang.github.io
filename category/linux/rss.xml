@@ -682,10 +682,10 @@ ZIP 在压缩与解压缩的时候默认使用了系统的本地编码，如 win
 &lt;h3 id=&#34;redis桌面可视化访问工具&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#redis桌面可视化访问工具&#34;&gt;#&lt;/a&gt; redis 桌面可视化访问工具&lt;/h3&gt;
 &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 参考工具&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;https://snapcraft.io/redis-desktop-manager&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;gitkraken-chinese&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#gitkraken-chinese&#34;&gt;#&lt;/a&gt; gitkraken-chinese&lt;/h3&gt;
-&lt;h2 id=&#34;原理-2&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#原理-2&#34;&gt;#&lt;/a&gt; 原理&lt;/h2&gt;
+&lt;h4 id=&#34;原理-2&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#原理-2&#34;&gt;#&lt;/a&gt; 原理&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/k-skye/gitkraken-chinese&#34;&gt;https://github.com/k-skye/gitkraken-chinese&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;通过修改软件目录下 english 语言对应的一个 json 文件内容来完成汉化目的&lt;/p&gt;
-&lt;h2 id=&#34;操作步骤&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#操作步骤&#34;&gt;#&lt;/a&gt; 操作步骤&lt;/h2&gt;
+&lt;h4 id=&#34;操作步骤&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#操作步骤&#34;&gt;#&lt;/a&gt; 操作步骤&lt;/h4&gt;
 &lt;ol&gt;
 &lt;li&gt;将项目中的  &lt;code&gt;strings.json&lt;/code&gt;  替换到 GitKraken 语言目录下的  &lt;code&gt;strings.json&lt;/code&gt; .&lt;br&gt;
 (实际目录可能会不一样，但文件名一定是 strings.json)
@@ -697,7 +697,7 @@ ZIP 在压缩与解压缩的时候默认使用了系统的本地编码，如 win
 &lt;/li&gt;
 &lt;li&gt;重启 GitKraken.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;issue&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#issue&#34;&gt;#&lt;/a&gt; issue&lt;/h2&gt;
+&lt;h4 id=&#34;issue&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#issue&#34;&gt;#&lt;/a&gt; issue&lt;/h4&gt;
 &lt;p&gt;GitKraken 旧版本目录不一样，应该是以下目录：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Windows:  &lt;code&gt;%程序安装目录%\gitkraken\app-x.x.x\resources\app.asar.unpacked\src\strings.json&lt;/code&gt;  (x.x.x 是你的 GitKraken 版本)&lt;/li&gt;
