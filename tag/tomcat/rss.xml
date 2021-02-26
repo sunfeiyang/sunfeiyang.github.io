@@ -37,6 +37,9 @@
         <category>Redis</category>
         <category>shiro</category>
         <category>jmeter</category>
+        <category>gitlab</category>
+        <category>Jenkins</category>
+        <category>nexus3</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/05/12/Server/Tomcat-startTwice/</guid>
             <title>Tomcat下项目被启动两次为问题</title>

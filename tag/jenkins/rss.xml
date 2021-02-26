@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>sunfy • Posts by &#34;jenkins&#34; tag</title>
+        <link>http://xinghuohan.cn</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Mon, 02 Nov 2020 00:00:00 +0800</pubDate>
+        <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0800</lastBuildDate>
+        <category>DB</category>
+        <category>MongoDB</category>
+        <category>MySQL</category>
+        <category>Linux</category>
+        <category>CentOS</category>
+        <category>Docker</category>
+        <category>IDEA</category>
+        <category>JRebel</category>
+        <category>Statistic</category>
+        <category>JDK</category>
+        <category>Centos</category>
+        <category>Ubuntu</category>
+        <category>VMware</category>
+        <category>Tomcat</category>
+        <category>Desk</category>
+        <category>Java</category>
+        <category>SPI</category>
+        <category>tools</category>
+        <category>git</category>
+        <category>MQ</category>
+        <category>MyBatis</category>
+        <category>IO</category>
+        <category>SpringBoot</category>
+        <category>WebSocket</category>
+        <category>Zookeeper</category>
+        <category>设计模式</category>
+        <category>Spring</category>
+        <category>Redis</category>
+        <category>shiro</category>
+        <category>jmeter</category>
+        <category>gitlab</category>
+        <category>Jenkins</category>
+        <category>nexus3</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/11/02/Docker/Centos-Docker-jenkins/</guid>
+            <title>Docker 搭建 Jenkins 实现自动部署</title>
+            <link>http://xinghuohan.cn/2020/11/02/Docker/Centos-Docker-jenkins/</link>
+            <category>CentOS</category>
+            <category>Docker</category>
+            <category>Jenkins</category>
+            <pubDate>Mon, 02 Nov 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;CentOS 安装 Docker 图形化工具&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;自动化部署（持续集成 / CI + 持续交付 / CD）不仅可以提升开发效率，让程序员更专注产品与业务的开发，还可以节省很多运维成本以及提升运维效率。其中，Jenkins 是自动化部署中最流行的工具，尤其是 Docker+Jenkins 的完美搭配，每个程序员都应该掌握这两个工具的使用。&lt;/p&gt;
+&lt;p&gt;环境配置&lt;br&gt;
+操作系统：CentOS Linux release 7.6.1810&lt;br&gt;
+Docker 版本：19.03.5&lt;br&gt;
+Jenkins 版本：2.204.1&lt;br&gt;
+Docker 安装 Jenkins&lt;br&gt;
+Docker 下载 Jenkins&lt;br&gt;
+docker pull jenkins/jenkins:lts // 最新版&lt;br&gt;
+查看 Jenkins 镜像&lt;br&gt;
+ docker images&lt;br&gt;
+docker inspect jenkins 镜像 ID&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230257822.png&#34; alt=&#34;image-20210222230257822&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230257822.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;创建一个 Jenkins 目录&lt;br&gt;
+ mkdir /data/jenkins_home;&lt;br&gt;
+ 安装启动 Jenkins 容器&lt;br&gt;
+ docker run -d --name jenkins -p 8081:8080 -v /data/jenkins_home:/var/jenkins_home jenkins/jenkins:lts;&lt;br&gt;
+ 备注：&lt;br&gt;
+-d // 启动在后台&lt;br&gt;
+–name // 容器名字&lt;br&gt;
+ - p // 端口映射（8081：宿主主机端口，8080：容器内部端口）&lt;br&gt;
+-v // 数据卷挂载映射（/data/jenkins_home：宿主主机目录，另外一个即是容器目录）&lt;br&gt;
+enkins/jenkins:lts //Jenkins 镜像（最新版）&lt;br&gt;
+查看 Jenkins 启动情况&lt;br&gt;
+ docker ps | grep jenkins;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230336460.png&#34; alt=&#34;image-20210222230336460&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230336460.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;安装过程遇到的小问题&lt;br&gt;
+ Jenkins 容器 docker run 之后状态总是 Exited&lt;br&gt;
+ 查看 docker 日志 ：&lt;br&gt;
+docker logs jenkins&lt;br&gt;
+ 发现是目前权限问题&lt;br&gt;
+因为 /data/jenkins_home 目录是 root 权限&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230353895.png&#34; alt=&#34;image-20210222230353895&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230353895.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230422305.png&#34; alt=&#34;image-20210222230422305&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230422305.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;解决：&lt;br&gt;
+chown -R 1000:1000 /data/jenkins_home// 用户组改变&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230437518.png&#34; alt=&#34;image-20210222230437518&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230437518.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;宿主主机端口要开启&lt;br&gt;
+因为本操作是在阿里云 ECS 上进行安装的，需要在安全组里开放 8081 此端口。&lt;br&gt;
+访问 Jenkins&lt;br&gt;
+&lt;a href=&#34;http://120.26.50.165:8081&#34;&gt;http://120.26.50.165:8081&lt;/a&gt; //ip: 端口号&lt;br&gt;
+管理配置 Jenkins&lt;br&gt;
+ 解锁&lt;br&gt;
+在安装完成后，默认生成了一个登录密码，首次登录需要这个密码。&lt;br&gt;
+密码路径：var/jenkins_home/secrets/initialAdminPassword// 容器内部&lt;br&gt;
+查找密码：&lt;br&gt;
+docker exec -it jenkins_01 bash // 进入 jenkins 容器&lt;br&gt;
+ cat /var/jenkins_home/secrets/initialAdminPassword// 查看密码&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230458505.png&#34; alt=&#34;image-20210222230458505&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230458505.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;安装插件&lt;br&gt;
+新手安装建议选择：Install suggested plugins，安装过程大概半个多小时。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230522215.png&#34; alt=&#34;image-20210222230522215&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230522215.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230703546.png&#34; alt=&#34;image-20210222230703546&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230703546.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;管理用户创建&lt;br&gt;
+这个用户就是最大管理者权限，相当于 admin&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230604348.png&#34; alt=&#34;image-20210222230604348&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230604348.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Jenkins 配置完成&lt;br&gt;
+到此步，安装就大功告成！&lt;br&gt;
+&lt;a href=&#34;http://120.26.50.165:8081&#34;&gt;http://120.26.50.165:8081&lt;/a&gt; //ip: 端口号&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230616065.png&#34; alt=&#34;image-20210222230616065&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230616065.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210222230629441.png&#34; alt=&#34;image-20210222230629441&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210222230629441.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;实现自动化部署&lt;br&gt;
+有了 Jenkins，接下来就是代码的自动部署过程了。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>
