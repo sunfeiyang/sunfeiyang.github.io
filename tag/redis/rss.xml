@@ -40,6 +40,9 @@
         <category>gitlab</category>
         <category>Jenkins</category>
         <category>nexus3</category>
+        <category>maven</category>
+        <category>索引</category>
+        <category>elasticSearch</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/12/06/java/redis/redisCache/</guid>
             <title>高并发Redis缓存那些事儿</title>

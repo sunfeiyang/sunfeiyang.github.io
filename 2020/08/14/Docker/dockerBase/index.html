@@ -25,7 +25,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2020-08-14">
-  <meta property="og:article:modified_time" content="2021-01-22">
+  <meta property="og:article:modified_time" content="2021-03-03">
   <meta property="og:article:author" content="sunfy">
   
   
@@ -204,7 +204,7 @@
     
     
     <span class="dot"></span>
-    <span>649 字</span>
+    <span>739 字</span>
     
   </div>
   
@@ -229,6 +229,10 @@
 <p>例如我们要查看 <strong>docker stats</strong> 指令的具体使用方法：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker stats --help</span><br></pre></td></tr></table></figure>
 <p><img src="/img/image-20210122101335591.png" alt="image-20210122101335591" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/image-20210122101335591.png" class="lozad post-image"></p>
+<h3 id="搜索镜像"><a class="markdownIt-Anchor" href="#搜索镜像">#</a> 搜索镜像</h3>
+<p>官网查看镜像版本地址</p>
+<p><code>https://hub.docker.com/</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker search httpd</span><br></pre></td></tr></table></figure>
 <h3 id="获取镜像"><a class="markdownIt-Anchor" href="#获取镜像">#</a> 获取镜像</h3>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker pull xxxx</span><br></pre></td></tr></table></figure>
 <h3 id="新建并启动容器"><a class="markdownIt-Anchor" href="#新建并启动容器">#</a> 新建并启动容器</h3>
@@ -260,6 +264,12 @@
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/wp-content/uploads/2016/05/docker-exec.png"><img src="/img/docker-exec.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/docker-exec.png" class="lozad post-image"></a></p>
 <p><strong>注意：</strong> 如果从这个容器退出，容器不会停止，这就是为什么推荐大家使用 <strong>docker exec</strong> 的原因。</p>
 <p>更多参数说明请使用 <strong>docker exec --help</strong> 命令查看。</p>
+<h3 id="获得容器root权限"><a class="markdownIt-Anchor" href="#获得容器root权限">#</a> 获得容器 root 权限</h3>
+<p>第一步：查看容器的 CONTAINER ID</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+<p>ps: 需要运行中的容器</p>
+<p>第二步：获取 root 权限，例如需要进入的 CONTAINER ID 为 2209371edd48</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker exec -ti -u root 2209371edd48 bash</span><br></pre></td></tr></table></figure>
 <h3 id="导出和导入容器"><a class="markdownIt-Anchor" href="#导出和导入容器">#</a> 导出和导入容器</h3>
 <p><strong>导出容器</strong></p>
 <p>如果要导出本地某个容器，可以使用 <strong>docker export</strong> 命令。</p>
@@ -281,6 +291,9 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container prune</span><br></pre></td></tr></table></figure>
 <h3 id="设置容器自动启动"><a class="markdownIt-Anchor" href="#设置容器自动启动">#</a> 设置容器自动启动</h3>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在运行docker容器时可以加如下参数来保证每次docker服务重启后容器也自动重启：</span></span><br><span class="line">docker run --restart=always</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果已经启动了则可以使用如下命令：</span></span><br><span class="line">docker update --restart=always &lt;CONTAINER ID&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="附录"><a class="markdownIt-Anchor" href="#附录">#</a> 附录</h3>
+<p>菜鸟教程 - docker  <code>https://www.runoob.com/docker/docker-tutorial.html</code></p>
+
   </div>
   <div>
   
@@ -323,7 +336,7 @@
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%87%8D%E5%90%AF"><span class="toc-number">1.</span> <span class="toc-text"> docker 服务器重启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker"><span class="toc-number">2.</span> <span class="toc-text"> docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E9%95%9C%E5%83%8F"><span class="toc-number">3.</span> <span class="toc-text"> 获取镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text"> 新建并启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E5%B7%B2%E5%88%9B%E5%BB%BA%E7%9A%84"><span class="toc-number">5.</span> <span class="toc-text"> 启动容器（已创建的）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">6.</span> <span class="toc-text"> 查看启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text"> 查看所有容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E5%AE%B9%E5%99%A8"><span class="toc-number">8.</span> <span class="toc-text"> 停止容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">9.</span> <span class="toc-text"> 重启容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">10.</span> <span class="toc-text"> 进入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E5%92%8C%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">11.</span> <span class="toc-text"> 导出和导入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="toc-number">12.</span> <span class="toc-text"> 删除容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%B9%E5%99%A8%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8"><span class="toc-number">13.</span> <span class="toc-text"> 设置容器自动启动</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%87%8D%E5%90%AF"><span class="toc-number">1.</span> <span class="toc-text"> docker 服务器重启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker"><span class="toc-number">2.</span> <span class="toc-text"> docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E9%95%9C%E5%83%8F"><span class="toc-number">3.</span> <span class="toc-text"> 搜索镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E9%95%9C%E5%83%8F"><span class="toc-number">4.</span> <span class="toc-text"> 获取镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text"> 新建并启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E5%B7%B2%E5%88%9B%E5%BB%BA%E7%9A%84"><span class="toc-number">6.</span> <span class="toc-text"> 启动容器（已创建的）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text"> 查看启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8"><span class="toc-number">8.</span> <span class="toc-text"> 查看所有容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E5%AE%B9%E5%99%A8"><span class="toc-number">9.</span> <span class="toc-text"> 停止容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">10.</span> <span class="toc-text"> 重启容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">11.</span> <span class="toc-text"> 进入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E5%AE%B9%E5%99%A8root%E6%9D%83%E9%99%90"><span class="toc-number">12.</span> <span class="toc-text"> 获得容器 root 权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E5%92%8C%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">13.</span> <span class="toc-text"> 导出和导入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="toc-number">14.</span> <span class="toc-text"> 删除容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%B9%E5%99%A8%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8"><span class="toc-number">15.</span> <span class="toc-text"> 设置容器自动启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number">16.</span> <span class="toc-text"> 附录</span></a></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -335,7 +348,7 @@
 <p class="author-description">人生在勤，不索何获</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>61</span>
+    <span>65</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -343,7 +356,7 @@
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>33</span>
+    <span>36</span>
     <span>标签</span>
   </a>
 </div>
@@ -356,7 +369,7 @@
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%87%8D%E5%90%AF"><span class="toc-number">1.</span> <span class="toc-text"> docker 服务器重启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker"><span class="toc-number">2.</span> <span class="toc-text"> docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E9%95%9C%E5%83%8F"><span class="toc-number">3.</span> <span class="toc-text"> 获取镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text"> 新建并启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E5%B7%B2%E5%88%9B%E5%BB%BA%E7%9A%84"><span class="toc-number">5.</span> <span class="toc-text"> 启动容器（已创建的）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">6.</span> <span class="toc-text"> 查看启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text"> 查看所有容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E5%AE%B9%E5%99%A8"><span class="toc-number">8.</span> <span class="toc-text"> 停止容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">9.</span> <span class="toc-text"> 重启容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">10.</span> <span class="toc-text"> 进入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E5%92%8C%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">11.</span> <span class="toc-text"> 导出和导入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="toc-number">12.</span> <span class="toc-text"> 删除容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%B9%E5%99%A8%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8"><span class="toc-number">13.</span> <span class="toc-text"> 设置容器自动启动</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%87%8D%E5%90%AF"><span class="toc-number">1.</span> <span class="toc-text"> docker 服务器重启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker"><span class="toc-number">2.</span> <span class="toc-text"> docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E9%95%9C%E5%83%8F"><span class="toc-number">3.</span> <span class="toc-text"> 搜索镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E9%95%9C%E5%83%8F"><span class="toc-number">4.</span> <span class="toc-text"> 获取镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text"> 新建并启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E5%B7%B2%E5%88%9B%E5%BB%BA%E7%9A%84"><span class="toc-number">6.</span> <span class="toc-text"> 启动容器（已创建的）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text"> 查看启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8"><span class="toc-number">8.</span> <span class="toc-text"> 查看所有容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E5%AE%B9%E5%99%A8"><span class="toc-number">9.</span> <span class="toc-text"> 停止容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">10.</span> <span class="toc-text"> 重启容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">11.</span> <span class="toc-text"> 进入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E5%AE%B9%E5%99%A8root%E6%9D%83%E9%99%90"><span class="toc-number">12.</span> <span class="toc-text"> 获得容器 root 权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E5%92%8C%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">13.</span> <span class="toc-text"> 导出和导入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="toc-number">14.</span> <span class="toc-text"> 删除容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%B9%E5%99%A8%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8"><span class="toc-number">15.</span> <span class="toc-text"> 设置容器自动启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number">16.</span> <span class="toc-text"> 附录</span></a></li></ol>
     </div>
   </article>
   
@@ -376,7 +389,7 @@
       <a href="/categories/Docker">
         <div class="categories-list-item">
           Docker
-          <span class="categories-list-item-badge">9</span>
+          <span class="categories-list-item-badge">11</span>
         </div>
       </a>
     
@@ -390,7 +403,7 @@
       <a href="/categories/Linux">
         <div class="categories-list-item">
           Linux
-          <span class="categories-list-item-badge">14</span>
+          <span class="categories-list-item-badge">15</span>
         </div>
       </a>
     
@@ -418,7 +431,7 @@
       <a href="/categories/tools">
         <div class="categories-list-item">
           tools
-          <span class="categories-list-item-badge">5</span>
+          <span class="categories-list-item-badge">6</span>
         </div>
       </a>
     
@@ -433,9 +446,9 @@
     
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
-    
     <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
+    
+    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
     
     <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
     
@@ -449,19 +462,19 @@
     
     <a href="\tags\nexus3" title="nexus3"><div class="tags-list-item">nexus3</div></a>
     
+    <a href="\tags\Jenkins" title="Jenkins"><div class="tags-list-item">Jenkins</div></a>
+    
     <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\git" title="git"><div class="tags-list-item">git</div></a>
+    
+    <a href="\tags\JDK" title="JDK"><div class="tags-list-item">JDK</div></a>
     
     <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
     
     <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
     
     <a href="\tags\Zookeeper" title="Zookeeper"><div class="tags-list-item">Zookeeper</div></a>
-    
-    <a href="\tags\MyBatis" title="MyBatis"><div class="tags-list-item">MyBatis</div></a>
-    
-    <a href="\tags\MQ" title="MQ"><div class="tags-list-item">MQ</div></a>
-    
-    <a href="\tags\git" title="git"><div class="tags-list-item">git</div></a>
     
   </div>
 </div>
@@ -476,7 +489,7 @@
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%87%8D%E5%90%AF"><span class="toc-number">1.</span> <span class="toc-text"> docker 服务器重启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker"><span class="toc-number">2.</span> <span class="toc-text"> docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E9%95%9C%E5%83%8F"><span class="toc-number">3.</span> <span class="toc-text"> 获取镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text"> 新建并启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E5%B7%B2%E5%88%9B%E5%BB%BA%E7%9A%84"><span class="toc-number">5.</span> <span class="toc-text"> 启动容器（已创建的）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">6.</span> <span class="toc-text"> 查看启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text"> 查看所有容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E5%AE%B9%E5%99%A8"><span class="toc-number">8.</span> <span class="toc-text"> 停止容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">9.</span> <span class="toc-text"> 重启容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">10.</span> <span class="toc-text"> 进入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E5%92%8C%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">11.</span> <span class="toc-text"> 导出和导入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="toc-number">12.</span> <span class="toc-text"> 删除容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%B9%E5%99%A8%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8"><span class="toc-number">13.</span> <span class="toc-text"> 设置容器自动启动</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%87%8D%E5%90%AF"><span class="toc-number">1.</span> <span class="toc-text"> docker 服务器重启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker"><span class="toc-number">2.</span> <span class="toc-text"> docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E9%95%9C%E5%83%8F"><span class="toc-number">3.</span> <span class="toc-text"> 搜索镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E9%95%9C%E5%83%8F"><span class="toc-number">4.</span> <span class="toc-text"> 获取镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text"> 新建并启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E5%B7%B2%E5%88%9B%E5%BB%BA%E7%9A%84"><span class="toc-number">6.</span> <span class="toc-text"> 启动容器（已创建的）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text"> 查看启动容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%AE%B9%E5%99%A8"><span class="toc-number">8.</span> <span class="toc-text"> 查看所有容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E5%AE%B9%E5%99%A8"><span class="toc-number">9.</span> <span class="toc-text"> 停止容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="toc-number">10.</span> <span class="toc-text"> 重启容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">11.</span> <span class="toc-text"> 进入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E5%AE%B9%E5%99%A8root%E6%9D%83%E9%99%90"><span class="toc-number">12.</span> <span class="toc-text"> 获得容器 root 权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E5%92%8C%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8"><span class="toc-number">13.</span> <span class="toc-text"> 导出和导入容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="toc-number">14.</span> <span class="toc-text"> 删除容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%B9%E5%99%A8%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8"><span class="toc-number">15.</span> <span class="toc-text"> 设置容器自动启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number">16.</span> <span class="toc-text"> 附录</span></a></li></ol>
   </article>
   
   
@@ -486,6 +499,16 @@
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-03</div>
+        <a href="/2021/03/03/tools/ELK/boke-build (copy)/"><div class="recent-posts-item-content">正排索引与倒排索引</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-03</div>
+        <a href="/2021/03/03/Docker/Docker-remove/"><div class="recent-posts-item-content">docker-修改容器的挂载目录三种方式</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-01-27</div>
         <a href="/2021/01/27/Server/Server-cloud/"><div class="recent-posts-item-content">云服务器80端口被占用</div></a>
       </div>
@@ -493,16 +516,6 @@
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-01-21</div>
         <a href="/2021/01/21/Docker/dockerBuildFormIdea/"><div class="recent-posts-item-content">idea 利用 docker插件打包上传</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2021-01-19</div>
-        <a href="/2021/01/19/java/Netty-IOModule/NettyBase/"><div class="recent-posts-item-content">Netty入门示例及核心功能了解</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2021-01-06</div>
-        <a href="/2021/01/06/Docker/dockerEdit/"><div class="recent-posts-item-content">Docker 修改MySQL配置</div></a>
       </div>
     
   </div>

@@ -40,6 +40,9 @@
         <category>gitlab</category>
         <category>Jenkins</category>
         <category>nexus3</category>
+        <category>maven</category>
+        <category>索引</category>
+        <category>elasticSearch</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/27/Server/Server-cloud/</guid>
             <title>云服务器80端口被占用</title>

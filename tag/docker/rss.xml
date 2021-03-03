@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Thu, 21 Jan 2021 17:17:15 +0800</pubDate>
-        <lastBuildDate>Thu, 21 Jan 2021 17:17:15 +0800</lastBuildDate>
+        <pubDate>Wed, 03 Mar 2021 10:16:29 +0800</pubDate>
+        <lastBuildDate>Wed, 03 Mar 2021 10:16:29 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -40,6 +40,35 @@
         <category>gitlab</category>
         <category>Jenkins</category>
         <category>nexus3</category>
+        <category>maven</category>
+        <category>索引</category>
+        <category>elasticSearch</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/03/03/Docker/Docker-remove/</guid>
+            <title>docker-修改容器的挂载目录三种方式</title>
+            <link>http://xinghuohan.cn/2021/03/03/Docker/Docker-remove/</link>
+            <category>Docker</category>
+            <pubDate>Wed, 03 Mar 2021 10:16:29 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;docker - 修改容器的挂载目录三种方式&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;方式一修改配置文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方式一修改配置文件&#34;&gt;#&lt;/a&gt; 方式一：修改配置文件&lt;/h3&gt;
+&lt;p&gt;（需停止 docker 服务）&lt;br&gt;
+1、停止 docker 服务&lt;br&gt;
+ systemctl stop docker.service（关键，修改之前必须停止 docker 服务）&lt;br&gt;
+2、vim /var/lib/docker/containers/container-ID/config.v2.json&lt;br&gt;
+ 修改配置文件中的目录位置，然后保存退出&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;quot;MountPoints&amp;quot;:&amp;#123;&amp;quot;/home&amp;quot;:&amp;#123;&amp;quot;Source&amp;quot;:&amp;quot;/docker&amp;quot;,&amp;quot;Destination&amp;quot;:&amp;quot;/home&amp;quot;,&amp;quot;RW&amp;quot;:true,&amp;quot;Name&amp;quot;:&amp;quot;&amp;quot;,&amp;quot;Driver&amp;quot;:&amp;quot;&amp;quot;,&amp;quot;Type&amp;quot;:&amp;quot;bind&amp;quot;,&amp;quot;Propagation&amp;quot;:&amp;quot;rprivate&amp;quot;,&amp;quot;Spec&amp;quot;:&amp;#123;&amp;quot;Type&amp;quot;:&amp;quot;bind&amp;quot;,&amp;quot;Source&amp;quot;:&amp;quot;//docker/&amp;quot;,&amp;quot;Target&amp;quot;:&amp;quot;/home&amp;quot;&amp;#125;&amp;#125;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3、启动 docker 服务&lt;br&gt;
+ systemctl start docker.service&lt;br&gt;
+4、启动 docker 容器&lt;br&gt;
+ docker start &amp;lt;container-name/ID&amp;gt;&lt;/p&gt;
+&lt;h3 id=&#34;方式二提交现有容器为新镜像然后重新运行它&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方式二提交现有容器为新镜像然后重新运行它&#34;&gt;#&lt;/a&gt; 方式二：提交现有容器为新镜像，然后重新运行它&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; docker ps  -a&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;CONTAINER ID        IMAGE                 COMMAND                  CREATED              STATUS                          PORTS               NAMES&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   5a3422adeead        ubuntu:14.04          &amp;quot;/bin/bash&amp;quot;              About a minute ago   Exited (0) About a minute ago                       agitated_newton&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; docker commit 5a3422adeead newimagename&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; docker run -ti -v &lt;span class=&#34;string&#34;&gt;&amp;quot;&lt;span class=&#34;variable&#34;&gt;$PWD&lt;/span&gt;/dir1&amp;quot;&lt;/span&gt;:/dir1 -v &lt;span class=&#34;string&#34;&gt;&amp;quot;&lt;span class=&#34;variable&#34;&gt;$PWD&lt;/span&gt;/dir2&amp;quot;&lt;/span&gt;:/dir2 newimagename /bin/bash&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后停止旧容器，并使用这个新容器，如果由于某种原因需要新容器使用旧名称，请在删除旧容器后使用 docker rename。&lt;/p&gt;
+&lt;h3 id=&#34;方式三export容器为镜像然后import为新镜像&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方式三export容器为镜像然后import为新镜像&#34;&gt;#&lt;/a&gt; 方式三：export 容器为镜像，然后 import 为新镜像&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;docker container &lt;span class=&#34;built_in&#34;&gt;export&lt;/span&gt; -o ./myimage.docker 容器ID&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;docker import ./myimage.docker newimagename&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;docker run -ti -v &lt;span class=&#34;string&#34;&gt;&amp;quot;&lt;span class=&#34;variable&#34;&gt;$PWD&lt;/span&gt;/dir1&amp;quot;&lt;/span&gt;:/dir1 -v &lt;span class=&#34;string&#34;&gt;&amp;quot;&lt;span class=&#34;variable&#34;&gt;$PWD&lt;/span&gt;/dir2&amp;quot;&lt;/span&gt;:/dir2 newimagename /bin/bash&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后停止旧容器，并使用这个新容器，如果由于某种原因需要新容器使用旧名称，请在删除旧容器后使用 docker rename。&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/21/Docker/dockerBuildFormIdea/</guid>
             <title>idea 利用 docker插件打包上传</title>
@@ -466,6 +495,33 @@ $PWD ：取当前路径。此处可以写死为某个完整的确定的目录。
  ]]></description>
         </item>
         <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/11/23/Docker/Centos-Docker-jenkins-mavenjdkgit/</guid>
+            <title>jenkins的docker容器如何装配jdk maven和git</title>
+            <link>http://xinghuohan.cn/2020/11/23/Docker/Centos-Docker-jenkins-mavenjdkgit/</link>
+            <category>Docker</category>
+            <category>JDK</category>
+            <category>git</category>
+            <category>Jenkins</category>
+            <category>maven</category>
+            <pubDate>Mon, 23 Nov 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;jenkins 的 docker 容器如何装配 jdk maven 和 git&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;jenkins/jenkins:lts 容器安装这些工具，其实 jenkins 镜像中已经包含了 jdk，我们只不过把容器中这些工具的路径找出来，配置下路径即可，所以有如下两种方式：&lt;/p&gt;
+&lt;h3 id=&#34;方式一推荐&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方式一推荐&#34;&gt;#&lt;/a&gt; 方式一（推荐）&lt;/h3&gt;
+&lt;p&gt;先进入 jenkins 的容器中&lt;/p&gt;
+&lt;p&gt;docker exec -it jenkins 容器 id /bin/bash&lt;/p&gt;
+&lt;h4 id=&#34;jdk&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#jdk&#34;&gt;#&lt;/a&gt; jdk&lt;/h4&gt;
+&lt;p&gt;然后通过 echo $JAVA_HOME 来查看 java 路径在 /usr/local 中，然后配置进 jenkins 的 JAVA_HOME 中即可&lt;/p&gt;
+&lt;h4 id=&#34;git&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#git&#34;&gt;#&lt;/a&gt; git&lt;/h4&gt;
+&lt;p&gt;通过 which git 查看 git 执行文件路径为 /usr/bin/git，把这个复制到 jenkins 路径中&lt;/p&gt;
+&lt;h4 id=&#34;mvn&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#mvn&#34;&gt;#&lt;/a&gt; mvn&lt;/h4&gt;
+&lt;p&gt;jenkins 容器中一般没有 maven 提供的，所以 jenkins 配置中我使用 install automatically&lt;/p&gt;
+&lt;h3 id=&#34;方式二&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方式二&#34;&gt;#&lt;/a&gt; 方式二&lt;/h3&gt;
+&lt;p&gt;使用 jenkins 工具管理里头自动安装 jdk，git 和 maven，但是 jdk 自动安装需要 oracle 的账号密码，这个得自己申请，这种比较麻烦，不见这么做，既然镜像中已经存在了 jdk，我们可找下路径就可以直接使用，为何还需要专门自动安装一个呢？&lt;/p&gt;
+&lt;p&gt;其他&lt;br&gt;
+如果不是 docker 容器的方式，要么用自动安装使用下 oracle 账号，要么自己安装一个 jdk 到本地，然后配一下 JAVA_HOME 路径即可，至于具体怎么配 java 路径请看这篇 CentOS 下 JDK 安装及配置&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/11/02/Docker/Centos-Docker-jenkins/</guid>
             <title>Docker 搭建 Jenkins 实现自动部署</title>
             <link>http://xinghuohan.cn/2020/11/02/Docker/Centos-Docker-jenkins/</link>
@@ -473,7 +529,7 @@ $PWD ：取当前路径。此处可以写死为某个完整的确定的目录。
             <category>Docker</category>
             <category>Jenkins</category>
             <pubDate>Mon, 02 Nov 2020 00:00:00 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;CentOS 安装 Docker 图形化工具&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+            <description><![CDATA[ &lt;p&gt;Docker 搭建 Jenkins 实现自动部署&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;自动化部署（持续集成 / CI + 持续交付 / CD）不仅可以提升开发效率，让程序员更专注产品与业务的开发，还可以节省很多运维成本以及提升运维效率。其中，Jenkins 是自动化部署中最流行的工具，尤其是 Docker+Jenkins 的完美搭配，每个程序员都应该掌握这两个工具的使用。&lt;/p&gt;
 &lt;p&gt;环境配置&lt;br&gt;
 操作系统：CentOS Linux release 7.6.1810&lt;br&gt;
@@ -601,6 +657,10 @@ docker exec -it jenkins_01 bash // 进入 jenkins 容器&lt;br&gt;
 &lt;p&gt;例如我们要查看 &lt;strong&gt;docker stats&lt;/strong&gt; 指令的具体使用方法：&lt;/p&gt;
 &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker stats --help&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;&lt;img src=&#34;/img/image-20210122101335591.png&#34; alt=&#34;image-20210122101335591&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210122101335591.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;搜索镜像&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#搜索镜像&#34;&gt;#&lt;/a&gt; 搜索镜像&lt;/h3&gt;
+&lt;p&gt;官网查看镜像版本地址&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;https://hub.docker.com/&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker search httpd&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;获取镜像&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#获取镜像&#34;&gt;#&lt;/a&gt; 获取镜像&lt;/h3&gt;
 &lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker pull xxxx&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;新建并启动容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#新建并启动容器&#34;&gt;#&lt;/a&gt; 新建并启动容器&lt;/h3&gt;
@@ -632,6 +692,12 @@ docker exec -it jenkins_01 bash // 进入 jenkins 容器&lt;br&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.runoob.com/wp-content/uploads/2016/05/docker-exec.png&#34;&gt;&lt;img src=&#34;/img/docker-exec.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/docker-exec.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt; 如果从这个容器退出，容器不会停止，这就是为什么推荐大家使用 &lt;strong&gt;docker exec&lt;/strong&gt; 的原因。&lt;/p&gt;
 &lt;p&gt;更多参数说明请使用 &lt;strong&gt;docker exec --help&lt;/strong&gt; 命令查看。&lt;/p&gt;
+&lt;h3 id=&#34;获得容器root权限&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#获得容器root权限&#34;&gt;#&lt;/a&gt; 获得容器 root 权限&lt;/h3&gt;
+&lt;p&gt;第一步：查看容器的 CONTAINER ID&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker ps&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;ps: 需要运行中的容器&lt;/p&gt;
+&lt;p&gt;第二步：获取 root 权限，例如需要进入的 CONTAINER ID 为 2209371edd48&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker exec -ti -u root 2209371edd48 bash&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;导出和导入容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#导出和导入容器&#34;&gt;#&lt;/a&gt; 导出和导入容器&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;导出容器&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;如果要导出本地某个容器，可以使用 &lt;strong&gt;docker export&lt;/strong&gt; 命令。&lt;/p&gt;
@@ -652,7 +718,10 @@ docker exec -it jenkins_01 bash // 进入 jenkins 容器&lt;br&gt;
 &lt;p&gt;下面的命令可以清理掉所有处于终止状态的容器。&lt;/p&gt;
 &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker container prune&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;设置容器自动启动&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#设置容器自动启动&#34;&gt;#&lt;/a&gt; 设置容器自动启动&lt;/h3&gt;
-&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 在运行docker容器时可以加如下参数来保证每次docker服务重启后容器也自动重启：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker run --restart=always&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 如果已经启动了则可以使用如下命令：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker update --restart=always &amp;lt;CONTAINER ID&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt; ]]></description>
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 在运行docker容器时可以加如下参数来保证每次docker服务重启后容器也自动重启：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker run --restart=always&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 如果已经启动了则可以使用如下命令：&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker update --restart=always &amp;lt;CONTAINER ID&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;附录&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#附录&#34;&gt;#&lt;/a&gt; 附录&lt;/h3&gt;
+&lt;p&gt;菜鸟教程 - docker  &lt;code&gt;https://www.runoob.com/docker/docker-tutorial.html&lt;/code&gt;&lt;/p&gt;
+ ]]></description>
         </item>
     </channel>
 </rss>

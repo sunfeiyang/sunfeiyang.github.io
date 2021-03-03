@@ -25,7 +25,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-08-03">
-  <meta property="og:article:modified_time" content="2021-01-28">
+  <meta property="og:article:modified_time" content="2021-03-03">
   <meta property="og:article:author" content="sunfy">
   
   
@@ -206,7 +206,7 @@
     
     
     <span class="dot"></span>
-    <span>861 字</span>
+    <span>1.1k 字</span>
     
   </div>
   
@@ -246,7 +246,8 @@
 <p><img src="/img/20171208142644577" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171208142644577" class="lozad post-image"></p>
 <p>当结果出现了完毕！，就表示卸载成功。</p>
 <p>安装 jdk (介绍三种方法)</p>
-<p>方法一：利用 yum 源来安装 jdk（此方法不需要配置环境变量）</p>
+<h3 id="方法一利用yum源来安装jdk"><a class="markdownIt-Anchor" href="#方法一利用yum源来安装jdk">#</a> 方法一：利用 yum 源来安装 jdk</h3>
+<p>（此方法不需要配置环境变量）</p>
 <p>查看 yum 库中的 java 安装包 ：yum -y list java*</p>
 <p><img src="/img/20171208143606277" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171208143606277" class="lozad post-image"></p>
 <p>安装需要的 jdk 版本的所有 java 程序：yum -y install java-1.8.0-openjdk*</p>
@@ -255,13 +256,15 @@
 <p>当结果出现了完毕！即安装完成。</p>
 <p>查看 java 版本：java -version</p>
 <p><img src="/img/20171208144426251" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171208144426251" class="lozad post-image"></p>
-<p>方法二：用 rpm 安装 jdk (可以使用 man rpm 命令查看 rpm 的帮助文档)</p>
+<h3 id="方法二用rpm安装jdk"><a class="markdownIt-Anchor" href="#方法二用rpm安装jdk">#</a> 方法二：用 rpm 安装 jdk</h3>
+<p>(可以使用 man rpm 命令查看 rpm 的帮助文档)</p>
 <p>使用 Xftp 将下载好的 jdk-8u152-linux-x64.rpm 上传到 CentOs 上去，我这里放到了 /home/lisonglin 下</p>
 <p><img src="/img/20171208161556789" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171208161556789" class="lozad post-image"></p>
 <p>使用 rpm 命令安装： rpm -ivh jdk-8u152-linux-x64.rpm</p>
 <p>(默认安装在 /usr/java 目录下，不用配置环境变量)</p>
 <p><img src="/img/20171213105005772" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171213105005772" class="lozad post-image"></p>
-<p>方法三：手动解压 JDK 的压缩包，然后设置环境变量</p>
+<h3 id="方法三手动安装压缩包"><a class="markdownIt-Anchor" href="#方法三手动安装压缩包">#</a> 方法三：手动安装压缩包</h3>
+<p>手动解压 JDK 的压缩包，然后设置环境变量</p>
 <p>使用 Xftp 将下载好的 jdk-8u152-linux-x64.tar.gz 上传到 CentOs 上去，我这里放到了 /home/lisonglin 下</p>
 <p><img src="/img/20171213112053683" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171213112053683" class="lozad post-image"></p>
 <p>先将之前使用 rpm 方式安装的 jdk 卸载掉 (如果没有安装过可跳过此步骤)</p>
@@ -294,6 +297,21 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
 <p>5、使配置文件生效：source /etc/profile</p>
 <p>6、测试配置是否成功</p>
 <p><img src="/img/20171213135856977" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20171213135856977" class="lozad post-image"></p>
+<h3 id="查找yum默认安装jdk路径"><a class="markdownIt-Anchor" href="#查找yum默认安装jdk路径">#</a> 查找 yum 默认安装 jdk 路径</h3>
+<p>为了图方便。使用 yum -y install jdk-9.0.1</p>
+<p>安装完成之后，发现在 centos7 中。jdk 的路径不在 /usr/lib/jvm 下面了。需要找到对应的路径。在此记录一下。</p>
+<p>1、先找到 java 执行文件路径</p>
+<p>whereis java<br>
+ 输出：java: /usr/bin/java<br>
+2、根据执行文件找到对应的软链接指向的文件路径<br>
+ ls -lrt  /usr/bin/java<br>
+ 输出：  /usr/bin/java -&gt; /etc/alternatives/java<br>
+3、进入 /etc/alternatives/ 目录，发现还不是源文件目录。继续找</p>
+<p>ls -lrt /etc/alternatives/java<br>
+ 输出：/etc/alternatives/java -&gt; /usr/java/jdk-9.0.1/bin/java<br>
+ 看到 jdk 字样了。应该是源文件目录了。进入到路径</p>
+<p>cd /usr/java/jdk-9.0.1/<br>
+ 确实是 jdk-9 的路径了。</p>
 
   </div>
   <div>
@@ -337,7 +355,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%E5%88%A9%E7%94%A8yum%E6%BA%90%E6%9D%A5%E5%AE%89%E8%A3%85jdk"><span class="toc-number">1.</span> <span class="toc-text"> 方法一：利用 yum 源来安装 jdk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%E7%94%A8rpm%E5%AE%89%E8%A3%85jdk"><span class="toc-number">2.</span> <span class="toc-text"> 方法二：用 rpm 安装 jdk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="toc-number">3.</span> <span class="toc-text"> 方法三：手动安装压缩包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E6%89%BEyum%E9%BB%98%E8%AE%A4%E5%AE%89%E8%A3%85jdk%E8%B7%AF%E5%BE%84"><span class="toc-number">4.</span> <span class="toc-text"> 查找 yum 默认安装 jdk 路径</span></a></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -349,7 +367,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
 <p class="author-description">人生在勤，不索何获</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>61</span>
+    <span>65</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -357,7 +375,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>33</span>
+    <span>36</span>
     <span>标签</span>
   </a>
 </div>
@@ -370,7 +388,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%E5%88%A9%E7%94%A8yum%E6%BA%90%E6%9D%A5%E5%AE%89%E8%A3%85jdk"><span class="toc-number">1.</span> <span class="toc-text"> 方法一：利用 yum 源来安装 jdk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%E7%94%A8rpm%E5%AE%89%E8%A3%85jdk"><span class="toc-number">2.</span> <span class="toc-text"> 方法二：用 rpm 安装 jdk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="toc-number">3.</span> <span class="toc-text"> 方法三：手动安装压缩包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E6%89%BEyum%E9%BB%98%E8%AE%A4%E5%AE%89%E8%A3%85jdk%E8%B7%AF%E5%BE%84"><span class="toc-number">4.</span> <span class="toc-text"> 查找 yum 默认安装 jdk 路径</span></a></li></ol>
     </div>
   </article>
   
@@ -390,7 +408,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
       <a href="/categories/Docker">
         <div class="categories-list-item">
           Docker
-          <span class="categories-list-item-badge">9</span>
+          <span class="categories-list-item-badge">11</span>
         </div>
       </a>
     
@@ -404,7 +422,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
       <a href="/categories/Linux">
         <div class="categories-list-item">
           Linux
-          <span class="categories-list-item-badge">14</span>
+          <span class="categories-list-item-badge">15</span>
         </div>
       </a>
     
@@ -432,7 +450,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
       <a href="/categories/tools">
         <div class="categories-list-item">
           tools
-          <span class="categories-list-item-badge">5</span>
+          <span class="categories-list-item-badge">6</span>
         </div>
       </a>
     
@@ -447,9 +465,9 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
     
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
-    
     <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
+    
+    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
     
     <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
     
@@ -463,19 +481,19 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
     
     <a href="\tags\nexus3" title="nexus3"><div class="tags-list-item">nexus3</div></a>
     
+    <a href="\tags\Jenkins" title="Jenkins"><div class="tags-list-item">Jenkins</div></a>
+    
     <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\git" title="git"><div class="tags-list-item">git</div></a>
+    
+    <a href="\tags\JDK" title="JDK"><div class="tags-list-item">JDK</div></a>
     
     <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
     
     <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
     
     <a href="\tags\Zookeeper" title="Zookeeper"><div class="tags-list-item">Zookeeper</div></a>
-    
-    <a href="\tags\MyBatis" title="MyBatis"><div class="tags-list-item">MyBatis</div></a>
-    
-    <a href="\tags\MQ" title="MQ"><div class="tags-list-item">MQ</div></a>
-    
-    <a href="\tags\git" title="git"><div class="tags-list-item">git</div></a>
     
   </div>
 </div>
@@ -490,7 +508,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%E5%88%A9%E7%94%A8yum%E6%BA%90%E6%9D%A5%E5%AE%89%E8%A3%85jdk"><span class="toc-number">1.</span> <span class="toc-text"> 方法一：利用 yum 源来安装 jdk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%E7%94%A8rpm%E5%AE%89%E8%A3%85jdk"><span class="toc-number">2.</span> <span class="toc-text"> 方法二：用 rpm 安装 jdk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="toc-number">3.</span> <span class="toc-text"> 方法三：手动安装压缩包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E6%89%BEyum%E9%BB%98%E8%AE%A4%E5%AE%89%E8%A3%85jdk%E8%B7%AF%E5%BE%84"><span class="toc-number">4.</span> <span class="toc-text"> 查找 yum 默认安装 jdk 路径</span></a></li></ol>
   </article>
   
   
@@ -500,6 +518,16 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-03</div>
+        <a href="/2021/03/03/tools/ELK/boke-build (copy)/"><div class="recent-posts-item-content">正排索引与倒排索引</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-03</div>
+        <a href="/2021/03/03/Docker/Docker-remove/"><div class="recent-posts-item-content">docker-修改容器的挂载目录三种方式</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-01-27</div>
         <a href="/2021/01/27/Server/Server-cloud/"><div class="recent-posts-item-content">云服务器80端口被占用</div></a>
       </div>
@@ -507,16 +535,6 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-01-21</div>
         <a href="/2021/01/21/Docker/dockerBuildFormIdea/"><div class="recent-posts-item-content">idea 利用 docker插件打包上传</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2021-01-19</div>
-        <a href="/2021/01/19/java/Netty-IOModule/NettyBase/"><div class="recent-posts-item-content">Netty入门示例及核心功能了解</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2021-01-06</div>
-        <a href="/2021/01/06/Docker/dockerEdit/"><div class="recent-posts-item-content">Docker 修改MySQL配置</div></a>
       </div>
     
   </div>

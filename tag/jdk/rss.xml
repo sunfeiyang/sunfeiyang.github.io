@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Tue, 09 Jun 2020 00:00:00 +0800</pubDate>
-        <lastBuildDate>Tue, 09 Jun 2020 00:00:00 +0800</lastBuildDate>
+        <pubDate>Mon, 23 Nov 2020 00:00:00 +0800</pubDate>
+        <lastBuildDate>Mon, 23 Nov 2020 00:00:00 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -40,6 +40,36 @@
         <category>gitlab</category>
         <category>Jenkins</category>
         <category>nexus3</category>
+        <category>maven</category>
+        <category>索引</category>
+        <category>elasticSearch</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2020/11/23/Docker/Centos-Docker-jenkins-mavenjdkgit/</guid>
+            <title>jenkins的docker容器如何装配jdk maven和git</title>
+            <link>http://xinghuohan.cn/2020/11/23/Docker/Centos-Docker-jenkins-mavenjdkgit/</link>
+            <category>Docker</category>
+            <category>JDK</category>
+            <category>git</category>
+            <category>Jenkins</category>
+            <category>maven</category>
+            <pubDate>Mon, 23 Nov 2020 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;jenkins 的 docker 容器如何装配 jdk maven 和 git&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;jenkins/jenkins:lts 容器安装这些工具，其实 jenkins 镜像中已经包含了 jdk，我们只不过把容器中这些工具的路径找出来，配置下路径即可，所以有如下两种方式：&lt;/p&gt;
+&lt;h3 id=&#34;方式一推荐&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方式一推荐&#34;&gt;#&lt;/a&gt; 方式一（推荐）&lt;/h3&gt;
+&lt;p&gt;先进入 jenkins 的容器中&lt;/p&gt;
+&lt;p&gt;docker exec -it jenkins 容器 id /bin/bash&lt;/p&gt;
+&lt;h4 id=&#34;jdk&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#jdk&#34;&gt;#&lt;/a&gt; jdk&lt;/h4&gt;
+&lt;p&gt;然后通过 echo $JAVA_HOME 来查看 java 路径在 /usr/local 中，然后配置进 jenkins 的 JAVA_HOME 中即可&lt;/p&gt;
+&lt;h4 id=&#34;git&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#git&#34;&gt;#&lt;/a&gt; git&lt;/h4&gt;
+&lt;p&gt;通过 which git 查看 git 执行文件路径为 /usr/bin/git，把这个复制到 jenkins 路径中&lt;/p&gt;
+&lt;h4 id=&#34;mvn&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#mvn&#34;&gt;#&lt;/a&gt; mvn&lt;/h4&gt;
+&lt;p&gt;jenkins 容器中一般没有 maven 提供的，所以 jenkins 配置中我使用 install automatically&lt;/p&gt;
+&lt;h3 id=&#34;方式二&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方式二&#34;&gt;#&lt;/a&gt; 方式二&lt;/h3&gt;
+&lt;p&gt;使用 jenkins 工具管理里头自动安装 jdk，git 和 maven，但是 jdk 自动安装需要 oracle 的账号密码，这个得自己申请，这种比较麻烦，不见这么做，既然镜像中已经存在了 jdk，我们可找下路径就可以直接使用，为何还需要专门自动安装一个呢？&lt;/p&gt;
+&lt;p&gt;其他&lt;br&gt;
+如果不是 docker 容器的方式，要么用自动安装使用下 oracle 账号，要么自己安装一个 jdk 到本地，然后配一下 JAVA_HOME 路径即可，至于具体怎么配 java 路径请看这篇 CentOS 下 JDK 安装及配置&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/06/09/Linux/Linux-PlanTask/</guid>
             <title>Linux执行定时任务</title>
@@ -110,7 +140,8 @@
 &lt;p&gt;&lt;img src=&#34;/img/20171208142644577&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171208142644577&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;当结果出现了完毕！，就表示卸载成功。&lt;/p&gt;
 &lt;p&gt;安装 jdk (介绍三种方法)&lt;/p&gt;
-&lt;p&gt;方法一：利用 yum 源来安装 jdk（此方法不需要配置环境变量）&lt;/p&gt;
+&lt;h3 id=&#34;方法一利用yum源来安装jdk&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方法一利用yum源来安装jdk&#34;&gt;#&lt;/a&gt; 方法一：利用 yum 源来安装 jdk&lt;/h3&gt;
+&lt;p&gt;（此方法不需要配置环境变量）&lt;/p&gt;
 &lt;p&gt;查看 yum 库中的 java 安装包 ：yum -y list java*&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/20171208143606277&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171208143606277&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;安装需要的 jdk 版本的所有 java 程序：yum -y install java-1.8.0-openjdk*&lt;/p&gt;
@@ -119,13 +150,15 @@
 &lt;p&gt;当结果出现了完毕！即安装完成。&lt;/p&gt;
 &lt;p&gt;查看 java 版本：java -version&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/20171208144426251&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171208144426251&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;p&gt;方法二：用 rpm 安装 jdk (可以使用 man rpm 命令查看 rpm 的帮助文档)&lt;/p&gt;
+&lt;h3 id=&#34;方法二用rpm安装jdk&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方法二用rpm安装jdk&#34;&gt;#&lt;/a&gt; 方法二：用 rpm 安装 jdk&lt;/h3&gt;
+&lt;p&gt;(可以使用 man rpm 命令查看 rpm 的帮助文档)&lt;/p&gt;
 &lt;p&gt;使用 Xftp 将下载好的 jdk-8u152-linux-x64.rpm 上传到 CentOs 上去，我这里放到了 /home/lisonglin 下&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/20171208161556789&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171208161556789&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;使用 rpm 命令安装： rpm -ivh jdk-8u152-linux-x64.rpm&lt;/p&gt;
 &lt;p&gt;(默认安装在 /usr/java 目录下，不用配置环境变量)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/20171213105005772&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171213105005772&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;p&gt;方法三：手动解压 JDK 的压缩包，然后设置环境变量&lt;/p&gt;
+&lt;h3 id=&#34;方法三手动安装压缩包&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方法三手动安装压缩包&#34;&gt;#&lt;/a&gt; 方法三：手动安装压缩包&lt;/h3&gt;
+&lt;p&gt;手动解压 JDK 的压缩包，然后设置环境变量&lt;/p&gt;
 &lt;p&gt;使用 Xftp 将下载好的 jdk-8u152-linux-x64.tar.gz 上传到 CentOs 上去，我这里放到了 /home/lisonglin 下&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/20171213112053683&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171213112053683&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;先将之前使用 rpm 方式安装的 jdk 卸载掉 (如果没有安装过可跳过此步骤)&lt;/p&gt;
@@ -158,6 +191,21 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH&lt;/p&gt;
 &lt;p&gt;5、使配置文件生效：source /etc/profile&lt;/p&gt;
 &lt;p&gt;6、测试配置是否成功&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/20171213135856977&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20171213135856977&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;查找yum默认安装jdk路径&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查找yum默认安装jdk路径&#34;&gt;#&lt;/a&gt; 查找 yum 默认安装 jdk 路径&lt;/h3&gt;
+&lt;p&gt;为了图方便。使用 yum -y install jdk-9.0.1&lt;/p&gt;
+&lt;p&gt;安装完成之后，发现在 centos7 中。jdk 的路径不在 /usr/lib/jvm 下面了。需要找到对应的路径。在此记录一下。&lt;/p&gt;
+&lt;p&gt;1、先找到 java 执行文件路径&lt;/p&gt;
+&lt;p&gt;whereis java&lt;br&gt;
+ 输出：java: /usr/bin/java&lt;br&gt;
+2、根据执行文件找到对应的软链接指向的文件路径&lt;br&gt;
+ ls -lrt  /usr/bin/java&lt;br&gt;
+ 输出：  /usr/bin/java -&amp;gt; /etc/alternatives/java&lt;br&gt;
+3、进入 /etc/alternatives/ 目录，发现还不是源文件目录。继续找&lt;/p&gt;
+&lt;p&gt;ls -lrt /etc/alternatives/java&lt;br&gt;
+ 输出：/etc/alternatives/java -&amp;gt; /usr/java/jdk-9.0.1/bin/java&lt;br&gt;
+ 看到 jdk 字样了。应该是源文件目录了。进入到路径&lt;/p&gt;
+&lt;p&gt;cd /usr/java/jdk-9.0.1/&lt;br&gt;
+ 确实是 jdk-9 的路径了。&lt;/p&gt;
  ]]></description>
         </item>
     </channel>
