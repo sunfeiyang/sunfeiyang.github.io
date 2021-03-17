@@ -43,6 +43,7 @@
         <category>maven</category>
         <category>索引</category>
         <category>elasticSearch</category>
+        <category>windows</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/03/13/tools/mavenInstallJar/</guid>
             <title>使用maven命令安装指定(第三方)jar包到本地仓库</title>

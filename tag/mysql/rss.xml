@@ -43,6 +43,7 @@
         <category>maven</category>
         <category>索引</category>
         <category>elasticSearch</category>
+        <category>windows</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/06/Docker/dockerEdit/</guid>
             <title>Docker 修改MySQL配置</title>

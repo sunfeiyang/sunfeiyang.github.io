@@ -43,6 +43,7 @@
         <category>maven</category>
         <category>索引</category>
         <category>elasticSearch</category>
+        <category>windows</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/06/14/DB/MongoDB-config/</guid>
             <title>MongoDB 通过配置文件启动</title>

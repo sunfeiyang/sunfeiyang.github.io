@@ -43,6 +43,7 @@
         <category>maven</category>
         <category>索引</category>
         <category>elasticSearch</category>
+        <category>windows</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/03/03/Docker/Docker-remove/</guid>
             <title>docker-修改容器的挂载目录三种方式</title>
