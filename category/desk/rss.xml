@@ -44,6 +44,8 @@
         <category>索引</category>
         <category>elasticSearch</category>
         <category>windows</category>
+        <category>nacos</category>
+        <category>springCloud-alibaba</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/03/02/desk/npmInstall/</guid>
             <title>前端基础插件</title>

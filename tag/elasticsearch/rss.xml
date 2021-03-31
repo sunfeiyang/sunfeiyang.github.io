@@ -44,6 +44,8 @@
         <category>索引</category>
         <category>elasticSearch</category>
         <category>windows</category>
+        <category>nacos</category>
+        <category>springCloud-alibaba</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/03/03/tools/ELK/boke-build%20(copy)/</guid>
             <title>正排索引与倒排索引</title>

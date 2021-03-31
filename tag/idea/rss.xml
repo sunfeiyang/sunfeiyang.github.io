@@ -44,6 +44,8 @@
         <category>索引</category>
         <category>elasticSearch</category>
         <category>windows</category>
+        <category>nacos</category>
+        <category>springCloud-alibaba</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/21/Docker/dockerBuildFormIdea/</guid>
             <title>idea 利用 docker插件打包上传</title>

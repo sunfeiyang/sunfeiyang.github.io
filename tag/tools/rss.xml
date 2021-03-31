@@ -44,6 +44,8 @@
         <category>索引</category>
         <category>elasticSearch</category>
         <category>windows</category>
+        <category>nacos</category>
+        <category>springCloud-alibaba</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/11/26/tools/renameFileSuffix/</guid>
             <title>批量修改文件后缀名</title>

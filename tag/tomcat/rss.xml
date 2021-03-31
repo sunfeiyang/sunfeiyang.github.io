@@ -44,6 +44,8 @@
         <category>索引</category>
         <category>elasticSearch</category>
         <category>windows</category>
+        <category>nacos</category>
+        <category>springCloud-alibaba</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/05/12/Server/Tomcat-startTwice/</guid>
             <title>Tomcat下项目被启动两次为问题</title>
