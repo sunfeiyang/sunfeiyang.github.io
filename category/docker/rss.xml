@@ -46,6 +46,7 @@
         <category>windows</category>
         <category>nacos</category>
         <category>springCloud-alibaba</category>
+        <category>sqlServer</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/03/31/Docker/Docker-springcloud-alibaba/</guid>
             <title>docker下springCloud-alibaba组件安装配置使用</title>

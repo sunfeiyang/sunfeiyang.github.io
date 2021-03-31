@@ -46,6 +46,7 @@
         <category>windows</category>
         <category>nacos</category>
         <category>springCloud-alibaba</category>
+        <category>sqlServer</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/02/Linux/Centos-jenkins/</guid>
             <title>Centos 安装 Jenkins</title>
@@ -800,6 +801,21 @@ ZIP 在压缩与解压缩的时候默认使用了系统的本地编码，如 win
 &lt;li&gt;Windows:  &lt;code&gt;%程序安装目录%\gitkraken\app-x.x.x\resources\app.asar.unpacked\src\strings.json&lt;/code&gt;  (x.x.x 是你的 GitKraken 版本)&lt;/li&gt;
 &lt;li&gt;Mac:  &lt;code&gt;/Applications/GitKraken.app/Contents/Resources/app.asar.unpacked/src/strings.json&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h3 id=&#34;openvpn客户端&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#openvpn客户端&#34;&gt;#&lt;/a&gt; openVpn 客户端&lt;/h3&gt;
+&lt;h4 id=&#34;安装openvpn&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装openvpn&#34;&gt;#&lt;/a&gt; 安装 openvpn&lt;/h4&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install openvpn&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h4 id=&#34;配置openvpn&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#配置openvpn&#34;&gt;#&lt;/a&gt; 配置 openvpn&lt;/h4&gt;
+&lt;p&gt;作为客户端，OpenVPN 并没有特定的配置文件，而是由服务器提供方给出一个配置文件。对于认证，OpenVPN 提供了两种认证方法：基于用户名 / 密码的认证与 SSL 证书认证。用户名 / 密码的认证方法无法（或较难）限制一个账号同时连接多个客户端，而采用证书，则可保证同一证书同一时间只能有 一个客户端连接。当然，这些都是由服务器端决定的，不需要客户端进行选择。&lt;/p&gt;
+&lt;p&gt;首先将 OpenVPN 服务器提供商发给你的配置文件解压，并将所有文件都复制到 /etc/openvpn/ 中，一共六个文件：ca.crt, ca.key, client.crt , client.csr , client.key ,client.ovpn。 &lt;strong&gt;红色的 client 文件为客户名称。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果没有.ovpn 文件需要手动差 u 创建一个：client.ovpn。格式如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;client &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;dev tun &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;proto tcp      --红色的两行需要根据openvpn服务器配置进行设置（dev tap　　proto tcp-client）remote openvpn服务器IP（10.0.0.1）  端口号（默认：1194）resolv-retry infinite&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;nobind&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mute-replay-warnings&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;redirect-gateway&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ca &amp;#x2F;etc&amp;#x2F;openvpn&amp;#x2F;ca.crt&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cert &amp;#x2F;etc&amp;#x2F;openvpn&amp;#x2F;client.crt&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;key &amp;#x2F;etc&amp;#x2F;openvpn&amp;#x2F;client.key&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;comp-lzo &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;verb 5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h4 id=&#34;连接openvpn&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#连接openvpn&#34;&gt;#&lt;/a&gt; 连接 openvpn&lt;/h4&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo openvpn &amp;#x2F;etc&amp;#x2F;openvpn&amp;#x2F;client.ovpn&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h4 id=&#34;用别名来优化开启openvpn的命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#用别名来优化开启openvpn的命令&#34;&gt;#&lt;/a&gt; 用别名来优化开启 openvpn 的命令&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;编辑.bashrc 文件，在文件中如下图后边加入一行&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo vim .bashrc&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;alias vpn&amp;#x3D;&amp;#39;sudo openvpn &amp;#x2F;etc&amp;#x2F;openvpn&amp;#x2F;client.ovpn&amp;#39; (插入之文件）&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;保存后，执行 &lt;strong&gt;vpn&lt;/strong&gt; 就可以直接连接 openvpn。&lt;/p&gt;
+&lt;h4 id=&#34;用ctrlc强制断开vpn连接&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#用ctrlc强制断开vpn连接&#34;&gt;#&lt;/a&gt; 用 ctrl+c 强制断开 vpn 连接。&lt;/h4&gt;
  ]]></description>
         </item>
         <item>

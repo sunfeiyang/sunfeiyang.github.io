@@ -46,6 +46,7 @@
         <category>windows</category>
         <category>nacos</category>
         <category>springCloud-alibaba</category>
+        <category>sqlServer</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/27/Server/Server-cloud/</guid>
             <title>云服务器80端口被占用</title>

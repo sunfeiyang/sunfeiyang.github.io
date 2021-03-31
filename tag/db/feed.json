@@ -5,6 +5,17 @@
     "home_page_url": "http://xinghuohan.cn",
     "items": [
         {
+            "id": "http://xinghuohan.cn/2021/03/31/DB/Centos-sqlServer/",
+            "url": "http://xinghuohan.cn/2021/03/31/DB/Centos-sqlServer/",
+            "title": "Centos 安装 sqlServer",
+            "date_published": "2021-03-31T02:43:04.701Z",
+            "content_html": "<p>CentOS 安装 sqlServer<a id=\"more\"></a></p>\n<h3 id=\"下载\"><a class=\"markdownIt-Anchor\" href=\"#下载\">#</a> 下载</h3>\n<p>Microsoft SQL Server Red Hat 存储库配置文件：</p>\n<figure class=\"highlight shell\"><table><tr><td class=\"code\"><pre><span class=\"line\">curl -o /etc/yum.repos.d/mssql-server.repo https://packages.microsoft.com/config/rhel/7/mssql-server-2017.repo</span><br></pre></td></tr></table></figure>\n<h3 id=\"通过yum安装\"><a class=\"markdownIt-Anchor\" href=\"#通过yum安装\">#</a> 通过 yum 安装</h3>\n<figure class=\"highlight shell\"><table><tr><td class=\"code\"><pre><span class=\"line\">yum install -y mssql-server</span><br></pre></td></tr></table></figure>\n<h3 id=\"运行\"><a class=\"markdownIt-Anchor\" href=\"#运行\">#</a> 运行</h3>\n<p>运行包安装完成后 mssql conf 安装并按照提示操作以设置 SA 密码，并选择你的版本，安装完成后会自动启动数据库服务。</p>\n<figure class=\"highlight shell\"><table><tr><td class=\"code\"><pre><span class=\"line\">/opt/mssql/bin/mssql-conf setup</span><br></pre></td></tr></table></figure>\n<p>注意，这一步需要选择所要安装的数据库版本和管理员 sa 账户密码，请按照实际需求选择版本，并记住所设置的密码。</p>\n<h3 id=\"查看是否启动成功\"><a class=\"markdownIt-Anchor\" href=\"#查看是否启动成功\">#</a> 查看是否启动成功</h3>\n<figure class=\"highlight shell\"><table><tr><td class=\"code\"><pre><span class=\"line\">systemctl status mssql-server</span><br></pre></td></tr></table></figure>\n<p>安装完成！</p>\n<p>开放 1433 端口关闭防火墙即可远程连接。</p>\n",
+            "tags": [
+                "DB",
+                "sqlServer"
+            ]
+        },
+        {
             "id": "http://xinghuohan.cn/2020/09/22/DB/MySQl-error/",
             "url": "http://xinghuohan.cn/2020/09/22/DB/MySQl-error/",
             "title": "MySQL常见异常",

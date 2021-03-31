@@ -46,6 +46,7 @@
         <category>windows</category>
         <category>nacos</category>
         <category>springCloud-alibaba</category>
+        <category>sqlServer</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/11/14/IDEA/IDEA-Statistic/</guid>
             <title>IDEA Statistic插件使用,代码统计</title>

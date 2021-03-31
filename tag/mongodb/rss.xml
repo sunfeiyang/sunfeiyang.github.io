@@ -46,6 +46,7 @@
         <category>windows</category>
         <category>nacos</category>
         <category>springCloud-alibaba</category>
+        <category>sqlServer</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/06/14/DB/MongoDB-config/</guid>
             <title>MongoDB 通过配置文件启动</title>
