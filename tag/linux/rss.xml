@@ -58,6 +58,16 @@
 &lt;p&gt;搜索当前文件夹内所有文件中对应的字符（递归查询）&lt;/p&gt;
 &lt;h3 id=&#34;unar-待解压文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#unar-待解压文件&#34;&gt;#&lt;/a&gt; unar  [待解压文件]&lt;/h3&gt;
 &lt;p&gt;解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题&lt;/p&gt;
+&lt;h3 id=&#34;端口使用情况&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#端口使用情况&#34;&gt;#&lt;/a&gt; 端口使用情况&lt;/h3&gt;
+&lt;p&gt;使用 netstat 命令：&lt;br&gt;
+查看已经连接的服务端口（ESTABLISHED）&lt;br&gt;
+ &lt;code&gt;netstat -a&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;查看所有的服务端口（LISTEN，ESTABLISHED）&lt;/p&gt;
+&lt;p&gt;netstat -ap 查看指定端口，可以结合 grep 命令：netstat -ap | grep 8080 也可以使用 lsof 命令：&lt;br&gt;
+ &lt;code&gt;lsof -i:8888&lt;/code&gt; &lt;br&gt;
+ 若要关闭使用这个端口的程序，使用 kill + 对应的 pid&lt;br&gt;
+kill -9 PID 号&lt;br&gt;
+ ps：kill 就是给某个进程 id 发送了一个信号。默认发送的信号是 SIGTERM，而 kill -9 发送的信号是 SIGKILL，即 exit。exit 信号不会被系统阻塞，所以 kill -9 能顺利杀掉进程。&lt;/p&gt;
  ]]></description>
         </item>
         <item>
