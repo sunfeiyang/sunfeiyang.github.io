@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Sun, 12 May 2019 00:00:00 +0800</pubDate>
-        <lastBuildDate>Sun, 12 May 2019 00:00:00 +0800</lastBuildDate>
+        <pubDate>Sat, 17 Apr 2021 09:51:20 +0800</pubDate>
+        <lastBuildDate>Sat, 17 Apr 2021 09:51:20 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -47,6 +47,39 @@
         <category>nacos</category>
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/04/17/Server/Server-tomcat/</guid>
+            <title>tomcat配置gc日志输出</title>
+            <link>http://xinghuohan.cn/2021/04/17/Server/Server-tomcat/</link>
+            <category>Tomcat</category>
+            <pubDate>Sat, 17 Apr 2021 09:51:20 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;tomcat 配置 gc 日志输出&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;omcat 目录 /bin&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://xn--catalina-nw7mn06k.sh&#34;&gt;找到 catalina.sh&lt;/a&gt; (这是 linux 下，window 下应该是 catalina.bat)&lt;/p&gt;
+&lt;p&gt;配置 JAVA_OPTS 参数，我这里配置的是 tomcat 目录 /log 目录下&lt;/p&gt;
+&lt;p&gt;JAVA_OPTS= -Xms1024m -Xmx3048m -XX:PermSize=512m -XX:MaxPermSize=1524m -Xss4096K&lt;br&gt;
+-Xloggc:…/logs/tomcat_gc.log&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/01/27/Server/Server-cloud/</guid>
+            <title>云服务器80端口被占用</title>
+            <link>http://xinghuohan.cn/2021/01/27/Server/Server-cloud/</link>
+            <category>Tomcat</category>
+            <pubDate>Wed, 27 Jan 2021 16:09:08 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;在使用案例云或其他厂商的云服务器时遇到的 80 端口被占用问题，如何释放 80 端口？问题主要出现在 Windows Server 服务器上，Linux 服务器上暂且还没有遇到类似情况。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;问题：80 端口被占用？如何释放 80 端口&lt;br&gt;
+第一步、win+r 输入 cmd&lt;br&gt;
+ 第二步、在控制台输入 &lt;code&gt;netstat -aon | findstr&lt;/code&gt;  &amp;quot;80&amp;quot; 命令。找出类型为 TCP 端口 80 的，然后记录 PID (最后一行为 PID) 如下图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20200307110151419.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20200307110151419.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;第三步、在控制台输入 &lt;code&gt;tasklist | findstr&lt;/code&gt;  “PID 数值”&lt;br&gt;
+ 第四步、打开任务管理器，查看 PID=4 是一个 system 进程，其对应的进程描述是 NT kernel &amp;amp; system。&lt;br&gt;
+第五步、win+r 输入 &lt;code&gt;regedit&lt;/code&gt;  回车，找到 &lt;code&gt;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\HTTP&lt;/code&gt; ，并修改&lt;br&gt;
+ Start 的数值数据为 4.（如下图）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20200307110236185.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20200307110236185.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;第六步、修改注册表后要重启电脑才会生效&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/05/12/Server/Tomcat-startTwice/</guid>
             <title>Tomcat下项目被启动两次为问题</title>

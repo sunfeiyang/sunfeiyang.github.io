@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.png">
+  <title>sunfy</title>
+  
+  
+  <meta property="og:title" content="基于docker 搭建Prometheus+Grafana">
+  
+  
+  <meta property="og:url" content="http://xinghuohan.cn/2021/04/17/Docker/Centos-Docker-Prometheus+Grafana/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.png">
+  
+  
+  <meta property="og:img" content="&lt;p&gt;Prometheus（普罗米修斯）是一套开源的监控 &amp;amp; 报警 &amp;amp; 时间序列数据库的组合，起始是由&lt;a href=&#34;https://soundcloud.com/&#34;&gt; SoundCloud&lt;/a&gt; 公司开发的。随着发展，越来越多公司和组织接受采用 Prometheus，社会也十分活跃，他们便将它独立成开源项目，并且有公司来运作。Google SRE 的书内也曾提到跟他们 BorgMon 监控系统相似的实现是 Prometheus。现在最常见的 Kubernetes 容器管理系统中，通常会搭配 Prometheus 进行监控。">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2021-04-17">
+  <meta property="og:article:modified_time" content="2021-04-17">
+  <meta property="og:article:author" content="sunfy">
+  
+  
+  <meta property="og:article:tag" content="Docker">
+  
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="sunfy" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.png">
+      
+      <span class="navbar-logo-dsc">sunfy</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      基于docker 搭建Prometheus+Grafana
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-04-17T01:55:18.083Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-04-17</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Docker/" class="post-meta-link">Docker</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.8k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Docker/" class="post-meta-link">Docker</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>Prometheus（普罗米修斯）是一套开源的监控 &amp; 报警 &amp; 时间序列数据库的组合，起始是由<a target="_blank" rel="noopener" href="https://soundcloud.com/"> SoundCloud</a> 公司开发的。随着发展，越来越多公司和组织接受采用 Prometheus，社会也十分活跃，他们便将它独立成开源项目，并且有公司来运作。Google SRE 的书内也曾提到跟他们 BorgMon 监控系统相似的实现是 Prometheus。现在最常见的 Kubernetes 容器管理系统中，通常会搭配 Prometheus 进行监控。<a id="more"></a></p>
+<h3 id="介绍prometheus"><a class="markdownIt-Anchor" href="#介绍prometheus">#</a> 介绍 Prometheus</h3>
+<p>Prometheus（普罗米修斯）是一套开源的监控 &amp; 报警 &amp; 时间序列数据库的组合，起始是由<a target="_blank" rel="noopener" href="https://soundcloud.com/"> SoundCloud</a> 公司开发的。随着发展，越来越多公司和组织接受采用 Prometheus，社会也十分活跃，他们便将它独立成开源项目，并且有公司来运作。Google SRE 的书内也曾提到跟他们 BorgMon 监控系统相似的实现是 Prometheus。现在最常见的 Kubernetes 容器管理系统中，通常会搭配 Prometheus 进行监控。</p>
+<p>Prometheus 基本原理是通过 HTTP 协议周期性抓取被监控组件的状态，这样做的好处是任意组件只要提供 HTTP 接口就可以接入监控系统，不需要任何 SDK 或者其他的集成过程。这样做非常适合虚拟化环境比如 VM 或者 Docker 。</p>
+<p>Prometheus 应该是为数不多的适合 Docker、Mesos、Kubernetes 环境的监控系统之一。</p>
+<p>输出被监控组件信息的 HTTP 接口被叫做 exporter 。目前互联网公司常用的组件大部分都有 exporter 可以直接使用，比如 Varnish、Haproxy、Nginx、MySQL、Linux 系统信息 (包括磁盘、内存、CPU、网络等等)，具体支持的源看：<a target="_blank" rel="noopener" href="https://github.com/prometheus%E3%80%82">https://github.com/prometheus。</a></p>
+<p>与其他监控系统相比，Prometheus 的主要特点是：</p>
+<ul>
+<li>一个多维数据模型（时间序列由指标名称定义和设置键 / 值尺寸）。</li>
+<li>非常高效的存储，平均一个采样数据占～3.5bytes 左右，320 万的时间序列，每 30 秒采样，保持 60 天，消耗磁盘大概 228G。</li>
+<li>一种灵活的查询语言。</li>
+<li>不依赖分布式存储，单个服务器节点。</li>
+<li>时间集合通过 HTTP 上的 PULL 模型进行。</li>
+<li>通过中间网关支持推送时间。</li>
+<li>通过服务发现或静态配置发现目标。</li>
+<li>多种模式的图形和仪表板支持。</li>
+</ul>
+<h3 id="prometheus架构概览"><a class="markdownIt-Anchor" href="#prometheus架构概览">#</a> Prometheus 架构概览</h3>
+<p>该图说明了普罗米修斯（Prometheus）及其一些生态系统组件的整体架构：</p>
+<p><img src="/img/1341090-20181108170701192-544617423.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108170701192-544617423.jpg" class="lozad post-image"></p>
+<p>它的服务过程是这样的 Prometheus daemon 负责定时去目标上抓取 metrics (指标) 数据，每个抓取目标需要暴露一个 http 服务的接口给它定时抓取。</p>
+<p>Prometheus：支持通过配置文件、文本文件、zookeeper、Consul、DNS SRV lookup 等方式指定抓取目标。支持很多方式的图表可视化，例如十分精美的 Grafana，自带的 Promdash，以及自身提供的模版引擎等等，还提供 HTTP API 的查询方式，自定义所需要的输出。</p>
+<p>Alertmanager：是独立于 Prometheus 的一个组件，可以支持 Prometheus 的查询语句，提供十分灵活的报警方式。</p>
+<p>PushGateway：这个组件是支 img 持 Client 主动推送 metrics 到 PushGateway，而 Prometheus 只是定时去 Gateway 上抓取数据。</p>
+<p>如果有使用过 statsd 的用户，则会觉得这十分相似，只是 statsd 是直接发送给服务器端，而 Prometheus 主要还是靠进程主动去抓取。</p>
+<p>大多数 Prometheus 组件都是用 Go 编写的，它们可以轻松地构建和部署为静态二进制文件。访问<a target="_blank" rel="noopener" href="https://prometheus.io/"> prometheus.io</a> 以获取完整的文档，示例和指南。</p>
+<h3 id="prometheus的数据模型"><a class="markdownIt-Anchor" href="#prometheus的数据模型">#</a> Prometheus 的数据模型</h3>
+<p>Prometheus 从根本上所有的存储都是按时间序列去实现的，相同的 metrics (指标名称) 和 label (一个或多个标签) 组成一条时间序列，不同的 label 表示不同的时间序列。为了支持一些查询，有时还会临时产生一些时间序列存储。</p>
+<p>metrics name&amp;label 指标名称和标签</p>
+<p>每条时间序列是由唯一的” 指标名称” 和一组” 标签（key=value）” 的形式组成。</p>
+<p>指标名称：一般是给监测对像起一名字，例如 http_requests_total 这样，它有一些命名规则，可以包字母数字_之类的的。通常是以应用名称开头_监测对像_数值类型_单位这样。例如：push_total、userlogin_mysql_duration_seconds、app_memory_usage_bytes。</p>
+<p>标签：就是对一条时间序列不同维度的识别了，例如一个 http 请求用的是 POST 还是 GET，它的 endpoint 是什么，这时候就要用标签去标记了。最终形成的标识便是这样了：http_requests_total {method=”POST”,endpoint=”/api/tracks”}。</p>
+<p>记住，针对 http_requests_total 这个 metrics name 无论是增加标签还是删除标签都会形成一条新的时间序列。</p>
+<p>查询语句就可以跟据上面标签的组合来查询聚合结果了。</p>
+<p>如果以传统数据库的理解来看这条语句，则可以考虑 http_requests_total 是表名，标签是字段，而 timestamp 是主键，还有一个 float64 字段是值了。（Prometheus 里面所有值都是按 float64 存储）。</p>
+<h3 id="prometheus四种数据类型"><a class="markdownIt-Anchor" href="#prometheus四种数据类型">#</a> Prometheus 四种数据类型</h3>
+<p>Counter</p>
+<p>Counter 用于累计值，例如记录请求次数、任务完成数、错误发生次数。一直增加，不会减少。重启进程后，会被重置。</p>
+<p>例如：http_response_total {method=”GET”,endpoint=”/api/tracks”} 100，10 秒后抓取 http_response_total {method=”GET”,endpoint=”/api/tracks”} 100。</p>
+<p>Gauge</p>
+<p>Gauge 常规数值，例如 温度变化、内存使用变化。可变大，可变小。重启进程后，会被重置。</p>
+<p>例如： memory_usage_bytes {host=”master-01″} 100 &lt; 抓取值、memory_usage_bytes {host=”master-01″} 30、memory_usage_bytes {host=”master-01″} 50、memory_usage_bytes {host=”master-01″} 80 &lt; 抓取值。</p>
+<p>Histogram</p>
+<p>Histogram（直方图）可以理解为柱状图的意思，常用于跟踪事件发生的规模，例如：请求耗时、响应大小。它特别之处是可以对记录的内容进行分组，提供 count 和 sum 全部值的功能。</p>
+<p>例如：{小于 10=5 次，小于 20=1 次，小于 30=2 次}，count=7 次，sum=7 次的求和值。</p>
+<p>Summary</p>
+<p>Summary 和 Histogram 十分相似，常用于跟踪事件发生的规模，例如：请求耗时、响应大小。同样提供 count 和 sum 全部值的功能。</p>
+<p>例如：count=7 次，sum=7 次的值求值。</p>
+<p>它提供一个 quantiles 的功能，可以按 % 比划分跟踪的结果。例如：quantile 取值 0.95，表示取采样值里面的 95% 数据。</p>
+<h3 id="安装运行prometheusdocker版"><a class="markdownIt-Anchor" href="#安装运行prometheusdocker版">#</a> 安装运行 Prometheus (docker 版)</h3>
+<p>下面介绍如何使用 Prometheus 和 Grafana 对本机服务器性能进行监控。</p>
+<p>监控本机，只需要一个 exporter</p>
+<p>node_exporter – 用于机器系统数据收集</p>
+<p>Grafana 是一个开源的功能丰富的数据可视化平台，通常用于时序数据的可视化。它内置了以下数据源的支持：</p>
+<p>下面是我们安装时用到的架构图：</p>
+<p><img src="/img/1341090-20181108171729613-1031744778.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108171729613-1031744778.png" class="lozad post-image"></p>
+<p><strong>注意：本文使用的是 ubuntu-16.04.5-server-amd64，只需要一台服务器即可！</strong></p>
+<h4 id="安装docker"><a class="markdownIt-Anchor" href="#安装docker">#</a> 安装 docker</h4>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt-get install -y docker.io</span><br></pre></td></tr></table></figure>
+<p>注意：网上的文章说要安装 docker-engine 和 docker-ce，那都是扯淡的。包压根都找不到！</p>
+<p>只需要安装 docker.io 就可以了！</p>
+<p>如果是 Centos 系统，使用 yum install -y docker-io 安装</p>
+<h4 id="下载镜像包"><a class="markdownIt-Anchor" href="#下载镜像包">#</a> 下载镜像包</h4>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker pull prom&#x2F;node-exporter</span><br><span class="line">docker pull prom&#x2F;prometheus</span><br><span class="line">docker pull grafana&#x2F;grafana</span><br></pre></td></tr></table></figure>
+<h4 id="启动node-exporter"><a class="markdownIt-Anchor" href="#启动node-exporter">#</a> 启动 node-exporter</h4>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d -p 9100:9100 \</span><br><span class="line">  -v &quot;&#x2F;proc:&#x2F;host&#x2F;proc:ro&quot; \</span><br><span class="line">  -v &quot;&#x2F;sys:&#x2F;host&#x2F;sys:ro&quot; \</span><br><span class="line">  -v &quot;&#x2F;:&#x2F;rootfs:ro&quot; \</span><br><span class="line">  --net&#x3D;&quot;host&quot; \</span><br><span class="line">  prom&#x2F;node-exporter</span><br></pre></td></tr></table></figure>
+<p>等待几秒钟，查看端口是否起来了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ubuntu:~# netstat -anpt</span><br><span class="line">Active Internet connections (servers and established)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID&#x2F;Program name</span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1147&#x2F;sshd       </span><br><span class="line">tcp        0     36 192.168.91.132:22       192.168.91.1:63648      ESTABLISHED 2969&#x2F;0          </span><br><span class="line">tcp        0      0 192.168.91.132:22       192.168.91.1:63340      ESTABLISHED 1321&#x2F;1          </span><br><span class="line">tcp6       0      0 :::9100                 :::*                    LISTEN      3070&#x2F;node_exporter</span><br></pre></td></tr></table></figure>
+<p>访问 url：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.91.132:9100&#x2F;metrics</span><br></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="/img/1341090-20181108172459066-1268369984.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108172459066-1268369984.png" class="lozad post-image"></p>
+<p>这些都是收集到数据，有了它就可以做数据展示了</p>
+<h4 id="启动prometheus"><a class="markdownIt-Anchor" href="#启动prometheus">#</a> 启动 prometheus</h4>
+<p>新建目录 prometheus，编辑配置文件 prometheus.yml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir &#x2F;opt&#x2F;prometheus</span><br><span class="line">cd &#x2F;opt&#x2F;prometheus&#x2F;</span><br><span class="line">vim prometheus.yml</span><br></pre></td></tr></table></figure>
+<p>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">global:</span><br><span class="line">  scrape_interval:     60s</span><br><span class="line">  evaluation_interval: 60s</span><br><span class="line"> </span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: prometheus</span><br><span class="line">    static_configs:</span><br><span class="line">      - targets: [&#39;localhost:9090&#39;]</span><br><span class="line">        labels:</span><br><span class="line">          instance: prometheus</span><br><span class="line"> </span><br><span class="line">  - job_name: linux</span><br><span class="line">    static_configs:</span><br><span class="line">      - targets: [&#39;192.168.91.132:9100&#39;]</span><br><span class="line">        labels:</span><br><span class="line">          instance: localhost</span><br></pre></td></tr></table></figure>
+<p>注意：修改 IP 地址，这里的 192.168.91.132 就是本机地址</p>
+<p>启动 prometheus</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run  -d \</span><br><span class="line">  -p 9090:9090 \</span><br><span class="line">  -v &#x2F;opt&#x2F;prometheus&#x2F;prometheus.yml:&#x2F;etc&#x2F;prometheus&#x2F;prometheus.yml  \</span><br><span class="line">  prom&#x2F;prometheus</span><br></pre></td></tr></table></figure>
+<p>等待几秒钟，查看端口状态</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ubuntu:&#x2F;opt&#x2F;prometheus# netstat -anpt</span><br><span class="line">Active Internet connections (servers and established)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID&#x2F;Program name</span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1147&#x2F;sshd       </span><br><span class="line">tcp        0     36 192.168.91.132:22       192.168.91.1:63648      ESTABLISHED 2969&#x2F;0          </span><br><span class="line">tcp        0      0 192.168.91.132:22       192.168.91.1:63340      ESTABLISHED 1321&#x2F;1          </span><br><span class="line">tcp6       0      0 :::9100                 :::*                    LISTEN      3070&#x2F;node_exporter</span><br><span class="line">tcp6       0      0 :::22                   :::*                    LISTEN      1147&#x2F;sshd       </span><br><span class="line">tcp6       0      0 :::9090                 :::*                    LISTEN      3336&#x2F;docker-proxy</span><br></pre></td></tr></table></figure>
+<p>访问 url：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.91.132:9090&#x2F;graph</span><br></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="/img/1341090-20181108173214667-1683170215.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108173214667-1683170215.png" class="lozad post-image"></p>
+<p>访问 targets，url 如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.91.132:9090&#x2F;targets</span><br></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="/img/1341090-20181108173301486-803834624.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108173301486-803834624.png" class="lozad post-image"></p>
+<p>如果状态没有 UP 起来，等待一会，就会 UP 了</p>
+<h4 id="启动grafana"><a class="markdownIt-Anchor" href="#启动grafana">#</a> 启动 grafana</h4>
+<p>新建空文件夹 grafana-storage，用来存储数据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir &#x2F;opt&#x2F;grafana-storage</span><br></pre></td></tr></table></figure>
+<p>设置权限</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chmod 777 -R &#x2F;opt&#x2F;grafana-storage</span><br></pre></td></tr></table></figure>
+<p>因为 grafana 用户会在这个目录写入文件，直接设置 777，比较简单粗暴！</p>
+<p>启动 grafana</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  -p 3000:3000 \</span><br><span class="line">  --name&#x3D;grafana \</span><br><span class="line">  -v &#x2F;opt&#x2F;grafana-storage:&#x2F;var&#x2F;lib&#x2F;grafana \</span><br><span class="line">  grafana&#x2F;grafana</span><br></pre></td></tr></table></figure>
+<p>等待几秒钟，查看端口状态</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ubuntu:&#x2F;opt&#x2F;prometheus# netstat -anpt</span><br><span class="line">Active Internet connections (servers and established)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID&#x2F;Program name</span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1147&#x2F;sshd       </span><br><span class="line">tcp        0     36 192.168.91.132:22       192.168.91.1:63648      ESTABLISHED 2969&#x2F;0          </span><br><span class="line">tcp        0      0 192.168.91.132:22       192.168.91.1:63340      ESTABLISHED 1321&#x2F;1          </span><br><span class="line">tcp6       0      0 :::9100                 :::*                    LISTEN      3070&#x2F;node_exporter</span><br><span class="line">tcp6       0      0 :::22                   :::*                    LISTEN      1147&#x2F;sshd       </span><br><span class="line">tcp6       0      0 :::3000                 :::*                    LISTEN      3494&#x2F;docker-proxy</span><br><span class="line">tcp6       0      0 :::9090                 :::*                    LISTEN      3336&#x2F;docker-proxy</span><br><span class="line">tcp6       0      0 192.168.91.132:9100     172.17.0.2:55108        ESTABLISHED 3070&#x2F;node_exporter</span><br></pre></td></tr></table></figure>
+<p>访问 url：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.91.132:3000&#x2F;</span><br></pre></td></tr></table></figure>
+<p>默认会先跳转到登录页面，默认的用户名和密码都是 admin</p>
+<p><img src="/img/1341090-20181108175033563-1187448777.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108175033563-1187448777.png" class="lozad post-image"></p>
+<p>登录之后，它会要求你重置密码。你还可以再输次 admin 密码！</p>
+<p><img src="/img/1341090-20181108175115397-1630657428.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108175115397-1630657428.png" class="lozad post-image"></p>
+<p>密码设置完成之后，就会跳转到首页</p>
+<p><img src="/img/1341090-20181108175150766-1146838339.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108175150766-1146838339.png" class="lozad post-image"></p>
+<p>点击 Add data source，由于使用的是镜像方式，所以版本比较新。和网络上的文章展示的图片不一样！</p>
+<p><img src="/img/1341090-20181108175335901-209843394.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108175335901-209843394.png" class="lozad post-image"></p>
+<p>name 名字写 Prometheus</p>
+<p>type 选择 Prometheus，因为数据都从它那里获取</p>
+<p>url 输入 Prometheus 的 ip + 端口</p>
+<p>点击下面的 Save &amp; Test，如果出现绿色的，说明 ok 了</p>
+<p><img src="/img/1341090-20181108175543609-598692887.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108175543609-598692887.png" class="lozad post-image"></p>
+<p>回到首页，点击 New dashboard</p>
+<p><img src="/img/1341090-20181108175634654-924081366.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108175634654-924081366.png" class="lozad post-image"></p>
+<p>点击 Graph</p>
+<p><img src="/img/1341090-20181108175652536-52423850.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108175652536-52423850.png" class="lozad post-image"></p>
+<p>效果如下：</p>
+<p><img src="/img/1341090-20181108175730765-2063837837.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108175730765-2063837837.png" class="lozad post-image"></p>
+<p>点击标题下方的编辑</p>
+<p><img src="/img/1341090-20181108175913741-475587810.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108175913741-475587810.png" class="lozad post-image"></p>
+<p>效果如下：</p>
+<p><img src="/img/1341090-20181108175957546-479306322.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108175957546-479306322.png" class="lozad post-image"></p>
+<p>输入 cpu，底部会有提示</p>
+<p><img src="/img/1341090-20181108180101326-1366026901.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108180101326-1366026901.png" class="lozad post-image"></p>
+<p>这里监控 node_load15，表示系统 15 分钟的负载。点击下面的 Add Query</p>
+<p><img src="/img/1341090-20181108180533718-812469530.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108180533718-812469530.png" class="lozad post-image"></p>
+<p>效果如下：</p>
+<p><img src="/img/1341090-20181108180627880-1441743252.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108180627880-1441743252.png" class="lozad post-image"></p>
+<p>添加总内存</p>
+<p><img src="/img/1341090-20181108180746522-1027042926.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108180746522-1027042926.png" class="lozad post-image"></p>
+<p>这里会多出一条线</p>
+<p><img src="/img/1341090-20181108180821288-1708778991.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108180821288-1708778991.png" class="lozad post-image"></p>
+<p>点击右边的，可以删除掉 总内存</p>
+<p><img src="/img/1341090-20181108181212402-1807243006.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108181212402-1807243006.png" class="lozad post-image"></p>
+<p>点击 General，修改标题为中文</p>
+<p><img src="/img/1341090-20181108181243544-126607151.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108181243544-126607151.png" class="lozad post-image"></p>
+<p>图表效果如下：</p>
+<p><img src="/img/1341090-20181108181317852-1720800596.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108181317852-1720800596.png" class="lozad post-image"></p>
+<p>点击上面的保存按钮</p>
+<p><img src="/img/1341090-20181108181403610-481592444.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108181403610-481592444.png" class="lozad post-image"></p>
+<p>输入名字</p>
+<p><img src="/img/1341090-20181108181436660-1511454160.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108181436660-1511454160.png" class="lozad post-image"></p>
+<p>效果如下：<br>
+<img src="/img/1341090-20181108181459540-6764391.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108181459540-6764391.png" class="lozad post-image"></p>
+<p>点击首页，就会有展示</p>
+<p><img src="/img/1341090-20181108181552921-1347274147.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1341090-20181108181552921-1347274147.png" class="lozad post-image"></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/about">sunfy</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/2021/04/17/Docker/Centos-Docker-Prometheus+Grafana/">http://xinghuohan.cn/2021/04/17/Docker/Centos-Docker-Prometheus+Grafana/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/04/17/Server/Server-tomcat/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">tomcat配置gc日志输出 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8Dprometheus"><span class="toc-number">1.</span> <span class="toc-text"> 介绍 Prometheus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prometheus%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="toc-number">2.</span> <span class="toc-text"> Prometheus 架构概览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prometheus%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text"> Prometheus 的数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prometheus%E5%9B%9B%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text"> Prometheus 四种数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%90%E8%A1%8Cprometheusdocker%E7%89%88"><span class="toc-number">5.</span> <span class="toc-text"> 安装运行 Prometheus (docker 版)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85docker"><span class="toc-number">5.1.</span> <span class="toc-text"> 安装 docker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F%E5%8C%85"><span class="toc-number">5.2.</span> <span class="toc-text"> 下载镜像包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8node-exporter"><span class="toc-number">5.3.</span> <span class="toc-text"> 启动 node-exporter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8prometheus"><span class="toc-number">5.4.</span> <span class="toc-text"> 启动 prometheus</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8grafana"><span class="toc-number">5.5.</span> <span class="toc-text"> 启动 grafana</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.png" class="author-img">
+
+<p class="author-name">sunfy</p>
+<p class="author-description">人生在勤，不索何获</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>71</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>40</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8Dprometheus"><span class="toc-number">1.</span> <span class="toc-text"> 介绍 Prometheus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prometheus%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="toc-number">2.</span> <span class="toc-text"> Prometheus 架构概览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prometheus%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text"> Prometheus 的数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prometheus%E5%9B%9B%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text"> Prometheus 四种数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%90%E8%A1%8Cprometheusdocker%E7%89%88"><span class="toc-number">5.</span> <span class="toc-text"> 安装运行 Prometheus (docker 版)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85docker"><span class="toc-number">5.1.</span> <span class="toc-text"> 安装 docker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F%E5%8C%85"><span class="toc-number">5.2.</span> <span class="toc-text"> 下载镜像包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8node-exporter"><span class="toc-number">5.3.</span> <span class="toc-text"> 启动 node-exporter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8prometheus"><span class="toc-number">5.4.</span> <span class="toc-text"> 启动 prometheus</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8grafana"><span class="toc-number">5.5.</span> <span class="toc-text"> 启动 grafana</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/DB">
+        <div class="categories-list-item">
+          DB
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Docker">
+        <div class="categories-list-item">
+          Docker
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/IDEA">
+        <div class="categories-list-item">
+          IDEA
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Server">
+        <div class="categories-list-item">
+          Server
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Desk">
+        <div class="categories-list-item">
+          Desk
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/tools">
+        <div class="categories-list-item">
+          tools
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
+    
+    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
+    
+    <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
+    
+    <a href="\tags\IDEA" title="IDEA"><div class="tags-list-item">IDEA</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    
+    <a href="\tags\SpringBoot" title="SpringBoot"><div class="tags-list-item">SpringBoot</div></a>
+    
+    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
+    
+    <a href="\tags\nexus3" title="nexus3"><div class="tags-list-item">nexus3</div></a>
+    
+    <a href="\tags\Jenkins" title="Jenkins"><div class="tags-list-item">Jenkins</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\git" title="git"><div class="tags-list-item">git</div></a>
+    
+    <a href="\tags\Tomcat" title="Tomcat"><div class="tags-list-item">Tomcat</div></a>
+    
+    <a href="\tags\JDK" title="JDK"><div class="tags-list-item">JDK</div></a>
+    
+    <a href="\tags\MySQL" title="MySQL"><div class="tags-list-item">MySQL</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8Dprometheus"><span class="toc-number">1.</span> <span class="toc-text"> 介绍 Prometheus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prometheus%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="toc-number">2.</span> <span class="toc-text"> Prometheus 架构概览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prometheus%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text"> Prometheus 的数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prometheus%E5%9B%9B%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text"> Prometheus 四种数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%90%E8%A1%8Cprometheusdocker%E7%89%88"><span class="toc-number">5.</span> <span class="toc-text"> 安装运行 Prometheus (docker 版)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85docker"><span class="toc-number">5.1.</span> <span class="toc-text"> 安装 docker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F%E5%8C%85"><span class="toc-number">5.2.</span> <span class="toc-text"> 下载镜像包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8node-exporter"><span class="toc-number">5.3.</span> <span class="toc-text"> 启动 node-exporter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8prometheus"><span class="toc-number">5.4.</span> <span class="toc-text"> 启动 prometheus</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8grafana"><span class="toc-number">5.5.</span> <span class="toc-text"> 启动 grafana</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-04-17</div>
+        <a href="/2021/04/17/Docker/Centos-Docker-Prometheus+Grafana/"><div class="recent-posts-item-content">基于docker 搭建Prometheus+Grafana</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-04-17</div>
+        <a href="/2021/04/17/Server/Server-tomcat/"><div class="recent-posts-item-content">tomcat配置gc日志输出</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-31</div>
+        <a href="/2021/03/31/DB/Centos-sqlServer/"><div class="recent-posts-item-content">Centos 安装 sqlServer</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-03-31</div>
+        <a href="/2021/03/31/Docker/Docker-springcloud-alibaba/"><div class="recent-posts-item-content">docker下springCloud-alibaba组件安装配置使用</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2019 -
+          
+          2021
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">sunfy </a>
+      </div>
+    </div>
+
+    
+    
+    
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>

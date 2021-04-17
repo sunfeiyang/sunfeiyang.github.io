@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Wed, 31 Mar 2021 10:21:13 +0800</pubDate>
-        <lastBuildDate>Wed, 31 Mar 2021 10:21:13 +0800</lastBuildDate>
+        <pubDate>Sat, 17 Apr 2021 09:55:18 +0800</pubDate>
+        <lastBuildDate>Sat, 17 Apr 2021 09:55:18 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -47,6 +47,165 @@
         <category>nacos</category>
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/04/17/Docker/Centos-Docker-Prometheus+Grafana/</guid>
+            <title>基于docker 搭建Prometheus+Grafana</title>
+            <link>http://xinghuohan.cn/2021/04/17/Docker/Centos-Docker-Prometheus+Grafana/</link>
+            <category>Docker</category>
+            <pubDate>Sat, 17 Apr 2021 09:55:18 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Prometheus（普罗米修斯）是一套开源的监控 &amp;amp; 报警 &amp;amp; 时间序列数据库的组合，起始是由&lt;a href=&#34;https://soundcloud.com/&#34;&gt; SoundCloud&lt;/a&gt; 公司开发的。随着发展，越来越多公司和组织接受采用 Prometheus，社会也十分活跃，他们便将它独立成开源项目，并且有公司来运作。Google SRE 的书内也曾提到跟他们 BorgMon 监控系统相似的实现是 Prometheus。现在最常见的 Kubernetes 容器管理系统中，通常会搭配 Prometheus 进行监控。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;介绍prometheus&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#介绍prometheus&#34;&gt;#&lt;/a&gt; 介绍 Prometheus&lt;/h3&gt;
+&lt;p&gt;Prometheus（普罗米修斯）是一套开源的监控 &amp;amp; 报警 &amp;amp; 时间序列数据库的组合，起始是由&lt;a href=&#34;https://soundcloud.com/&#34;&gt; SoundCloud&lt;/a&gt; 公司开发的。随着发展，越来越多公司和组织接受采用 Prometheus，社会也十分活跃，他们便将它独立成开源项目，并且有公司来运作。Google SRE 的书内也曾提到跟他们 BorgMon 监控系统相似的实现是 Prometheus。现在最常见的 Kubernetes 容器管理系统中，通常会搭配 Prometheus 进行监控。&lt;/p&gt;
+&lt;p&gt;Prometheus 基本原理是通过 HTTP 协议周期性抓取被监控组件的状态，这样做的好处是任意组件只要提供 HTTP 接口就可以接入监控系统，不需要任何 SDK 或者其他的集成过程。这样做非常适合虚拟化环境比如 VM 或者 Docker 。&lt;/p&gt;
+&lt;p&gt;Prometheus 应该是为数不多的适合 Docker、Mesos、Kubernetes 环境的监控系统之一。&lt;/p&gt;
+&lt;p&gt;输出被监控组件信息的 HTTP 接口被叫做 exporter 。目前互联网公司常用的组件大部分都有 exporter 可以直接使用，比如 Varnish、Haproxy、Nginx、MySQL、Linux 系统信息 (包括磁盘、内存、CPU、网络等等)，具体支持的源看：&lt;a href=&#34;https://github.com/prometheus%E3%80%82&#34;&gt;https://github.com/prometheus。&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;与其他监控系统相比，Prometheus 的主要特点是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个多维数据模型（时间序列由指标名称定义和设置键 / 值尺寸）。&lt;/li&gt;
+&lt;li&gt;非常高效的存储，平均一个采样数据占～3.5bytes 左右，320 万的时间序列，每 30 秒采样，保持 60 天，消耗磁盘大概 228G。&lt;/li&gt;
+&lt;li&gt;一种灵活的查询语言。&lt;/li&gt;
+&lt;li&gt;不依赖分布式存储，单个服务器节点。&lt;/li&gt;
+&lt;li&gt;时间集合通过 HTTP 上的 PULL 模型进行。&lt;/li&gt;
+&lt;li&gt;通过中间网关支持推送时间。&lt;/li&gt;
+&lt;li&gt;通过服务发现或静态配置发现目标。&lt;/li&gt;
+&lt;li&gt;多种模式的图形和仪表板支持。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;prometheus架构概览&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#prometheus架构概览&#34;&gt;#&lt;/a&gt; Prometheus 架构概览&lt;/h3&gt;
+&lt;p&gt;该图说明了普罗米修斯（Prometheus）及其一些生态系统组件的整体架构：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108170701192-544617423.jpg&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108170701192-544617423.jpg&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;它的服务过程是这样的 Prometheus daemon 负责定时去目标上抓取 metrics (指标) 数据，每个抓取目标需要暴露一个 http 服务的接口给它定时抓取。&lt;/p&gt;
+&lt;p&gt;Prometheus：支持通过配置文件、文本文件、zookeeper、Consul、DNS SRV lookup 等方式指定抓取目标。支持很多方式的图表可视化，例如十分精美的 Grafana，自带的 Promdash，以及自身提供的模版引擎等等，还提供 HTTP API 的查询方式，自定义所需要的输出。&lt;/p&gt;
+&lt;p&gt;Alertmanager：是独立于 Prometheus 的一个组件，可以支持 Prometheus 的查询语句，提供十分灵活的报警方式。&lt;/p&gt;
+&lt;p&gt;PushGateway：这个组件是支 img 持 Client 主动推送 metrics 到 PushGateway，而 Prometheus 只是定时去 Gateway 上抓取数据。&lt;/p&gt;
+&lt;p&gt;如果有使用过 statsd 的用户，则会觉得这十分相似，只是 statsd 是直接发送给服务器端，而 Prometheus 主要还是靠进程主动去抓取。&lt;/p&gt;
+&lt;p&gt;大多数 Prometheus 组件都是用 Go 编写的，它们可以轻松地构建和部署为静态二进制文件。访问&lt;a href=&#34;https://prometheus.io/&#34;&gt; prometheus.io&lt;/a&gt; 以获取完整的文档，示例和指南。&lt;/p&gt;
+&lt;h3 id=&#34;prometheus的数据模型&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#prometheus的数据模型&#34;&gt;#&lt;/a&gt; Prometheus 的数据模型&lt;/h3&gt;
+&lt;p&gt;Prometheus 从根本上所有的存储都是按时间序列去实现的，相同的 metrics (指标名称) 和 label (一个或多个标签) 组成一条时间序列，不同的 label 表示不同的时间序列。为了支持一些查询，有时还会临时产生一些时间序列存储。&lt;/p&gt;
+&lt;p&gt;metrics name&amp;amp;label 指标名称和标签&lt;/p&gt;
+&lt;p&gt;每条时间序列是由唯一的” 指标名称” 和一组” 标签（key=value）” 的形式组成。&lt;/p&gt;
+&lt;p&gt;指标名称：一般是给监测对像起一名字，例如 http_requests_total 这样，它有一些命名规则，可以包字母数字_之类的的。通常是以应用名称开头_监测对像_数值类型_单位这样。例如：push_total、userlogin_mysql_duration_seconds、app_memory_usage_bytes。&lt;/p&gt;
+&lt;p&gt;标签：就是对一条时间序列不同维度的识别了，例如一个 http 请求用的是 POST 还是 GET，它的 endpoint 是什么，这时候就要用标签去标记了。最终形成的标识便是这样了：http_requests_total {method=”POST”,endpoint=”/api/tracks”}。&lt;/p&gt;
+&lt;p&gt;记住，针对 http_requests_total 这个 metrics name 无论是增加标签还是删除标签都会形成一条新的时间序列。&lt;/p&gt;
+&lt;p&gt;查询语句就可以跟据上面标签的组合来查询聚合结果了。&lt;/p&gt;
+&lt;p&gt;如果以传统数据库的理解来看这条语句，则可以考虑 http_requests_total 是表名，标签是字段，而 timestamp 是主键，还有一个 float64 字段是值了。（Prometheus 里面所有值都是按 float64 存储）。&lt;/p&gt;
+&lt;h3 id=&#34;prometheus四种数据类型&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#prometheus四种数据类型&#34;&gt;#&lt;/a&gt; Prometheus 四种数据类型&lt;/h3&gt;
+&lt;p&gt;Counter&lt;/p&gt;
+&lt;p&gt;Counter 用于累计值，例如记录请求次数、任务完成数、错误发生次数。一直增加，不会减少。重启进程后，会被重置。&lt;/p&gt;
+&lt;p&gt;例如：http_response_total {method=”GET”,endpoint=”/api/tracks”} 100，10 秒后抓取 http_response_total {method=”GET”,endpoint=”/api/tracks”} 100。&lt;/p&gt;
+&lt;p&gt;Gauge&lt;/p&gt;
+&lt;p&gt;Gauge 常规数值，例如 温度变化、内存使用变化。可变大，可变小。重启进程后，会被重置。&lt;/p&gt;
+&lt;p&gt;例如： memory_usage_bytes {host=”master-01″} 100 &amp;lt; 抓取值、memory_usage_bytes {host=”master-01″} 30、memory_usage_bytes {host=”master-01″} 50、memory_usage_bytes {host=”master-01″} 80 &amp;lt; 抓取值。&lt;/p&gt;
+&lt;p&gt;Histogram&lt;/p&gt;
+&lt;p&gt;Histogram（直方图）可以理解为柱状图的意思，常用于跟踪事件发生的规模，例如：请求耗时、响应大小。它特别之处是可以对记录的内容进行分组，提供 count 和 sum 全部值的功能。&lt;/p&gt;
+&lt;p&gt;例如：{小于 10=5 次，小于 20=1 次，小于 30=2 次}，count=7 次，sum=7 次的求和值。&lt;/p&gt;
+&lt;p&gt;Summary&lt;/p&gt;
+&lt;p&gt;Summary 和 Histogram 十分相似，常用于跟踪事件发生的规模，例如：请求耗时、响应大小。同样提供 count 和 sum 全部值的功能。&lt;/p&gt;
+&lt;p&gt;例如：count=7 次，sum=7 次的值求值。&lt;/p&gt;
+&lt;p&gt;它提供一个 quantiles 的功能，可以按 % 比划分跟踪的结果。例如：quantile 取值 0.95，表示取采样值里面的 95% 数据。&lt;/p&gt;
+&lt;h3 id=&#34;安装运行prometheusdocker版&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装运行prometheusdocker版&#34;&gt;#&lt;/a&gt; 安装运行 Prometheus (docker 版)&lt;/h3&gt;
+&lt;p&gt;下面介绍如何使用 Prometheus 和 Grafana 对本机服务器性能进行监控。&lt;/p&gt;
+&lt;p&gt;监控本机，只需要一个 exporter&lt;/p&gt;
+&lt;p&gt;node_exporter – 用于机器系统数据收集&lt;/p&gt;
+&lt;p&gt;Grafana 是一个开源的功能丰富的数据可视化平台，通常用于时序数据的可视化。它内置了以下数据源的支持：&lt;/p&gt;
+&lt;p&gt;下面是我们安装时用到的架构图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108171729613-1031744778.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108171729613-1031744778.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意：本文使用的是 ubuntu-16.04.5-server-amd64，只需要一台服务器即可！&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id=&#34;安装docker&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装docker&#34;&gt;#&lt;/a&gt; 安装 docker&lt;/h4&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;apt-get install -y docker.io&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意：网上的文章说要安装 docker-engine 和 docker-ce，那都是扯淡的。包压根都找不到！&lt;/p&gt;
+&lt;p&gt;只需要安装 docker.io 就可以了！&lt;/p&gt;
+&lt;p&gt;如果是 Centos 系统，使用 yum install -y docker-io 安装&lt;/p&gt;
+&lt;h4 id=&#34;下载镜像包&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#下载镜像包&#34;&gt;#&lt;/a&gt; 下载镜像包&lt;/h4&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker pull prom&amp;#x2F;node-exporter&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker pull prom&amp;#x2F;prometheus&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;docker pull grafana&amp;#x2F;grafana&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h4 id=&#34;启动node-exporter&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#启动node-exporter&#34;&gt;#&lt;/a&gt; 启动 node-exporter&lt;/h4&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker run -d -p 9100:9100 \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  -v &amp;quot;&amp;#x2F;proc:&amp;#x2F;host&amp;#x2F;proc:ro&amp;quot; \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  -v &amp;quot;&amp;#x2F;sys:&amp;#x2F;host&amp;#x2F;sys:ro&amp;quot; \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  -v &amp;quot;&amp;#x2F;:&amp;#x2F;rootfs:ro&amp;quot; \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  --net&amp;#x3D;&amp;quot;host&amp;quot; \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  prom&amp;#x2F;node-exporter&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;等待几秒钟，查看端口是否起来了&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;root@ubuntu:~# netstat -anpt&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Active Internet connections (servers and established)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID&amp;#x2F;Program name&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1147&amp;#x2F;sshd       &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp        0     36 192.168.91.132:22       192.168.91.1:63648      ESTABLISHED 2969&amp;#x2F;0          &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp        0      0 192.168.91.132:22       192.168.91.1:63340      ESTABLISHED 1321&amp;#x2F;1          &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp6       0      0 :::9100                 :::*                    LISTEN      3070&amp;#x2F;node_exporter&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;访问 url：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;http:&amp;#x2F;&amp;#x2F;192.168.91.132:9100&amp;#x2F;metrics&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108172459066-1268369984.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108172459066-1268369984.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这些都是收集到数据，有了它就可以做数据展示了&lt;/p&gt;
+&lt;h4 id=&#34;启动prometheus&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#启动prometheus&#34;&gt;#&lt;/a&gt; 启动 prometheus&lt;/h4&gt;
+&lt;p&gt;新建目录 prometheus，编辑配置文件 prometheus.yml&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mkdir &amp;#x2F;opt&amp;#x2F;prometheus&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cd &amp;#x2F;opt&amp;#x2F;prometheus&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;vim prometheus.yml&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;内容如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;global:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  scrape_interval:     60s&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  evaluation_interval: 60s&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;scrape_configs:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - job_name: prometheus&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    static_configs:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      - targets: [&amp;#39;localhost:9090&amp;#39;]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        labels:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;          instance: prometheus&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - job_name: linux&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    static_configs:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      - targets: [&amp;#39;192.168.91.132:9100&amp;#39;]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        labels:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;          instance: localhost&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意：修改 IP 地址，这里的 192.168.91.132 就是本机地址&lt;/p&gt;
+&lt;p&gt;启动 prometheus&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker run  -d \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  -p 9090:9090 \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  -v &amp;#x2F;opt&amp;#x2F;prometheus&amp;#x2F;prometheus.yml:&amp;#x2F;etc&amp;#x2F;prometheus&amp;#x2F;prometheus.yml  \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  prom&amp;#x2F;prometheus&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;等待几秒钟，查看端口状态&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;root@ubuntu:&amp;#x2F;opt&amp;#x2F;prometheus# netstat -anpt&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Active Internet connections (servers and established)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID&amp;#x2F;Program name&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1147&amp;#x2F;sshd       &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp        0     36 192.168.91.132:22       192.168.91.1:63648      ESTABLISHED 2969&amp;#x2F;0          &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp        0      0 192.168.91.132:22       192.168.91.1:63340      ESTABLISHED 1321&amp;#x2F;1          &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp6       0      0 :::9100                 :::*                    LISTEN      3070&amp;#x2F;node_exporter&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp6       0      0 :::22                   :::*                    LISTEN      1147&amp;#x2F;sshd       &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp6       0      0 :::9090                 :::*                    LISTEN      3336&amp;#x2F;docker-proxy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;访问 url：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;http:&amp;#x2F;&amp;#x2F;192.168.91.132:9090&amp;#x2F;graph&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108173214667-1683170215.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108173214667-1683170215.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;访问 targets，url 如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;http:&amp;#x2F;&amp;#x2F;192.168.91.132:9090&amp;#x2F;targets&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108173301486-803834624.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108173301486-803834624.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;如果状态没有 UP 起来，等待一会，就会 UP 了&lt;/p&gt;
+&lt;h4 id=&#34;启动grafana&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#启动grafana&#34;&gt;#&lt;/a&gt; 启动 grafana&lt;/h4&gt;
+&lt;p&gt;新建空文件夹 grafana-storage，用来存储数据&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mkdir &amp;#x2F;opt&amp;#x2F;grafana-storage&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;设置权限&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;chmod 777 -R &amp;#x2F;opt&amp;#x2F;grafana-storage&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;因为 grafana 用户会在这个目录写入文件，直接设置 777，比较简单粗暴！&lt;/p&gt;
+&lt;p&gt;启动 grafana&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker run -d \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  -p 3000:3000 \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  --name&amp;#x3D;grafana \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  -v &amp;#x2F;opt&amp;#x2F;grafana-storage:&amp;#x2F;var&amp;#x2F;lib&amp;#x2F;grafana \&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  grafana&amp;#x2F;grafana&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;等待几秒钟，查看端口状态&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;root@ubuntu:&amp;#x2F;opt&amp;#x2F;prometheus# netstat -anpt&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Active Internet connections (servers and established)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID&amp;#x2F;Program name&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1147&amp;#x2F;sshd       &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp        0     36 192.168.91.132:22       192.168.91.1:63648      ESTABLISHED 2969&amp;#x2F;0          &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp        0      0 192.168.91.132:22       192.168.91.1:63340      ESTABLISHED 1321&amp;#x2F;1          &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp6       0      0 :::9100                 :::*                    LISTEN      3070&amp;#x2F;node_exporter&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp6       0      0 :::22                   :::*                    LISTEN      1147&amp;#x2F;sshd       &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp6       0      0 :::3000                 :::*                    LISTEN      3494&amp;#x2F;docker-proxy&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp6       0      0 :::9090                 :::*                    LISTEN      3336&amp;#x2F;docker-proxy&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tcp6       0      0 192.168.91.132:9100     172.17.0.2:55108        ESTABLISHED 3070&amp;#x2F;node_exporter&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;访问 url：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;http:&amp;#x2F;&amp;#x2F;192.168.91.132:3000&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;默认会先跳转到登录页面，默认的用户名和密码都是 admin&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108175033563-1187448777.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108175033563-1187448777.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;登录之后，它会要求你重置密码。你还可以再输次 admin 密码！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108175115397-1630657428.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108175115397-1630657428.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;密码设置完成之后，就会跳转到首页&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108175150766-1146838339.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108175150766-1146838339.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;点击 Add data source，由于使用的是镜像方式，所以版本比较新。和网络上的文章展示的图片不一样！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108175335901-209843394.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108175335901-209843394.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;name 名字写 Prometheus&lt;/p&gt;
+&lt;p&gt;type 选择 Prometheus，因为数据都从它那里获取&lt;/p&gt;
+&lt;p&gt;url 输入 Prometheus 的 ip + 端口&lt;/p&gt;
+&lt;p&gt;点击下面的 Save &amp;amp; Test，如果出现绿色的，说明 ok 了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108175543609-598692887.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108175543609-598692887.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;回到首页，点击 New dashboard&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108175634654-924081366.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108175634654-924081366.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;点击 Graph&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108175652536-52423850.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108175652536-52423850.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108175730765-2063837837.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108175730765-2063837837.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;点击标题下方的编辑&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108175913741-475587810.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108175913741-475587810.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108175957546-479306322.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108175957546-479306322.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;输入 cpu，底部会有提示&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108180101326-1366026901.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108180101326-1366026901.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这里监控 node_load15，表示系统 15 分钟的负载。点击下面的 Add Query&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108180533718-812469530.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108180533718-812469530.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108180627880-1441743252.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108180627880-1441743252.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;添加总内存&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108180746522-1027042926.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108180746522-1027042926.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这里会多出一条线&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108180821288-1708778991.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108180821288-1708778991.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;点击右边的，可以删除掉 总内存&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108181212402-1807243006.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108181212402-1807243006.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;点击 General，修改标题为中文&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108181243544-126607151.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108181243544-126607151.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;图表效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108181317852-1720800596.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108181317852-1720800596.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;点击上面的保存按钮&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108181403610-481592444.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108181403610-481592444.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;输入名字&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108181436660-1511454160.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108181436660-1511454160.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;效果如下：&lt;br&gt;
+&lt;img src=&#34;/img/1341090-20181108181459540-6764391.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108181459540-6764391.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;点击首页，就会有展示&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1341090-20181108181552921-1347274147.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1341090-20181108181552921-1347274147.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/03/31/Docker/Docker-springcloud-alibaba/</guid>
             <title>docker下springCloud-alibaba组件安装配置使用</title>
