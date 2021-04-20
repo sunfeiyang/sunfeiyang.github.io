@@ -842,6 +842,8 @@ docker exec -it jenkins_01 bash // 进入 jenkins 容器&lt;br&gt;
             <category>Docker</category>
             <pubDate>Fri, 14 Aug 2020 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;docker 客户端非常简单，我们可以直接输入 docker 命令来查看到 Docker 客户端的所有命令选项。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;docker安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker安装&#34;&gt;#&lt;/a&gt; docker 安装&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;docker服务器重启&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker服务器重启&#34;&gt;#&lt;/a&gt; docker 服务器重启&lt;/h3&gt;
 &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;service docker restart&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&#34;docker&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker&#34;&gt;#&lt;/a&gt; docker&lt;/h3&gt;
