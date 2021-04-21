@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Sun, 14 Jun 2020 00:00:00 +0800</pubDate>
-        <lastBuildDate>Sun, 14 Jun 2020 00:00:00 +0800</lastBuildDate>
+        <pubDate>Wed, 21 Apr 2021 15:20:06 +0800</pubDate>
+        <lastBuildDate>Wed, 21 Apr 2021 15:20:06 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -47,6 +47,105 @@
         <category>nacos</category>
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/04/21/DB/MongoDB-config%20(copy)/</guid>
+            <title>MongoDB 数据备份与恢复</title>
+            <link>http://xinghuohan.cn/2021/04/21/DB/MongoDB-config%20(copy)/</link>
+            <category>DB</category>
+            <category>MongoDB</category>
+            <pubDate>Wed, 21 Apr 2021 15:20:06 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;MongoDB 备份 (mongodump) 与恢复 (mongorestore)&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mongodb数据备份&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#mongodb数据备份&#34;&gt;#&lt;/a&gt; MongoDB 数据备份&lt;/h3&gt;
+&lt;p&gt;在 Mongodb 中我们使用 mongodump 命令来备份 MongoDB 数据。该命令可以导出所有数据到指定目录中。&lt;/p&gt;
+&lt;p&gt;mongodump 命令可以通过参数指定导出的数据量级转存的服务器。&lt;/p&gt;
+&lt;h4 id=&#34;语法&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#语法&#34;&gt;#&lt;/a&gt; 语法&lt;/h4&gt;
+&lt;p&gt;mongodump 命令脚本语法如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;gt;mongodump -h dbhost -d dbname -o dbdirectory&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;-h：&lt;/p&gt;
+&lt;p&gt;MongoDB 所在服务器地址，例如：127.0.0.1，当然也可以指定端口号：127.0.0.1:27017&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;-d：&lt;/p&gt;
+&lt;p&gt;需要备份的数据库实例，例如：test&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;-o：&lt;/p&gt;
+&lt;p&gt;备份的数据存放位置，例如：c:\data\dump，当然该目录需要提前建立，在备份完成后，系统自动在 dump 目录下建立一个 test 目录，这个目录里面存放该数据库实例的备份数据。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;实例&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#实例&#34;&gt;#&lt;/a&gt; 实例&lt;/h4&gt;
+&lt;p&gt;在本地使用 27017 启动你的 mongod 服务。打开命令提示符窗口，进入 MongoDB 安装目录的 bin 目录输入命令 mongodump:&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mongodump -h 192.168.1.24:27017 -d cost -o /media/sunfy/project/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;导出过程中可能会出现如下错误：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210421152454424.png&#34; alt=&#34;image-20210421152454424&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210421152454424.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;此问题的原因是因为本机 mongo 版本同服务器版本不一致导致，添加 &lt;code&gt;--forceTableScan&lt;/code&gt;  问题解决&lt;/p&gt;
+&lt;p&gt;导出成功截图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210421152626286.png&#34; alt=&#34;image-20210421152626286&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210421152626286.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;mongodump 命令可选参数列表如下所示：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;语法&lt;/th&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;描述&lt;/th&gt;
+&lt;th style=&#34;text-align:left&#34;&gt;实例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;mongodump --host HOST_NAME --port PORT_NUMBER&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;该命令将备份所有 MongoDB 数据&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;mongodump --host &lt;a href=&#34;http://runoob.com&#34;&gt;runoob.com&lt;/a&gt; --port 27017&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;mongodump --dbpath DB_PATH --out BACKUP_DIRECTORY&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;mongodump --dbpath /data/db/ --out /data/backup/&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;mongodump --collection COLLECTION --db DB_NAME&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;该命令将备份指定数据库的集合。&lt;/td&gt;
+&lt;td style=&#34;text-align:left&#34;&gt;mongodump --collection mycol --db test&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;mongodb数据恢复&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#mongodb数据恢复&#34;&gt;#&lt;/a&gt; MongoDB 数据恢复&lt;/h3&gt;
+&lt;p&gt;mongodb 使用 mongorestore 命令来恢复备份的数据。&lt;/p&gt;
+&lt;h4 id=&#34;语法-2&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#语法-2&#34;&gt;#&lt;/a&gt; 语法&lt;/h4&gt;
+&lt;p&gt;mongorestore 命令脚本语法如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;gt;mongorestore -h &amp;lt;hostname&amp;gt;&amp;lt;:port&amp;gt; -d dbname &amp;lt;path&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;–host &amp;lt;:port&amp;gt;, -h &amp;lt;:port&amp;gt;：&lt;/p&gt;
+&lt;p&gt;MongoDB 所在服务器地址，默认为： localhost:27017&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;–db , -d ：&lt;/p&gt;
+&lt;p&gt;需要恢复的数据库实例，例如：test，当然这个名称也可以和备份时候的不一样，比如 test2&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;–drop：&lt;/p&gt;
+&lt;p&gt;恢复的时候，先删除当前数据，然后恢复备份的数据。就是说，恢复后，备份后添加修改的数据都会被删除，慎用哦！&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;path&gt;：&lt;/p&gt;
+&lt;p&gt;mongorestore 最后的一个参数，设置备份数据所在位置，例如：c:\data\dump\test。&lt;/p&gt;
+&lt;p&gt;你不能同时指定 &lt;path&gt; 和 --dir 选项，–dir 也可以设置备份目录。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;–dir：&lt;/p&gt;
+&lt;p&gt;指定备份的目录&lt;/p&gt;
+&lt;p&gt;你不能同时指定 &lt;path&gt; 和 --dir 选项。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;接下来我们执行以下命令:&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mongorestore -h 192.168.1.161:27017 -d cost &amp;#x2F;media&amp;#x2F;sunfy&amp;#x2F;project&amp;#x2F;cost&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;执行以上命令输出结果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210421152711232.png&#34; alt=&#34;image-20210421152711232&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210421152711232.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/06/14/DB/MongoDB-config/</guid>
             <title>MongoDB 通过配置文件启动</title>
