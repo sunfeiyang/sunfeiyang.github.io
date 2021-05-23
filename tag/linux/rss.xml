@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Wed, 14 Oct 2020 13:05:50 +0800</pubDate>
-        <lastBuildDate>Wed, 14 Oct 2020 13:05:50 +0800</lastBuildDate>
+        <pubDate>Wed, 12 May 2021 20:30:31 +0800</pubDate>
+        <lastBuildDate>Wed, 12 May 2021 20:30:31 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -48,15 +48,15 @@
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/05/12/Linux/CommonCommands/</guid>
             <title>Linux常用命令</title>
-            <link>http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/</link>
+            <link>http://xinghuohan.cn/2021/05/12/Linux/CommonCommands/</link>
             <category>Linux</category>
             <category>CentOS</category>
             <category>Ubuntu</category>
-            <pubDate>Wed, 14 Oct 2020 13:05:50 +0800</pubDate>
+            <pubDate>Wed, 12 May 2021 20:30:31 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;Linux 系统常用基本命令&lt;/p&gt;
-&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
 &lt;h3 id=&#34;ack-待查询字符串&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ack-待查询字符串&#34;&gt;#&lt;/a&gt; ack  [待查询字符串]&lt;/h3&gt;
 &lt;p&gt;搜索当前文件夹内所有文件中对应的字符（递归查询）&lt;/p&gt;
 &lt;h3 id=&#34;unar-待解压文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#unar-待解压文件&#34;&gt;#&lt;/a&gt; unar  [待解压文件]&lt;/h3&gt;
@@ -71,6 +71,15 @@
  若要关闭使用这个端口的程序，使用 kill + 对应的 pid&lt;br&gt;
 kill -9 PID 号&lt;br&gt;
  ps：kill 就是给某个进程 id 发送了一个信号。默认发送的信号是 SIGTERM，而 kill -9 发送的信号是 SIGKILL，即 exit。exit 信号不会被系统阻塞，所以 kill -9 能顺利杀掉进程。&lt;/p&gt;
+&lt;h3 id=&#34;查看安装的所有软件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查看安装的所有软件&#34;&gt;#&lt;/a&gt; 查看安装的所有软件&lt;/h3&gt;
+&lt;p&gt;dpkg -l&lt;/p&gt;
+&lt;p&gt;例如：dpkg -l | grep ftp&lt;/p&gt;
+&lt;h3 id=&#34;查看软件安装的路径&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查看软件安装的路径&#34;&gt;#&lt;/a&gt; 查看软件安装的路径&lt;/h3&gt;
+&lt;p&gt;dpkg -L | grep ftp&lt;/p&gt;
+&lt;p&gt;也可以用 whereis ftp&lt;/p&gt;
+&lt;h3 id=&#34;查看软件版本&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查看软件版本&#34;&gt;#&lt;/a&gt; 查看软件版本&lt;/h3&gt;
+&lt;p&gt;aptitude show&lt;/p&gt;
+&lt;p&gt;例如：aptitude show ftp&lt;/p&gt;
  ]]></description>
         </item>
         <item>

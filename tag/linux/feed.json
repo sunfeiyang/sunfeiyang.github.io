@@ -5,11 +5,11 @@
     "home_page_url": "http://xinghuohan.cn",
     "items": [
         {
-            "id": "http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/",
-            "url": "http://xinghuohan.cn/2020/10/14/Linux/CommonCommands/",
+            "id": "http://xinghuohan.cn/2021/05/12/Linux/CommonCommands/",
+            "url": "http://xinghuohan.cn/2021/05/12/Linux/CommonCommands/",
             "title": "Linux常用命令",
-            "date_published": "2020-10-14T05:05:50.142Z",
-            "content_html": "<p>Linux 系统常用基本命令</p>\n<a id=\"more\"></a>\n<h3 id=\"ack-待查询字符串\"><a class=\"markdownIt-Anchor\" href=\"#ack-待查询字符串\">#</a> ack  [待查询字符串]</h3>\n<p>搜索当前文件夹内所有文件中对应的字符（递归查询）</p>\n<h3 id=\"unar-待解压文件\"><a class=\"markdownIt-Anchor\" href=\"#unar-待解压文件\">#</a> unar  [待解压文件]</h3>\n<p>解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题</p>\n<h3 id=\"端口使用情况\"><a class=\"markdownIt-Anchor\" href=\"#端口使用情况\">#</a> 端口使用情况</h3>\n<p>使用 netstat 命令：<br>\n查看已经连接的服务端口（ESTABLISHED）<br>\n <code>netstat -a</code></p>\n<p>查看所有的服务端口（LISTEN，ESTABLISHED）</p>\n<p>netstat -ap 查看指定端口，可以结合 grep 命令：netstat -ap | grep 8080 也可以使用 lsof 命令：<br>\n <code>lsof -i:8888</code> <br>\n 若要关闭使用这个端口的程序，使用 kill + 对应的 pid<br>\nkill -9 PID 号<br>\n ps：kill 就是给某个进程 id 发送了一个信号。默认发送的信号是 SIGTERM，而 kill -9 发送的信号是 SIGKILL，即 exit。exit 信号不会被系统阻塞，所以 kill -9 能顺利杀掉进程。</p>\n",
+            "date_published": "2021-05-12T12:30:31.951Z",
+            "content_html": "<p>Linux 系统常用基本命令</p>\n<span id=\"more\"></span>\n<h3 id=\"ack-待查询字符串\"><a class=\"markdownIt-Anchor\" href=\"#ack-待查询字符串\">#</a> ack  [待查询字符串]</h3>\n<p>搜索当前文件夹内所有文件中对应的字符（递归查询）</p>\n<h3 id=\"unar-待解压文件\"><a class=\"markdownIt-Anchor\" href=\"#unar-待解压文件\">#</a> unar  [待解压文件]</h3>\n<p>解压命令，可以解压 zip 文件，主要可以解决 windows 系统中的部分文件解压后乱码问题</p>\n<h3 id=\"端口使用情况\"><a class=\"markdownIt-Anchor\" href=\"#端口使用情况\">#</a> 端口使用情况</h3>\n<p>使用 netstat 命令：<br>\n查看已经连接的服务端口（ESTABLISHED）<br>\n <code>netstat -a</code></p>\n<p>查看所有的服务端口（LISTEN，ESTABLISHED）</p>\n<p>netstat -ap 查看指定端口，可以结合 grep 命令：netstat -ap | grep 8080 也可以使用 lsof 命令：<br>\n <code>lsof -i:8888</code> <br>\n 若要关闭使用这个端口的程序，使用 kill + 对应的 pid<br>\nkill -9 PID 号<br>\n ps：kill 就是给某个进程 id 发送了一个信号。默认发送的信号是 SIGTERM，而 kill -9 发送的信号是 SIGKILL，即 exit。exit 信号不会被系统阻塞，所以 kill -9 能顺利杀掉进程。</p>\n<h3 id=\"查看安装的所有软件\"><a class=\"markdownIt-Anchor\" href=\"#查看安装的所有软件\">#</a> 查看安装的所有软件</h3>\n<p>dpkg -l</p>\n<p>例如：dpkg -l | grep ftp</p>\n<h3 id=\"查看软件安装的路径\"><a class=\"markdownIt-Anchor\" href=\"#查看软件安装的路径\">#</a> 查看软件安装的路径</h3>\n<p>dpkg -L | grep ftp</p>\n<p>也可以用 whereis ftp</p>\n<h3 id=\"查看软件版本\"><a class=\"markdownIt-Anchor\" href=\"#查看软件版本\">#</a> 查看软件版本</h3>\n<p>aptitude show</p>\n<p>例如：aptitude show ftp</p>\n",
             "tags": [
                 "Linux",
                 "CentOS",
