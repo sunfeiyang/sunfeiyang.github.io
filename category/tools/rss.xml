@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Wed, 17 Mar 2021 12:03:05 +0800</pubDate>
-        <lastBuildDate>Wed, 17 Mar 2021 12:03:05 +0800</lastBuildDate>
+        <pubDate>Wed, 12 May 2021 20:30:32 +0800</pubDate>
+        <lastBuildDate>Wed, 12 May 2021 20:30:32 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -48,75 +48,13 @@
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2021/03/17/tools/winKill/</guid>
-            <title>Cmd批量结束所有进程命令kill使用方法</title>
-            <link>http://xinghuohan.cn/2021/03/17/tools/winKill/</link>
-            <category>windows</category>
-            <pubDate>Wed, 17 Mar 2021 12:03:05 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;Windows 任务管理器进程中，可以查看到我们电脑运行了那些程序，有时候电脑莫名其妙很卡的时候，查看进程的时候，会发现多了很多一样名称的进程让电脑很卡，如果一个个结束，效率低不说，还麻烦，今天给大家带来的批量结束进程的方法。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;操作一：打开 Windows 任务管理器的方法有，按 Ctrl+shift+Esc 组合键，或右键点击任务栏空白处，在打开的菜单项中，选择启动任务管理器；&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://exp-picture.cdn.bcebos.com/19587f20a7cd0c6ebdd4f107fed7997bbaf4ddbe.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://exp-picture.cdn.bcebos.com/19587f20a7cd0c6ebdd4f107fed7997bbaf4ddbe.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;操作二：Windows 任务管理器中，可以在进程选项卡下，找到需要批量结束的进程，比如这里红色框标记的 notepad.exe 记事本进程；&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://exp-picture.cdn.bcebos.com/0fb94656d53da82480cf3f66306651598440cbbe.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://exp-picture.cdn.bcebos.com/0fb94656d53da82480cf3f66306651598440cbbe.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;操作三：既然知道需要结束那个进程，那就按 Win + R 组合键，打开运行，并输入：cmd 命令，确定或回车，可以快速打开命令提示符窗口；&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://exp-picture.cdn.bcebos.com/a151a233ec3834bb7fc951eb8714c27bd3823dbf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://exp-picture.cdn.bcebos.com/a151a233ec3834bb7fc951eb8714c27bd3823dbf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;操作四：命令提示符窗口中，输入：taskkill /f/im notepad.exe 命令，然后按回车执行命令，其中 notepad.exe 是你要批量结束的进程，这里千万不要搞错；&lt;/p&gt;
-   &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;taskkill /f /im notepad.exe&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 支持通配符&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;taskkill /f /im WPS*&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;img src=&#34;https://exp-picture.cdn.bcebos.com/7efc527c34b33c41409c20f5887de137c8762ebf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://exp-picture.cdn.bcebos.com/7efc527c34b33c41409c20f5887de137c8762ebf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;ol start=&#34;5&#34;&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;操作五：回车执行 taskkill /f/im notepad.exe 命令，成功的话，会提示成功：已终止进程，还有 PID 为多少那样；&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://exp-picture.cdn.bcebos.com/04d7a614f4d0b50349f4b54acc4ec28332bf20bf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://exp-picture.cdn.bcebos.com/04d7a614f4d0b50349f4b54acc4ec28332bf20bf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
-&lt;ol start=&#34;6&#34;&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;操作六：最后，再打开 Windows 任务管理器，按进程选项卡，可以发现刚才的 notepad.exe 记事本进程已经被结束；&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../img/fb738d9c2cf7dfb24c3f3d98d01b1edef5dc13bf.jpg&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/fb738d9c2cf7dfb24c3f3d98d01b1edef5dc13bf.jpg&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2021/03/13/tools/mavenInstallJar/</guid>
-            <title>使用maven命令安装指定(第三方)jar包到本地仓库</title>
-            <link>http://xinghuohan.cn/2021/03/13/tools/mavenInstallJar/</link>
-            <category>maven</category>
-            <pubDate>Sat, 13 Mar 2021 21:45:35 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;&lt;strong&gt;第三方 jar 包在开发工具中引入后编译没问题，启动调试包括打包时会提示找不到 jar 包的错误。需要上传到 maven 仓库中，并在 pom 文件内引入.&lt;/strong&gt;&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;maven 命令:&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;安装指定文件到本地仓库命令：mvn install:install-file&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-DgroupId&amp;#x3D;&amp;lt;groupId&amp;gt;       : 设置上传到仓库的包名&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-DartifactId&amp;#x3D;&amp;lt;artifactId&amp;gt; : 设置该包所属的模块名&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-Dversion&amp;#x3D;1.0.0           : 设置该包的版本号&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-Dpackaging&amp;#x3D;jar           : 设置该包的类型(很显然jar包)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-Dfile&amp;#x3D;&amp;lt;myfile.jar&amp;gt;       : 设置该jar包文件所在的路径与文件名&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;strong&gt;一。上传 jar 包 win+r cmd 打开命令行输入以下命令:&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mvn install:install-file -DgroupId&amp;#x3D;com.zebra -DartifactId&amp;#x3D;ZSDK_API -Dversion&amp;#x3D;v2.12.3782 -Dpackaging&amp;#x3D;jar -Dfile&amp;#x3D;E:\perslib\ZSDK_API.jar&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mvn install:install-file -DgroupId&amp;#x3D;com.zebra -DartifactId&amp;#x3D;ZSDK_CARD_API -Dversion&amp;#x3D;v2.12.3782 -Dpackaging&amp;#x3D;jar -Dfile&amp;#x3D;E:\perslib\ZSDK_CARD_API.jar&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mvn install:install-file -DgroupId&amp;#x3D;com.jacob -DartifactId&amp;#x3D;jacob -Dversion&amp;#x3D;1.19 -Dpackaging&amp;#x3D;jar -Dfile&amp;#x3D;jacob.jar&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;出现以下 success 说明成功了.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://img2018.cnblogs.com/blog/917633/201810/917633-20181022135853625-157850255.png&#34;&gt;&lt;img src=&#34;/img/917633-20181022135853625-157850255.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/917633-20181022135853625-157850255.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;到 maven 仓库查看:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://img2018.cnblogs.com/blog/917633/201810/917633-20181022141949167-1559238206.png&#34;&gt;&lt;img src=&#34;/img/917633-20181022141949167-1559238206.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/917633-20181022141949167-1559238206.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;二。在 pom 文件中引入 jar 包&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;groupId&amp;gt;com.zebra&amp;lt;&amp;#x2F;groupId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;artifactId&amp;gt;ZSDK_API&amp;lt;&amp;#x2F;artifactId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;version&amp;gt;v2.12.3782&amp;lt;&amp;#x2F;version&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;&amp;#x2F;dependency&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;groupId&amp;gt;com.zebra&amp;lt;&amp;#x2F;groupId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;artifactId&amp;gt;ZSDK_CARD_API&amp;lt;&amp;#x2F;artifactId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;version&amp;gt;v2.12.3782&amp;lt;&amp;#x2F;version&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;&amp;#x2F;dependency&amp;gt; &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;strong&gt;注意:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;jar 包所在路径不要带中文，不要带中文，不要带中文！&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;另外，不通过这种方式直接放在项目目录下，通过 pom 引用不导入 maven 仓库也是可以的。如下图:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://img2020.cnblogs.com/blog/917633/202010/917633-20201027224436808-358780583.png&#34;&gt;&lt;img src=&#34;/img/917633-20201027224436808-358780583.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/917633-20201027224436808-358780583.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2021/03/03/tools/ELK/boke-build%20(copy)/</guid>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/05/12/tools/ELK/index/</guid>
             <title>正排索引与倒排索引</title>
-            <link>http://xinghuohan.cn/2021/03/03/tools/ELK/boke-build%20(copy)/</link>
+            <link>http://xinghuohan.cn/2021/05/12/tools/ELK/index/</link>
             <category>索引</category>
             <category>elasticSearch</category>
-            <pubDate>Wed, 03 Mar 2021 10:46:44 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;正排索引与倒排索引 &lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+            <pubDate>Wed, 12 May 2021 20:30:32 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;正排索引与倒排索引 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;正排索引：一个未经处理的数据库中，一般是以文档 ID 作为索引，以文档内容作为记录。&lt;br&gt;
 倒排索引：Inverted index，指的是将单词或记录作为索引，将文档 ID 作为记录，这样便可以方便地通过单词或记录查找到其所在的文档。&lt;/p&gt;
 &lt;blockquote&gt;
@@ -186,6 +124,68 @@
 &lt;h2 id=&#34;倒排在-feed-流中的使用&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#倒排在-feed-流中的使用&#34;&gt;#&lt;/a&gt; 倒排在 Feed 流中的使用&lt;/h2&gt;
 &lt;p&gt;如上所示，倒排的工作：将站内数据 hash 化为一个大 map，服务用户请求其实是在 map 里查找数据。与引擎不同的是，Feed 流的只是倒排的 hash 函数不同。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://qiniu.limengting.site/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%956.jpg&#34;&gt;&lt;img src=&#34;/img/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%956.jpg&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%956.jpg&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/03/17/tools/winKill/</guid>
+            <title>Cmd批量结束所有进程命令kill使用方法</title>
+            <link>http://xinghuohan.cn/2021/03/17/tools/winKill/</link>
+            <category>windows</category>
+            <pubDate>Wed, 17 Mar 2021 12:03:05 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Windows 任务管理器进程中，可以查看到我们电脑运行了那些程序，有时候电脑莫名其妙很卡的时候，查看进程的时候，会发现多了很多一样名称的进程让电脑很卡，如果一个个结束，效率低不说，还麻烦，今天给大家带来的批量结束进程的方法。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;操作一：打开 Windows 任务管理器的方法有，按 Ctrl+shift+Esc 组合键，或右键点击任务栏空白处，在打开的菜单项中，选择启动任务管理器；&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://exp-picture.cdn.bcebos.com/19587f20a7cd0c6ebdd4f107fed7997bbaf4ddbe.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://exp-picture.cdn.bcebos.com/19587f20a7cd0c6ebdd4f107fed7997bbaf4ddbe.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;操作二：Windows 任务管理器中，可以在进程选项卡下，找到需要批量结束的进程，比如这里红色框标记的 notepad.exe 记事本进程；&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://exp-picture.cdn.bcebos.com/0fb94656d53da82480cf3f66306651598440cbbe.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://exp-picture.cdn.bcebos.com/0fb94656d53da82480cf3f66306651598440cbbe.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;操作三：既然知道需要结束那个进程，那就按 Win + R 组合键，打开运行，并输入：cmd 命令，确定或回车，可以快速打开命令提示符窗口；&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://exp-picture.cdn.bcebos.com/a151a233ec3834bb7fc951eb8714c27bd3823dbf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://exp-picture.cdn.bcebos.com/a151a233ec3834bb7fc951eb8714c27bd3823dbf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;操作四：命令提示符窗口中，输入：taskkill /f/im notepad.exe 命令，然后按回车执行命令，其中 notepad.exe 是你要批量结束的进程，这里千万不要搞错；&lt;/p&gt;
+   &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;taskkill /f /im notepad.exe&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 支持通配符&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;taskkill /f /im WPS*&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;https://exp-picture.cdn.bcebos.com/7efc527c34b33c41409c20f5887de137c8762ebf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://exp-picture.cdn.bcebos.com/7efc527c34b33c41409c20f5887de137c8762ebf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;操作五：回车执行 taskkill /f/im notepad.exe 命令，成功的话，会提示成功：已终止进程，还有 PID 为多少那样；&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://exp-picture.cdn.bcebos.com/04d7a614f4d0b50349f4b54acc4ec28332bf20bf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://exp-picture.cdn.bcebos.com/04d7a614f4d0b50349f4b54acc4ec28332bf20bf.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_jpg%2Fquality%2Cq_80&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;操作六：最后，再打开 Windows 任务管理器，按进程选项卡，可以发现刚才的 notepad.exe 记事本进程已经被结束；&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../img/fb738d9c2cf7dfb24c3f3d98d01b1edef5dc13bf.jpg&#34; alt=&#34;Cmd批量结束所有进程命令kill使用方法&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/fb738d9c2cf7dfb24c3f3d98d01b1edef5dc13bf.jpg&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/03/13/tools/mavenInstallJar/</guid>
+            <title>使用maven命令安装指定(第三方)jar包到本地仓库</title>
+            <link>http://xinghuohan.cn/2021/03/13/tools/mavenInstallJar/</link>
+            <category>maven</category>
+            <pubDate>Sat, 13 Mar 2021 21:45:35 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;&lt;strong&gt;第三方 jar 包在开发工具中引入后编译没问题，启动调试包括打包时会提示找不到 jar 包的错误。需要上传到 maven 仓库中，并在 pom 文件内引入.&lt;/strong&gt;&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;maven 命令:&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;安装指定文件到本地仓库命令：mvn install:install-file&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-DgroupId&amp;#x3D;&amp;lt;groupId&amp;gt;       : 设置上传到仓库的包名&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-DartifactId&amp;#x3D;&amp;lt;artifactId&amp;gt; : 设置该包所属的模块名&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-Dversion&amp;#x3D;1.0.0           : 设置该包的版本号&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-Dpackaging&amp;#x3D;jar           : 设置该包的类型(很显然jar包)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-Dfile&amp;#x3D;&amp;lt;myfile.jar&amp;gt;       : 设置该jar包文件所在的路径与文件名&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;一。上传 jar 包 win+r cmd 打开命令行输入以下命令:&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mvn install:install-file -DgroupId&amp;#x3D;com.zebra -DartifactId&amp;#x3D;ZSDK_API -Dversion&amp;#x3D;v2.12.3782 -Dpackaging&amp;#x3D;jar -Dfile&amp;#x3D;E:\perslib\ZSDK_API.jar&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mvn install:install-file -DgroupId&amp;#x3D;com.zebra -DartifactId&amp;#x3D;ZSDK_CARD_API -Dversion&amp;#x3D;v2.12.3782 -Dpackaging&amp;#x3D;jar -Dfile&amp;#x3D;E:\perslib\ZSDK_CARD_API.jar&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mvn install:install-file -DgroupId&amp;#x3D;com.jacob -DartifactId&amp;#x3D;jacob -Dversion&amp;#x3D;1.19 -Dpackaging&amp;#x3D;jar -Dfile&amp;#x3D;jacob.jar&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;出现以下 success 说明成功了.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://img2018.cnblogs.com/blog/917633/201810/917633-20181022135853625-157850255.png&#34;&gt;&lt;img src=&#34;/img/917633-20181022135853625-157850255.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/917633-20181022135853625-157850255.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;到 maven 仓库查看:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://img2018.cnblogs.com/blog/917633/201810/917633-20181022141949167-1559238206.png&#34;&gt;&lt;img src=&#34;/img/917633-20181022141949167-1559238206.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/917633-20181022141949167-1559238206.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二。在 pom 文件中引入 jar 包&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;groupId&amp;gt;com.zebra&amp;lt;&amp;#x2F;groupId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;artifactId&amp;gt;ZSDK_API&amp;lt;&amp;#x2F;artifactId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;version&amp;gt;v2.12.3782&amp;lt;&amp;#x2F;version&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;&amp;#x2F;dependency&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;groupId&amp;gt;com.zebra&amp;lt;&amp;#x2F;groupId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;artifactId&amp;gt;ZSDK_CARD_API&amp;lt;&amp;#x2F;artifactId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;version&amp;gt;v2.12.3782&amp;lt;&amp;#x2F;version&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;&amp;#x2F;dependency&amp;gt; &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;注意:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;jar 包所在路径不要带中文，不要带中文，不要带中文！&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;另外，不通过这种方式直接放在项目目录下，通过 pom 引用不导入 maven 仓库也是可以的。如下图:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://img2020.cnblogs.com/blog/917633/202010/917633-20201027224436808-358780583.png&#34;&gt;&lt;img src=&#34;/img/917633-20201027224436808-358780583.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/917633-20201027224436808-358780583.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>

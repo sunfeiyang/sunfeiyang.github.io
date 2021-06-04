@@ -1,0 +1,18 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "sunfy • All posts by \"windows\" category",
+    "description": "",
+    "home_page_url": "http://xinghuohan.cn",
+    "items": [
+        {
+            "id": "http://xinghuohan.cn/2021/06/04/Windows/boke-build%20(copy)/",
+            "url": "http://xinghuohan.cn/2021/06/04/Windows/boke-build%20(copy)/",
+            "title": "Windows服务器定时任务执行",
+            "date_published": "2021-06-04T02:19:04.600Z",
+            "content_html": "<p>Windows 执行定时任何，可以执行脚本或打开文件，支持定期（每天，每周，每月），或开机执行、登录执行等 <span id=\"more\"></span></p>\n<p>文档说明主要为两个方面操作，一种通过 windows 可视化窗口新增定时任务，一种通过脚本的方式直接新增。</p>\n<h3 id=\"可视化窗口\"><a class=\"markdownIt-Anchor\" href=\"#可视化窗口\">#</a> 可视化窗口</h3>\n<h4 id=\"打开页面\"><a class=\"markdownIt-Anchor\" href=\"#打开页面\">#</a> 打开页面</h4>\n<p>win+R 打开  <code>taskschd.msc</code></p>\n<p>打开如下页面</p>\n<p><img src=\"/img/image-20210604103229068.png\" alt=\"image-20210604103229068\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210604103229068.png\" class=\"lozad post-image\"></p>\n<h4 id=\"创建基本任务\"><a class=\"markdownIt-Anchor\" href=\"#创建基本任务\">#</a> 创建基本任务</h4>\n<p><img src=\"/img/image-20210604103338759.png\" alt=\"image-20210604103338759\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210604103338759.png\" class=\"lozad post-image\"></p>\n<h4 id=\"创建任务\"><a class=\"markdownIt-Anchor\" href=\"#创建任务\">#</a> 创建任务</h4>\n<p>根据页面提示，创建好对应的任务，即可。</p>\n<p><img src=\"/img/image-20210604103513314.png\" alt=\"image-20210604103513314\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210604103513314.png\" class=\"lozad post-image\"></p>\n<p>查看任务</p>\n<p>在任务计算程序库中既可以查看到当前创建的定时计划，当前任务的下次运行事件，上次运行事件，包括上次运行结果等都可以看到，同时自己也可以手动运行，测试当前任务是否可以正常执行。</p>\n<p><img src=\"/img/image-20210604103736790.png\" alt=\"image-20210604103736790\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/image-20210604103736790.png\" class=\"lozad post-image\"></p>\n<h3 id=\"命令行\"><a class=\"markdownIt-Anchor\" href=\"#命令行\">#</a> 命令行</h3>\n<p>可视化窗口创建任务、执行任务很方便，但如果要同时创建多个项目，此时就需要做很多重复的机械工作了，效率就很慢了。此时我们可以采用 cmd 命令的方式，执行新增 n 多个定时任务。执行命令如下：</p>\n<figure class=\"highlight shell\"><table><tr><td class=\"code\"><pre><span class=\"line\">schtasks /create /tn &quot;cleanwpp&quot; /tr D:\\clean\\cleanwpp.bat /sc DAILY /st 01:36</span><br></pre></td></tr></table></figure>\n<p>它的意思是，创建了</p>\n<ul>\n<li>一个为 “cleanwpp” 的每天（DAILY）01:36 定时执行任务。</li>\n<li>该任务会执行 D:\\clean 路径下的 cleanwpp.bat 脚本。</li>\n</ul>\n<p>复制多条上面的命令，在 windows 系统中执行命令，则可以创建多个定时任务。</p>\n",
+            "tags": [
+                "windows"
+            ]
+        }
+    ]
+}
