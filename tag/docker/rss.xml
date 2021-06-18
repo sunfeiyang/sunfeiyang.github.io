@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Sat, 17 Apr 2021 09:55:18 +0800</pubDate>
-        <lastBuildDate>Sat, 17 Apr 2021 09:55:18 +0800</lastBuildDate>
+        <pubDate>Fri, 18 Jun 2021 08:59:42 +0800</pubDate>
+        <lastBuildDate>Fri, 18 Jun 2021 08:59:42 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -47,6 +47,192 @@
         <category>nacos</category>
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/06/18/Docker/docker-compose-base/</guid>
+            <title>docker-compose 启动容器</title>
+            <link>http://xinghuohan.cn/2021/06/18/Docker/docker-compose-base/</link>
+            <category>Docker</category>
+            <pubDate>Fri, 18 Jun 2021 08:59:42 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;docker 客户端非常简单，我们可以直接输入 docker 命令来查看到 Docker 客户端的所有命令选项。&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;docker-compose-是什么&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker-compose-是什么&#34;&gt;#&lt;/a&gt; docker-compose 是什么&lt;/h2&gt;
+&lt;p&gt;docker-compose 是一个用来把 docker 自动化的东西。&lt;br&gt;
+有了 docker-compose 你可以把所有繁复的 docker 操作全都一条命令，自动化的完成。&lt;/p&gt;
+&lt;h3 id=&#34;为什么要用-docker-compose他解决了什么&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#为什么要用-docker-compose他解决了什么&#34;&gt;#&lt;/a&gt; 为什么要用 docker-compose，他解决了什么&lt;/h3&gt;
+&lt;p&gt;用通俗的语言来说，我们平时操作 docker 还是很原始的一系列动作，你手动使用 docker 的动作可以拆分成&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;找到一个系统镜像 //docker search&lt;/li&gt;
+&lt;li&gt;安装好 vm 或者 virtual box //apt-get install docker&lt;/li&gt;
+&lt;li&gt;在 vm 中安装镜像 //docker run -d -it 你的镜像&lt;/li&gt;
+&lt;li&gt;略…&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这是最小的动作， 如果你要映射硬盘，设置 nat 网络或者桥接网络，等等… 你就要做更多的 docker 操作， 这显然是非常没有效率的。&lt;/p&gt;
+&lt;p&gt;但是我们写在 docker-compose.file 里面就很好了。 你只需要写好后 只运行一句&lt;br&gt;
+ &lt;code&gt;docker-compose up&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;docker-compose-常用命令与配置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker-compose-常用命令与配置&#34;&gt;#&lt;/a&gt; Docker Compose 常用命令与配置&lt;/h2&gt;
+&lt;h3 id=&#34;常见命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#常见命令&#34;&gt;#&lt;/a&gt; 常见命令&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ps&lt;/strong&gt;：列出所有运行容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose ps&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;logs&lt;/strong&gt;：查看服务日志输出&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose logs&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;port&lt;/strong&gt;：打印绑定的公共端口，下面命令可以输出 eureka 服务 8761 端口所绑定的公共端口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose port eureka 8761&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;build&lt;/strong&gt;：构建或者重新构建服务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose build&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;start&lt;/strong&gt;：启动指定服务已存在的容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose start eureka&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;stop&lt;/strong&gt;：停止已运行的服务的容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose stop eureka&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;rm&lt;/strong&gt;：删除指定服务的容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose rm eureka&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;up&lt;/strong&gt;：构建、启动容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose up&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;kill&lt;/strong&gt;：通过发送 SIGKILL 信号来停止指定服务的容器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose kill eureka&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;pull&lt;/strong&gt;：下载服务镜像&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;scale&lt;/strong&gt;：设置指定服务运气容器的个数，以 service=num 形式指定&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose scale user&amp;#x3D;3 movie&amp;#x3D;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;run&lt;/strong&gt;：在一个服务上执行一个命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker-compose run web bash&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;docker-composeyml-属性&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker-composeyml-属性&#34;&gt;#&lt;/a&gt; docker-compose.yml 属性&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;version&lt;/strong&gt;：指定 docker-compose.yml 文件的写法格式&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;services&lt;/strong&gt;：多个容器集合&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;build&lt;/strong&gt;：配置构建时，Compose 会利用它自动构建镜像，该值可以是一个路径，也可以是一个对象，用于指定 Dockerfile 参数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;build: .&amp;#x2F;dir&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;---------------&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;build:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    context: .&amp;#x2F;dir&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    dockerfile: Dockerfile&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    args:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        buildno: 1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;command&lt;/strong&gt;：覆盖容器启动后默认执行的命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;command: bundle exec thin -p 3000&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;----------------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;command: [bundle,exec,thin,-p,3000]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;dns&lt;/strong&gt;：配置 dns 服务器，可以是一个值或列表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;dns: 8.8.8.8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;------------&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;dns:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - 8.8.8.8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - 9.9.9.9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;dns_search&lt;/strong&gt;：配置 DNS 搜索域，可以是一个值或列表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;dns_search: example.com&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;dns_search:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - dc1.example.com&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - dc2.example.com&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;environment&lt;/strong&gt;：环境变量配置，可以用数组或字典两种方式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;environment:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    RACK_ENV: development&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    SHOW: &amp;#39;ture&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-------------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;environment:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - RACK_ENV&amp;#x3D;development&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - SHOW&amp;#x3D;ture&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;env_file&lt;/strong&gt;：从文件中获取环境变量，可以指定一个文件路径或路径列表，其优先级低于 environment 指定的环境变量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;env_file: .env&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;---------------&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;env_file:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - .&amp;#x2F;common.env&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;expose&lt;/strong&gt;：暴露端口，只将端口暴露给连接的服务，而不暴露给主机&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;expose:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - &amp;quot;3000&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - &amp;quot;8000&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;image&lt;/strong&gt;：指定服务所使用的镜像&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;image: java&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;network_mode&lt;/strong&gt;：设置网络模式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;network_mode: &amp;quot;bridge&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;network_mode: &amp;quot;host&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;network_mode: &amp;quot;none&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;network_mode: &amp;quot;service:[service name]&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;network_mode: &amp;quot;container:[container name&amp;#x2F;id]&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ports&lt;/strong&gt;：对外暴露的端口定义，和 expose 对应&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;ports:   # 暴露端口信息  - &amp;quot;宿主机端口:容器暴露端口&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- &amp;quot;8763:8763&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;- &amp;quot;8763:8763&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;links&lt;/strong&gt;：将指定容器连接到当前连接，可以设置别名，避免 ip 方式导致的容器重启动态改变的无法连接情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;links:    # 指定服务名称:别名 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - docker-compose-eureka-server:compose-eureka&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;volumes&lt;/strong&gt;：卷挂载路径&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;volumes:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;#x2F;lib&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;#x2F;var&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;logs&lt;/strong&gt;：日志输出信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;--no-color          单色输出，不显示其他颜.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-f, --follow        跟踪日志输出，就是可以实时查看日志&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-t, --timestamps    显示时间戳&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;--tail              从日志的结尾显示，--tail&amp;#x3D;200&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&#34;docker-compose-其它&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker-compose-其它&#34;&gt;#&lt;/a&gt; Docker Compose 其它&lt;/h2&gt;
+&lt;h3 id=&#34;更新容器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#更新容器&#34;&gt;#&lt;/a&gt; 更新容器&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;当服务的配置发生更改时，可使用 docker-compose up 命令更新配置&lt;/li&gt;
+&lt;li&gt;此时，Compose 会删除旧容器并创建新容器，新容器会以不同的 IP 地址加入网络，名称保持不变，任何指向旧容起的连接都会被关闭，重新找到新容器并连接上去&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;links&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#links&#34;&gt;#&lt;/a&gt; links&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;服务之间可以使用服务名称相互访问，links 允许定义一个别名，从而使用该别名访问其它服务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;version: &amp;#39;2&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;services:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    web:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        build: .&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        links:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            - &amp;quot;db:database&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    db:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        image: postgres&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;这样 Web 服务就可以使用 db 或 database 作为 hostname 访问 db 服务了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;使用 dockers-compose&lt;/p&gt;
+&lt;p&gt;新建 项目 userapi&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../img/349537-20190819232634986-324677362.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/349537-20190819232634986-324677362.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;添加引用:&lt;/p&gt;
+&lt;p&gt;Microsoft.EntityFrameworkCore&lt;/p&gt;
+&lt;p&gt;Microsoft.EntityFrameworkCore.Design&lt;/p&gt;
+&lt;p&gt;Microsoft.EntityFrameworkCore.Tools&lt;/p&gt;
+&lt;p&gt;MySql.Data.EntityFrameworkCore&lt;/p&gt;
+&lt;p&gt;models 新建 Users&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;public class Users&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     [Key]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     public int Id &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     public string Name &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     public int Age &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     public string Job &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     public string Company &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     public DateTime CreateTime &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;添加 AppDbContext&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;public class AppDbContext : DbContext&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     public AppDbContext(DbContextOptions&amp;lt;AppDbContext&amp;gt; options) : base(options)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     protected override void OnModelCreating(ModelBuilder modelBuilder)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         base.OnModelCreating(modelBuilder);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     public DbSet&amp;lt;Users&amp;gt; Users &amp;#123; get; set; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &amp;#125;　&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;配置文件添加数据库连接&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;quot;ConnectionStrings&amp;quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;quot;MysqlConnection&amp;quot;: &amp;quot;server&amp;#x3D;db;port&amp;#x3D;3306;database&amp;#x3D;mysql;userId&amp;#x3D;root;password&amp;#x3D;1234.&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Startup&lt;/p&gt;
+&lt;p&gt;ConfigureServices 添加&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;services.AddDbContext&amp;lt;AppDbContext&amp;gt;(options &amp;#x3D;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         options.UseMySQL(Configuration.GetConnectionString(&amp;quot;MysqlConnection&amp;quot;));&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;configrue 添加 InitDataBase(app);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;private void InitDataBase(IApplicationBuilder app)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;using (var scope &amp;#x3D; app.ApplicationServices.CreateScope())&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;var userContext &amp;#x3D; scope.ServiceProvider.GetRequiredService&amp;lt;AppDbContext&amp;gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;userContext.Database.Migrate();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;if (userContext.Users !&amp;#x3D; null)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;userContext.Users.Add(new Models.Users() &amp;#123; Age &amp;#x3D; 66, Company &amp;#x3D; &amp;quot;myCompany&amp;quot;, CreateTime &amp;#x3D; DateTime.Now, Job &amp;#x3D; &amp;quot;chengxuyuan&amp;quot;, Name &amp;#x3D; &amp;quot;xiaohong&amp;quot; &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;userContext.SaveChanges();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;新建 ADD-Migrations init&lt;/p&gt;
+&lt;p&gt;这里需要注意 mysql 有的时候不会生成__EFMigrationsHistory 表&lt;/p&gt;
+&lt;p&gt;可以在 AppDbContextModelSnapshot 文件里添加&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;modelBuilder.Entity(&amp;quot;__EFMigrationsHistory&amp;quot;, b &amp;#x3D;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;             b.Property&amp;lt;string&amp;gt;(&amp;quot;MigrationId&amp;quot;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;             b.Property&amp;lt;string&amp;gt;(&amp;quot;ProductVersion&amp;quot;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;也可以自己在 mysql 中新建&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;CREATE TABLE &amp;#96;__EFMigrationsHistory&amp;#96;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#96;MigrationId&amp;#96; nvarchar(150) NOT NULL,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#96;ProductVersion&amp;#96; nvarchar(32) NOT NULL,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     PRIMARY KEY (&amp;#96;MigrationId&amp;#96;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;新建文件 Dockerfile.json&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;FROM mcr.microsoft.com&amp;#x2F;dotnet&amp;#x2F;core&amp;#x2F;aspnet:2.2-stretch-slim AS base&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;WORKDIR &amp;#x2F;app&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;EXPOSE 80&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;EXPOSE 443&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;FROM mcr.microsoft.com&amp;#x2F;dotnet&amp;#x2F;core&amp;#x2F;sdk:2.2-stretch AS build&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;WORKDIR &amp;#x2F;src&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;COPY [&amp;quot;User.Api.csproj&amp;quot;, &amp;quot;&amp;quot;]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;RUN dotnet restore &amp;quot;.&amp;#x2F;User.Api.csproj&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;COPY . .&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;WORKDIR &amp;quot;&amp;#x2F;src&amp;#x2F;.&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;RUN dotnet build &amp;quot;User.Api.csproj&amp;quot; -c Release -o &amp;#x2F;app&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;FROM build AS publish&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;RUN dotnet publish &amp;quot;User.Api.csproj&amp;quot; -c Release -o &amp;#x2F;app&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;FROM base AS final&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;WORKDIR &amp;#x2F;app&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;COPY --from&amp;#x3D;publish &amp;#x2F;app .&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ENTRYPOINT [&amp;quot;dotnet&amp;quot;, &amp;quot;User.Api.dll&amp;quot;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;新建文件 docker-compose.yml&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;version: &amp;#39;3.3&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;services:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   db:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    image: mysql&amp;#x2F;mysql-server&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    container_name: mysqldb&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    command: mysqld --character-set-server&amp;#x3D;utf8 --collation-server&amp;#x3D;utf8_general_ci&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    restart: always&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    ports:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     - &amp;quot;3306:3306&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    environment:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     MYSQL_ROOT_PASSWORD: 1234.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     MYSQL_USER: root&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     MYSQL_PASSWORD: 1234.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    volumes:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;       - &amp;#x2F;d&amp;#x2F;docker&amp;#x2F;beta&amp;#x2F;mysql-init:&amp;#x2F;docker-entrypoint-initdb.d &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   web:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     build: .&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     container_name: aspnetcore&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     ports:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      - &amp;quot;8004:80&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     depends_on:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      - db&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;init.sql 添加 root 授权，并刷新权限:&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;ALTER USER &amp;#39;root&amp;#39;@&amp;#39;%&amp;#39; IDENTIFIED WITH mysql_native_password BY &amp;#39;1234.&amp;#39;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;GRANT ALL PRIVILEGES ON *.* TO &amp;#39;root&amp;#39;@&amp;#39;%&amp;#39; WITH GRANT OPTION;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;flush privileges;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;cmd 到项目目录&lt;/p&gt;
+&lt;p&gt;执行 : docker-compose up&lt;/p&gt;
+&lt;p&gt;指定 dockers ps&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../img/349537-20190819234932645-2110002229.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/349537-20190819234932645-2110002229.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;我们看到项目已经发布成功了&lt;/p&gt;
+&lt;p&gt;浏览器看看&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../img/349537-20190819235244348-1639877727.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/349537-20190819235244348-1639877727.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;docker-compose命令通过指定文件运行&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker-compose命令通过指定文件运行&#34;&gt;#&lt;/a&gt; docker-compose 命令通过指定文件运行&lt;/h2&gt;
+&lt;p&gt;启动服务&lt;br&gt;
+ docker-compose -f docker-compose.yml up -d&lt;br&gt;
+ 停止服务&lt;br&gt;
+ docker-compose -f docker-compose.yml stop&lt;br&gt;
+ 停止并删除服务&lt;br&gt;
+ docker-compose -f docker-compose.yml down&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/04/17/Docker/Centos-Docker-Prometheus+Grafana/</guid>
             <title>基于docker 搭建Prometheus+Grafana</title>
