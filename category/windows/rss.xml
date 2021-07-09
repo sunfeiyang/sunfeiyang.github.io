@@ -48,6 +48,7 @@
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
         <category>npm</category>
+        <category>vue</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/06/04/Windows/boke-build%20(copy)/</guid>
             <title>Windows服务器定时任务执行</title>

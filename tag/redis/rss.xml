@@ -48,6 +48,7 @@
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
         <category>npm</category>
+        <category>vue</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/12/06/java/redis/redisCache/</guid>
             <title>高并发Redis缓存那些事儿</title>

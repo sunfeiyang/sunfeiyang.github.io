@@ -48,6 +48,7 @@
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
         <category>npm</category>
+        <category>vue</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/19/java/Netty-IOModule/NettyBase/</guid>
             <title>Netty入门示例及核心功能了解</title>

@@ -48,6 +48,7 @@
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
         <category>npm</category>
+        <category>vue</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/05/12/tools/ELK/index/</guid>
             <title>正排索引与倒排索引</title>

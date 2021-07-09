@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.png">
+  <title>sunfy</title>
+  
+  
+  <meta property="og:title" content="vue解决跨域问题">
+  
+  
+  <meta property="og:url" content="http://xinghuohan.cn/2021/07/09/desk/vueProxy/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.png">
+  
+  
+  <meta property="og:img" content="&lt;p&gt;vue 解决跨域问题">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2021-07-09">
+  <meta property="og:article:modified_time" content="2021-07-09">
+  <meta property="og:article:author" content="sunfy">
+  
+  
+  <meta property="og:article:tag" content="Desk">
+  
+  <meta property="og:article:tag" content="vue">
+  
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="sunfy" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.png">
+      
+      <span class="navbar-logo-dsc">sunfy</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      vue解决跨域问题
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-07-09T08:21:00.706Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-07-09</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Desk/" class="post-meta-link">Desk</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>717 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Desk/" class="post-meta-link">Desk</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/vue/" class="post-meta-link">vue</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>vue 解决跨域问题<span id="more"></span></p>
+<h3 id="什么是跨域"><a class="markdownIt-Anchor" href="#什么是跨域">#</a> 什么是跨域</h3>
+<p>跨域问题的出现是因为浏览器的同源策略问题，所谓同源：就是两个页面具有相同的协议（protocol），主机（host）和端口号（port），它是浏览器最核心也是最基本的功能，如果没有同源策略我们的浏览器将会十分的不安全，随时都可能受到攻击。</p>
+<p>当我们请求一个接口的时候，出现如：Access-Control-Allow-Origin 字眼的时候说明请求跨域了</p>
+<p><img src="/img/1649717-20200227142258131-1409861315.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1649717-20200227142258131-1409861315.png" class="lozad post-image"></p>
+<h3 id="如何解决跨域问题"><a class="markdownIt-Anchor" href="#如何解决跨域问题">#</a> 如何解决跨域问题</h3>
+<p>1. 使用 jsonp 实现，网页通过 script 标签向服务器请求 json 数据，服务器受到请求后，将数据放在一个指定名字的回调函数的参数里面传给前端。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;http://www.test.com/getData?callback=getData&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="comment">// 向服务器test.com发出请求，该请求的查询字符串有一个callback参数，用来指定回调函数的名字</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理服务器返回回调函数的数据</span></span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="comment">// 服务器返回的数据会放到回调函数里面</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params">res</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 处理获得的数据</span></span><br><span class="line">        <span class="built_in">console</span>.log(res.data)</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>2. 使用 Jquery ajax 实现，</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">  url: <span class="string">&#x27;http://www.test.com:8888/getData&#x27;</span>,</span><br><span class="line">  type: <span class="string">&#x27;get&#x27;</span>,</span><br><span class="line">  dataType: <span class="string">&#x27;jsonp&#x27;</span>,  <span class="comment">// 请求方式为jsonp</span></span><br><span class="line">  jsonpCallback: <span class="string">&quot;handleCallback&quot;</span>,    <span class="comment">// 自定义回调函数名</span></span><br><span class="line">  data: &#123;&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>3. 在 vue 开发中实现跨域：在 vue 项目根目录下找到 vue.config.js 文件（如果没有该文件则自己创建），在 proxy 中设置跨域</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">   proxy: &#123;  <span class="comment">//配置跨域</span></span><br><span class="line">     <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">       target: <span class="string">&#x27;http://121.121.67.254:8185/&#x27;</span>,  <span class="comment">//这里后台的地址模拟的;应该填写你们真实的后台接口</span></span><br><span class="line">       changOrigin: <span class="literal">true</span>,  <span class="comment">//允许跨域</span></span><br><span class="line">       pathRewrite: &#123;</span><br><span class="line">         <span class="comment">/* 重写路径，当我们在浏览器中看到请求的地址为：http://localhost:8080/api/core/getData/userInfo 时</span></span><br><span class="line"><span class="comment">           实际上访问的地址是：http://121.121.67.254:8185/core/getData/userInfo,因为重写了 /api</span></span><br><span class="line"><span class="comment">          */</span></span><br><span class="line">         <span class="string">&#x27;^/api&#x27;</span>: <span class="string">&#x27;&#x27;</span> </span><br><span class="line">       &#125;</span><br><span class="line">     &#125;,</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
+<p><strong>在 vue 中使用 proxy 进行跨域的原理是：将域名发送给本地的服务器（启动 vue 项目的服务，loclahost:8080），再由本地的服务器去请求真正的服务器。</strong></p>
+<p>以下是我在开发 vue 项目中实现跨域的步骤：</p>
+<p>1. 在 proxy 中设置要访问的地址，并重写 /api 为空的字符串，因为我们真正请求的地址是没有带 /api，这个重写很重要！！！</p>
+<p><img src="/img/1649717-20200227144905470-1085262547.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1649717-20200227144905470-1085262547.png" class="lozad post-image"></p>
+<p>2. 在创建 axios 实例的时候将 baseURL 设置为 /api , 这时候我们的跨域就已经完成了。</p>
+<p><img src="/img/1649717-20200227145106938-1311841373.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1649717-20200227145106938-1311841373.png" class="lozad post-image"></p>
+<p>3. 假如请求的真正地址为：<a target="_blank" rel="noopener" href="http://121.121.67.254:8185/core/getdata/userInfo,%E4%BD%86%E6%88%91%E4%BB%AC%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8A%E4%BC%9A%E7%9C%8B%E5%88%B0%E6%98%AF%E8%BF%99%E6%A0%B7%E7%9A%84%EF%BC%9A">http://121.121.67.254:8185/core/getdata/userInfo, 但我们在浏览器上会看到是这样的：</a> <a target="_blank" rel="noopener" href="http://localhost:8080/api/core/getData/userInfo">http://localhost:8080/api/core/getData/userInfo</a> , 多了个 /api，但并不影响我们请求数据。</p>
+<p><img src="/img/1649717-20200227151147818-885350634.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/1649717-20200227151147818-885350634.png" class="lozad post-image"></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/about">sunfy</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://xinghuohan.cn/2021/07/09/desk/vueProxy/">http://xinghuohan.cn/2021/07/09/desk/vueProxy/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/07/09/desk/npmBase/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">npm基础知识点总结记录 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F"><span class="toc-number">1.</span> <span class="toc-text"> 什么是跨域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text"> 如何解决跨域问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.png" class="author-img">
+
+<p class="author-name">sunfy</p>
+<p class="author-description">人生在勤，不索何获</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>76</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>9</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>42</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F"><span class="toc-number">1.</span> <span class="toc-text"> 什么是跨域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text"> 如何解决跨域问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/DB">
+        <div class="categories-list-item">
+          DB
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Docker">
+        <div class="categories-list-item">
+          Docker
+          <span class="categories-list-item-badge">14</span>
+        </div>
+      </a>
+    
+      <a href="/categories/IDEA">
+        <div class="categories-list-item">
+          IDEA
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Server">
+        <div class="categories-list-item">
+          Server
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Desk">
+        <div class="categories-list-item">
+          Desk
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/tools">
+        <div class="categories-list-item">
+          tools
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/windows">
+        <div class="categories-list-item">
+          windows
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\Docker" title="Docker"><div class="tags-list-item">Docker</div></a>
+    
+    <a href="\tags\CentOS" title="CentOS"><div class="tags-list-item">CentOS</div></a>
+    
+    <a href="\tags\Ubuntu" title="Ubuntu"><div class="tags-list-item">Ubuntu</div></a>
+    
+    <a href="\tags\IDEA" title="IDEA"><div class="tags-list-item">IDEA</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\DB" title="DB"><div class="tags-list-item">DB</div></a>
+    
+    <a href="\tags\Redis" title="Redis"><div class="tags-list-item">Redis</div></a>
+    
+    <a href="\tags\SpringBoot" title="SpringBoot"><div class="tags-list-item">SpringBoot</div></a>
+    
+    <a href="\tags\nexus3" title="nexus3"><div class="tags-list-item">nexus3</div></a>
+    
+    <a href="\tags\Jenkins" title="Jenkins"><div class="tags-list-item">Jenkins</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\git" title="git"><div class="tags-list-item">git</div></a>
+    
+    <a href="\tags\Desk" title="Desk"><div class="tags-list-item">Desk</div></a>
+    
+    <a href="\tags\Tomcat" title="Tomcat"><div class="tags-list-item">Tomcat</div></a>
+    
+    <a href="\tags\JDK" title="JDK"><div class="tags-list-item">JDK</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F"><span class="toc-number">1.</span> <span class="toc-text"> 什么是跨域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text"> 如何解决跨域问题</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-07-09</div>
+        <a href="/2021/07/09/desk/vueProxy/"><div class="recent-posts-item-content">vue解决跨域问题</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-07-09</div>
+        <a href="/2021/07/09/desk/npmBase/"><div class="recent-posts-item-content">npm基础知识点总结记录</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-06-18</div>
+        <a href="/2021/06/18/Docker/docker-compose-base/"><div class="recent-posts-item-content">docker-compose 启动容器</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-06-04</div>
+        <a href="/2021/06/04/Windows/boke-build (copy)/"><div class="recent-posts-item-content">Windows服务器定时任务执行</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2019 -
+          
+          2021
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">sunfy </a>
+      </div>
+    </div>
+
+    
+    
+    
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
