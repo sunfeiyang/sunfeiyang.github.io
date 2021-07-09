@@ -47,6 +47,7 @@
         <category>nacos</category>
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
+        <category>npm</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2020/11/23/Docker/Centos-Docker-jenkins-mavenjdkgit/</guid>
             <title>jenkins的docker容器如何装配jdk maven和git</title>

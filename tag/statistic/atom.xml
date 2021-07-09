@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2019/11/14/IDEA/IDEA-Statistic/</id>
         <title>IDEA Statistic插件使用,代码统计</title>

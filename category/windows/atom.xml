@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2021/06/04/Windows/boke-build%20(copy)/</id>
         <title>Windows服务器定时任务执行</title>

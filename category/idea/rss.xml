@@ -47,6 +47,7 @@
         <category>nacos</category>
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
+        <category>npm</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2019/12/14/IDEA/IDEA-JRebel/</guid>
             <title>IDEA JRebel 破解最简单的使用</title>

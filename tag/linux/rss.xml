@@ -47,6 +47,7 @@
         <category>nacos</category>
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
+        <category>npm</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/05/12/Linux/CommonCommands/</guid>
             <title>Linux常用命令</title>

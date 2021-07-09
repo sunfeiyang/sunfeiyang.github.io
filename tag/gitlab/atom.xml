@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2020/12/15/Docker/Centos-Docker-gitlab/</id>
         <title>docker下gitlab安装配置使用</title>

@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2021/06/18/Docker/docker-compose-base/</id>
         <title>docker-compose 启动容器</title>

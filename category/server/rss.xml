@@ -47,6 +47,7 @@
         <category>nacos</category>
         <category>springCloud-alibaba</category>
         <category>sqlServer</category>
+        <category>npm</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/04/17/Server/Server-tomcat/</guid>
             <title>tomcat配置gc日志输出</title>

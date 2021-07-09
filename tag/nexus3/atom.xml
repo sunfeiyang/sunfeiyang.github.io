@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2020/12/17/Docker/Centos-Docker-nexus-error/</id>
         <title>Maven-Nexus 私服部署发布报错</title>

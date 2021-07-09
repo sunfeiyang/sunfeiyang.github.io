@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2020/10/16/Linux/VmWarekernelModuleUpdater/</id>
         <title>Linux系统下VMware kernel Module Updater弹框，Install失败</title>

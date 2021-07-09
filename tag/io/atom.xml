@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2020/11/25/java/Netty-IOModule/BIO-NIO-AIO/</id>
         <title>BIO-NIO-AIO 模型</title>

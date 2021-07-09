@@ -5,6 +5,17 @@
     "home_page_url": "http://xinghuohan.cn",
     "items": [
         {
+            "id": "http://xinghuohan.cn/2021/07/09/desk/npmBase/",
+            "url": "http://xinghuohan.cn/2021/07/09/desk/npmBase/",
+            "title": "npm基础知识点总结记录",
+            "date_published": "2021-07-09T05:47:42.368Z",
+            "content_html": "<p>vue 基础知识点<span id=\"more\"></span></p>\n<h3 id=\"vue-使用-npm-run-dev命令后-自动打开浏览器\"><a class=\"markdownIt-Anchor\" href=\"#vue-使用-npm-run-dev命令后-自动打开浏览器\">#</a> vue 使用 npm run dev 命令后 自动打开浏览器</h3>\n<p>1、使用 vue-cli 老版本构建项目时， 可修改 config 文件夹下 index.js 文件 autoOpenBrowser 属性给为 true 即可</p>\n<p><img src=\"/img/1551162-20191125153631601-544714164.png\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/1551162-20191125153631601-544714164.png\" class=\"lozad post-image\"></p>\n<p>使用 vue-cli 3.x 版本后，所有的配置项均在 vue.config.js 中，修改 devServer 增加 open 属性为 true 即可</p>\n<p>官方：<a href=\"https://cli.vuejs.org/zh/config/#devserver\">https://cli.vuejs.org/zh/config/#devserver</a></p>\n<p><img src=\"/img/1551162-20191125153649052-1072532253.png\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/1551162-20191125153649052-1072532253.png\" class=\"lozad post-image\"></p>\n<p><img src=\"/img/1551162-20191125153721414-1989487532.png\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/1551162-20191125153721414-1989487532.png\" class=\"lozad post-image\"></p>\n<p>所以自己项目中的配置就可以配置为：</p>\n<p>在运行项目时即可自动打开浏览器</p>\n<p>这种方法比较万能， 在 package.json 文件下 修改 scripts 中 dev 的命令 最后面加上 --open ； 如图</p>\n<p><img src=\"/img/1551162-20191125153501504-311525175.png\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/1551162-20191125153501504-311525175.png\" class=\"lozad post-image\"></p>\n<h3 id=\"vue-cli3项目解决npm-run-dev在浏览器打开两次的问题\"><a class=\"markdownIt-Anchor\" href=\"#vue-cli3项目解决npm-run-dev在浏览器打开两次的问题\">#</a> vue-cli3 项目解决 npm run dev 在浏览器打开两次的问题</h3>\n<ol>\n<li>删掉 vue.config.js 文件里面 devServer 下面的 open:true</li>\n<li>在 package.json 文件 scripts 对象 dev 键后面加 --open，（“dev”: “vue-cli-service serve --open”）</li>\n<li>ok 重新运行 npm run dev (修改配置文件后要重新启动项目修改才会生效）</li>\n</ol>\n",
+            "tags": [
+                "Desk",
+                "npm"
+            ]
+        },
+        {
             "id": "http://xinghuohan.cn/2020/03/02/desk/npmInstall/",
             "url": "http://xinghuohan.cn/2020/03/02/desk/npmInstall/",
             "title": "前端基础插件",

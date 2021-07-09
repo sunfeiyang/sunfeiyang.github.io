@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2021/03/31/Docker/Docker-springcloud-alibaba/</id>
         <title>docker下springCloud-alibaba组件安装配置使用</title>

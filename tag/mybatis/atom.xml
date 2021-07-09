@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2021/01/19/java/Netty-IOModule/NettyBase/</id>
         <title>Netty入门示例及核心功能了解</title>

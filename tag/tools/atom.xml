@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2019/11/26/tools/renameFileSuffix/</id>
         <title>批量修改文件后缀名</title>

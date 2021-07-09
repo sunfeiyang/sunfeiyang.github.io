@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2019/12/06/java/redis/redisCache/</id>
         <title>高并发Redis缓存那些事儿</title>

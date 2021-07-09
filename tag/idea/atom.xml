@@ -44,6 +44,7 @@
     <category term="nacos" />
     <category term="springCloud-alibaba" />
     <category term="sqlServer" />
+    <category term="npm" />
     <entry>
         <id>http://xinghuohan.cn/2021/01/21/Docker/dockerBuildFormIdea/</id>
         <title>idea 利用 docker插件打包上传</title>
