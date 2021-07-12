@@ -61,7 +61,7 @@
 &lt;p&gt;底层数据结构–》适用场景–》相同点和不同点&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;底层数据结构&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#底层数据结构&#34;&gt;#&lt;/a&gt; 底层数据结构&lt;/h2&gt;
-&lt;p&gt;他们的底层数据结构不同，ArrayList 底层是基于数据实现的，LinkedList 底层是基于链表实现的。&lt;/p&gt;
+&lt;p&gt;他们的底层数据结构不同，ArrayList 底层是基于数据实现的，连续内存存储，LinkedList 底层是基于链表实现的，可以存储在分散的内存中。&lt;/p&gt;
 &lt;h2 id=&#34;使用场景&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#使用场景&#34;&gt;#&lt;/a&gt; 使用场景&lt;/h2&gt;
 &lt;p&gt;由于底层数据不同，他们所使用的场景也不同，ArrayList 更适合随机查找，LinkedList 更适合删除和添加，查询、添加删除的时间复杂度也不同。&lt;/p&gt;
 &lt;h2 id=&#34;其他相同点和不同点&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#其他相同点和不同点&#34;&gt;#&lt;/a&gt; 其他相同点和不同点&lt;/h2&gt;
