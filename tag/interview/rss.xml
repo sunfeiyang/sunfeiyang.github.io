@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>sunfy • Posts by &#34;interview&#34; tag</title>
+        <link>http://xinghuohan.cn</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Mon, 12 Jul 2021 09:25:14 +0800</pubDate>
+        <lastBuildDate>Mon, 12 Jul 2021 09:25:14 +0800</lastBuildDate>
+        <category>DB</category>
+        <category>MongoDB</category>
+        <category>MySQL</category>
+        <category>Linux</category>
+        <category>CentOS</category>
+        <category>Docker</category>
+        <category>IDEA</category>
+        <category>JRebel</category>
+        <category>Statistic</category>
+        <category>JDK</category>
+        <category>Centos</category>
+        <category>Ubuntu</category>
+        <category>VMware</category>
+        <category>Tomcat</category>
+        <category>Desk</category>
+        <category>Java</category>
+        <category>SPI</category>
+        <category>tools</category>
+        <category>git</category>
+        <category>MQ</category>
+        <category>MyBatis</category>
+        <category>IO</category>
+        <category>SpringBoot</category>
+        <category>WebSocket</category>
+        <category>Zookeeper</category>
+        <category>设计模式</category>
+        <category>Spring</category>
+        <category>Redis</category>
+        <category>shiro</category>
+        <category>jmeter</category>
+        <category>gitlab</category>
+        <category>Jenkins</category>
+        <category>nexus3</category>
+        <category>maven</category>
+        <category>索引</category>
+        <category>elasticSearch</category>
+        <category>windows</category>
+        <category>nacos</category>
+        <category>springCloud-alibaba</category>
+        <category>sqlServer</category>
+        <category>npm</category>
+        <category>vue</category>
+        <category>Interview</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/07/12/Interview/01Arraylist&amp;LinkedList/</guid>
+            <title>java面试题-ArrayList和LinkedList区别</title>
+            <link>http://xinghuohan.cn/2021/07/12/Interview/01Arraylist&amp;LinkedList/</link>
+            <category>Java</category>
+            <category>Interview</category>
+            <pubDate>Mon, 12 Jul 2021 09:25:14 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;&lt;strong&gt;思路&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;底层数据结构–》适用场景–》相同点和不同点&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;底层数据结构&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#底层数据结构&#34;&gt;#&lt;/a&gt; 底层数据结构&lt;/h2&gt;
+&lt;p&gt;他们的底层数据结构不同，ArrayList 底层是基于数据实现的，LinkedList 底层是基于链表实现的。&lt;/p&gt;
+&lt;h2 id=&#34;使用场景&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#使用场景&#34;&gt;#&lt;/a&gt; 使用场景&lt;/h2&gt;
+&lt;p&gt;由于底层数据不同，他们所使用的场景也不同，ArrayList 更适合随机查找，LinkedList 更适合删除和添加，查询、添加删除的时间复杂度也不同。&lt;/p&gt;
+&lt;h2 id=&#34;其他相同点和不同点&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#其他相同点和不同点&#34;&gt;#&lt;/a&gt; 其他相同点和不同点&lt;/h2&gt;
+&lt;p&gt;ArrayList 和 LinkedList 都实现了 List 接口。&lt;/p&gt;
+&lt;p&gt;LinkedList 还额外实现了 Deque 接口，所以 LinkList 还可以当作双端队列来使用。&lt;/p&gt;
+&lt;h2 id=&#34;详细解释&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#详细解释&#34;&gt;#&lt;/a&gt; 详细解释&lt;/h2&gt;
+&lt;p&gt;查看二者类的结构&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210712112423871.png&#34; alt=&#34;image-20210712112423871&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210712112423871.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210712112411812.png&#34; alt=&#34;image-20210712112411812&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210712112411812.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;LinkedList 实现了 Deque 接口，就包含了 addFirest、addLast 等队列的操作&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210712112723040.png&#34; alt=&#34;image-20210712112723040&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210712112723040.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;数据模型&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#数据模型&#34;&gt;#&lt;/a&gt; 数据模型&lt;/h3&gt;
+&lt;p&gt;数组模型图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1516809-20181023201007357-1981279990.gif&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1516809-20181023201007357-1981279990.gif&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;链表模型图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210712113418978.png&#34; alt=&#34;image-20210712113418978&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210712113418978.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;查询操作&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查询操作&#34;&gt;#&lt;/a&gt; 查询操作&lt;/h3&gt;
+&lt;p&gt;​	ArrayList.get (1) 根据下标进行查询，因为数组是提前分配好的内存空间，可以直接根据下标查找，速度很快。&lt;/p&gt;
+&lt;p&gt;​	LinkedList.get (1) 相对而言，链表根据指定下标进行查询时，需要遍历链表，逐个进行查找，直至所要查询的下标位置&lt;/p&gt;
+&lt;p&gt;源码中看 get 操作：会发现，想要获取某个下标的值，需要从第一个开始进行遍历查找。&lt;img src=&#34;/img/image-20210712113650183.png&#34; alt=&#34;image-20210712113650183&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210712113650183.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;二者这两个操作进行比较的话，ArrayList 会相较 LinkedList 操作会快一些，但是 LinkedList 中有 getFirst () 和 getLast () 操作，这两个操作也是很快的，因为在 LinkedList 中通过 last 和 first 两个树形记录了两个元素的位置，获取时可以直接拿到，不需要遍历。&lt;/p&gt;
+&lt;h3 id=&#34;新增操作&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#新增操作&#34;&gt;#&lt;/a&gt; 新增操作&lt;/h3&gt;
+&lt;p&gt;二者都有两个方法，&lt;/p&gt;
+&lt;p&gt;ArrayList：&lt;/p&gt;
+&lt;p&gt;add (1) 直接增加一个元素，此时会将元素添加到最后一个元素。&lt;/p&gt;
+&lt;p&gt;该方法正常添加数据都是很快的，但是存在一种情况是数组可能会需要扩容，如果数据要扩容的情况，添加元素的速率就会有些影响。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210712115244051.png&#34; alt=&#34;image-20210712115244051&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210712115244051.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;add (1,1) 指定元素的位置进行添加。&lt;/p&gt;
+&lt;p&gt;该方法通过指定元素添加，如果要插入下标的位置不存在元素，则直接进行添加，但是如果要插入元素的位置存在元素，则会存在已有元素的后移操作，相对而言速率不是很高的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210712115716970.png&#34; alt=&#34;image-20210712115716970&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210712115716970.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210712120040213.png&#34; alt=&#34;image-20210712120040213&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210712120040213.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;LinkedList：&lt;/p&gt;
+&lt;p&gt;add (1) 直接增加一个元素，此时会将元素添加到最后一位，因为 LinkedList 底层采用的是链表结构，链表是不存在扩容操作的，所以相对来说 add 操作速度会比较快。&lt;/p&gt;
+&lt;p&gt;add (1,1) 指定元素的位置进行添加。&lt;/p&gt;
+&lt;p&gt;这个操作，效率取决于要插入元素的位置，如果要插入元素的位置比较大的时候，链表就需要逐个遍历之前的元素，此时效率也会有些影响的。&lt;/p&gt;
+&lt;p&gt;对比二者的 add (1,1) 方法，ArrayList 不需要查找待插入的位置，需要插入元素后移动后续的元素，LinkedList 操作需要先遍历找到要插入的位置，而后插入元素。二者插入的性能来说是无法直接进行比较的，这个和具体数据存在关联。&lt;/p&gt;
+&lt;h2 id=&#34;总结&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#总结&#34;&gt;#&lt;/a&gt; 总结&lt;/h2&gt;
+&lt;p&gt;如果查询比较多的情况可以使用 ArrayList&lt;/p&gt;
+&lt;p&gt;频繁进行插入数据的操作可以使用 LinkedList，同时 LinkedList 可是当作一个双端队列进行使用。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

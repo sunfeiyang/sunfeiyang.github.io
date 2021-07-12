@@ -49,6 +49,7 @@
         <category>sqlServer</category>
         <category>npm</category>
         <category>vue</category>
+        <category>Interview</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/07/09/desk/vueProxy/</guid>
             <title>vue解决跨域问题</title>
