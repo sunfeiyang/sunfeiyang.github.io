@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;maven&#34; tag</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2021-03-13T13:45:35.122Z</updated>
+    <category term="DB" />
+    <category term="MongoDB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="CentOS" />
+    <category term="Docker" />
+    <category term="IDEA" />
+    <category term="JRebel" />
+    <category term="Statistic" />
+    <category term="JDK" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="VMware" />
+    <category term="Tomcat" />
+    <category term="Desk" />
+    <category term="Java" />
+    <category term="SPI" />
+    <category term="tools" />
+    <category term="git" />
+    <category term="MQ" />
+    <category term="MyBatis" />
+    <category term="IO" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="设计模式" />
+    <category term="Spring" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <category term="jmeter" />
+    <category term="gitlab" />
+    <category term="Jenkins" />
+    <category term="nexus3" />
+    <category term="maven" />
+    <category term="索引" />
+    <category term="elasticSearch" />
+    <category term="windows" />
+    <category term="nacos" />
+    <category term="springCloud-alibaba" />
+    <category term="sqlServer" />
+    <category term="npm" />
+    <category term="vue" />
+    <category term="Interview" />
+    <entry>
+        <id>http://xinghuohan.cn/2021/03/13/tools/mavenInstallJar/</id>
+        <title>使用maven命令安装指定(第三方)jar包到本地仓库</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2021/03/13/tools/mavenInstallJar/"/>
+        <content type="html">&lt;p&gt;&lt;strong&gt;第三方 jar 包在开发工具中引入后编译没问题，启动调试包括打包时会提示找不到 jar 包的错误。需要上传到 maven 仓库中，并在 pom 文件内引入.&lt;/strong&gt;&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;maven 命令:&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;安装指定文件到本地仓库命令：mvn install:install-file&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-DgroupId&amp;#x3D;&amp;lt;groupId&amp;gt;       : 设置上传到仓库的包名&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-DartifactId&amp;#x3D;&amp;lt;artifactId&amp;gt; : 设置该包所属的模块名&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-Dversion&amp;#x3D;1.0.0           : 设置该包的版本号&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-Dpackaging&amp;#x3D;jar           : 设置该包的类型(很显然jar包)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-Dfile&amp;#x3D;&amp;lt;myfile.jar&amp;gt;       : 设置该jar包文件所在的路径与文件名&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;一。上传 jar 包 win+r cmd 打开命令行输入以下命令:&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mvn install:install-file -DgroupId&amp;#x3D;com.zebra -DartifactId&amp;#x3D;ZSDK_API -Dversion&amp;#x3D;v2.12.3782 -Dpackaging&amp;#x3D;jar -Dfile&amp;#x3D;E:\perslib\ZSDK_API.jar&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mvn install:install-file -DgroupId&amp;#x3D;com.zebra -DartifactId&amp;#x3D;ZSDK_CARD_API -Dversion&amp;#x3D;v2.12.3782 -Dpackaging&amp;#x3D;jar -Dfile&amp;#x3D;E:\perslib\ZSDK_CARD_API.jar&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mvn install:install-file -DgroupId&amp;#x3D;com.jacob -DartifactId&amp;#x3D;jacob -Dversion&amp;#x3D;1.19 -Dpackaging&amp;#x3D;jar -Dfile&amp;#x3D;jacob.jar&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;出现以下 success 说明成功了.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://img2018.cnblogs.com/blog/917633/201810/917633-20181022135853625-157850255.png&#34;&gt;&lt;img src=&#34;/img/917633-20181022135853625-157850255.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/917633-20181022135853625-157850255.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;到 maven 仓库查看:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://img2018.cnblogs.com/blog/917633/201810/917633-20181022141949167-1559238206.png&#34;&gt;&lt;img src=&#34;/img/917633-20181022141949167-1559238206.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/917633-20181022141949167-1559238206.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二。在 pom 文件中引入 jar 包&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;groupId&amp;gt;com.zebra&amp;lt;&amp;#x2F;groupId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;artifactId&amp;gt;ZSDK_API&amp;lt;&amp;#x2F;artifactId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;version&amp;gt;v2.12.3782&amp;lt;&amp;#x2F;version&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;&amp;#x2F;dependency&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;groupId&amp;gt;com.zebra&amp;lt;&amp;#x2F;groupId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;artifactId&amp;gt;ZSDK_CARD_API&amp;lt;&amp;#x2F;artifactId&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;lt;version&amp;gt;v2.12.3782&amp;lt;&amp;#x2F;version&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;&amp;#x2F;dependency&amp;gt; &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;注意:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;jar 包所在路径不要带中文，不要带中文，不要带中文！&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;另外，不通过这种方式直接放在项目目录下，通过 pom 引用不导入 maven 仓库也是可以的。如下图:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://img2020.cnblogs.com/blog/917633/202010/917633-20201027224436808-358780583.png&#34;&gt;&lt;img src=&#34;/img/917633-20201027224436808-358780583.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/917633-20201027224436808-358780583.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+</content>
+        <category term="maven" />
+        <updated>2021-03-13T13:45:35.122Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2020/11/23/Docker/Centos-Docker-jenkins-mavenjdkgit/</id>
+        <title>jenkins的docker容器如何装配jdk maven和git</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/11/23/Docker/Centos-Docker-jenkins-mavenjdkgit/"/>
+        <content type="html">&lt;p&gt;jenkins 的 docker 容器如何装配 jdk maven 和 git&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;jenkins/jenkins:lts 容器安装这些工具，其实 jenkins 镜像中已经包含了 jdk，我们只不过把容器中这些工具的路径找出来，配置下路径即可，所以有如下两种方式：&lt;/p&gt;
+&lt;h3 id=&#34;方式一推荐&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方式一推荐&#34;&gt;#&lt;/a&gt; 方式一（推荐）&lt;/h3&gt;
+&lt;p&gt;先进入 jenkins 的容器中&lt;/p&gt;
+&lt;p&gt;docker exec -it jenkins 容器 id /bin/bash&lt;/p&gt;
+&lt;h4 id=&#34;jdk&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#jdk&#34;&gt;#&lt;/a&gt; jdk&lt;/h4&gt;
+&lt;p&gt;然后通过 echo $JAVA_HOME 来查看 java 路径在 /usr/local 中，然后配置进 jenkins 的 JAVA_HOME 中即可&lt;/p&gt;
+&lt;h4 id=&#34;git&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#git&#34;&gt;#&lt;/a&gt; git&lt;/h4&gt;
+&lt;p&gt;通过 which git 查看 git 执行文件路径为 /usr/bin/git，把这个复制到 jenkins 路径中&lt;/p&gt;
+&lt;h4 id=&#34;mvn&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#mvn&#34;&gt;#&lt;/a&gt; mvn&lt;/h4&gt;
+&lt;p&gt;jenkins 容器中一般没有 maven 提供的，所以 jenkins 配置中我使用 install automatically&lt;/p&gt;
+&lt;h3 id=&#34;方式二&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#方式二&#34;&gt;#&lt;/a&gt; 方式二&lt;/h3&gt;
+&lt;p&gt;使用 jenkins 工具管理里头自动安装 jdk，git 和 maven，但是 jdk 自动安装需要 oracle 的账号密码，这个得自己申请，这种比较麻烦，不见这么做，既然镜像中已经存在了 jdk，我们可找下路径就可以直接使用，为何还需要专门自动安装一个呢？&lt;/p&gt;
+&lt;p&gt;其他&lt;br&gt;
+如果不是 docker 容器的方式，要么用自动安装使用下 oracle 账号，要么自己安装一个 jdk 到本地，然后配一下 JAVA_HOME 路径即可，至于具体怎么配 java 路径请看这篇 CentOS 下 JDK 安装及配置&lt;/p&gt;
+</content>
+        <category term="Docker" />
+        <category term="JDK" />
+        <category term="git" />
+        <category term="Jenkins" />
+        <category term="maven" />
+        <updated>2020-11-22T16:00:00.000Z</updated>
+    </entry>
+</feed>

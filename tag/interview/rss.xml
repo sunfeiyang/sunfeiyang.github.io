@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Mon, 12 Jul 2021 09:25:14 +0800</pubDate>
-        <lastBuildDate>Mon, 12 Jul 2021 09:25:14 +0800</lastBuildDate>
+        <pubDate>Tue, 13 Jul 2021 22:22:11 +0800</pubDate>
+        <lastBuildDate>Tue, 13 Jul 2021 22:22:11 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -51,9 +51,46 @@
         <category>vue</category>
         <category>Interview</category>
         <item>
-            <guid isPermalink="true">http://xinghuohan.cn/2021/07/12/Interview/01Arraylist&amp;LinkedList/</guid>
-            <title>java面试题-ArrayList和LinkedList区别</title>
-            <link>http://xinghuohan.cn/2021/07/12/Interview/01Arraylist&amp;LinkedList/</link>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/07/13/Interview/002ThreadLocal/</guid>
+            <title></title>
+            <link>http://xinghuohan.cn/2021/07/13/Interview/002ThreadLocal/</link>
+            <category>Java</category>
+            <category>Interview</category>
+            <pubDate>Tue, 13 Jul 2021 22:22:11 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;&lt;strong&gt;思路&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;是什么–》底层实现–》优缺点–》应用场景&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;是什么&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#是什么&#34;&gt;#&lt;/a&gt; 是什么&lt;/h2&gt;
+&lt;p&gt;ThreadLocal 是 java 中的所提供的&lt;strong&gt;线程本地&lt;/strong&gt;存储机制，可以利用该机制将某个数据、某个对象、某个值缓存在某个线程内部，该线程可以在任意时刻、任意方法中获取到相应的内容。&lt;/p&gt;
+&lt;h2 id=&#34;底层实现&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#底层实现&#34;&gt;#&lt;/a&gt; 底层实现&lt;/h2&gt;
+&lt;p&gt;ThreadLocal 底层通过 ThreadLocalMap 实现，每个&lt;strong&gt; Thread&lt;/strong&gt; 对象中都存在一个 ThreadLocalMap，Map 的 key 为 ThreadLocal 对象，Map 的 value 为需要缓存的值。&lt;/p&gt;
+&lt;h3 id=&#34;注意&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#注意&#34;&gt;#&lt;/a&gt; 注意&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;ThreadLocalMap 对象存储在 Thread 对象中。&lt;img src=&#34;/img/image-20210713231133655.png&#34; alt=&#34;image-20210713231133655&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210713231133655.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/li&gt;
+&lt;li&gt;存储形式&lt;img src=&#34;/img/image-20210713232214175.png&#34; alt=&#34;image-20210713232214175&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210713232214175.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;优缺点&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#优缺点&#34;&gt;#&lt;/a&gt; 优缺点&lt;/h2&gt;
+&lt;p&gt;如果在线程池中使用 ThreadLocal 会造成内容泄露，因为当 ThreadLocal 对象使用完之后，应该把设置的 key、value，也就是 Entry 对象进行回收，但线程池中的线程不会回收，而线程对象是通过强引用指向 ThreadLocalMap，ThreadLocalMap 也是通过强引用指向 Entry 对象，线程不被回收，Entry 对象也就不会被回收，从而出现内存泄漏。&lt;/p&gt;
+&lt;p&gt;解决方法是，在使用了 ThreadLocal 对象之后，手动调用 ThreadLocal 的 remove 方法，手动清除 Entry 对象。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210713233047404.png&#34; alt=&#34;image-20210713233047404&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210713233047404.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210713233215930.png&#34; alt=&#34;image-20210713233215930&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210713233215930.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;注意-2&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#注意-2&#34;&gt;#&lt;/a&gt; 注意&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;使用的好处&lt;img src=&#34;/img/image-20210713232349257.png&#34; alt=&#34;image-20210713232349257&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210713232349257.png&#34; class=&#34;lozad post-image&#34;&gt;，开启两个线程，一个是普通的 Person 类，一个使用 ThreaLocal 的，运行程度得到的结果&lt;img src=&#34;/img/image-20210713232536975.png&#34; alt=&#34;image-20210713232536975&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210713232536975.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/li&gt;
+&lt;li&gt;强引用&lt;img src=&#34;/img/image-20210713234033492.png&#34; alt=&#34;image-20210713234033492&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210713234033492.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;应用场景&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#应用场景&#34;&gt;#&lt;/a&gt; 应用场景&lt;/h2&gt;
+&lt;p&gt;ThreadLocal 经典的使用场景就是连接管理（一个线程持有一个连接，该连接对象可以在不同方法之间进行传递，线程之间不共享同一个连接）&lt;/p&gt;
+&lt;h3 id=&#34;场景1&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#场景1&#34;&gt;#&lt;/a&gt; 场景 1：&lt;/h3&gt;
+&lt;p&gt;ThreadLocal 用作保存每个线程独享的对象，为每个线程都创建一个副本，这样每个线程都可以修改自己所拥有的副本，而不会影响其他线程的副本，确保了线程安全。&lt;/p&gt;
+&lt;h3 id=&#34;场景2&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#场景2&#34;&gt;#&lt;/a&gt; 场景 2：&lt;/h3&gt;
+&lt;p&gt;ThreadLocal 用作每个线程内需要独立保存信息，以便供其他方法更方便地获取该信息的场景。每个线程获取到的信息可能都是不一样的，前面执行的方法保存了信息后，后续方法可以通过 ThreadLocal 直接获取到，避免了传参，类似于全局变量的概念。&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/07/12/Interview/001Arraylist&amp;LinkedList/</guid>
+            <title>Java面试题001-ArrayList和LinkedList区别</title>
+            <link>http://xinghuohan.cn/2021/07/12/Interview/001Arraylist&amp;LinkedList/</link>
             <category>Java</category>
             <category>Interview</category>
             <pubDate>Mon, 12 Jul 2021 09:25:14 +0800</pubDate>

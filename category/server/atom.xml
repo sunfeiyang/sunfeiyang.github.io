@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;server&#34; category</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2021-04-17T01:51:20.071Z</updated>
+    <category term="DB" />
+    <category term="MongoDB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="CentOS" />
+    <category term="Docker" />
+    <category term="IDEA" />
+    <category term="JRebel" />
+    <category term="Statistic" />
+    <category term="JDK" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="VMware" />
+    <category term="Tomcat" />
+    <category term="Desk" />
+    <category term="Java" />
+    <category term="SPI" />
+    <category term="tools" />
+    <category term="git" />
+    <category term="MQ" />
+    <category term="MyBatis" />
+    <category term="IO" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="设计模式" />
+    <category term="Spring" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <category term="jmeter" />
+    <category term="gitlab" />
+    <category term="Jenkins" />
+    <category term="nexus3" />
+    <category term="maven" />
+    <category term="索引" />
+    <category term="elasticSearch" />
+    <category term="windows" />
+    <category term="nacos" />
+    <category term="springCloud-alibaba" />
+    <category term="sqlServer" />
+    <category term="npm" />
+    <category term="vue" />
+    <category term="Interview" />
+    <entry>
+        <id>http://xinghuohan.cn/2021/04/17/Server/Server-tomcat/</id>
+        <title>tomcat配置gc日志输出</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2021/04/17/Server/Server-tomcat/"/>
+        <content type="html">&lt;p&gt;tomcat 配置 gc 日志输出&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;omcat 目录 /bin&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://xn--catalina-nw7mn06k.sh&#34;&gt;找到 catalina.sh&lt;/a&gt; (这是 linux 下，window 下应该是 catalina.bat)&lt;/p&gt;
+&lt;p&gt;配置 JAVA_OPTS 参数，我这里配置的是 tomcat 目录 /log 目录下&lt;/p&gt;
+&lt;p&gt;JAVA_OPTS= -Xms1024m -Xmx3048m -XX:PermSize=512m -XX:MaxPermSize=1524m -Xss4096K&lt;br&gt;
+-Xloggc:…/logs/tomcat_gc.log&lt;/p&gt;
+</content>
+        <category term="Tomcat" />
+        <updated>2021-04-17T01:51:20.071Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2021/01/27/Server/Server-cloud/</id>
+        <title>云服务器80端口被占用</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2021/01/27/Server/Server-cloud/"/>
+        <content type="html">&lt;p&gt;在使用案例云或其他厂商的云服务器时遇到的 80 端口被占用问题，如何释放 80 端口？问题主要出现在 Windows Server 服务器上，Linux 服务器上暂且还没有遇到类似情况。&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;问题：80 端口被占用？如何释放 80 端口&lt;br&gt;
+第一步、win+r 输入 cmd&lt;br&gt;
+ 第二步、在控制台输入 &lt;code&gt;netstat -aon | findstr&lt;/code&gt;  &amp;quot;80&amp;quot; 命令。找出类型为 TCP 端口 80 的，然后记录 PID (最后一行为 PID) 如下图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20200307110151419.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20200307110151419.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;第三步、在控制台输入 &lt;code&gt;tasklist | findstr&lt;/code&gt;  “PID 数值”&lt;br&gt;
+ 第四步、打开任务管理器，查看 PID=4 是一个 system 进程，其对应的进程描述是 NT kernel &amp;amp; system。&lt;br&gt;
+第五步、win+r 输入 &lt;code&gt;regedit&lt;/code&gt;  回车，找到 &lt;code&gt;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\HTTP&lt;/code&gt; ，并修改&lt;br&gt;
+ Start 的数值数据为 4.（如下图）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20200307110236185.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20200307110236185.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;第六步、修改注册表后要重启电脑才会生效&lt;/p&gt;
+</content>
+        <category term="Tomcat" />
+        <updated>2021-01-27T08:09:08.656Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2019/05/12/Server/Tomcat-startTwice/</id>
+        <title>Tomcat下项目被启动两次为问题</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2019/05/12/Server/Tomcat-startTwice/"/>
+        <content type="html">&lt;p&gt;在 tomcat 下启动项目时自己写的定时程序被执行了两次，导致程序启动了两个线程，使定时任务在几秒间隔内执行了两次，后来通过日志查到，原来是 tomcat 将项目启动了两次，为什么呢？&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;问题原因是由于 tomcat 下配置的问题；为了让程序可以通过域名直接访问，而不用输入项目名，所有要对 tomcat 配置项目的映射，由于客户那里配置的有问题所有导致程序启动两次。&lt;/p&gt;
+&lt;p&gt;错误配置：&lt;/p&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;Host&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;name&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;appBase&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;webapps&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;unpackWARs&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;true&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;autoDeploy&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;  &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;    &lt;span class=&#34;attr&#34;&gt;xmlValidation&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;false&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;xmlNamespaceAware&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;Context&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;docBase&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;/usr/local/apache-tomcat-6.0.29/webapps/XXX&amp;quot;&lt;/span&gt;  &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;        &lt;span class=&#34;attr&#34;&gt;path&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;reloadable&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;Context&lt;/span&gt;&amp;gt;&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;Context&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;docBase&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;/usr/local/apache-tomcat-6.0.29/webapps/XXX&amp;quot;&lt;/span&gt;  &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;        &lt;span class=&#34;attr&#34;&gt;path&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;/admin&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;reloadable&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;Context&lt;/span&gt;&amp;gt;&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;Host&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;以上配置，由于 host 节点配置了 appBase 为 webapps，所有 tomcat 会加载 webapps 里的所有项目，下面又配置了 webapps 里的项目，导致项目又加载一次，所以会导致项目重复加载，定时程序会在几秒之内重复执行，后来改了一下配置好了，&lt;/p&gt;
+&lt;p&gt;如下正确配置：&lt;/p&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;Host&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;name&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;appBase&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;unpackWARs&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;true&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;autoDeploy&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;  &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;    &lt;span class=&#34;attr&#34;&gt;xmlValidation&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;false&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;xmlNamespaceAware&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;false&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;Context&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;docBase&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;/usr/local/apache-tomcat-6.0.29/webapps/XXX&amp;quot;&lt;/span&gt;  &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;        &lt;span class=&#34;attr&#34;&gt;path&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;reloadable&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;Context&lt;/span&gt;&amp;gt;&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;Context&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;docBase&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;/usr/local/apache-tomcat-6.0.29/webapps/XXX&amp;quot;&lt;/span&gt;  &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;        &lt;span class=&#34;attr&#34;&gt;path&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;/admin&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;reloadable&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;Context&lt;/span&gt;&amp;gt;&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;Host&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+        <category term="Tomcat" />
+        <updated>2019-05-11T16:00:00.000Z</updated>
+    </entry>
+</feed>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;vue&#34; tag</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2021-07-09T08:21:00.706Z</updated>
+    <category term="DB" />
+    <category term="MongoDB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="CentOS" />
+    <category term="Docker" />
+    <category term="IDEA" />
+    <category term="JRebel" />
+    <category term="Statistic" />
+    <category term="JDK" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="VMware" />
+    <category term="Tomcat" />
+    <category term="Desk" />
+    <category term="Java" />
+    <category term="SPI" />
+    <category term="tools" />
+    <category term="git" />
+    <category term="MQ" />
+    <category term="MyBatis" />
+    <category term="IO" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="设计模式" />
+    <category term="Spring" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <category term="jmeter" />
+    <category term="gitlab" />
+    <category term="Jenkins" />
+    <category term="nexus3" />
+    <category term="maven" />
+    <category term="索引" />
+    <category term="elasticSearch" />
+    <category term="windows" />
+    <category term="nacos" />
+    <category term="springCloud-alibaba" />
+    <category term="sqlServer" />
+    <category term="npm" />
+    <category term="vue" />
+    <category term="Interview" />
+    <entry>
+        <id>http://xinghuohan.cn/2021/07/09/desk/vueProxy/</id>
+        <title>vue解决跨域问题</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2021/07/09/desk/vueProxy/"/>
+        <content type="html">&lt;p&gt;vue 解决跨域问题&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;什么是跨域&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#什么是跨域&#34;&gt;#&lt;/a&gt; 什么是跨域&lt;/h3&gt;
+&lt;p&gt;跨域问题的出现是因为浏览器的同源策略问题，所谓同源：就是两个页面具有相同的协议（protocol），主机（host）和端口号（port），它是浏览器最核心也是最基本的功能，如果没有同源策略我们的浏览器将会十分的不安全，随时都可能受到攻击。&lt;/p&gt;
+&lt;p&gt;当我们请求一个接口的时候，出现如：Access-Control-Allow-Origin 字眼的时候说明请求跨域了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1649717-20200227142258131-1409861315.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1649717-20200227142258131-1409861315.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;如何解决跨域问题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#如何解决跨域问题&#34;&gt;#&lt;/a&gt; 如何解决跨域问题&lt;/h3&gt;
+&lt;p&gt;1. 使用 jsonp 实现，网页通过 script 标签向服务器请求 json 数据，服务器受到请求后，将数据放在一个指定名字的回调函数的参数里面传给前端。&lt;/p&gt;
+&lt;figure class=&#34;highlight js&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;script src=&lt;span class=&#34;string&#34;&gt;&amp;quot;http://www.test.com/getData?callback=getData&amp;quot;&lt;/span&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// 向服务器test.com发出请求，该请求的查询字符串有一个callback参数，用来指定回调函数的名字&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// 处理服务器返回回调函数的数据&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;script type=&lt;span class=&#34;string&#34;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// 服务器返回的数据会放到回调函数里面&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;getData&lt;/span&gt;(&lt;span class=&#34;params&#34;&gt;res&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;comment&#34;&gt;// 处理获得的数据&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;built_in&#34;&gt;console&lt;/span&gt;.log(res.data)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;2. 使用 Jquery ajax 实现，&lt;/p&gt;
+&lt;figure class=&#34;highlight js&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;$.ajax(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  url: &lt;span class=&#34;string&#34;&gt;&amp;#x27;http://www.test.com:8888/getData&amp;#x27;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  type: &lt;span class=&#34;string&#34;&gt;&amp;#x27;get&amp;#x27;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  dataType: &lt;span class=&#34;string&#34;&gt;&amp;#x27;jsonp&amp;#x27;&lt;/span&gt;,  &lt;span class=&#34;comment&#34;&gt;// 请求方式为jsonp&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  jsonpCallback: &lt;span class=&#34;string&#34;&gt;&amp;quot;handleCallback&amp;quot;&lt;/span&gt;,    &lt;span class=&#34;comment&#34;&gt;// 自定义回调函数名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  data: &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3. 在 vue 开发中实现跨域：在 vue 项目根目录下找到 vue.config.js 文件（如果没有该文件则自己创建），在 proxy 中设置跨域&lt;/p&gt;
+&lt;figure class=&#34;highlight js&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;devServer: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   proxy: &amp;#123;  &lt;span class=&#34;comment&#34;&gt;//配置跨域&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &lt;span class=&#34;string&#34;&gt;&amp;#x27;/api&amp;#x27;&lt;/span&gt;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;       target: &lt;span class=&#34;string&#34;&gt;&amp;#x27;http://121.121.67.254:8185/&amp;#x27;&lt;/span&gt;,  &lt;span class=&#34;comment&#34;&gt;//这里后台的地址模拟的;应该填写你们真实的后台接口&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;       changOrigin: &lt;span class=&#34;literal&#34;&gt;true&lt;/span&gt;,  &lt;span class=&#34;comment&#34;&gt;//允许跨域&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;       pathRewrite: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         &lt;span class=&#34;comment&#34;&gt;/* 重写路径，当我们在浏览器中看到请求的地址为：http://localhost:8080/api/core/getData/userInfo 时&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;           实际上访问的地址是：http://121.121.67.254:8185/core/getData/userInfo,因为重写了 /api&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;          */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         &lt;span class=&#34;string&#34;&gt;&amp;#x27;^/api&amp;#x27;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;#x27;&amp;#x27;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;       &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;在 vue 中使用 proxy 进行跨域的原理是：将域名发送给本地的服务器（启动 vue 项目的服务，loclahost:8080），再由本地的服务器去请求真正的服务器。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以下是我在开发 vue 项目中实现跨域的步骤：&lt;/p&gt;
+&lt;p&gt;1. 在 proxy 中设置要访问的地址，并重写 /api 为空的字符串，因为我们真正请求的地址是没有带 /api，这个重写很重要！！！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1649717-20200227144905470-1085262547.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1649717-20200227144905470-1085262547.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2. 在创建 axios 实例的时候将 baseURL 设置为 /api , 这时候我们的跨域就已经完成了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1649717-20200227145106938-1311841373.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1649717-20200227145106938-1311841373.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;3. 假如请求的真正地址为：&lt;a href=&#34;http://121.121.67.254:8185/core/getdata/userInfo,%E4%BD%86%E6%88%91%E4%BB%AC%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8A%E4%BC%9A%E7%9C%8B%E5%88%B0%E6%98%AF%E8%BF%99%E6%A0%B7%E7%9A%84%EF%BC%9A&#34;&gt;http://121.121.67.254:8185/core/getdata/userInfo, 但我们在浏览器上会看到是这样的：&lt;/a&gt; &lt;a href=&#34;http://localhost:8080/api/core/getData/userInfo&#34;&gt;http://localhost:8080/api/core/getData/userInfo&lt;/a&gt; , 多了个 /api，但并不影响我们请求数据。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1649717-20200227151147818-885350634.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1649717-20200227151147818-885350634.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+</content>
+        <category term="Desk" />
+        <category term="vue" />
+        <updated>2021-07-09T08:21:00.706Z</updated>
+    </entry>
+</feed>

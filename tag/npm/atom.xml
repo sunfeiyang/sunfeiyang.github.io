@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;npm&#34; tag</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2021-07-09T05:47:42.368Z</updated>
+    <category term="DB" />
+    <category term="MongoDB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="CentOS" />
+    <category term="Docker" />
+    <category term="IDEA" />
+    <category term="JRebel" />
+    <category term="Statistic" />
+    <category term="JDK" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="VMware" />
+    <category term="Tomcat" />
+    <category term="Desk" />
+    <category term="Java" />
+    <category term="SPI" />
+    <category term="tools" />
+    <category term="git" />
+    <category term="MQ" />
+    <category term="MyBatis" />
+    <category term="IO" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="设计模式" />
+    <category term="Spring" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <category term="jmeter" />
+    <category term="gitlab" />
+    <category term="Jenkins" />
+    <category term="nexus3" />
+    <category term="maven" />
+    <category term="索引" />
+    <category term="elasticSearch" />
+    <category term="windows" />
+    <category term="nacos" />
+    <category term="springCloud-alibaba" />
+    <category term="sqlServer" />
+    <category term="npm" />
+    <category term="vue" />
+    <category term="Interview" />
+    <entry>
+        <id>http://xinghuohan.cn/2021/07/09/desk/npmBase/</id>
+        <title>npm基础知识点总结记录</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2021/07/09/desk/npmBase/"/>
+        <content type="html">&lt;p&gt;vue 基础知识点&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;vue-使用-npm-run-dev命令后-自动打开浏览器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#vue-使用-npm-run-dev命令后-自动打开浏览器&#34;&gt;#&lt;/a&gt; vue 使用 npm run dev 命令后 自动打开浏览器&lt;/h3&gt;
+&lt;p&gt;1、使用 vue-cli 老版本构建项目时， 可修改 config 文件夹下 index.js 文件 autoOpenBrowser 属性给为 true 即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1551162-20191125153631601-544714164.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1551162-20191125153631601-544714164.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;使用 vue-cli 3.x 版本后，所有的配置项均在 vue.config.js 中，修改 devServer 增加 open 属性为 true 即可&lt;/p&gt;
+&lt;p&gt;官方：&lt;a href=&#34;https://cli.vuejs.org/zh/config/#devserver&#34;&gt;https://cli.vuejs.org/zh/config/#devserver&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1551162-20191125153649052-1072532253.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1551162-20191125153649052-1072532253.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1551162-20191125153721414-1989487532.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1551162-20191125153721414-1989487532.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;所以自己项目中的配置就可以配置为：&lt;/p&gt;
+&lt;p&gt;在运行项目时即可自动打开浏览器&lt;/p&gt;
+&lt;p&gt;这种方法比较万能， 在 package.json 文件下 修改 scripts 中 dev 的命令 最后面加上 --open ； 如图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1551162-20191125153501504-311525175.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1551162-20191125153501504-311525175.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;vue-cli3项目解决npm-run-dev在浏览器打开两次的问题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#vue-cli3项目解决npm-run-dev在浏览器打开两次的问题&#34;&gt;#&lt;/a&gt; vue-cli3 项目解决 npm run dev 在浏览器打开两次的问题&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;删掉 vue.config.js 文件里面 devServer 下面的 open:true&lt;/li&gt;
+&lt;li&gt;在 package.json 文件 scripts 对象 dev 键后面加 --open，（“dev”: “vue-cli-service serve --open”）&lt;/li&gt;
+&lt;li&gt;ok 重新运行 npm run dev (修改配置文件后要重新启动项目修改才会生效）&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+        <category term="Desk" />
+        <category term="npm" />
+        <updated>2021-07-09T05:47:42.368Z</updated>
+    </entry>
+</feed>
