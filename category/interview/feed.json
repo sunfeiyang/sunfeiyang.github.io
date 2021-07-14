@@ -5,6 +5,17 @@
     "home_page_url": "http://xinghuohan.cn",
     "items": [
         {
+            "id": "http://xinghuohan.cn/2021/07/14/Interview/003HashMap-put/",
+            "url": "http://xinghuohan.cn/2021/07/14/Interview/003HashMap-put/",
+            "title": "",
+            "date_published": "2021-07-14T00:52:48.604Z",
+            "content_html": "<p><strong>思路</strong></p>\n<p>1.7 与 1.8 方法的比较</p>\n<p>put 方法大致流程–》put 方法时下标位置元素为空（1.7、1.8）–》不为空</p>\n<hr>\n<p><strong>1.7 HashMap 采用的是数据 + 链表</strong></p>\n<p><img src=\"/img/1024555-20161113235348670-746615111.png\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/1024555-20161113235348670-746615111.png\" class=\"lozad post-image\"></p>\n<p><strong>1.8 HashMap 采用的是数组 + 链表 + 红黑树</strong></p>\n<p><img src=\"/img/20347625-8a203bab21e20da8.png\" alt=\"img\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/20347625-8a203bab21e20da8.png\" class=\"lozad post-image\"></p>\n<h2 id=\"大致流程\"><a class=\"markdownIt-Anchor\" href=\"#大致流程\">#</a> 大致流程</h2>\n<p>根据 key 通过哈希算法与运算得出数据下标。</p>\n<h3 id=\"下标位置元素为空\"><a class=\"markdownIt-Anchor\" href=\"#下标位置元素为空\">#</a> 下标位置元素为空</h3>\n<p>将 key 和 value 封装成 Entry 对象（1.7 中是 Entry 对象，1.8 中采用 Node 对象），并放入该位置</p>\n<h3 id=\"下标位置不为空\"><a class=\"markdownIt-Anchor\" href=\"#下标位置不为空\">#</a> 下标位置不为空</h3>\n<h4 id=\"17\"><a class=\"markdownIt-Anchor\" href=\"#17\">#</a> 1.7</h4>\n<p>先判断是否需要扩容，如果需要则先进行扩容，如果不用就生成 Entry 对象，并使用头插法添加到当前位置的链表中。</p>\n<h4 id=\"18\"><a class=\"markdownIt-Anchor\" href=\"#18\">#</a> 1.8</h4>\n<p>先判断当前位置上的 Node 类型，看是红黑树 Node 还是链表 Node</p>\n<ol>\n<li>如果是红黑树 Node，则将 key 和 value 封装成一个红黑树节点添加到红黑树中，在这个过程中判断红黑树中是否存在当前 key，如果存在则更新 value</li>\n<li>如果此位置上的 Node 对象是链表节点，则将 key 和 value 封装成一个链表 Node 并通过尾插法插入到链表的最后位置，因为是尾插法，，所以需要遍历链表，在遍历链表的过程中判断是否存在当前 key，如果存在则更新 value，当遍历完链表之后，将新链表 Node 插入后链表中，插入链表后，会看当前链表的个数，如果大于等于 8，那么就会将链表转换成红黑树</li>\n<li>将 key 和 value 封装位 Node 插入到链表或红黑树中后，再判断是否需要进行扩容，如果需要就扩容，如果不需要就结束 put 方法</li>\n</ol>\n",
+            "tags": [
+                "Java",
+                "Interview"
+            ]
+        },
+        {
             "id": "http://xinghuohan.cn/2021/07/13/Interview/002ThreadLocal/",
             "url": "http://xinghuohan.cn/2021/07/13/Interview/002ThreadLocal/",
             "title": "",

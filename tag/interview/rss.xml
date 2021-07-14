@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Tue, 13 Jul 2021 22:22:11 +0800</pubDate>
-        <lastBuildDate>Tue, 13 Jul 2021 22:22:11 +0800</lastBuildDate>
+        <pubDate>Wed, 14 Jul 2021 08:52:48 +0800</pubDate>
+        <lastBuildDate>Wed, 14 Jul 2021 08:52:48 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -50,6 +50,37 @@
         <category>npm</category>
         <category>vue</category>
         <category>Interview</category>
+        <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/07/14/Interview/003HashMap-put/</guid>
+            <title></title>
+            <link>http://xinghuohan.cn/2021/07/14/Interview/003HashMap-put/</link>
+            <category>Java</category>
+            <category>Interview</category>
+            <pubDate>Wed, 14 Jul 2021 08:52:48 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;&lt;strong&gt;思路&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1.7 与 1.8 方法的比较&lt;/p&gt;
+&lt;p&gt;put 方法大致流程–》put 方法时下标位置元素为空（1.7、1.8）–》不为空&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;1.7 HashMap 采用的是数据 + 链表&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1024555-20161113235348670-746615111.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1024555-20161113235348670-746615111.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.8 HashMap 采用的是数组 + 链表 + 红黑树&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20347625-8a203bab21e20da8.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20347625-8a203bab21e20da8.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;大致流程&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#大致流程&#34;&gt;#&lt;/a&gt; 大致流程&lt;/h2&gt;
+&lt;p&gt;根据 key 通过哈希算法与运算得出数据下标。&lt;/p&gt;
+&lt;h3 id=&#34;下标位置元素为空&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#下标位置元素为空&#34;&gt;#&lt;/a&gt; 下标位置元素为空&lt;/h3&gt;
+&lt;p&gt;将 key 和 value 封装成 Entry 对象（1.7 中是 Entry 对象，1.8 中采用 Node 对象），并放入该位置&lt;/p&gt;
+&lt;h3 id=&#34;下标位置不为空&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#下标位置不为空&#34;&gt;#&lt;/a&gt; 下标位置不为空&lt;/h3&gt;
+&lt;h4 id=&#34;17&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#17&#34;&gt;#&lt;/a&gt; 1.7&lt;/h4&gt;
+&lt;p&gt;先判断是否需要扩容，如果需要则先进行扩容，如果不用就生成 Entry 对象，并使用头插法添加到当前位置的链表中。&lt;/p&gt;
+&lt;h4 id=&#34;18&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#18&#34;&gt;#&lt;/a&gt; 1.8&lt;/h4&gt;
+&lt;p&gt;先判断当前位置上的 Node 类型，看是红黑树 Node 还是链表 Node&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如果是红黑树 Node，则将 key 和 value 封装成一个红黑树节点添加到红黑树中，在这个过程中判断红黑树中是否存在当前 key，如果存在则更新 value&lt;/li&gt;
+&lt;li&gt;如果此位置上的 Node 对象是链表节点，则将 key 和 value 封装成一个链表 Node 并通过尾插法插入到链表的最后位置，因为是尾插法，，所以需要遍历链表，在遍历链表的过程中判断是否存在当前 key，如果存在则更新 value，当遍历完链表之后，将新链表 Node 插入后链表中，插入链表后，会看当前链表的个数，如果大于等于 8，那么就会将链表转换成红黑树&lt;/li&gt;
+&lt;li&gt;将 key 和 value 封装位 Node 插入到链表或红黑树中后，再判断是否需要进行扩容，如果需要就扩容，如果不需要就结束 put 方法&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/07/13/Interview/002ThreadLocal/</guid>
             <title></title>
