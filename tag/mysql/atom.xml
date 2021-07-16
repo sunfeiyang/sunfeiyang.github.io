@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;mysql&#34; tag</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2021-01-06T07:48:02.642Z</updated>
+    <category term="DB" />
+    <category term="MongoDB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="CentOS" />
+    <category term="Docker" />
+    <category term="IDEA" />
+    <category term="JRebel" />
+    <category term="Statistic" />
+    <category term="JDK" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="VMware" />
+    <category term="Tomcat" />
+    <category term="Desk" />
+    <category term="Java" />
+    <category term="SPI" />
+    <category term="tools" />
+    <category term="git" />
+    <category term="MQ" />
+    <category term="MyBatis" />
+    <category term="IO" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="设计模式" />
+    <category term="Spring" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <category term="jmeter" />
+    <category term="gitlab" />
+    <category term="Jenkins" />
+    <category term="nexus3" />
+    <category term="maven" />
+    <category term="索引" />
+    <category term="elasticSearch" />
+    <category term="windows" />
+    <category term="nacos" />
+    <category term="springCloud-alibaba" />
+    <category term="sqlServer" />
+    <category term="npm" />
+    <category term="vue" />
+    <category term="Interview" />
+    <category term="algorithm" />
+    <entry>
+        <id>http://xinghuohan.cn/2021/01/06/Docker/dockerEdit/</id>
+        <title>Docker 修改MySQL配置</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2021/01/06/Docker/dockerEdit/"/>
+        <content type="html">&lt;p&gt;Docker 修改 MySQL 配置 &lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;docker-修改mysql配置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker-修改mysql配置&#34;&gt;#&lt;/a&gt; Docker 修改 MySQL 配置&lt;/h1&gt;
+&lt;p&gt;作者：YoungJ&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;前言：大部分程序员在刚使用 docker 时，按照教程迅速的就装完了 mysql，在使用的过程中出现各种问题：比如中文乱码、 &lt;code&gt;com.mysql.jdbc.PacketTooBigException: Packet for query is too large (1053 &amp;gt; 1024).&lt;/code&gt;  等等，最简单的方式通过 sql 去设置，但每次重启又还原了，那么本文就是通过 docker 下 MySQL 的配置去解决该问题。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;从安装说起，获取镜像&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker pull mysql:5.7.18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查看镜像&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker images&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190806154125457.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190806154125457.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;运行 docker 容器&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker run -d -p 3306:3306 --name mymysql -e MYSQL_ROOT_PASSWORD=123456 mysql:5.7.18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;code&gt;(* 这里没有设置挂载外部的配置)&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查看容器是否启动成功&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker ps&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190806154209392.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190806154209392.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进入容器&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker exec -it 1383f2e49cb7 /bin/bash&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190806154239219.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190806154239219.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查看配置&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;more /etc/mysql/mysql.conf.d/mysqld.cnf&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;code&gt;（* 如果你执行到这步提示没有该文件，别着急，往下看）&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编辑配置&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;第一种方式：将配置从容器中 copy 到宿主机（之前文章讲到过，可以去看下，如果没有该文件，那这一步省略，稍后直接将我写好的配置放到容器中就好）&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker cp mysql:/etc/mysql/mysql.conf.d/mysqld.cnf /root/mysqld.cnf&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;mysqld.cnf 脚本如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; Copyright (c) 2014, 2016, Oracle and/or its affiliates. All rights reserved.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; This program is free software; you can redistribute it and/or modify&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; it under the terms of the GNU General Public License as published by&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; the Free Software Foundation; version 2 of the License.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; This program is distributed &lt;span class=&#34;keyword&#34;&gt;in&lt;/span&gt; the hope that it will be useful,&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; but WITHOUT ANY WARRANTY; without even the implied warranty of&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; GNU General Public License &lt;span class=&#34;keyword&#34;&gt;for&lt;/span&gt; more details.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; You should have received a copy of the GNU General Public License&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; along with this program; &lt;span class=&#34;keyword&#34;&gt;if&lt;/span&gt; not, write to the Free Software&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; The MySQL  Server configuration file.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; For explanations see&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; http://dev.mysql.com/doc/mysql/en/server-system-variables.html&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysqld]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;pid-file        = /var/run/mysqld/mysqld.pid&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;socket          = /var/run/mysqld/mysqld.sock&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;datadir         = /var/lib/mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;log&lt;/span&gt;-error      = /var/&lt;span class=&#34;built_in&#34;&gt;log&lt;/span&gt;/mysql/error.log&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; By default we only accept connections from localhost&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;built_in&#34;&gt;bind&lt;/span&gt;-address   = 127.0.0.1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; Disabling symbolic-links is recommended to prevent assorted security risks&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;symbolic-links=0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;character_set_server=utf8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;init_connect=&amp;#x27;SET NAMES utf8&amp;#x27;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;max_allowed_packet = 20M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysql]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;default-character-set = utf8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysql.server]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;default-character-set = utf8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysqld_safe]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;default-character-set = utf8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[client]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;default-character-set = utf8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;将修改后的配置copy到容器&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker cp /root/mysqld.cnf mymysql:/etc/mysql/mysql.conf.d/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;code&gt;(* mymysql是你容器的name,不清楚的可以通过docker ps看到)&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;另一种方式，直接编辑&lt;br&gt;
+在使用 docker 容器时，有时候里边没有安装 vim，敲 vim 命令时提示说：vim: command not found，这个时候就需要安装 vim，可是当你敲 apt-get install vim 命令时，提示：&lt;br&gt;
+Reading package lists… Done&lt;br&gt;
+Building dependency tree&lt;br&gt;
+Reading state information… Done&lt;br&gt;
+E: Unable to locate package vim&lt;br&gt;
+ 这时候需要敲：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;apt-get update&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这个命令的作用是：同步 /etc/apt/sources.list 和 /etc/apt/sources.list.d 中列出的源的索引，这样才能获取到最新的软件包。&lt;br&gt;
+等更新完毕以后再敲命令：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;apt-get install vim&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;vim /etc/mysql/mysql.conf.d/mysqld.cnf&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;接下来重启容器就可以了（可以参考之前的文章）&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;docker restart 1383f2e49cb7 &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+        <category term="MySQL" />
+        <category term="Docker" />
+        <updated>2021-01-06T07:48:02.642Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2020/09/22/DB/MySQl-error/</id>
+        <title>MySQL常见异常</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/09/22/DB/MySQl-error/"/>
+        <content type="html">&lt;p&gt;mySQL 数据库在使用过程中遇到的一些问题记录&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;linux登录mysql报错&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#linux登录mysql报错&#34;&gt;#&lt;/a&gt; linux，登录 mysql 报错&lt;/h3&gt;
+&lt;p&gt;ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/var/lib/mysql.sock’&lt;/p&gt;
+&lt;p&gt;首先检查 /etc 下的是否有 my.cnf 文件，这是启动时基本配置文件&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[mysqld]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;log-bin&amp;#x3D;mysql-bin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;server-id&amp;#x3D;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Remove leading # and set to the amount of RAM for the most important data&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;innodb_buffer_pool_size &amp;#x3D; 8M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Remove leading # to turn on a very important data integrity option: logging&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# changes to the binary log between backups.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# log_bin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Remove leading # to set options mainly useful for reporting servers.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# The server defaults are faster for transactions and fast SELECTs.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Adjust sizes as needed, experiment to find the optimal values.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;join_buffer_size &amp;#x3D; 8M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sort_buffer_size &amp;#x3D; 2M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;read_rnd_buffer_size &amp;#x3D; 2M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;datadir&amp;#x3D;&amp;#x2F;var&amp;#x2F;lib&amp;#x2F;mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;socket&amp;#x3D;&amp;#x2F;var&amp;#x2F;lib&amp;#x2F;mysql&amp;#x2F;mysql.sock&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;log-bin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;max_binlog_size&amp;#x3D;50M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;expire_logs_days&amp;#x3D;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# 关闭所有网络链接,开启后只能使用mysql客户端链接&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#skip-networking&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#default-time-zone &amp;#x3D; &amp;#39;+8:00&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;performance_schema_max_table_instances&amp;#x3D;200&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;table_definition_cache&amp;#x3D;200&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;table_open_cache&amp;#x3D;128&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;bind-address &amp;#x3D; 0.0.0.0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#skip-grant-tables&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Disabling symbolic-links is recommended to prevent assorted security risks&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;symbolic-links&amp;#x3D;0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# Recommended in standard MySQL setup&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sql_mode&amp;#x3D;NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysqld_safe]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;log-error&amp;#x3D;&amp;#x2F;var&amp;#x2F;log&amp;#x2F;mysqld.log&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;pid-file&amp;#x3D;&amp;#x2F;var&amp;#x2F;run&amp;#x2F;mysqld&amp;#x2F;mysqld.pid&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#配置开启binlog&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;log‐bin&amp;#x3D;&amp;#x2F;usr&amp;#x2F;local&amp;#x2F;software&amp;#x2F;mysql&amp;#x2F;binlog&amp;#x2F;mysql‐bin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;##注意5.7以及更高版本需要配置本项:server‐id&amp;#x3D;123454(自定义,保证唯一性);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;###binlog格式,有3种statement,row,mixed&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;binlog‐format&amp;#x3D;ROW&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;###表示每1次执行写入就与硬盘同步,会影响性能,为0时表示,事务提交时mysql不做刷盘操作,由系统决定&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sync‐binlog&amp;#x3D;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;关闭进程指令：ps aux |grep ‘mysql*’&lt;br&gt;
+关闭 mysql 的所有进程&lt;/p&gt;
+&lt;p&gt;启动 mysql: systemctl start mysqld&lt;/p&gt;
+&lt;h3 id=&#34;server-id问题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#server-id问题&#34;&gt;#&lt;/a&gt; server-id 问题&lt;/h3&gt;
+&lt;p&gt;[ERROR] You have enabled the binary log, but you haven’t provided the mandatory server-id.&lt;/p&gt;
+&lt;p&gt;报错的原因：&lt;/p&gt;
+&lt;p&gt;在设置 bin log 日志的时候，没有设置 server_id 参数。server-id 参数用于在复制中，为主库和备库提供一个独立的 ID，以区分主库和备库；开启二进制文件的时候，需要设置这个参数。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[root@mysql bin]# vi &amp;#x2F;etc&amp;#x2F;my.cnf&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;#add&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[mysqld]&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;log-bin&amp;#x3D;mysql-bin&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;server-id&amp;#x3D;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;远程登录授权&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#远程登录授权&#34;&gt;#&lt;/a&gt; 远程登录授权&lt;/h3&gt;
+&lt;p&gt;Access denied for user ‘root’@’%’ to database ‘XXXX’&lt;/p&gt;
+&lt;p&gt;解决方法&lt;br&gt;
+最后发现是 user 表中’root’@’%’没有 grant 的权限&lt;br&gt;
+可以用如下命令查看：&lt;/p&gt;
+&lt;p&gt;可以看到现在这两个权限都是 N&lt;br&gt;
+ 然后我们更新它们为 Y，然后重启 mysql&lt;/p&gt;
+&lt;p&gt;update mysql.user set Grant_priv=‘Y’,Super_priv=‘Y’ where user = ‘root’ and host = ‘%’;&lt;/p&gt;
+&lt;h3 id=&#34;mysql57简单密码错误&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#mysql57简单密码错误&#34;&gt;#&lt;/a&gt; mysql5.7 简单密码错误&lt;/h3&gt;
+&lt;p&gt;ERROR 1819 (HY000): Your password does not satisfy the current policy requirements&lt;/p&gt;
+&lt;p&gt;有时候，只是为了自己测试，不想密码设置得那么复杂，譬如只想设置 root 的密码为 123456。&lt;/p&gt;
+&lt;p&gt;SET PASSWORD FOR ‘root’@‘localhost’ = PASSWORD(‘123456’);&lt;/p&gt;
+&lt;p&gt;但是会报错：&lt;/p&gt;
+&lt;figure class=&#34;highlight delphi&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; &lt;span class=&#34;keyword&#34;&gt;SET&lt;/span&gt; PASSWORD &lt;span class=&#34;keyword&#34;&gt;FOR&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;#x27;root&amp;#x27;&lt;/span&gt;@&lt;span class=&#34;string&#34;&gt;&amp;#x27;localhost&amp;#x27;&lt;/span&gt; = PASSWORD(&lt;span class=&#34;string&#34;&gt;&amp;#x27;123&amp;#x27;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ERROR &lt;span class=&#34;number&#34;&gt;1819&lt;/span&gt; (HY000): Your password does &lt;span class=&#34;keyword&#34;&gt;not&lt;/span&gt; satisfy the current policy requirements&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;【原因】&lt;/p&gt;
+&lt;p&gt;原来 MySQL5.6.6 版本之后增加了密码强度验证插件 validate_password，相关参数设置的较为严格。&lt;br&gt;
+使用了该插件会检查设置的密码是否符合当前设置的强度规则，若不满足则拒绝设置。影响的语句和函数有：create user,grant,set password,password (),old password。&lt;br&gt;
+【解决】&lt;/p&gt;
+&lt;p&gt;1） 查看 mysql 全局参数配置&lt;/p&gt;
+&lt;p&gt;该问题其实与 mysql 的 validate_password_policy 的值有关。&lt;br&gt;
+查看一下 msyql 密码相关的几个全局参数：&lt;/p&gt;
+&lt;figure class=&#34;highlight sql&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; select @@validate_password_policy;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;+&lt;span class=&#34;comment&#34;&gt;----------------------------+&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| @@validate_password_policy |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;+&lt;span class=&#34;comment&#34;&gt;----------------------------+&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| MEDIUM                     |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;+&lt;span class=&#34;comment&#34;&gt;----------------------------+&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1 row in &lt;span class=&#34;keyword&#34;&gt;set&lt;/span&gt; (&lt;span class=&#34;number&#34;&gt;0.00&lt;/span&gt; sec)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; &lt;span class=&#34;keyword&#34;&gt;SHOW&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;VARIABLES&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;LIKE&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;#x27;validate_password%&amp;#x27;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;+&lt;span class=&#34;comment&#34;&gt;--------------------------------------+--------+&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| Variable_name                        | Value  |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;+&lt;span class=&#34;comment&#34;&gt;--------------------------------------+--------+&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_dictionary_file    |        |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_length             | 8      |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_mixed_case_count   | 1      |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_number_count       | 1      |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_policy             | MEDIUM |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_special_char_count | 1      |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;+&lt;span class=&#34;comment&#34;&gt;--------------------------------------+--------+&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6 rows in &lt;span class=&#34;keyword&#34;&gt;set&lt;/span&gt; (&lt;span class=&#34;number&#34;&gt;0.08&lt;/span&gt; sec)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;2）参数解释&lt;/p&gt;
+&lt;p&gt;validate_password_dictionary_file&lt;br&gt;
+ 插件用于验证密码强度的字典文件路径。&lt;/p&gt;
+&lt;p&gt;validate_password_length&lt;br&gt;
+ 密码最小长度，参数默认为 8，它有最小值的限制，最小值为：validate_password_number_count + validate_password_special_char_count + (2 * validate_password_mixed_case_count)&lt;/p&gt;
+&lt;p&gt;validate_password_mixed_case_count&lt;br&gt;
+ 密码至少要包含的小写字母个数和大写字母个数。&lt;/p&gt;
+&lt;p&gt;validate_password_number_count&lt;br&gt;
+ 密码至少要包含的数字个数。&lt;/p&gt;
+&lt;p&gt;validate_password_policy&lt;br&gt;
+ 密码强度检查等级，0/LOW、1/MEDIUM、2/STRONG。有以下取值：&lt;br&gt;
+&lt;strong&gt;Policy         Tests Performed&lt;/strong&gt;&lt;br&gt;
+0 or LOW        Length&lt;br&gt;
+1 or MEDIUM     Length; numeric, lowercase/uppercase, and special characters&lt;br&gt;
+2 or STRONG     Length; numeric, lowercase/uppercase, and special characters; dictionary file&lt;br&gt;
+ 默认是 1，即 MEDIUM，所以刚开始设置的密码必须符合长度，且必须含有数字，小写或大写字母，特殊字符。&lt;/p&gt;
+&lt;p&gt;validate_password_special_char_count&lt;br&gt;
+ 密码至少要包含的特殊字符数。&lt;/p&gt;
+&lt;p&gt;3）修改 mysql 参数配置&lt;/p&gt;
+&lt;figure class=&#34;highlight sql&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; set global validate_password_policy=0;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Query OK, 0 rows affected (0.05 sec)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; set global validate_password_mixed_case_count=0;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Query OK, 0 rows affected (0.00 sec)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; set global validate_password_number_count=3;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Query OK, 0 rows affected (0.00 sec)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; set global validate_password_special_char_count=0;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Query OK, 0 rows affected (0.00 sec)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; set global validate_password_length=3;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Query OK, 0 rows affected (0.00 sec)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; SHOW VARIABLES LIKE &amp;#x27;validate_password%&amp;#x27;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;+&lt;span class=&#34;comment&#34;&gt;--------------------------------------+-------+&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| Variable_name                        | Value |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;+&lt;span class=&#34;comment&#34;&gt;--------------------------------------+-------+&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_dictionary_file    |       |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_length             | 3     |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_mixed_case_count   | 0     |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_number_count       | 3     |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_policy             | LOW   |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;| validate_password_special_char_count | 0     |&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;+&lt;span class=&#34;comment&#34;&gt;--------------------------------------+-------+&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6 rows in &lt;span class=&#34;keyword&#34;&gt;set&lt;/span&gt; (&lt;span class=&#34;number&#34;&gt;0.00&lt;/span&gt; sec)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;4）修改简单密码：&lt;/p&gt;
+&lt;figure class=&#34;highlight sql&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;mysql&amp;gt; SET PASSWORD FOR &amp;#x27;root&amp;#x27;@&amp;#x27;localhost&amp;#x27; = PASSWORD(&amp;#x27;123&amp;#x27;);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;Query OK, 0 rows affected, 1 warning (0.00 sec)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+        <category term="DB" />
+        <category term="MySQL" />
+        <category term="Linux" />
+        <updated>2020-09-21T16:00:00.000Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2019/11/22/DB/MySQl-install/</id>
+        <title>CentOS安装MySql5.7</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2019/11/22/DB/MySQl-install/"/>
+        <content type="html">&lt;p&gt;mySQL5.7 数据库在 CentOS 服务器上安装&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;一-安装yum-repo&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#一-安装yum-repo&#34;&gt;#&lt;/a&gt; 一、安装 YUM Repo&lt;/h1&gt;
+&lt;h3 id=&#34;1-由于centos-的yum源中没有mysql需要到mysql的官网下载yum-repo配置文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-由于centos-的yum源中没有mysql需要到mysql的官网下载yum-repo配置文件&#34;&gt;#&lt;/a&gt; 1、由于 CentOS 的 yum 源中没有 mysql，需要到 mysql 的官网下载 yum repo 配置文件。&lt;/h3&gt;
+&lt;p&gt;下载命令：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;2-然后进行repo的安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-然后进行repo的安装&#34;&gt;#&lt;/a&gt; 2、然后进行 repo 的安装：&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;rpm -ivh mysql57-community-release-el7-9.noarch.rpm&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;执行完成后会在 /etc/yum.repos.d/ 目录下生成两个 repo 文件 mysql-community.repo mysql-community-source.repo&lt;/p&gt;
+&lt;h1 id=&#34;二-使用yum命令即可完成安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#二-使用yum命令即可完成安装&#34;&gt;#&lt;/a&gt; 二、使用 yum 命令即可完成安装&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;注意：必须进入到 /etc/yum.repos.d/ 目录后再执行以下脚本&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 1、安装命令：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;yum install mysql-server&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 2、启动msyql：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl start mysqld #启动MySQL&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 3、获取安装时的临时密码（在第一次登录时就是用这个密码）：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;grep &amp;#x27;temporary password&amp;#x27; /var/log/mysqld.log&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 4、倘若没有获取临时密码，则&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4.1、删除原来安装过的mysql残留的数据&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;rm -rf /var/lib/mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4.2.再启动mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl start mysqld #启动MySQL&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&#34;三-登录&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#三-登录&#34;&gt;#&lt;/a&gt; 三、登录：&lt;/h1&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 1、方式一（已验证）：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql -u root -p&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;然后输入密码（刚刚获取的临时密码）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 2、方式二（未验证）：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;进入mysql数据库&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;root@test:/home# mysql -uroot -proot  &amp;lt;uroot是用户名，proot是密码&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;如：&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;root@test:/home# mysql -root -XXXX&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;3-若登录不了则进行以下配置跳过登录验证&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3-若登录不了则进行以下配置跳过登录验证&#34;&gt;#&lt;/a&gt; 3、若登录不了，则进行以下配置，跳过登录验证&lt;/h3&gt;
+&lt;p&gt;3.1、重置密码的第一步就是跳过 MySQL 的密码认证过程，方法如下：&lt;/p&gt;
+&lt;p&gt;3.2、vim /etc/my.cnf (注：windows 下修改的是 my.ini)&lt;/p&gt;
+&lt;p&gt;在文档内搜索 mysqld 定位到 [mysqld] 文本段：&lt;/p&gt;
+&lt;p&gt;/mysqld (在 vim 编辑状态下直接输入该命令可搜索文本内容)&lt;/p&gt;
+&lt;p&gt;在 [mysqld] 后面任意一行添加 “skip-grant-tables” 用来跳过密码验证的过程，如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190417160900803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaGl1c2Rhc2hp,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190417160900803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaGl1c2Rhc2hp,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;3.3、保存文档并退出：&lt;/p&gt;
+&lt;p&gt;#:wq&lt;/p&gt;
+&lt;p&gt;3.4、&lt;strong&gt;接下来我们需要重启 MySQL：&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&#34;四-登录成功后修改密码&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#四-登录成功后修改密码&#34;&gt;#&lt;/a&gt; 四、登录成功后修改密码&lt;/h1&gt;
+&lt;h3 id=&#34;1-注意这里会进行密码强度校验密码设置时必须包含大小写字母-特殊符号-数字并且长度大于8位&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-注意这里会进行密码强度校验密码设置时必须包含大小写字母-特殊符号-数字并且长度大于8位&#34;&gt;#&lt;/a&gt; 1、注意：这里会进行密码强度校验（密码设置时必须包含大小写字母、特殊符号、数字，并且长度大于 8 位）&lt;/h3&gt;
+&lt;h3 id=&#34;2-如不满足以上条件则会报错如下图&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-如不满足以上条件则会报错如下图&#34;&gt;#&lt;/a&gt; 2、如不满足以上条件则会报错，如下图：&lt;/h3&gt;
+&lt;p&gt;密码策略问题异常信息：&lt;/p&gt;
+&lt;p&gt;ERROR 1819 (HY000): Your password does not satisfy the current policy requirements&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190417161754664.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaGl1c2Rhc2hp,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190417161754664.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaGl1c2Rhc2hp,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;3-解决办法&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3-解决办法&#34;&gt;#&lt;/a&gt; 3、解决办法：&lt;/h3&gt;
+&lt;p&gt;3.1、查看 mysql 初始的密码策略，&lt;/p&gt;
+ &lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;输入语句 “ SHOW VARIABLES LIKE &amp;#x27;validate_password%&amp;#x27;; ” 进行查看，&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://img-blog.csdnimg.cn/20190417161937367.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaGl1c2Rhc2hp,size_16,color_FFFFFF,t_70&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;https://img-blog.csdnimg.cn/20190417161937367.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvaGl1c2Rhc2hp,size_16,color_FFFFFF,t_70&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;3.2、首先需要设置密码的验证强度等级，设置 validate_password_policy 的全局参数为 LOW 即可，&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;输入设值语句 “ set global validate_password_policy=LOW; ” 进行设值，&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3.3、当前密码长度为 8 ，如果不介意的话就不用修改了，按照通用的来讲，设置为 6 位的密码，设置 validate_password_length 的全局参数为 6 即可，&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;输入设值语句 “ set global validate_password_length=6; ” 进行设值，&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3.4、现在可以为 mysql 设置简单密码了，只要满足六位的长度即可，&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;输入修改语句 “ ALTER USER &amp;#x27;root&amp;#x27;@&amp;#x27;localhost&amp;#x27; IDENTIFIED BY &amp;#x27;123456&amp;#x27;; ” 可以看到修改成功，表示密码策略修改成功了！！！&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3.5、注：在默认密码的长度最小值为 4 ，由 大 / 小写字母各一个 + 阿拉伯数字一个 + 特殊字符一个，&lt;/p&gt;
+&lt;p&gt;只要设置密码的长度小于 3 ，都将自动设值为 4 ，&lt;/p&gt;
+&lt;p&gt;3.6、关于 mysql 密码策略相关参数；&lt;/p&gt;
+&lt;p&gt;1）、validate_password_length  固定密码的总长度；&lt;/p&gt;
+&lt;p&gt;2）、validate_password_dictionary_file 指定密码验证的文件路径；&lt;/p&gt;
+&lt;p&gt;3）、validate_password_mixed_case_count  整个密码中至少要包含大 / 小写字母的总个数；&lt;/p&gt;
+&lt;p&gt;4）、validate_password_number_count  整个密码中至少要包含阿拉伯数字的个数；&lt;/p&gt;
+&lt;p&gt;5）、validate_password_policy 指定密码的强度验证等级，默认为 MEDIUM；&lt;/p&gt;
+&lt;p&gt;关于 validate_password_policy 的取值：&lt;/p&gt;
+&lt;p&gt;LOW：只验证长度；&lt;/p&gt;
+&lt;p&gt;1/MEDIUM：验证长度、数字、大小写、特殊字符；&lt;/p&gt;
+&lt;p&gt;2/STRONG：验证长度、数字、大小写、特殊字符、字典文件；&lt;/p&gt;
+&lt;p&gt;6）、validate_password_special_char_count 整个密码中至少要包含特殊字符的个数；&lt;/p&gt;
+&lt;h1 id=&#34;五-修改密码&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#五-修改密码&#34;&gt;#&lt;/a&gt; 五、修改密码&lt;/h1&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 1、方式一（已验证）：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ALTER USER &amp;#x27;root&amp;#x27;@&amp;#x27;localhost&amp;#x27; IDENTIFIED BY &amp;#x27;@abcd123456&amp;#x27;; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 2、方式二（未验证）&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;set password=password(&amp;quot;yourpassword&amp;quot;); &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;方法1： 用SET PASSWORD命令 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;首先登录MySQL。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;格式：mysql&amp;gt; set password for 用户名@localhost = password(‘新密码’); &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;例子：mysql&amp;gt; set password for root@localhost = password(‘123’);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;方法2：用mysqladmin &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;格式：mysqladmin -u用户名 -p旧密码 password 新密码 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;例子：mysqladmin -uroot -p123456 password 123&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;方法3：用UPDATE直接编辑user表 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;首先登录MySQL。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;mysql&amp;gt;&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; use mysql; &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;mysql&amp;gt;&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; update user &lt;span class=&#34;built_in&#34;&gt;set&lt;/span&gt; password=password(‘123’) &lt;span class=&#34;built_in&#34;&gt;where&lt;/span&gt; user=’root’ and host=’localhost’; &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;mysql&amp;gt;&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; flush privileges;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;方法4：在忘记root密码的时候，可以这样 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;以windows为例： &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1. 关闭正在运行的MySQL服务。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2. 打开DOS窗口，转到mysql\bin目录。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3. 输入mysqld –skip-grant-tables 回车。–skip-grant-tables 的意思是启动MySQL服务的时候跳过权限表认证。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4. 再开一个DOS窗口（因为刚才那个DOS窗口已经不能动了），转到mysql\bin目录。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5. 输入mysql回车，如果成功，将出现MySQL提示符 &amp;gt;。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6. 连接权限数据库： use mysql; 。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6. 改密码：update user set password=password(“123”) where user=”root”;（别忘了最后加分号） 。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7. 刷新权限（必须步骤）：flush privileges;　。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8. 退出 quit。 &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9. 注销系统，再进入，使用用户名root和刚才设置的新密码123登录。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&#34;六-开启远程控制&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#六-开启远程控制&#34;&gt;#&lt;/a&gt; 六、开启远程控制&lt;/h1&gt;
+&lt;p&gt;MySQL 默认是没有开启远程控制的，必须添加远程访问的用户，即默认是只能自己访问，别的机器是访问不了的。&lt;/p&gt;
+&lt;h3 id=&#34;1-方式一已验证&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-方式一已验证&#34;&gt;#&lt;/a&gt; 1、方式一（已验证）：&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1.1、连接服务器: mysql -u root -p&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.2、看当前所有数据库：show databases;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.3、进入mysql数据库：use mysql;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.4、查看mysql数据库中所有的表：show tables;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.5、查看user表中的数据：select Host, User,Password from user;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.6、修改user表中的Host:  update user set Host=&amp;#x27;%&amp;#x27; where User=&amp;#x27;root&amp;#x27;; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;说明： % 代表任意的客户端,可替换成具体IP地址。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.7、最后刷新一下：flush privileges;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1.8、注意：一定要记得在写sql的时候要在语句完成后加上&amp;quot; ; &amp;quot;**&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;2-方式二未验证&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-方式二未验证&#34;&gt;#&lt;/a&gt; 2、方式二（未验证）：&lt;/h3&gt;
+&lt;h3 id=&#34;1-使用-grant-命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1-使用-grant-命令&#34;&gt;#&lt;/a&gt; 1、使用 grant 命令&lt;/h3&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;grant all privileges on 数据库名.表名 to 创建的用户名(root)@&amp;quot;%&amp;quot; identified by &amp;quot;密码&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;2-格式说明&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2-格式说明&#34;&gt;#&lt;/a&gt; 2、格式说明：&lt;/h3&gt;
+&lt;p&gt;数据库名。表名 如果写成 *.* 代表授权所有的数据库 flush privileges; #刷新刚才的内容&lt;/p&gt;
+&lt;p&gt;如：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;grant all privileges on *.* to root@&amp;quot;113.123.123.1&amp;quot; identified by &amp;quot;123456789&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;@ 后面是访问mysql的客户端IP地址（或是 主机名） % 代表任意的客户端，如果填写 localhost 为本地访问（那此用户就不能远程访问该mysql数据库了）&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&#34;七-其他配置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#七-其他配置&#34;&gt;#&lt;/a&gt; 七、其他配置&lt;/h1&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 1、设置安全选项：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mysql_secure_installation&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 2、关闭MySQL&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl stop mysqld &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 3、重启MySQL&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl restart mysqld &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 4、查看MySQL运行状态&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl status mysqld &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 5、设置开机启动&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl enable mysqld &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 6、关闭开机启动&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;systemctl disable mysqld &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 7、配置默认编码为utf8：&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;vi /etc/my.cnf #添加 [mysqld] character_set_server=utf8 init_connect=&amp;#x27;SET NAMES utf8&amp;#x27;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;其他默认配置文件路径： &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;配置文件：/etc/my.cnf 日志文件：/var/log//var/log/mysqld.log 服务启动脚本：/usr/lib/systemd/system/mysqld.service socket文件：/var/run/mysqld/mysqld.pid&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt;&lt;span class=&#34;comment&#34;&gt;## 8、查看版本&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;select version();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+        <category term="DB" />
+        <category term="MySQL" />
+        <category term="Linux" />
+        <updated>2019-11-21T16:00:00.000Z</updated>
+    </entry>
+</feed>

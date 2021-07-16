@@ -50,6 +50,7 @@
         <category>npm</category>
         <category>vue</category>
         <category>Interview</category>
+        <category>algorithm</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/01/06/Docker/dockerEdit/</guid>
             <title>Docker 修改MySQL配置</title>

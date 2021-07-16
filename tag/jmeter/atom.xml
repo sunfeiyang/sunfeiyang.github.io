@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;jmeter&#34; tag</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2020-07-18T16:00:00.000Z</updated>
+    <category term="DB" />
+    <category term="MongoDB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="CentOS" />
+    <category term="Docker" />
+    <category term="IDEA" />
+    <category term="JRebel" />
+    <category term="Statistic" />
+    <category term="JDK" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="VMware" />
+    <category term="Tomcat" />
+    <category term="Desk" />
+    <category term="Java" />
+    <category term="SPI" />
+    <category term="tools" />
+    <category term="git" />
+    <category term="MQ" />
+    <category term="MyBatis" />
+    <category term="IO" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="设计模式" />
+    <category term="Spring" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <category term="jmeter" />
+    <category term="gitlab" />
+    <category term="Jenkins" />
+    <category term="nexus3" />
+    <category term="maven" />
+    <category term="索引" />
+    <category term="elasticSearch" />
+    <category term="windows" />
+    <category term="nacos" />
+    <category term="springCloud-alibaba" />
+    <category term="sqlServer" />
+    <category term="npm" />
+    <category term="vue" />
+    <category term="Interview" />
+    <category term="algorithm" />
+    <entry>
+        <id>http://xinghuohan.cn/2020/07/19/Linux/ubuntu-jmeter/</id>
+        <title>jmeter在ubuntu下面的配置以及使用</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/07/19/Linux/ubuntu-jmeter/"/>
+        <content type="html">&lt;p&gt;jmeter 在 ubuntu 下面的配置以及使用&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h2&gt;
+&lt;p&gt;jmeter 是 apache 的一个开源压力测试工具。&lt;br&gt;
+话说，实在很好奇开发出来的程序性能如何。所以抽空配置一下 jmeter，后续还会有实际压测例子。&lt;/p&gt;
+&lt;p&gt;对了，可以先看看文章，参考：&lt;br&gt;
+&lt;a href=&#34;https://www.cnblogs.com/MING-FBUG/p/9153016.html&#34;&gt;Jmeter 环境搭建与使用（Linux）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/yangxia-test/p/3964881.html&#34;&gt;JMeter 学习（一）工具简单介绍&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/stulzq/p/8971531.html&#34;&gt;使用 JMeter 进行压力测试&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;几个重要地址：&lt;br&gt;
+&lt;a href=&#34;https://jmeter.apache.org/&#34;&gt;jmeter 官网&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://jmeter.apache.org/usermanual/get-started.html&#34;&gt;官方指导&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这里先预告一下，&lt;br&gt;
+下面这个网站看起来是相当专业的，&lt;br&gt;
+&lt;a href=&#34;http://www.techempower.com/benchmarks/#section=data-r17&amp;amp;hw=ph&amp;amp;test=json&#34;&gt;Web Framework Benchmarks&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;第一页，json 格式化性能：&lt;br&gt;
+&lt;img src=&#34;/img/20190125192323368.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125192323368.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;额，前面几个看不到 spring，spring 在这里呢：&lt;br&gt;
+&lt;img src=&#34;/img/20190125192407432.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125192407432.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;单条数据库查询：&lt;br&gt;
+&lt;img src=&#34;/img/20190125192557216.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125192557216.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;额，spring 在后面呢：&lt;br&gt;
+&lt;img src=&#34;/img/20190125192611518.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125192611518.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;写完这篇文章以后，下一个目标是，重做 benchmark 试验 ---- 当然就针对 java web 框架，譬如：vert.x 还有 spring 什么的，还 spring 一个正名。额，当然用的是自己的渣渣机器，然而没问题，只要得出胜负就可以了。&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;配置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#配置&#34;&gt;#&lt;/a&gt; 配置&lt;/h2&gt;
+&lt;p&gt;在官网下载 jmeter，额，这里：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo wget http:&amp;#x2F;&amp;#x2F;mirrors.shu.edu.cn&amp;#x2F;apache&amp;#x2F;&amp;#x2F;jmeter&amp;#x2F;binaries&amp;#x2F;apache-jmeter-5.0.tgz&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125193112828.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125193112828.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;解压缩到目标文件：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo mkdir -p &amp;#x2F;usr&amp;#x2F;local&amp;#x2F;jmeter&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;-- 解压到目标目录：&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;sudo tar -zxvf apache-jmeter-5.0.tgz -C &amp;#x2F;usr&amp;#x2F;local&amp;#x2F;jmeter&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125193257314.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125193257314.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;可以得知，文件现在的 jmeter 的正式目录是：&lt;br&gt;
+/usr/local/jmeter/apache-jmeter-5.0/&lt;/p&gt;
+&lt;p&gt;好了，将 bin 路径加入到环境变量中去：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo vim &amp;#x2F;etc&amp;#x2F;profile&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;写入以下内容：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;#配置jmeter&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;export PATH&amp;#x3D;&amp;#x2F;usr&amp;#x2F;local&amp;#x2F;jmeter&amp;#x2F;apache-jmeter-5.0&amp;#x2F;bin:$PATH&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125193658222.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125193658222.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+然后，&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;source &amp;#x2F;etc&amp;#x2F;profile&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;再试试能不能运行 jmeter：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;jmeter -v&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125193750436.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125193750436.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;成功运行，嗯，这样就配置好了。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;进行一个单机web网站测试&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#进行一个单机web网站测试&#34;&gt;#&lt;/a&gt; 进行一个单机 web 网站测试&lt;/h2&gt;
+&lt;h3 id=&#34;受测网站准备&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#受测网站准备&#34;&gt;#&lt;/a&gt; 受测网站准备&lt;/h3&gt;
+&lt;p&gt;好了，作为程序员，身边肯定会有一些网站可以随便开启随便测试的，下面我就随便测试其中一个网站，是前几篇博文提到的 fileserver webapp：&lt;br&gt;
+&lt;img src=&#34;/img/20190125194337529.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125194337529.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;测试的接口是这个。&lt;/p&gt;
+&lt;h3 id=&#34;测试计划&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#测试计划&#34;&gt;#&lt;/a&gt; 测试计划&lt;/h3&gt;
+&lt;p&gt;在命令行输入：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;jmeter&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可启动客户端，&lt;br&gt;
+&lt;img src=&#34;/img/2019012519460212.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/2019012519460212.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+好了，现在来制定测试计划&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;下面部分照着&lt;/em&gt;&lt;br&gt;
+&lt;a href=&#34;https://www.cnblogs.com/stulzq/p/8971531.html&#34;&gt;使用 JMeter 进行压力测试&lt;/a&gt;&lt;br&gt;
+&lt;em&gt;来做&lt;/em&gt;，尤其是，&lt;strong&gt;我压根没办法截取菜单的图片，直接引用&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id=&#34;1创建线程组&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1创建线程组&#34;&gt;#&lt;/a&gt; 1. 创建线程组&lt;/h4&gt;
+&lt;p&gt;在 “测试计划” 上右键 【添加】–&amp;gt;【Threads (Users)】–&amp;gt;【线程组】。&lt;br&gt;
+&lt;img src=&#34;/img/20190125201333113.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125201333113.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;然后，额，根据他的来是 500 的，这个恐怕有点高了，不过没关系，设为 500：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;设置线程数和循环次数。我这里设置线程数为 500，循环一次。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125201507611.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125201507611.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2配置元件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2配置元件&#34;&gt;#&lt;/a&gt; 2. 配置元件&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在我们刚刚创建的线程组上右键 【添加】–&amp;gt;【配置元件】–&amp;gt;【HTTP 请求默认值】。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125201642264.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125201642264.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;配置我们需要进行测试的程序协议、地址和端口&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;譬如，我本地的是：&lt;/em&gt;&lt;br&gt;
+&lt;img src=&#34;/img/20190125202007458.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125202007458.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;当所有的接口测试的访问域名和端口都一样时，可以使用该元件，一旦服务器地址变更，只需要修改请求默认值即可。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;3构造http请求&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3构造http请求&#34;&gt;#&lt;/a&gt; 3. 构造 HTTP 请求&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在 “线程组” 右键 【添加 -】-&amp;gt;【samlper】–&amp;gt;【HTTP 请求】设置我们需要测试的 API 的请求路径和数据。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125202225571.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125202225571.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;根据实际情况，应该这样：&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125203950235.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125203950235.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;注意，参数不要有空格等特殊符号 — 除非你将空格自己手动转为 url 认可的编码。&lt;/p&gt;
+&lt;h3 id=&#34;4添加http请求头&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#4添加http请求头&#34;&gt;#&lt;/a&gt; 4. 添加 HTTP 请求头&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125202650438.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125202650438.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这个。。也加上去。。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125202812321.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125202812321.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;5添加断言&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#5添加断言&#34;&gt;#&lt;/a&gt; 5. 添加断言&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在我们刚刚创建的线程组上右键 【添加】–&amp;gt;【断言】–&amp;gt;【响应断言】。根据响应的数据来判断请求是否正常。我在这里只判断的响应代码是否为 200。还可以配置错误信息&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;/img/2019012520321973.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/2019012520321973.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;好了，按实际情况，&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125203305757.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125203305757.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;6添加察看结果树&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#6添加察看结果树&#34;&gt;#&lt;/a&gt; 6. 添加察看结果树&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在我们刚刚创建的线程组上右键 【添加】–&amp;gt;【监听器】–&amp;gt;【察看结果树】。直接添加，然后点击运行按钮就可以看到结果了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125203533863.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125203533863.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+实际响应情况：&lt;br&gt;
+&lt;img src=&#34;/img/20190125204115824.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125204115824.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;7添加summary-report&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#7添加summary-report&#34;&gt;#&lt;/a&gt; 7. 添加 Summary Report&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在我们刚刚创建的线程组上右键 【添加】–&amp;gt;【监听器】–&amp;gt;【Summary Report】。直接添加，然后点击运行按钮就可以看到结果了。&lt;br&gt;
+&lt;img src=&#34;/img/20190125204307331.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125204307331.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;实际情况：&lt;br&gt;
+&lt;img src=&#34;/img/20190125204434827.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125204434827.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;8测试计划创建完成&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#8测试计划创建完成&#34;&gt;#&lt;/a&gt; 8. 测试计划创建完成&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;记得点保存。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;执行测试计划&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#执行测试计划&#34;&gt;#&lt;/a&gt; 执行测试计划&lt;/h2&gt;
+&lt;p&gt;先参考：&lt;br&gt;
+&lt;img src=&#34;/img/20190125204641669.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125204641669.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+实际情况：&lt;br&gt;
+&lt;img src=&#34;/img/20190125204800977.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125204800977.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;本地的保存地址为：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;#x2F;home&amp;#x2F;too-white&amp;#x2F;测试计划&amp;#x2F;file-server-web-app-test1.jmx&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;实际命令为：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;cd &amp;#x2F;home&amp;#x2F;too-white&amp;#x2F;测试计划&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mkdir -p testplan&amp;#x2F;webreport&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;jmeter -n -t file-server-web-app-test1.jmx  -l result.txt -e -o testplan&amp;#x2F;webreport&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;执行结果：&lt;br&gt;
+&lt;img src=&#34;/img/20190125210626864.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125210626864.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;话说不知道为什么每次都要 source /etc/profile 才能识别到 jmeter 的目录&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125210805445.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125210805445.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;附录&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#附录&#34;&gt;#&lt;/a&gt; 附录&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.cnblogs.com/yangxia-test/p/3964881.html&#34;&gt;JMeter 学习（一）工具简单介绍&lt;/a&gt;&lt;br&gt;
+该文章的部分内容&lt;br&gt;
+&lt;img src=&#34;/img/20190125195744129.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125195744129.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125195752486.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125195752486.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125195759746.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125195759746.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;/img/20190125195831146.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125195831146.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;/img/20190125195858443.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125195858443.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;/img/20190125195924279.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125195924279.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;/img/20190125195951896.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125195951896.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190125200031728.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125200031728.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;/img/20190125200055470.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125200055470.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;/img/20190125200133287.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190125200133287.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+</content>
+        <category term="Ubuntu" />
+        <category term="jmeter" />
+        <updated>2020-07-18T16:00:00.000Z</updated>
+    </entry>
+</feed>

@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://xinghuohan.cn</id>
+    <title>sunfy • Posts by &#34;desk&#34; tag</title>
+    <link href="http://xinghuohan.cn" />
+    <updated>2021-07-09T08:21:00.706Z</updated>
+    <category term="DB" />
+    <category term="MongoDB" />
+    <category term="MySQL" />
+    <category term="Linux" />
+    <category term="CentOS" />
+    <category term="Docker" />
+    <category term="IDEA" />
+    <category term="JRebel" />
+    <category term="Statistic" />
+    <category term="JDK" />
+    <category term="Centos" />
+    <category term="Ubuntu" />
+    <category term="VMware" />
+    <category term="Tomcat" />
+    <category term="Desk" />
+    <category term="Java" />
+    <category term="SPI" />
+    <category term="tools" />
+    <category term="git" />
+    <category term="MQ" />
+    <category term="MyBatis" />
+    <category term="IO" />
+    <category term="SpringBoot" />
+    <category term="WebSocket" />
+    <category term="Zookeeper" />
+    <category term="设计模式" />
+    <category term="Spring" />
+    <category term="Redis" />
+    <category term="shiro" />
+    <category term="jmeter" />
+    <category term="gitlab" />
+    <category term="Jenkins" />
+    <category term="nexus3" />
+    <category term="maven" />
+    <category term="索引" />
+    <category term="elasticSearch" />
+    <category term="windows" />
+    <category term="nacos" />
+    <category term="springCloud-alibaba" />
+    <category term="sqlServer" />
+    <category term="npm" />
+    <category term="vue" />
+    <category term="Interview" />
+    <category term="algorithm" />
+    <entry>
+        <id>http://xinghuohan.cn/2021/07/09/desk/vueProxy/</id>
+        <title>vue解决跨域问题</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2021/07/09/desk/vueProxy/"/>
+        <content type="html">&lt;p&gt;vue 解决跨域问题&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;什么是跨域&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#什么是跨域&#34;&gt;#&lt;/a&gt; 什么是跨域&lt;/h3&gt;
+&lt;p&gt;跨域问题的出现是因为浏览器的同源策略问题，所谓同源：就是两个页面具有相同的协议（protocol），主机（host）和端口号（port），它是浏览器最核心也是最基本的功能，如果没有同源策略我们的浏览器将会十分的不安全，随时都可能受到攻击。&lt;/p&gt;
+&lt;p&gt;当我们请求一个接口的时候，出现如：Access-Control-Allow-Origin 字眼的时候说明请求跨域了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1649717-20200227142258131-1409861315.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1649717-20200227142258131-1409861315.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;如何解决跨域问题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#如何解决跨域问题&#34;&gt;#&lt;/a&gt; 如何解决跨域问题&lt;/h3&gt;
+&lt;p&gt;1. 使用 jsonp 实现，网页通过 script 标签向服务器请求 json 数据，服务器受到请求后，将数据放在一个指定名字的回调函数的参数里面传给前端。&lt;/p&gt;
+&lt;figure class=&#34;highlight js&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;script src=&lt;span class=&#34;string&#34;&gt;&amp;quot;http://www.test.com/getData?callback=getData&amp;quot;&lt;/span&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// 向服务器test.com发出请求，该请求的查询字符串有一个callback参数，用来指定回调函数的名字&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;// 处理服务器返回回调函数的数据&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;script type=&lt;span class=&#34;string&#34;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// 服务器返回的数据会放到回调函数里面&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;function&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;getData&lt;/span&gt;(&lt;span class=&#34;params&#34;&gt;res&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;comment&#34;&gt;// 处理获得的数据&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;built_in&#34;&gt;console&lt;/span&gt;.log(res.data)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;2. 使用 Jquery ajax 实现，&lt;/p&gt;
+&lt;figure class=&#34;highlight js&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;$.ajax(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  url: &lt;span class=&#34;string&#34;&gt;&amp;#x27;http://www.test.com:8888/getData&amp;#x27;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  type: &lt;span class=&#34;string&#34;&gt;&amp;#x27;get&amp;#x27;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  dataType: &lt;span class=&#34;string&#34;&gt;&amp;#x27;jsonp&amp;#x27;&lt;/span&gt;,  &lt;span class=&#34;comment&#34;&gt;// 请求方式为jsonp&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  jsonpCallback: &lt;span class=&#34;string&#34;&gt;&amp;quot;handleCallback&amp;quot;&lt;/span&gt;,    &lt;span class=&#34;comment&#34;&gt;// 自定义回调函数名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  data: &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3. 在 vue 开发中实现跨域：在 vue 项目根目录下找到 vue.config.js 文件（如果没有该文件则自己创建），在 proxy 中设置跨域&lt;/p&gt;
+&lt;figure class=&#34;highlight js&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;devServer: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   proxy: &amp;#123;  &lt;span class=&#34;comment&#34;&gt;//配置跨域&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &lt;span class=&#34;string&#34;&gt;&amp;#x27;/api&amp;#x27;&lt;/span&gt;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;       target: &lt;span class=&#34;string&#34;&gt;&amp;#x27;http://121.121.67.254:8185/&amp;#x27;&lt;/span&gt;,  &lt;span class=&#34;comment&#34;&gt;//这里后台的地址模拟的;应该填写你们真实的后台接口&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;       changOrigin: &lt;span class=&#34;literal&#34;&gt;true&lt;/span&gt;,  &lt;span class=&#34;comment&#34;&gt;//允许跨域&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;       pathRewrite: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         &lt;span class=&#34;comment&#34;&gt;/* 重写路径，当我们在浏览器中看到请求的地址为：http://localhost:8080/api/core/getData/userInfo 时&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;           实际上访问的地址是：http://121.121.67.254:8185/core/getData/userInfo,因为重写了 /api&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;          */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         &lt;span class=&#34;string&#34;&gt;&amp;#x27;^/api&amp;#x27;&lt;/span&gt;: &lt;span class=&#34;string&#34;&gt;&amp;#x27;&amp;#x27;&lt;/span&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;       &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;   &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;在 vue 中使用 proxy 进行跨域的原理是：将域名发送给本地的服务器（启动 vue 项目的服务，loclahost:8080），再由本地的服务器去请求真正的服务器。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以下是我在开发 vue 项目中实现跨域的步骤：&lt;/p&gt;
+&lt;p&gt;1. 在 proxy 中设置要访问的地址，并重写 /api 为空的字符串，因为我们真正请求的地址是没有带 /api，这个重写很重要！！！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1649717-20200227144905470-1085262547.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1649717-20200227144905470-1085262547.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2. 在创建 axios 实例的时候将 baseURL 设置为 /api , 这时候我们的跨域就已经完成了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1649717-20200227145106938-1311841373.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1649717-20200227145106938-1311841373.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;3. 假如请求的真正地址为：&lt;a href=&#34;http://121.121.67.254:8185/core/getdata/userInfo,%E4%BD%86%E6%88%91%E4%BB%AC%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8A%E4%BC%9A%E7%9C%8B%E5%88%B0%E6%98%AF%E8%BF%99%E6%A0%B7%E7%9A%84%EF%BC%9A&#34;&gt;http://121.121.67.254:8185/core/getdata/userInfo, 但我们在浏览器上会看到是这样的：&lt;/a&gt; &lt;a href=&#34;http://localhost:8080/api/core/getData/userInfo&#34;&gt;http://localhost:8080/api/core/getData/userInfo&lt;/a&gt; , 多了个 /api，但并不影响我们请求数据。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1649717-20200227151147818-885350634.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1649717-20200227151147818-885350634.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+</content>
+        <category term="Desk" />
+        <category term="vue" />
+        <updated>2021-07-09T08:21:00.706Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2021/07/09/desk/npmBase/</id>
+        <title>npm基础知识点总结记录</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2021/07/09/desk/npmBase/"/>
+        <content type="html">&lt;p&gt;vue 基础知识点&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;vue-使用-npm-run-dev命令后-自动打开浏览器&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#vue-使用-npm-run-dev命令后-自动打开浏览器&#34;&gt;#&lt;/a&gt; vue 使用 npm run dev 命令后 自动打开浏览器&lt;/h3&gt;
+&lt;p&gt;1、使用 vue-cli 老版本构建项目时， 可修改 config 文件夹下 index.js 文件 autoOpenBrowser 属性给为 true 即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1551162-20191125153631601-544714164.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1551162-20191125153631601-544714164.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;使用 vue-cli 3.x 版本后，所有的配置项均在 vue.config.js 中，修改 devServer 增加 open 属性为 true 即可&lt;/p&gt;
+&lt;p&gt;官方：&lt;a href=&#34;https://cli.vuejs.org/zh/config/#devserver&#34;&gt;https://cli.vuejs.org/zh/config/#devserver&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1551162-20191125153649052-1072532253.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1551162-20191125153649052-1072532253.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1551162-20191125153721414-1989487532.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1551162-20191125153721414-1989487532.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;所以自己项目中的配置就可以配置为：&lt;/p&gt;
+&lt;p&gt;在运行项目时即可自动打开浏览器&lt;/p&gt;
+&lt;p&gt;这种方法比较万能， 在 package.json 文件下 修改 scripts 中 dev 的命令 最后面加上 --open ； 如图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/1551162-20191125153501504-311525175.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/1551162-20191125153501504-311525175.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;vue-cli3项目解决npm-run-dev在浏览器打开两次的问题&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#vue-cli3项目解决npm-run-dev在浏览器打开两次的问题&#34;&gt;#&lt;/a&gt; vue-cli3 项目解决 npm run dev 在浏览器打开两次的问题&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;删掉 vue.config.js 文件里面 devServer 下面的 open:true&lt;/li&gt;
+&lt;li&gt;在 package.json 文件 scripts 对象 dev 键后面加 --open，（“dev”: “vue-cli-service serve --open”）&lt;/li&gt;
+&lt;li&gt;ok 重新运行 npm run dev (修改配置文件后要重新启动项目修改才会生效）&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+        <category term="Desk" />
+        <category term="npm" />
+        <updated>2021-07-09T05:47:42.368Z</updated>
+    </entry>
+    <entry>
+        <id>http://xinghuohan.cn/2020/03/02/desk/npmInstall/</id>
+        <title>前端基础插件</title>
+        <link rel="alternate" href="http://xinghuohan.cn/2020/03/02/desk/npmInstall/"/>
+        <content type="html">&lt;p&gt;前端基本开发环境安装，node、npm、cnpm、@angular&lt;a id=&#34;more&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;安装nodejs&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装nodejs&#34;&gt;#&lt;/a&gt; 安装 nodejs&lt;/h2&gt;
+&lt;p&gt;第一步，去 nodejs 官网 &lt;a href=&#34;https://nodejs.org/&#34;&gt;https://nodejs.org&lt;/a&gt; 看最新的版本号；&lt;img src=&#34;/img/image-20210123213318414.png&#34; alt=&#34;image-20210123213318414&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210123213318414.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;求稳的话建议选 LTS 版。&lt;/p&gt;
+&lt;p&gt;第二步，添加源后安装&lt;br&gt;
+重点来了，nodejs 的每个大版本号都有相对应的源，比如这里的 14.x.x 版本的源是 https://deb.nodesource.com/setup_14.x。&lt;/p&gt;
+&lt;p&gt;所以在终端执行：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;稍等片刻，源已经添加完毕，再执行：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo apt-get install -y nodejs&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;等待安装完成。&lt;/p&gt;
+&lt;h2 id=&#34;安装npm&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装npm&#34;&gt;#&lt;/a&gt; 安装 npm&lt;/h2&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo apt install npm&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210123213822768.png&#34; alt=&#34;image-20210123213822768&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210123213822768.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;淘宝npm镜像-cnpm&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#淘宝npm镜像-cnpm&#34;&gt;#&lt;/a&gt; 淘宝 npm 镜像 cnpm&lt;/h2&gt;
+&lt;p&gt;国内直接使用 npm 的官方镜像是非常慢的，这里推荐使用淘宝 NPM 镜像。&lt;/p&gt;
+&lt;p&gt;淘宝 NPM 镜像是一个完整 &lt;a href=&#34;http://npmjs.org&#34;&gt;npmjs.org&lt;/a&gt; 镜像，可以用此代替官方版本 (只读)，同步频率目前为 10 分钟 一次以保证尽量与官方服务同步。&lt;/p&gt;
+&lt;p&gt;用 npm 安装 cnm&lt;/p&gt;
+&lt;figure class=&#34;highlight sql&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;npm &lt;span class=&#34;keyword&#34;&gt;install&lt;/span&gt; -g cnpm &lt;span class=&#34;comment&#34;&gt;--registry=https://registry.npm.taobao.org&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&#34;错误&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#错误&#34;&gt;#&lt;/a&gt; 错误&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210123214230438.png&#34; alt=&#34;image-20210123214230438&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210123214230438.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;错误原因&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#错误原因&#34;&gt;#&lt;/a&gt; 错误原因&lt;/h2&gt;
+&lt;p&gt;找到报错的文件，会看到它的所有者是  &lt;code&gt;root&lt;/code&gt; 。&lt;br&gt;
+之前用  &lt;code&gt;root&lt;/code&gt;  进行了局部的安装操作，导致这个文件的所有者是  &lt;code&gt;root&lt;/code&gt;  ，还包括  &lt;code&gt;.npm&lt;/code&gt;  文件夹下部分文件夹的所有权，也是  &lt;code&gt;root&lt;/code&gt; ，普通用户当然就无权访问了。就会报权限错误。&lt;/p&gt;
+&lt;h2 id=&#34;解决办法&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#解决办法&#34;&gt;#&lt;/a&gt; 解决办法&lt;/h2&gt;
+&lt;p&gt;就是把用户目录下的  &lt;code&gt;.npm&lt;/code&gt;  文件夹所有权都改成当前用户即可。&lt;br&gt;
+比如：当前用户名为 sunfy&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;sudo chown -R sunfy ~/.npm&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&#34;安装angular&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装angular&#34;&gt;#&lt;/a&gt; 安装 Angular&lt;/h2&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;npm install -g @angular/cli&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&#34;/img/image-20210123214609372.png&#34; alt=&#34;image-20210123214609372&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/image-20210123214609372.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;npm安装后提示命令不存在&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#npm安装后提示命令不存在&#34;&gt;#&lt;/a&gt; npm 安装后提示命令不存在&lt;/h2&gt;
+&lt;p&gt;解决方案：用一个通用的命令配置环境变量&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;echo -e &amp;quot;export PATH&amp;#x3D;$(npm prefix -g)&amp;#x2F;bin:$PATH&amp;quot; &amp;gt;&amp;gt; ~&amp;#x2F;.bashrc &amp;amp;&amp;amp; source ~&amp;#x2F;.bashrc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+        <category term="Desk" />
+        <updated>2020-03-01T16:00:00.000Z</updated>
+    </entry>
+</feed>

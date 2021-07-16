@@ -50,6 +50,7 @@
         <category>npm</category>
         <category>vue</category>
         <category>Interview</category>
+        <category>algorithm</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/03/13/tools/mavenInstallJar/</guid>
             <title>使用maven命令安装指定(第三方)jar包到本地仓库</title>

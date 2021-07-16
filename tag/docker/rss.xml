@@ -50,6 +50,7 @@
         <category>npm</category>
         <category>vue</category>
         <category>Interview</category>
+        <category>algorithm</category>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/06/18/Docker/docker-compose-base/</guid>
             <title>docker-compose 启动容器</title>
