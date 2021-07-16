@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Fri, 16 Jul 2021 15:40:21 +0800</pubDate>
-        <lastBuildDate>Fri, 16 Jul 2021 15:40:21 +0800</lastBuildDate>
+        <pubDate>Fri, 16 Jul 2021 15:47:41 +0800</pubDate>
+        <lastBuildDate>Fri, 16 Jul 2021 15:47:41 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -52,8 +52,29 @@
         <category>Interview</category>
         <category>algorithm</category>
         <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/07/16/Interview/004JVM-gc/</guid>
+            <title>Java面试题003-说一下JVM中，哪些是共享区，哪些可以作为GC ROOT？</title>
+            <link>http://xinghuohan.cn/2021/07/16/Interview/004JVM-gc/</link>
+            <category>Java</category>
+            <category>Interview</category>
+            <pubDate>Fri, 16 Jul 2021 15:47:41 +0800</pubDate>
+            <description><![CDATA[ &lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;图示&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190929172432494.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190929172432494.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;堆区和方法区是所有线程共享的，栈、本地方法栈、程序计数器是每个线程独有的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;什么是 gc root？&lt;/p&gt;
+&lt;p&gt;JVM 在进行垃圾回收时，需要找到垃圾对象，也就是没有被引用的对象，但是直接找 “垃圾” 对象是比较耗时的，所以反过来，先找 “非垃圾” 对象，也就是正常对象，那么就需要从某些 “根” 的引用路径找到正常对象，而这些 “根” 有一个特征，就是它只会引用其他对象，而不会被其他对象引用，例如：栈中的本地变量、方法区中的金静态变量、本地方法栈中的变量、正在运行的线程等可以作为 gc root。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
+        <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/</guid>
-            <title>面试801-算法常用的解题思路---快速排序及优化</title>
+            <title>面试802-算法常用的解题思路---快速排序及优化</title>
             <link>http://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/</link>
             <category>Interview</category>
             <category>algorithm</category>
@@ -112,7 +133,7 @@
 &lt;p&gt;简而言之，滑动窗口算法在一个特定大小的字符串或数组上进行操作，而不在整个字符串和数组上操作，这样就降低了问题的复杂度，从而也达到降低了循环的嵌套深度。&lt;strong&gt;其实这里就可以看出来滑动窗口主要应用在数组和字符串上。&lt;/strong&gt;&lt;/p&gt;
 &lt;h1 id=&#34;基本示例&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#基本示例&#34;&gt;#&lt;/a&gt; 基本示例&lt;/h1&gt;
 &lt;p&gt;如下图所示，设定滑动窗口（window）大小为 3，当滑动窗口每次划过数组时，计算当前滑动窗口中元素的和，得到结果 res。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../img/20190305164439172.png&#34; alt=&#34;滑动窗口算法基本&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/20190305164439172.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190305164439172.png&#34; alt=&#34;滑动窗口算法基本&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190305164439172.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
 可以用来解决一些查找满足一定条件的连续区间的性质（长度等）的问题。由于区间连续，因此当区间发生变化时，可以通过旧有的计算结果对搜索空间进行剪枝，这样便减少了重复计算，降低了时间复杂度。往往类似于 &amp;quot; &lt;strong&gt;请找到满足 xx 的最 x 的区间（子串、子数组) 的 xx&lt;/strong&gt; ” 这类问题都可以使用该方法进行解决。&lt;/p&gt;
 &lt;p&gt;需要注意的是，滑动窗口算法更多的是一种思想，而非某种数据结构的使用。&lt;/p&gt;
 &lt;h1 id=&#34;滑动窗口法的大体框架&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#滑动窗口法的大体框架&#34;&gt;#&lt;/a&gt; 滑动窗口法的大体框架&lt;/h1&gt;
@@ -131,13 +152,13 @@
 &lt;p&gt;这个思路其实也不难，第 2 步相当于在寻找一个「可行解」，然后第 3 步在优化这个「可行解」，最终找到最优解。左右指针轮流前进，窗口大小增增减减，窗口不断向右滑动。&lt;/p&gt;
 &lt;p&gt;下面画图理解一下，needs 和 window 相当于计数器，分别记录 T 中字符出现次数和窗口中的相应字符的出现次数。&lt;/p&gt;
 &lt;p&gt;初始状态：&lt;br&gt;
-&lt;img src=&#34;../../img/2019101621574345.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/2019101621574345.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/img/2019101621574345.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/2019101621574345.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;增加 right，直到窗口 [left, right] 包含了 T 中所有字符：&lt;br&gt;
-&lt;img src=&#34;../../img/20191016215752186.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/20191016215752186.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/img/20191016215752186.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20191016215752186.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;现在开始增加 left，缩小窗口 [left, right]。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../img/20191016215807735.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/20191016215807735.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20191016215807735.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20191016215807735.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;直到窗口中的字符串不再符合要求，left 不再继续移动。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../img/20191016215824468.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/20191016215824468.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20191016215824468.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20191016215824468.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;之后重复上述过程，先移动 right，再移动 left…… 直到 right 指针到达字符串 S 的末端，算法结束。&lt;/p&gt;
 &lt;p&gt;如果你能够理解上述过程，恭喜，你已经完全掌握了滑动窗口算法思想。至于如何具体到问题，如何得出此题的答案，都是编程问题，等会提供一套模板，理解一下就会了。&lt;/p&gt;
 &lt;p&gt;上述过程对于非固定大小的滑动窗口，可以简单地写出如下伪码框架：&lt;/p&gt;
@@ -251,11 +272,14 @@ s 由英文字母、数字、符号和空格组成&lt;/p&gt;
 &lt;p&gt;算法常用解题思路&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;两路快排&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#两路快排&#34;&gt;#&lt;/a&gt; 两路快排&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/&#34;&gt;https://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;三路快排&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#三路快排&#34;&gt;#&lt;/a&gt; 三路快排&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/&#34;&gt;https://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;双指针&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#双指针&#34;&gt;#&lt;/a&gt; 双指针&lt;/h3&gt;
 &lt;h3 id=&#34;快慢指针&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#快慢指针&#34;&gt;#&lt;/a&gt; 快慢指针&lt;/h3&gt;
 &lt;h3 id=&#34;对撞指针&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#对撞指针&#34;&gt;#&lt;/a&gt; 对撞指针&lt;/h3&gt;
 &lt;h3 id=&#34;滑动窗口&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#滑动窗口&#34;&gt;#&lt;/a&gt; 滑动窗口&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://xinghuohan.cn/2021/07/16/Interview/801-SlidingWindow/&#34;&gt;https://xinghuohan.cn/2021/07/16/Interview/801-SlidingWindow/&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;查找&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查找&#34;&gt;#&lt;/a&gt; 查找&lt;/h3&gt;
 &lt;h3 id=&#34;链表&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#链表&#34;&gt;#&lt;/a&gt; 链表&lt;/h3&gt;
 &lt;h3 id=&#34;栈&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#栈&#34;&gt;#&lt;/a&gt; 栈&lt;/h3&gt;

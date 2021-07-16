@@ -5,8 +5,8 @@
         <link>http://xinghuohan.cn</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Fri, 16 Jul 2021 15:40:21 +0800</pubDate>
-        <lastBuildDate>Fri, 16 Jul 2021 15:40:21 +0800</lastBuildDate>
+        <pubDate>Fri, 16 Jul 2021 15:47:41 +0800</pubDate>
+        <lastBuildDate>Fri, 16 Jul 2021 15:47:41 +0800</lastBuildDate>
         <category>DB</category>
         <category>MongoDB</category>
         <category>MySQL</category>
@@ -52,8 +52,29 @@
         <category>Interview</category>
         <category>algorithm</category>
         <item>
+            <guid isPermalink="true">http://xinghuohan.cn/2021/07/16/Interview/004JVM-gc/</guid>
+            <title>Java面试题003-说一下JVM中，哪些是共享区，哪些可以作为GC ROOT？</title>
+            <link>http://xinghuohan.cn/2021/07/16/Interview/004JVM-gc/</link>
+            <category>Java</category>
+            <category>Interview</category>
+            <pubDate>Fri, 16 Jul 2021 15:47:41 +0800</pubDate>
+            <description><![CDATA[ &lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;图示&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190929172432494.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190929172432494.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;堆区和方法区是所有线程共享的，栈、本地方法栈、程序计数器是每个线程独有的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;什么是 gc root？&lt;/p&gt;
+&lt;p&gt;JVM 在进行垃圾回收时，需要找到垃圾对象，也就是没有被引用的对象，但是直接找 “垃圾” 对象是比较耗时的，所以反过来，先找 “非垃圾” 对象，也就是正常对象，那么就需要从某些 “根” 的引用路径找到正常对象，而这些 “根” 有一个特征，就是它只会引用其他对象，而不会被其他对象引用，例如：栈中的本地变量、方法区中的金静态变量、本地方法栈中的变量、正在运行的线程等可以作为 gc root。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+ ]]></description>
+        </item>
+        <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/</guid>
-            <title>面试801-算法常用的解题思路---快速排序及优化</title>
+            <title>面试802-算法常用的解题思路---快速排序及优化</title>
             <link>http://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/</link>
             <category>Interview</category>
             <category>algorithm</category>
@@ -112,7 +133,7 @@
 &lt;p&gt;简而言之，滑动窗口算法在一个特定大小的字符串或数组上进行操作，而不在整个字符串和数组上操作，这样就降低了问题的复杂度，从而也达到降低了循环的嵌套深度。&lt;strong&gt;其实这里就可以看出来滑动窗口主要应用在数组和字符串上。&lt;/strong&gt;&lt;/p&gt;
 &lt;h1 id=&#34;基本示例&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#基本示例&#34;&gt;#&lt;/a&gt; 基本示例&lt;/h1&gt;
 &lt;p&gt;如下图所示，设定滑动窗口（window）大小为 3，当滑动窗口每次划过数组时，计算当前滑动窗口中元素的和，得到结果 res。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../img/20190305164439172.png&#34; alt=&#34;滑动窗口算法基本&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/20190305164439172.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20190305164439172.png&#34; alt=&#34;滑动窗口算法基本&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20190305164439172.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;br&gt;
 可以用来解决一些查找满足一定条件的连续区间的性质（长度等）的问题。由于区间连续，因此当区间发生变化时，可以通过旧有的计算结果对搜索空间进行剪枝，这样便减少了重复计算，降低了时间复杂度。往往类似于 &amp;quot; &lt;strong&gt;请找到满足 xx 的最 x 的区间（子串、子数组) 的 xx&lt;/strong&gt; ” 这类问题都可以使用该方法进行解决。&lt;/p&gt;
 &lt;p&gt;需要注意的是，滑动窗口算法更多的是一种思想，而非某种数据结构的使用。&lt;/p&gt;
 &lt;h1 id=&#34;滑动窗口法的大体框架&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#滑动窗口法的大体框架&#34;&gt;#&lt;/a&gt; 滑动窗口法的大体框架&lt;/h1&gt;
@@ -131,13 +152,13 @@
 &lt;p&gt;这个思路其实也不难，第 2 步相当于在寻找一个「可行解」，然后第 3 步在优化这个「可行解」，最终找到最优解。左右指针轮流前进，窗口大小增增减减，窗口不断向右滑动。&lt;/p&gt;
 &lt;p&gt;下面画图理解一下，needs 和 window 相当于计数器，分别记录 T 中字符出现次数和窗口中的相应字符的出现次数。&lt;/p&gt;
 &lt;p&gt;初始状态：&lt;br&gt;
-&lt;img src=&#34;../../img/2019101621574345.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/2019101621574345.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/img/2019101621574345.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/2019101621574345.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;增加 right，直到窗口 [left, right] 包含了 T 中所有字符：&lt;br&gt;
-&lt;img src=&#34;../../img/20191016215752186.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/20191016215752186.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/img/20191016215752186.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20191016215752186.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;现在开始增加 left，缩小窗口 [left, right]。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../img/20191016215807735.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/20191016215807735.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20191016215807735.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20191016215807735.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;直到窗口中的字符串不再符合要求，left 不再继续移动。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../img/20191016215824468.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/20191016215824468.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/20191016215824468.png&#34; alt=&#34;在这里插入图片描述&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/20191016215824468.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;之后重复上述过程，先移动 right，再移动 left…… 直到 right 指针到达字符串 S 的末端，算法结束。&lt;/p&gt;
 &lt;p&gt;如果你能够理解上述过程，恭喜，你已经完全掌握了滑动窗口算法思想。至于如何具体到问题，如何得出此题的答案，都是编程问题，等会提供一套模板，理解一下就会了。&lt;/p&gt;
 &lt;p&gt;上述过程对于非固定大小的滑动窗口，可以简单地写出如下伪码框架：&lt;/p&gt;
@@ -251,11 +272,14 @@ s 由英文字母、数字、符号和空格组成&lt;/p&gt;
 &lt;p&gt;算法常用解题思路&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;两路快排&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#两路快排&#34;&gt;#&lt;/a&gt; 两路快排&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/&#34;&gt;https://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;三路快排&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#三路快排&#34;&gt;#&lt;/a&gt; 三路快排&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/&#34;&gt;https://xinghuohan.cn/2021/07/16/Interview/802-qualkSort/&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;双指针&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#双指针&#34;&gt;#&lt;/a&gt; 双指针&lt;/h3&gt;
 &lt;h3 id=&#34;快慢指针&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#快慢指针&#34;&gt;#&lt;/a&gt; 快慢指针&lt;/h3&gt;
 &lt;h3 id=&#34;对撞指针&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#对撞指针&#34;&gt;#&lt;/a&gt; 对撞指针&lt;/h3&gt;
 &lt;h3 id=&#34;滑动窗口&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#滑动窗口&#34;&gt;#&lt;/a&gt; 滑动窗口&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://xinghuohan.cn/2021/07/16/Interview/801-SlidingWindow/&#34;&gt;https://xinghuohan.cn/2021/07/16/Interview/801-SlidingWindow/&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;查找&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#查找&#34;&gt;#&lt;/a&gt; 查找&lt;/h3&gt;
 &lt;h3 id=&#34;链表&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#链表&#34;&gt;#&lt;/a&gt; 链表&lt;/h3&gt;
 &lt;h3 id=&#34;栈&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#栈&#34;&gt;#&lt;/a&gt; 栈&lt;/h3&gt;
@@ -630,10 +654,10 @@ s 由英文字母、数字、符号和空格组成&lt;/p&gt;
 &lt;p&gt;cmd 到项目目录&lt;/p&gt;
 &lt;p&gt;执行 : docker-compose up&lt;/p&gt;
 &lt;p&gt;指定 dockers ps&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../img/349537-20190819234932645-2110002229.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/349537-20190819234932645-2110002229.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/349537-20190819234932645-2110002229.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/349537-20190819234932645-2110002229.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;p&gt;我们看到项目已经发布成功了&lt;/p&gt;
 &lt;p&gt;浏览器看看&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../img/349537-20190819235244348-1639877727.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;../../img/349537-20190819235244348-1639877727.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/349537-20190819235244348-1639877727.png&#34; alt=&#34;img&#34; srcset=&#34;data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E&#34; data-src=&#34;/img/349537-20190819235244348-1639877727.png&#34; class=&#34;lozad post-image&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;docker-compose命令通过指定文件运行&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#docker-compose命令通过指定文件运行&#34;&gt;#&lt;/a&gt; docker-compose 命令通过指定文件运行&lt;/h2&gt;
 &lt;p&gt;启动服务&lt;br&gt;
  docker-compose -f docker-compose.yml up -d&lt;br&gt;
@@ -641,7 +665,155 @@ s 由英文字母、数字、符号和空格组成&lt;/p&gt;
  docker-compose -f docker-compose.yml stop&lt;br&gt;
  停止并删除服务&lt;br&gt;
  docker-compose -f docker-compose.yml down&lt;/p&gt;
- ]]></description>
+&lt;h2 id=&#34;常用参数&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#常用参数&#34;&gt;#&lt;/a&gt; 常用参数：&lt;/h2&gt;
+&lt;h3 id=&#34;image&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#image&#34;&gt;#&lt;/a&gt; image&lt;/h3&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;services:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  web:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    image: hello-world&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在 services 标签下的第二级标签是 web，这个名字是用户自己自定义，它就是服务名称。&lt;br&gt;
+image 则是指定服务的镜像名称或镜像 ID。如果镜像在本地不存在，Compose 将会尝试拉取这个镜像。&lt;br&gt;
+例如下面这些格式都是可以的：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;image: redis&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;image: ubuntu:14.04&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;image: tutum&amp;#x2F;influxdb&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;image: example-registry.com:4000&amp;#x2F;postgresql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;image: a4bc65fd&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;build&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#build&#34;&gt;#&lt;/a&gt; build&lt;/h3&gt;
+&lt;p&gt;2.1 基本用法&lt;/p&gt;
+&lt;p&gt;服务除了可以基于指定的镜像，还可以基于一份 Dockerfile，在使用 up 启动之时执行构建任务，这个构建标签就是 build，它可以指定 Dockerfile 所在文件夹的路径。Compose 将会利用它自动构建这个镜像，然后使用这个镜像启动服务容器。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;# 指明绝对路径&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;build: &amp;#x2F;path&amp;#x2F;to&amp;#x2F;build&amp;#x2F;dir&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# 指明相对路径，只要上下文确定就可以读取到 Dockerfile。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;build: .&amp;#x2F;dir&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;# 设定上下文根目录，然后以该目录为准指定 Dockerfile。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;build:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  context: ..&amp;#x2F;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  dockerfile: path&amp;#x2F;of&amp;#x2F;Dockerfile&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意 build 都是一个目录，如果你要指定 Dockerfile 文件需要在 build 标签的子级标签中使用 dockerfile 标签指定，如上面的例子。&lt;/p&gt;
+&lt;p&gt;如果你同时指定了 image 和 build 两个标签，那么 Compose 会构建镜像并且把镜像命名为 image 后面的那个名字。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;build: .&amp;#x2F;dir&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;image: webapp:tag&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;2.2  构建过程中的 args 标签&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;既然可以在 docker-compose.yml 中定义构建任务，那么一定少不了 arg 这个标签，就像 Dockerfile 中的 ARG 指令，它可以在构建过程中指定环境变量，但是在构建成功后取消，在 docker-compose.yml 文件中也支持这样的写法：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;build:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  context: .&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  args:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    buildno: 1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    password: secret&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;下面这种写法也是支持的，一般来说下面的写法更适合阅读。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;build:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  context: .&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  args:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - buildno&amp;#x3D;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - password&amp;#x3D;secret&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;与 ENV 不同的是，ARG 是允许空值的。例如：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;args:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - buildno&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - password&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这样构建过程可以向它们赋值。&lt;/p&gt;
+&lt;p&gt;注意：YAML 的布尔值（true, false, yes, no, on, off）必须要使用引号引起来（单引号、双引号均可），否则会当成字符串解析。&lt;/p&gt;
+&lt;h3 id=&#34;command&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#command&#34;&gt;#&lt;/a&gt; command&lt;/h3&gt;
+&lt;p&gt;使用 command 可以覆盖容器启动后默认执行的命令。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;command: bundle exec thin -p 3000&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;也可以写成类似 Dockerfile 中的格式：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;command: [bundle, exec, thin, -p, 3000]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;container_name&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#container_name&#34;&gt;#&lt;/a&gt; container_name&lt;/h3&gt;
+&lt;p&gt;前面说过 Compose 的容器名称格式是：&amp;lt;项目名称&amp;gt;&lt;em&gt;&amp;lt;服务名称&amp;gt;&lt;/em&gt;&amp;lt;序号&amp;gt;&lt;br&gt;
+ 虽然可以自定义项目名称、服务名称，但是如果你想完全控制容器的命名，可以使用这个标签指定：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;container_name: app&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这样容器的名字就指定为 app 了。&lt;/p&gt;
+&lt;h3 id=&#34;depends_on&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#depends_on&#34;&gt;#&lt;/a&gt; depends_on&lt;/h3&gt;
+&lt;p&gt;在使用 Compose 时，最大的好处就是少打启动命令，但是一般项目容器启动的顺序是有要求的，如果直接从上到下启动容器，必然会因为容器依赖问题而启动失败。&lt;br&gt;
+例如在没启动数据库容器的时候启动了应用容器，这时候应用容器会因为找不到数据库而退出，为了避免这种情况我们需要加入一个标签，就是 depends_on，这个标签解决了容器的依赖、启动先后的问题。&lt;br&gt;
+例如下面容器会先启动 redis 和 db 两个服务，最后才启动 web 服务：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;version: &amp;#39;2&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;services:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  web:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    build: .&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    depends_on:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      - db&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      - redis&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  redis:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    image: redis&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  db:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    image: postgres&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意的是，默认情况下使用 docker-compose up web 这样的方式启动 web 服务时，也会启动 redis 和 db 两个服务，因为在配置文件中定义了依赖关系。&lt;/p&gt;
+&lt;h3 id=&#34;ports&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#ports&#34;&gt;#&lt;/a&gt; ports&lt;/h3&gt;
+&lt;p&gt;映射端口的标签。&lt;br&gt;
+使用主机端口：容器端口格式 或者 只是指定容器的端口，宿主机会随机映射端口。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;ports:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - &amp;quot;3000&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - &amp;quot;8000:8000&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - &amp;quot;49100:22&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - &amp;quot;127.0.0.1:8001:8001&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意：当使用主机端口：宿主机端口格式来映射端口时，如果你使用的容器端口小于 60 你可能会得到错误得结果，因为 YAML 将会解析 xx:yy 这种数字格式为 60 进制，所以建议使用字符串格式&lt;/p&gt;
+&lt;h3 id=&#34;links-2&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#links-2&#34;&gt;#&lt;/a&gt; links&lt;/h3&gt;
+&lt;p&gt;还记得上面的 depends_on 吧，那个标签解决的是启动顺序问题，这个标签解决的是容器连接问题，与 Docker client 的–link 一样效果，会连接到其它服务中的容器。&lt;br&gt;
+格式如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;links:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - db&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - db:database&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - redis&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;使用的别名将会自动在服务容器中的 /etc/hosts 里创建。例如：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;172.12.2.186  db&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;172.12.2.186  database&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;172.12.2.187  redis&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;相应的环境变量也将被创建。&lt;/p&gt;
+&lt;h3 id=&#34;volumes&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#volumes&#34;&gt;#&lt;/a&gt; volumes&lt;/h3&gt;
+&lt;p&gt;挂载一个目录或者一个已存在的数据卷容器，可以直接使用 [HOST:CONTAINER] 这样的格式，或者使用 [HOST:CONTAINER:ro] 这样的格式，后者对于容器来说，数据卷是只读的，这样可以有效保护宿主机的文件系统。&lt;br&gt;
+Compose 的数据卷指定路径可以是相对路径，使用。或者 … 来指定相对目录。&lt;br&gt;
+数据卷的格式可以是下面多种形式：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;volumes:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  # 只是指定一个路径，Docker 会自动在创建一个数据卷（这个路径是容器内部的）。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;#x2F;var&amp;#x2F;lib&amp;#x2F;mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  # 使用绝对路径挂载数据卷&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;#x2F;opt&amp;#x2F;data:&amp;#x2F;var&amp;#x2F;lib&amp;#x2F;mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  # 以 Compose 配置文件为中心的相对路径作为数据卷挂载到容器。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - .&amp;#x2F;cache:&amp;#x2F;tmp&amp;#x2F;cache&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  # 使用用户的相对路径（~&amp;#x2F; 表示的目录是 &amp;#x2F;home&amp;#x2F;&amp;lt;用户目录&amp;gt;&amp;#x2F; 或者 &amp;#x2F;root&amp;#x2F;）。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - ~&amp;#x2F;configs:&amp;#x2F;etc&amp;#x2F;configs&amp;#x2F;:ro&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  # 已经存在的命名的数据卷。&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - datavolume:&amp;#x2F;var&amp;#x2F;lib&amp;#x2F;mysql&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果你不使用宿主机的路径，你可以指定一个 volume_driver。 比如 --&amp;gt;   &lt;code&gt;volume_driver: mydriver&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;environment&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#environment&#34;&gt;#&lt;/a&gt; environment&lt;/h3&gt;
+&lt;p&gt;与上面的 env_file 标签完全不同，反而和 arg 有几分类似，这个标签的作用是设置镜像变量，它可以保存变量到镜像里面，也就是说启动的容器也会包含这些变量设置，这是与 arg 最大的不同。&lt;br&gt;
+一般 arg 标签的变量仅用在构建过程中。而 environment 和 Dockerfile 中的 ENV 指令一样会把变量一直保存在镜像、容器中，类似 docker run -e 的效果，两种写法。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;environment:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  RACK_ENV: development&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  SHOW: &amp;#39;true&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  SESSION_SECRET:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;environment:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - RACK_ENV&amp;#x3D;development&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - SHOW&amp;#x3D;true&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - SESSION_SECRET&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;external_links&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#external_links&#34;&gt;#&lt;/a&gt; external_links&lt;/h3&gt;
+&lt;p&gt;在使用 Docker 过程中，我们会有许多单独使用 docker run 启动的容器，为了使 Compose 能够连接这些不在 docker-compose.yml 中定义的容器，我们需要一个特殊的标签，就是 external_links，它可以让 Compose 项目里面的容器连接到那些项目配置外部的容器（前提是外部容器中必须至少有一个容器是连接到与项目内的服务的同一个网络里面）。&lt;br&gt;
+格式如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;external_links:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - redis_1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - project_db_1:mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - project_db_1:postgresql&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&#34;非常用参数&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#非常用参数&#34;&gt;#&lt;/a&gt; 非常用参数&lt;/h2&gt;
+&lt;h3 id=&#34;dns&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#dns&#34;&gt;#&lt;/a&gt; dns&lt;/h3&gt;
+&lt;p&gt;和 --dns 参数一样用途，格式如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;dns: 8.8.8.8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;也可以是一个列表：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;dns:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - 8.8.8.8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - 9.9.9.9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;此外 dns_search 的配置也类似：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;dns_search: example.com&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;dns_search:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - dc1.example.com&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - dc2.example.com&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;tmpfs&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#tmpfs&#34;&gt;#&lt;/a&gt; tmpfs&lt;/h3&gt;
+&lt;p&gt;挂载临时目录到容器内部，与 run 的参数一样效果：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;tmpfs: &amp;#x2F;run&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tmpfs:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;#x2F;run&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;#x2F;tmp&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;entrypoint&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#entrypoint&#34;&gt;#&lt;/a&gt; entrypoint&lt;/h3&gt;
+&lt;p&gt;在 Dockerfile 中有一个指令叫做 ENTRYPOINT 指令，用于指定接入点，第四章有对比过与 CMD 的区别。&lt;br&gt;
+在 docker-compose.yml 中可以定义接入点，覆盖 Dockerfile 中的定义：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;entrypoint: &amp;#x2F;code&amp;#x2F;entrypoint.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;格式和 Docker 类似，不过还可以写成这样：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;entrypoint:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - php&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - -d&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - zend_extension&amp;#x3D;&amp;#x2F;usr&amp;#x2F;local&amp;#x2F;lib&amp;#x2F;php&amp;#x2F;extensions&amp;#x2F;no-debug-non-zts-20100525&amp;#x2F;xdebug.so&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - -d&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - memory_limit&amp;#x3D;-1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    - vendor&amp;#x2F;bin&amp;#x2F;phpunit&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;env_file&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#env_file&#34;&gt;#&lt;/a&gt; env_file&lt;/h3&gt;
+&lt;p&gt;还记得前面提到的 .env 文件吧，这个文件可以设置 Compose 的变量。而在 docker-compose.yml 中可以定义一个专门存放变量的文件。&lt;br&gt;
+如果通过 docker-compose -f FILE 指定了配置文件，则 env_file 中路径会使用配置文件路径。&lt;/p&gt;
+&lt;p&gt;如果有变量名称与 environment 指令冲突，则以后者为准。格式如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;env_file: .env&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;或者根据 docker-compose.yml 设置多个：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;env_file:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - .&amp;#x2F;common.env&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - .&amp;#x2F;apps&amp;#x2F;web.env&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;#x2F;opt&amp;#x2F;secrets.env&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意的是这里所说的环境变量是对宿主机的 Compose 而言的，如果在配置文件中有 build 操作，这些变量并不会进入构建过程中，如果要在构建中使用变量还是首选前面刚讲的 arg 标签。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;expose&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#expose&#34;&gt;#&lt;/a&gt; expose&lt;/h3&gt;
+&lt;p&gt;这个标签与 Dockerfile 中的 EXPOSE 指令一样，用于指定暴露的端口，但是只是作为一种参考，实际上 docker-compose.yml 的端口映射还得 ports 这样的标签。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;expose:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - &amp;quot;3000&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - &amp;quot;8000&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;extra_hosts&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#extra_hosts&#34;&gt;#&lt;/a&gt; extra_hosts&lt;/h3&gt;
+&lt;p&gt;添加主机名的标签，就是往 /etc/hosts 文件中添加一些记录，与 Docker client 的–add-host 类似：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;extra_hosts:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - &amp;quot;somehost:162.242.195.82&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt; - &amp;quot;otherhost:50.31.209.229&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;启动之后查看容器内部 hosts：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;162.242.195.82  somehost&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;50.31.209.229   otherhost&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;labels&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#labels&#34;&gt;#&lt;/a&gt; labels&lt;/h3&gt;
+&lt;p&gt;向容器添加元数据，和 Dockerfile 的 LABEL 指令一个意思，格式如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;labels:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  com.example.description: &amp;quot;Accounting webapp&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  com.example.department: &amp;quot;Finance&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  com.example.label-with-empty-value: &amp;quot;&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;labels:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;quot;com.example.description&amp;#x3D;Accounting webapp&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;quot;com.example.department&amp;#x3D;Finance&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;quot;com.example.label-with-empty-value&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;logging&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#logging&#34;&gt;#&lt;/a&gt; logging&lt;/h3&gt;
+&lt;p&gt;这个标签用于配置日志服务。格式如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;logging:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  driver: syslog&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  options:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    syslog-address: &amp;quot;tcp:&amp;#x2F;&amp;#x2F;192.168.0.42:123&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;默认的 driver 是 json-file。只有 json-file 和 journald 可以通过 docker-compose logs 显示日志，其他方式有其他日志查看方式，但目前 Compose 不支持。对于可选值可以使用 options 指定。&lt;br&gt;
+有关更多这方面的信息可以阅读官方文档：&lt;br&gt;
+&lt;a href=&#34;https://link.jianshu.com/?t=https://docs.docker.com/engine/admin/logging/overview/&#34;&gt;https://docs.docker.com/engine/admin/logging/overview/&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;pid&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#pid&#34;&gt;#&lt;/a&gt; pid&lt;/h3&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;pid: &amp;quot;host&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;将 PID 模式设置为主机 PID 模式，跟主机系统共享进程命名空间。容器使用这个标签将能够访问和操纵其他容器和宿主机的名称空间。&lt;/p&gt;
+&lt;h3 id=&#34;security_opt&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#security_opt&#34;&gt;#&lt;/a&gt; security_opt&lt;/h3&gt;
+&lt;p&gt;为每个容器覆盖默认的标签。简单说来就是管理全部服务的标签。比如设置全部服务的 user 标签值为 USER。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;security_opt:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - label:user:USER&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - label:role:ROLE&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;stop_signal&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#stop_signal&#34;&gt;#&lt;/a&gt; stop_signal&lt;/h3&gt;
+&lt;p&gt;设置另一个信号来停止容器。在默认情况下使用的是 SIGTERM 停止容器。设置另一个信号可以使用 stop_signal 标签。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;stop_signal: SIGUSR1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;volumes_from&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#volumes_from&#34;&gt;#&lt;/a&gt; volumes_from&lt;/h3&gt;
+&lt;p&gt;从其它容器或者服务挂载数据卷，可选的参数是 :ro 或者 :rw，前者表示容器只读，后者表示容器对数据卷是可读可写的。默认情况下是可读可写的。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;volumes_from:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - service_name&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - service_name:ro&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - container:container_name&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - container:container_name:rw&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;cap_add-cap_drop&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#cap_add-cap_drop&#34;&gt;#&lt;/a&gt; cap_add, cap_drop&lt;/h3&gt;
+&lt;p&gt;添加或删除容器的内核功能。详细信息在前面容器章节有讲解，此处不再赘述。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;cap_add:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - ALL&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cap_drop:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - NET_ADMIN&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - SYS_ADMIN&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;cgroup_parent&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#cgroup_parent&#34;&gt;#&lt;/a&gt; cgroup_parent&lt;/h3&gt;
+&lt;p&gt;指定一个容器的父级 cgroup。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;cgroup_parent: m-executor-abcd&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;devices&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#devices&#34;&gt;#&lt;/a&gt; devices&lt;/h3&gt;
+&lt;p&gt;设备映射列表。与 Docker client 的–device 参数类似。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;devices:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  - &amp;quot;&amp;#x2F;dev&amp;#x2F;ttyUSB0:&amp;#x2F;dev&amp;#x2F;ttyUSB0&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&#34;extends&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#extends&#34;&gt;#&lt;/a&gt; extends&lt;/h3&gt;
+&lt;p&gt;这个标签可以扩展另一个服务，扩展内容可以是来自在当前文件，也可以是来自其他文件，相同服务的情况下，后来者会有选择地覆盖原有配置。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;extends:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  file: common.yml&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  service: webapp&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;用户可以在任何地方使用这个标签，只要标签内容包含 file 和 service 两个值就可以了。file 的值可以是相对或者绝对路径，如果不指定 file 的值，那么 Compose 会读取当前 YML 文件的信息。&lt;br&gt;
+更多的操作细节在后面的 12.3.4 小节有介绍。&lt;/p&gt;
+&lt;h3 id=&#34;network_mode&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#network_mode&#34;&gt;#&lt;/a&gt; network_mode&lt;/h3&gt;
+&lt;p&gt;网络模式，与 Docker client 的–net 参数类似，只是相对多了一个 service:[service name] 的格式。&lt;br&gt;
+例如：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;network_mode: &amp;quot;bridge&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;network_mode: &amp;quot;host&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;network_mode: &amp;quot;none&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;network_mode: &amp;quot;service:[service name]&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;network_mode: &amp;quot;container:[container name&amp;#x2F;id]&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可以指定使用服务或者容器的网络。&lt;/p&gt;
+&lt;h3 id=&#34;networks&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#networks&#34;&gt;#&lt;/a&gt; networks&lt;/h3&gt;
+&lt;p&gt;加入指定网络，格式如下：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;services:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  some-service:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    networks:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     - some-network&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;     - other-network&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;关于这个标签还有一个特别的子标签 aliases，这是一个用来设置服务别名的标签，例如：&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;services:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  some-service:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    networks:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      some-network:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        aliases:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         - alias1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         - alias3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      other-network:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        aliases:&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;         - alias2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;相同的服务可以在不同的网络有不同的别名。&lt;/p&gt;
+&lt;h3 id=&#34;其它&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#其它&#34;&gt;#&lt;/a&gt; 其它&lt;/h3&gt;
+&lt;p&gt;还有这些标签：cpu_shares, cpu_quota, cpuset, domainname, hostname, ipc, mac_address, mem_limit, memswap_limit, privileged, read_only, restart, shm_size, stdin_open, tty, user, working_dir&lt;br&gt;
+ 上面这些都是一个单值的标签，类似于使用 docker run 的效果。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;cpu_shares: 73&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cpu_quota: 50000&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;cpuset: 0,1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;user: postgresql&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;working_dir: &amp;#x2F;code&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;domainname: foo.com&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;hostname: foo&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;ipc: host&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mac_address: 02:42:ac:11:65:43&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;mem_limit: 1000000000&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;memswap_limit: 2000000000&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;privileged: true&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;restart: always&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;read_only: true&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;shm_size: 64M&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;stdin_open: true&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;tty: true&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt; ]]></description>
         </item>
         <item>
             <guid isPermalink="true">http://xinghuohan.cn/2021/06/04/Windows/boke-build%20(copy)/</guid>

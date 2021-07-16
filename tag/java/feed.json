@@ -5,6 +5,17 @@
     "home_page_url": "http://xinghuohan.cn",
     "items": [
         {
+            "id": "http://xinghuohan.cn/2021/07/16/Interview/004JVM-gc/",
+            "url": "http://xinghuohan.cn/2021/07/16/Interview/004JVM-gc/",
+            "title": "Java面试题003-说一下JVM中，哪些是共享区，哪些可以作为GC ROOT？",
+            "date_published": "2021-07-16T07:47:41.279Z",
+            "content_html": "<hr>\n<p><strong>图示</strong></p>\n<p><img src=\"/img/20190929172432494.png\" alt=\"在这里插入图片描述\" srcset=\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E\" data-src=\"/img/20190929172432494.png\" class=\"lozad post-image\"></p>\n<ol>\n<li>\n<p>堆区和方法区是所有线程共享的，栈、本地方法栈、程序计数器是每个线程独有的</p>\n</li>\n<li>\n<p>什么是 gc root？</p>\n<p>JVM 在进行垃圾回收时，需要找到垃圾对象，也就是没有被引用的对象，但是直接找 “垃圾” 对象是比较耗时的，所以反过来，先找 “非垃圾” 对象，也就是正常对象，那么就需要从某些 “根” 的引用路径找到正常对象，而这些 “根” 有一个特征，就是它只会引用其他对象，而不会被其他对象引用，例如：栈中的本地变量、方法区中的金静态变量、本地方法栈中的变量、正在运行的线程等可以作为 gc root。</p>\n</li>\n</ol>\n",
+            "tags": [
+                "Java",
+                "Interview"
+            ]
+        },
+        {
             "id": "http://xinghuohan.cn/2021/07/14/Interview/003HashMap-put/",
             "url": "http://xinghuohan.cn/2021/07/14/Interview/003HashMap-put/",
             "title": "Java面试题003-说一下HashMap的put方法",

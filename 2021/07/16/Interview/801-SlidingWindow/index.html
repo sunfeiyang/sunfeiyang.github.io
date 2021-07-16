@@ -240,7 +240,7 @@
 <p>简而言之，滑动窗口算法在一个特定大小的字符串或数组上进行操作，而不在整个字符串和数组上操作，这样就降低了问题的复杂度，从而也达到降低了循环的嵌套深度。<strong>其实这里就可以看出来滑动窗口主要应用在数组和字符串上。</strong></p>
 <h1 id="基本示例"><a class="markdownIt-Anchor" href="#基本示例">#</a> 基本示例</h1>
 <p>如下图所示，设定滑动窗口（window）大小为 3，当滑动窗口每次划过数组时，计算当前滑动窗口中元素的和，得到结果 res。</p>
-<p><img src="../../img/20190305164439172.png" alt="滑动窗口算法基本" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="../../img/20190305164439172.png" class="lozad post-image"><br>
+<p><img src="/img/20190305164439172.png" alt="滑动窗口算法基本" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20190305164439172.png" class="lozad post-image"><br>
 可以用来解决一些查找满足一定条件的连续区间的性质（长度等）的问题。由于区间连续，因此当区间发生变化时，可以通过旧有的计算结果对搜索空间进行剪枝，这样便减少了重复计算，降低了时间复杂度。往往类似于 &quot; <strong>请找到满足 xx 的最 x 的区间（子串、子数组) 的 xx</strong> ” 这类问题都可以使用该方法进行解决。</p>
 <p>需要注意的是，滑动窗口算法更多的是一种思想，而非某种数据结构的使用。</p>
 <h1 id="滑动窗口法的大体框架"><a class="markdownIt-Anchor" href="#滑动窗口法的大体框架">#</a> 滑动窗口法的大体框架</h1>
@@ -259,13 +259,13 @@
 <p>这个思路其实也不难，第 2 步相当于在寻找一个「可行解」，然后第 3 步在优化这个「可行解」，最终找到最优解。左右指针轮流前进，窗口大小增增减减，窗口不断向右滑动。</p>
 <p>下面画图理解一下，needs 和 window 相当于计数器，分别记录 T 中字符出现次数和窗口中的相应字符的出现次数。</p>
 <p>初始状态：<br>
-<img src="../../img/2019101621574345.png" alt="在这里插入图片描述" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="../../img/2019101621574345.png" class="lozad post-image"></p>
+<img src="/img/2019101621574345.png" alt="在这里插入图片描述" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/2019101621574345.png" class="lozad post-image"></p>
 <p>增加 right，直到窗口 [left, right] 包含了 T 中所有字符：<br>
-<img src="../../img/20191016215752186.png" alt="在这里插入图片描述" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="../../img/20191016215752186.png" class="lozad post-image"></p>
+<img src="/img/20191016215752186.png" alt="在这里插入图片描述" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20191016215752186.png" class="lozad post-image"></p>
 <p>现在开始增加 left，缩小窗口 [left, right]。</p>
-<p><img src="../../img/20191016215807735.png" alt="在这里插入图片描述" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="../../img/20191016215807735.png" class="lozad post-image"></p>
+<p><img src="/img/20191016215807735.png" alt="在这里插入图片描述" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20191016215807735.png" class="lozad post-image"></p>
 <p>直到窗口中的字符串不再符合要求，left 不再继续移动。</p>
-<p><img src="../../img/20191016215824468.png" alt="在这里插入图片描述" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="../../img/20191016215824468.png" class="lozad post-image"></p>
+<p><img src="/img/20191016215824468.png" alt="在这里插入图片描述" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/20191016215824468.png" class="lozad post-image"></p>
 <p>之后重复上述过程，先移动 right，再移动 left…… 直到 right 指针到达字符串 S 的末端，算法结束。</p>
 <p>如果你能够理解上述过程，恭喜，你已经完全掌握了滑动窗口算法思想。至于如何具体到问题，如何得出此题的答案，都是编程问题，等会提供一套模板，理解一下就会了。</p>
 <p>上述过程对于非固定大小的滑动窗口，可以简单地写出如下伪码框架：</p>
@@ -386,7 +386,7 @@ s 由英文字母、数字、符号和空格组成</p>
       <div>
         <div class="nav-label">上一篇</div>
         
-        <div class="nav-title">面试801-算法常用的解题思路---快速排序及优化 </div>
+        <div class="nav-title">面试802-算法常用的解题思路---快速排序及优化 </div>
         
       </div>
     </a>
@@ -421,7 +421,7 @@ s 由英文字母、数字、符号和空格组成</p>
 <p class="author-description">人生在勤，不索何获</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>82</span>
+    <span>83</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -518,7 +518,7 @@ s 由英文字母、数字、符号和空格组成</p>
       <a href="/categories/Interview">
         <div class="categories-list-item">
           Interview
-          <span class="categories-list-item-badge">6</span>
+          <span class="categories-list-item-badge">7</span>
         </div>
       </a>
     
@@ -587,7 +587,12 @@ s 由英文字母、数字、符号和空格组成</p>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-07-16</div>
-        <a href="/2021/07/16/Interview/802-qualkSort/"><div class="recent-posts-item-content">面试801-算法常用的解题思路---快速排序及优化</div></a>
+        <a href="/2021/07/16/Interview/004JVM-gc/"><div class="recent-posts-item-content">Java面试题003-说一下JVM中，哪些是共享区，哪些可以作为GC ROOT？</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-07-16</div>
+        <a href="/2021/07/16/Interview/802-qualkSort/"><div class="recent-posts-item-content">面试802-算法常用的解题思路---快速排序及优化</div></a>
       </div>
     
       <div class="recent-posts-item">
@@ -598,11 +603,6 @@ s 由英文字母、数字、符号和空格组成</p>
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2021-07-16</div>
         <a href="/2021/07/16/Interview/800-algorithm/"><div class="recent-posts-item-content">面试800-算法常用的解题思路</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2021-07-14</div>
-        <a href="/2021/07/14/Interview/003HashMap-put/"><div class="recent-posts-item-content">Java面试题003-说一下HashMap的put方法</div></a>
       </div>
     
   </div>
