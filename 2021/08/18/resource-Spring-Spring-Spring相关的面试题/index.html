@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Spring相关的面试题 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/08/18/resource-Spring-Spring-Spring相关的面试题/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/spring/interview.PNG')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
+                            
+                              <a class="tag" href="/tags/#Interview" title="Interview">Interview</a>
+                            
+                        </div>
+
+                        <h1>Spring相关的面试题</h1>
+                        <h2 class="subheading">pring使Java编程对每个人来说更快、更容易、更安全。Spring对速度、简单性和生产率的关注使它成为世界上最流行的Java框架。</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-08-18
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">6.4k</span> and
+                                Reading Time <span class="post-count">23</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/photography/">Photography</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p><a href="https://spring.io/why-spring" target="_blank" rel="noopener">Why Spring?</a></p>
+<p>Spring makes programming Java quicker, easier, and safer for everybody. Spring’s focus on speed, simplicity, and productivity has made it the <a href="https://snyk.io/blog/jvm-ecosystem-report-2018-platform-application/" target="_blank" rel="noopener">world’s most popular</a> Java framework.（Spring使Java编程对每个人来说更快、更容易、更安全。Spring对速度、简单性和生产率的关注使它成为世界上最流行的Java框架。）<a id="more"></a></p>
+<hr>
+<blockquote>
+<p>“We use a lot of the tools that come with the Spring framework and reap the benefits of having a lot of the out of the box solutions, and not having to worry about writing a ton of additional code—so that really saves us some time and energy.”</p>
+<p>“我们使用了Spring框架附带的许多工具，并获得了许多开箱即用的解决方案的好处，而不必担心编写大量额外的代码——因此，这确实节省了我们一些时间和精力。”</p>
+<p>SEAN GRAHAM, APPLICATION TRANSFORMATION LEAD, DICK’S SPORTING GOODS</p>
+</blockquote>
+<ul>
+<li><p>Spring is everywhere(无处不在)</p>
+</li>
+<li><p>Spring is flexible(灵活的)</p>
+</li>
+<li><p>Spring is productive(多产的)</p>
+</li>
+<li><p>Spring is fast(快)</p>
+</li>
+<li><p>Spring is secure(安全)</p>
+</li>
+<li><p>Spring is supportive(支持的)</p>
+</li>
+</ul>
+<p>以上都是来自于Spring官网的一些内容，下面正式开始了解面试中常见的spring的相关问题。</p>
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><ul>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#Spring%E6%98%AF%E4%BB%80%E4%B9%88">Spring是什么？读过源码介绍一下大致流程？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#%E5%AF%B9IOC%E7%9A%84%E7%90%86%E8%A7%A3">谈谈你对IOC的理解？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#%E5%AF%B9AOP%E7%9A%84%E7%90%86%E8%A7%A3">谈谈你对AOP的理解？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#%E5%AE%9E%E7%8E%B0IOC%E5%AE%B9%E5%99%A8">如何实现一个IOC容器？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#BeanFactory%E5%92%8CApplicationContext%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB">BeanFactory和ApplicationContext有什么区别？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#Spring%E5%90%8E%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%9C%E7%94%A8">Spring中后置处理器的作用？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#Spring-Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">描述一下Spring Bean的生命周期？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#Spring%E4%B8%AD%E7%9A%84%E5%8D%95%E4%BE%8Bbean%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97">Spring中的单例bean是线程安全的吗？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#Spring%E4%B8%ADbean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">解释一下Spring支持的几种bean的作用域？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#Spring%E6%A1%86%E6%9E%B6%E4%B8%AD%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">Spring框架中都用到了那些设计模式？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#Spring%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E5%92%8C%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8A%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">Spring事务的实现方式和原理以及隔离级别？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#Spring%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E6%9C%BA%E5%88%B6">Spring事务传播机制？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#Spring%E4%BA%8B%E5%8A%A1%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BC%9A%E5%A4%B1%E6%95%88%EF%BC%9F%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99-Transactional%E4%BC%9A%E5%A4%B1%E6%95%88%EF%BC%9F">Spring事务什么时候会失效？什么时候@Transactional会失效？</a></li>
+<li><a href="/2021/08/18/resource-file-Interview-105-springAbout/#bean%E7%9A%84%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%EF%BC%8C%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E5%BC%8F">什么是bean的自动装配，有哪些方式？</a><sunfy-line></li>
+</ul>
+<h1 id="Spring是什么"><a href="#Spring是什么" class="headerlink" title="Spring是什么"></a>Spring是什么</h1><p>轻量级的开源的J2EE框架。它是一个容器框架，用来装java bean（java对象），中间层框架（万能胶）可以起一个连接作用，比如说把Struts和hibernate粘合在一起运用，可以让我们的企业开发更快、更简洁。</p>
+<p>Spring是一个轻量级的控制反转（IoC）和面向切面（AOP）的容器框架</p>
+<ul>
+<li>从大小与开销两方面而言Spring都是轻量级的。</li>
+<li>通过控制反转（IoC）的技术达到松耦合的目的。</li>
+<li>提供了面向切面编程的丰富支持，允许通过分离应用的业务逻辑与系统级服务进行内聚性的开发。</li>
+<li>包含并管理应用对象(Bean)的配置和生命周期，这个意义上是一个容器。</li>
+<li>将简单的组件配置、组合成为复杂的应用，这个意义上是一个框架。</li>
+</ul>
+<p><a href="http://sunfy.top/2021/08/10/resource-file-Interview-102-sAsbAsc/" target="_blank" rel="noopener">Spring、SpringMVC、SpringBoot区别和联系</a></p>
+<ul>
+<li>Spring是⼀个快速开发框架，Spring帮助程序员来管理对象</li>
+<li>Spring的源码实现的是⾮常优秀的，设计模式的应⽤、并发安全的实现、⾯向接⼝的设计等</li>
+<li>在创建Spring容器，也就是启动Spring时：<ul>
+<li>⾸先会进⾏扫描，扫描得到所有的BeanDefinition对象，并存在⼀个Map中</li>
+<li>然后筛选出⾮懒加载的单例BeanDefinition进⾏创建Bean，对于多例Bean不需要在启动过程中去进⾏创建，对于多例Bean会在每次获取Bean时利⽤BeanDefinition去创建</li>
+<li>利⽤BeanDefinition创建Bean就是Bean的创建⽣命周期，这期间包括了合并BeanDefinition、推断构造⽅法、实例化、属性填充、初始化前、初始化、初始化后等步骤，其中AOP就是发⽣在初始化后这⼀步骤中</li>
+</ul>
+</li>
+<li>单例Bean创建完了之后，Spring会发布⼀个容器启动事件</li>
+<li>Spring启动结束</li>
+<li>在源码中会更复杂，⽐如源码中会提供⼀些模板⽅法，让⼦类来实现，⽐如源码中还涉及到⼀些BeanFactoryPostProcessor和BeanPostProcessor的注册，Spring的扫描就是通过BenaFactoryPostProcessor来实现的，依赖注⼊就是通过BeanPostProcessor来实现的</li>
+<li>在Spring启动过程中还会去处理@Import等注解</li>
+</ul>
+<h1 id="对IOC的理解"><a href="#对IOC的理解" class="headerlink" title="对IOC的理解"></a>对IOC的理解</h1><h2 id="ioc容器（容器概念）"><a href="#ioc容器（容器概念）" class="headerlink" title="ioc容器（容器概念）"></a>ioc容器（容器概念）</h2><p>实际上就是个map（key，value），里面存的是各种对象（在xml里配置的bean节点、@repository、@service、@controller、@component），在项目启动的时候会读取配置文件里面的bean节点，根据全限定类名使用反射创建对象放到map里、扫描到打上上述注解的类还是通过反射创建对象放到map里。<br>这个时候map里就有各种对象了，接下来我们在代码里需要用到里面的对象时，再通过DI注入（autowired、resource等注解，xml里bean节点内的ref属性，项目启动的时候会读取xml节点ref属性，根据id注入，也会扫描这些注解，根据类型或id注入；id就是对象名）。</p>
+<h2 id="控制反转"><a href="#控制反转" class="headerlink" title="控制反转"></a>控制反转</h2><p>没有引入IOC容器之前，对象A依赖于对象B，那么对象A在初始化或者运行到某一点的时候，自己必须主动去创建对象B或者使用已经创建的对象B。无论是创建还是使用对象B，控制权都在自己手上。引入IOC容器之后，对象A与对象B之间失去了直接联系，当对象A运行到需要对象B的时候，IOC容器会主动创建一个对象B注入到对象A需要的地方。通过前后的对比，不难看出来：对象A获得依赖对象B的过程,由主动行为变为了被动行为，控制权颠倒过来了，这就是“控制反转”这个名称的由来。<br>全部对象的控制权全部上缴给“第三方”IOC容器，所以，IOC容器成了整个系统的关键核心，它起到了一种类似“粘合剂”的作用，把系统中的所有对象粘合在一起发挥作用，如果没有这个“粘合剂”，对象与对象之间会彼此失去联系，这就是有人把IOC容器比喻成“粘合剂”的由来。</p>
+<h2 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h2><p>“获得依赖对象的过程被反转了”。控制被反转之后，获得依赖对象的过程由自身管理变为了由IOC容器主动注入。依赖注入是实现IOC的方法，就是由IOC容器在运行期间，动态地将某种依赖关系注入到对象之中。</p>
+<h1 id="对AOP的理解"><a href="#对AOP的理解" class="headerlink" title="对AOP的理解"></a>对AOP的理解</h1><p>系统是由许多不同的组件所组成的，每一个组件各负责一块特定功能。除了实现自身核心功能之外，这些组件还经常承担着额外的职责。例如日志、事务管理和安全这样的核心服务经常融入到自身具有核心业务逻辑的组件中去。这些系统服务经常被称为<code>横切关注点</code>，因为它们会跨越系统的多个组件。</p>
+<p>当我们需要为<strong>分散的对象引入公共行为</strong>的时候，OOP则显得无能为力。也就是说，OOP允许你定义从上到下的关系，但并不适合定义从左到右的关系。例如日志功能。</p>
+<p>日志代码往往水平地散布在所有对象层次中，而与它所散布到的对象的核心功能毫无关系。在OOP设计中，它导致了大量代码的重复，而不利于各个模块的重用。</p>
+<p>AOP：将程序中的交叉业务逻辑（比如安全，日志，事务等），封装成一个<code>切面</code>，然后注入到目标对象（具体业务逻辑）中去。AOP可以对<strong>某个</strong>对象或<strong>某些</strong>对象的功能进行增强，比如对象中的方法进行增强，可以在执行某个方法之前额外的做一些事情，在某个方法执行之后额外的做一些事情</p>
+<h1 id="实现IOC容器"><a href="#实现IOC容器" class="headerlink" title="实现IOC容器"></a>实现IOC容器</h1><ul>
+<li>配置文件配置包扫描路径</li>
+<li>递归包扫描获取.class文件</li>
+<li>反射、确定需要交给IOC管理的类</li>
+<li>对需要注入的类进行<a href="https://sunfy.top/2021/08/18/resource-file-Interview-105-springAbout/#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5" target="_blank" rel="noopener"><strong>依赖注入</strong></a><ul>
+<li>配置文件中指定需要扫描的包路径【<code>确定包路径</code>】</li>
+<li>定义一些注解，分别表示访问控制层、业务服务层、数据持久层、依赖注入注解、获取配置文件注解【<code>定义私有注解</code>】</li>
+<li>从配置文件中获取需要扫描的包路径，获取到当前路径下的文件信息及文件夹信息，我们将当前路径下所有以.class结尾的文件添加到一个Set集合中进行存储【<code>读取class文件并保存至Set集合</code>】</li>
+<li>遍历这个set集合，获取在类上有指定注解的类，并将其交给IOC容器，定义一个安全的Map用来存储这些对象【<code>遍历集合，根据注解交给IOC，保存至缓存Map</code>】</li>
+<li>遍历这个IOC容器，获取到每一个类的实例，判断里面是否有依赖其他的类的实例，然后进行递归注入【<code>遍历IOC容器，判断注入</code>】</li>
+</ul>
+</li>
+</ul>
+   <font size=5 color="red" face="楷书">IOC通过依赖注入实现控制反转</font>
+
+<h1 id="BeanFactory和ApplicationContext有什么区别"><a href="#BeanFactory和ApplicationContext有什么区别" class="headerlink" title="BeanFactory和ApplicationContext有什么区别"></a>BeanFactory和ApplicationContext有什么区别</h1><p>ApplicationContext是BeanFactory的子接口</p>
+<p><img src="../../../../img/Spring相关的面试题/image-20210819161143563.png" alt="image-20210819161143563"></p>
+<p>ApplicationContext提供了更完整的功能：</p>
+<ul>
+<li>继承MessageSource，因此支持国际化。</li>
+<li>统一的资源文件访问方式。</li>
+<li>提供在监听器中注册bean的事件。</li>
+<li>同时加载多个配置文件。</li>
+<li>载入多个（有继承关系）上下文，使得每一个上下文都专注于一个特定的层次，比如应用的web层。</li>
+</ul>
+<hr>
+<ul>
+<li>BeanFactroy采用的是延迟加载形式来注入Bean的，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化。这样，我们就不能发现一些存在的Spring的配置问题。如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常。</li>
+<li>ApplicationContext，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误，这样有利于检查所依赖属性是否注入。ApplicationContext启动后预载入所有的单实例Bean，通过预载入单实例bean,确保当你需要的时候，你就不用等待，因为它们已经创建好了。</li>
+<li>相对于基本的BeanFactory，ApplicationContext唯一的不足是占用内存空间。当应用程序配置Bean较多时，程序启动较慢。</li>
+<li>BeanFactory通常以编程的方式被创建，ApplicationContext还能以声明的方式创建，如使用ContextLoader。</li>
+<li>BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。</li>
+</ul>
+<h1 id="Spring后置处理器作用"><a href="#Spring后置处理器作用" class="headerlink" title="Spring后置处理器作用"></a>Spring后置处理器作用</h1><p>Spring中的后置处理器分为<strong>BeanFactory后置处理器</strong>和<strong>Bean后置处理器</strong>，它们是Spring底层源码架构设计中⾮常重要的⼀种机制，同时开发者也可以利⽤这两种后置处理器来进⾏扩展。</p>
+<h2 id="BeanFactory后置处理器"><a href="#BeanFactory后置处理器" class="headerlink" title="BeanFactory后置处理器"></a>BeanFactory后置处理器</h2><p>表示针对BeanFactory的处理器，Spring启动过程中，会先创建出BeanFactory实例，然后利⽤BeanFactory处理器来加⼯BeanFactory，⽐如Spring的扫描就是基于BeanFactory后置处理器来实现的。</p>
+<h2 id="Bean后置处理器"><a href="#Bean后置处理器" class="headerlink" title="Bean后置处理器"></a>Bean后置处理器</h2><p>也类似，Spring在创建⼀个Bean的过程中，⾸先会实例化得到⼀个对象，然后再利⽤Bean后置处理器来对该实例对象进⾏加⼯，⽐如我们常说的<code>依赖注⼊就是基于⼀个Bean后置处理器来实现</code>的，通过该Bean后置处理器来给实例对象中加了@Autowired注解的属性⾃动赋值，还⽐如我们常说的AOP，也是利⽤⼀个Bean后置处理器来实现的，基于原实例对象，判断是否需要进⾏AOP，如果需要，那么就基于原实例对象进⾏动态代理，⽣成⼀个代理对象。</p>
+<p><img src="../../../../img/Spring相关的面试题/image-20210819160854872.png" alt="image-20210819160854872"></p>
+<p><img src="../../../../img/Spring相关的面试题/image-20210819160415377.png" alt="image-20210819160415377"></p>
+<p><img src="../../../../img/Spring相关的面试题/image-20210819160602471.png" alt="image-20210819160602471"></p>
+<p><img src="../../../../img/Spring相关的面试题/image-20210819141413088.png" alt="image-20210819141413088"></p>
+<p><img src="../../../../img/Spring相关的面试题/image-20210819160319867.png" alt="image-20210819160319867"></p>
+<h1 id="Spring-Bean的生命周期"><a href="#Spring-Bean的生命周期" class="headerlink" title="Spring Bean的生命周期"></a>Spring Bean的生命周期</h1><p><a href="https://www.processon.com/view/link/5eafa609f346fb177ba8091f" target="_blank" rel="noopener">Spring生命周期图</a></p>
+<p><a href="/img/image-20210819165326564.png"><img src="../../../../img/Spring相关的面试题/image-20210819165326564.png" alt="image-20210819165326564"></a></p>
+<ul>
+<li>解析类得到BeanDefinition</li>
+<li>如果有多个构造方法，则要推断构造方法</li>
+<li>确定好构造方法后，进行实例化得到一个对象</li>
+<li>对对象中的加了@Autowired注解的属性进行属性填充</li>
+<li>回调Aware方法，比如BeanNameAware，BeanFactoryAware</li>
+<li>调用BeanPostProcessor的初始化前的方法</li>
+<li>调用初始化方法</li>
+<li>调用BeanPostProcessor的初始化后的方法，在这里会进行AOP</li>
+<li>如果当前创建的bean是单例的则会把bean放入单例池</li>
+<li>使用bean</li>
+<li>Spring容器关闭时调用DisposableBean中destory()方法</li>
+</ul>
+<h1 id="Spring中的单例bean是线程安全的吗"><a href="#Spring中的单例bean是线程安全的吗" class="headerlink" title="Spring中的单例bean是线程安全的吗"></a>Spring中的单例bean是线程安全的吗</h1><p>Spring中的Bean默认是单例模式的，框架并没有对bean进行多线程的封装处理。</p>
+<p>如果Bean是有状态的那就需要开发人员自己来进行线程安全的保证，最简单的办法就是改变bean的作用域把”singleton”改为’‘protopyte’这样每次请求Bean就相当于是new Bean()这样就可以保证线程的安全了。</p>
+<ul>
+<li>有状态就是有数据存储功能</li>
+<li>无状态就是不会保存数据controller、service和dao层本身并不是线程安全的，只是如果只是调用里面的方法，而且多线程调用一个实例的方法，会在内存中复制变量，这是自己的线程的工作内存，是安全的。</li>
+</ul>
+<p>Dao会操作数据库Connection，Connection是带有状态的，比如说数据库事务，Spring的事务管理器使用Threadlocal为不同线程维护了一套独立的connection副本，保证线程之间不会互相影响（Spring是如何保证事务获取同一个Connection的）</p>
+<p>不要在bean中声明任何有状态的实例变量或类变量，如果必须如此，那么就使用ThreadLocal把变量变为线程私有的，如果bean的实例变量或类变量需要在多个线程之间共享，那么就只能使用synchronized、lock、CAS等这些实现线程同步的方法了。</p>
+<h1 id="Spring中bean的作用域"><a href="#Spring中bean的作用域" class="headerlink" title="Spring中bean的作用域"></a>Spring中bean的作用域</h1><ul>
+<li>singleton：默认，每个容器中只有一个bean的实例，单例的模式由BeanFactory自身来维护。该对象的生命周期是与Spring IOC容器一致的（但在第一次被注入时才会创建）。</li>
+<li>prototype：为每一个bean请求提供一个实例。在每次注入时都会创建一个新的对象request：bean被定义为在每个HTTP请求中创建一个单例对象，也就是说在单个请求中都会复用这一个单例对象。</li>
+<li>session：与request范围类似，确保每个session中有一个bean的实例，在session过期后，bean会随之失效。</li>
+<li>application：bean被定义为在ServletContext的生命周期中复用一个单例对象。</li>
+<li>websocket：bean被定义为在websocket的生命周期中复用一个单例对象。</li>
+<li>global-session：全局作用域，</li>
+<li>global-session和Portlet应用相关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。全局作用域与Servlet中的session作用域效果相同。</li>
+</ul>
+<h1 id="Spring框架中的设计模式"><a href="#Spring框架中的设计模式" class="headerlink" title="Spring框架中的设计模式"></a>Spring框架中的设计模式</h1><p>简单工厂：由一个工厂类根据传入的参数，动态决定应该创建哪一个产品类。</p>
+<blockquote>
+<p>Spring中的BeanFactory就是简单工厂模式的体现，根据传入一个唯一的标识来获得Bean对象，但是否是在传入参数后创建还是传入参数前创建这个要根据具体情况来定。</p>
+</blockquote>
+<p>工厂方法：</p>
+<blockquote>
+<p>实现了FactoryBean接口的bean是一类叫做factory的bean。其特点是，spring会在使用getBean()调用获得该bean时，会自动调用该bean的getObject()方法，所以返回的不是factory这个bean，而是这个bean.getOjbect()方法的返回值。</p>
+</blockquote>
+<p>单例模式：</p>
+<blockquote>
+<p>spring对单例的实现： spring中的单例模式完成了后半句话，即提供了全局的访问点BeanFactory。但没有从构造器级别去控制单例，这是因为spring管理的是任意的java对象。</p>
+</blockquote>
+<p>适配器模式：</p>
+<blockquote>
+<p>Spring定义了一个适配接口，使得每一种Controller有一种对应的适配器实现类，让适配器代替controller执行相应的方法。这样在扩展Controller时，只需要增加一个适配器类就完成了SpringMVC的扩展了。</p>
+</blockquote>
+<p>装饰器模式：动态地给一个对象添加一些额外的职责。就增加功能来说，Decorator模式相比生成子类更为灵活。</p>
+<blockquote>
+<p>Spring中用到的包装器模式在类名上有两种表现：一种是类名中含有Wrapper，另一种是类名中含有Decorator。</p>
+</blockquote>
+<p>动态代理：</p>
+<blockquote>
+<p>切面在应用运行的时刻被织入。一般情况下，在织入切面时，AOP容器会为目标对象创建动态的创建一个代理对象。SpringAOP就是以这种方式织入切面的。<br>织入：把切面应用到目标对象并创建新的代理对象的过程。</p>
+</blockquote>
+<p>观察者模式：</p>
+<blockquote>
+<p>spring的事件驱动模型使用的是 观察者模式 ，Spring中Observer模式常用的地方是listener的实现。</p>
+</blockquote>
+<p>策略模式：</p>
+<blockquote>
+<p>Spring框架的资源访问Resource接口。该接口提供了更强的资源访问能力，Spring 框架本身大量使用了<br>Resource 接口来访问底层资源。    </p>
+</blockquote>
+<p>模板方法：父类定义了骨架（调用哪些方法及顺序），某些特定方法由子类实现。</p>
+<p>最大的好处：代码复用，减少重复代码。除了子类要实现的特定方法，其他方法及方法调用顺序都在父类中预先写好了。</p>
+<blockquote>
+<p>refresh方法</p>
+</blockquote>
+<h1 id="Spring事务的实现方式和原理以及隔离级别"><a href="#Spring事务的实现方式和原理以及隔离级别" class="headerlink" title="Spring事务的实现方式和原理以及隔离级别"></a>Spring事务的实现方式和原理以及隔离级别</h1><p>在使用Spring框架时，可以有两种使用事务的方式，一种是编程式的，一种是申明式的，@Transactional注解就是申明式的。</p>
+<p>首先，事务这个概念是数据库层面的，Spring只是基于数据库中的事务进行了扩展，以及提供了一些能让程序员更加方便操作事务的方式。</p>
+<p>比如我们可以通过在某个方法上增加@Transactional注解，就可以开启事务，这个方法中所有的sql都会在一个事务中执行，统一成功或失败。</p>
+<p>在一个方法上加了@Transactional注解后，Spring会基于这个类生成一个代理对象，会将这个代理对象作为bean，当在使用这个代理对象的方法时，如果这个方法上存在@Transactional注解，那么代理逻辑会先把事务的自动提交设置为false，然后再去执行原本的业务逻辑方法，如果执行业务逻辑方法没有出现异常，那么代理逻辑中就会将事务进行提交，如果执行业务逻辑方法出现了异常，那么则会将事务进行回滚。</p>
+<p>当然，针对哪些异常回滚事务是可以配置的，可以利用@Transactional注解中的rollbackFor属性进行配置，默认情况下会对RuntimeException和Error进行回滚。</p>
+<p>spring事务隔离级别就是数据库的隔离级别：外加一个默认级别</p>
+<ul>
+<li>read uncommitted（未提交读）</li>
+<li>read committed（提交读、不可重复读）</li>
+<li>repeatable read（可重复读）</li>
+<li>serializable（可串行化）</li>
+</ul>
+<blockquote>
+<p>数据库的配置隔离级别是Read Commited,而Spring配置的隔离级别是Repeatable Read，请问这时隔离级别是以哪一个为准？<br>以Spring配置的为准，如果spring设置的隔离级别数据库不支持，效果取决于数据库</p>
+</blockquote>
+<h1 id="Spring事务传播机制"><a href="#Spring事务传播机制" class="headerlink" title="Spring事务传播机制"></a>Spring事务传播机制</h1><p>多个事务方法相互调用时,事务如何在这些方法间传播</p>
+<blockquote>
+<p>方法A是一个事务的方法，方法A执行过程中调用了方法B，那么方法B有无事务以及方法B对事务的要求不同都<br>会对方法A的事务具体执行造成影响，同时方法A的事务对方法B的事务执行也有影响，这种影响具体是什么就<br>由两个方法所定义的事务传播类型所决定。</p>
+</blockquote>
+<ul>
+<li>REQUIRED(Spring默认的事务传播类型)：如果当前没有事务，则自己新建一个事务，如果当前存在事务，则加入这个事务</li>
+<li>SUPPORTS：当前存在事务，则加入当前事务，如果当前没有事务，就以非事务方法执行</li>
+<li>MANDATORY：当前存在事务，则加入当前事务，如果当前事务不存在，则抛出异常。</li>
+<li>REQUIRES_NEW：创建一个新事务，如果存在当前事务，则挂起该事务。</li>
+<li>NOT_SUPPORTED：以非事务方式执行,如果当前存在事务，则挂起当前事务</li>
+<li>NEVER：不使用事务，如果当前事务存在，则抛出异常</li>
+<li>NESTED：如果当前事务存在，则在嵌套事务中执行，否则REQUIRED的操作一样（开启一个事务）</li>
+</ul>
+<blockquote>
+<p>和REQUIRES_NEW的区别<br>REQUIRES_NEW是新建一个事务并且新开启的这个事务与原有事务无关，而NESTED则是当前存在事务时（我<br>们把当前事务称之为父事务）会开启一个嵌套事务（称之为一个子事务）。在NESTED情况下父事务回滚时，<br>子事务也会回滚，而在REQUIRES_NEW情况下，原有事务回滚，不会影响新开启的事务。<br>和REQUIRED的区别<br>REQUIRED情况下，调用方存在事务时，则被调用方和调用方使用同一事务，那么被调用方出现异常时，由于<br>共用一个事务，所以无论调用方是否catch其异常，事务都会回滚而在NESTED情况下，被调用方发生异常<br>时，调用方可以catch其异常，这样只有子事务回滚，父事务不受影响</p>
+</blockquote>
+<h1 id="Spring事务什么时候会失效？什么时候-Transactional会失效？"><a href="#Spring事务什么时候会失效？什么时候-Transactional会失效？" class="headerlink" title="Spring事务什么时候会失效？什么时候@Transactional会失效？"></a>Spring事务什么时候会失效？什么时候@Transactional会失效？</h1><p>spring事务的原理是AOP，进行了切面增强，那么失效的根本原因是这个AOP不起作用了！常见情况有如下几种</p>
+<ul>
+<li><p>发生自调用，类里面使用this调用本类的方法（this通常省略），此时这个this对象不是代理类，而是UserService对象本身！解决方法很简单，让那个this变成UserService的代理类即可！</p>
+</li>
+<li><p>方法不是public的</p>
+<blockquote>
+<p>@Transactional只能用于public的方法上，否则事务不会失效，如果要用在非public方法上，可<br>以开启AspectJ代理模式。</p>
+</blockquote>
+</li>
+<li><p>数据库不支持事务</p>
+</li>
+<li><p>没有被spring管理</p>
+</li>
+<li><p>异常被吃掉，事务不会回滚(或者抛出的异常没有被定义，默认为RuntimeException)</p>
+</li>
+</ul>
+<p>因为Spring事务是基于代理来实现的，所以某个加了@Transactional的⽅法只有是被代理对象调⽤时，那么这个注解才会⽣效，所以如果是被代理对象来调⽤这个⽅法，那么@Transactional是不会⽣效的。</p>
+<p>同时如果某个⽅法是private的，那么@Transactional也会失效，因为底层cglib是基于⽗⼦类来实现的，⼦类是不能重载⽗类的private⽅法的，所以⽆法很好的利⽤代理，也会导致@Transactianal失效</p>
+<h1 id="bean的自动装配，有哪些方式"><a href="#bean的自动装配，有哪些方式" class="headerlink" title="bean的自动装配，有哪些方式"></a>bean的自动装配，有哪些方式</h1><p>开启自动装配，只需要在xml配置文件中定义“autowire”属性。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cutomer"</span> <span class="attr">class</span>=<span class="string">"com.xxx.xxx.Customer"</span> <span class="attr">autowire</span>=<span class="string">""</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>autowire属性有五种装配的方式：</p>
+<ul>
+<li>no – 缺省情况下，自动配置是通过“ref”属性手动设定 。</li>
+</ul>
+<blockquote>
+<p>autowire属性有五种装配的方式：<br>no – 缺省情况下，自动配置是通过“ref”属性手动设定。</p>
+</blockquote>
+<ul>
+<li>byName-根据bean的属性名称进行自动装配。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Cutomer的属性名称是person，Spring会将bean id为person的bean通过setter方法进行自动装</span><br><span class="line">配。</span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cutomer"</span> <span class="attr">class</span>=<span class="string">"com.xxx.xxx.Cutomer"</span> <span class="attr">autowire</span>=<span class="string">"byName"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"person"</span> <span class="attr">class</span>=<span class="string">"com.xxx.xxx.Person"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>byType-根据bean的类型进行自动装配。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Cutomer的属性person的类型为Person，Spirng会将Person类型通过setter方法进行自动装配。</span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cutomer"</span> <span class="attr">class</span>=<span class="string">"com.xxx.xxx.Cutomer"</span> <span class="attr">autowire</span>=<span class="string">"byType"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"person"</span> <span class="attr">class</span>=<span class="string">"com.xxx.xxx.Person"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>constructor-类似byType，不过是应用于构造器的参数。如果一个bean与构造器参数的类型形同，则进行自动装配，否则导致异常。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Cutomer构造函数的参数person的类型为Person，Spirng会将Person类型通过构造方法进行自动装</span><br><span class="line">配。</span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cutomer"</span> <span class="attr">class</span>=<span class="string">"com.xxx.xxx.Cutomer"</span> <span class="attr">autowire</span>=<span class="string">"construtor"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"person"</span> <span class="attr">class</span>=<span class="string">"com.xxx.xxx.Person"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Cutomer构造函数的参数person的类型为Person，Spirng会将Person类型通过构造方法进行自动装配。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Cutomer构造函数的参数person的类型为Person，Spirng会将Person类型通过构造方法进行自动装</span><br><span class="line">配。</span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"cutomer"</span> <span class="attr">class</span>=<span class="string">"com.xxx.xxx.Cutomer"</span> <span class="attr">autowire</span>=<span class="string">"construtor"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"person"</span> <span class="attr">class</span>=<span class="string">"com.xxx.xxx.Person"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>@Autowired自动装配bean，可以在字段、setter方法、构造函数上使用。</li>
+</ul>
+<h1 id="Spring扩展点"><a href="#Spring扩展点" class="headerlink" title="Spring扩展点"></a><strong>Spring扩展点</strong></h1><ul>
+<li><strong>BeanFactoryPostProcessor</strong><ul>
+<li>BeanDefinitionRegistryPostProcessor</li>
+</ul>
+</li>
+<li><strong>BeanPostProcessor</strong><ul>
+<li>InstantiationAwareBeanPostProcessor</li>
+<li>AbstractAutoProxyCreator</li>
+</ul>
+</li>
+<li><strong>@Import</strong><ul>
+<li>ImportBeanDefinitionRegistrar</li>
+<li>ImportSelector</li>
+</ul>
+</li>
+<li><strong>Aware</strong></li>
+<li><strong>InitializingBean</strong></li>
+<li><strong>FactoryBean</strong></li>
+<li><strong>SmartInitializingSingleton</strong></li>
+<li><strong>ApplicationListener</strong></li>
+<li><strong>Lifecycle</strong><ul>
+<li>SmartLifecycle</li>
+<li>LifecycleProcessor</li>
+</ul>
+</li>
+<li><strong>HandlerInterceptor</strong></li>
+<li><strong>MethodInterceptor</strong></li>
+</ul>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a><strong>应用场景</strong></h2><h3 id="整合Nacos"><a href="#整合Nacos" class="headerlink" title="整合Nacos"></a><a href="https://www.processon.com/view/link/5ea27ca15653bb6efc68eb8c" target="_blank" rel="noopener">整合Nacos</a></h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对ApplicationListener的扩展</span></span><br><span class="line">AbstractAutoServiceRegistration#onApplicationEvent</span><br><span class="line"><span class="comment"># 服务注册</span></span><br><span class="line">》NacosServiceRegistry#register</span><br></pre></td></tr></table></figure>
+<p>NacosWatch：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#对SmartLifecycle的扩展</span></span><br><span class="line">NacosWatch#start</span><br><span class="line"><span class="comment">#订阅服务接收实例更改的事件</span></span><br><span class="line">》NamingService#subscribe</span><br></pre></td></tr></table></figure>
+<p>Eureka Server端上下文的初始化是在SmartLifecycle#start中实现的</p>
+<p>EurekaServerInitializerConfiguration</p>
+<h3 id="整合Feign"><a href="#整合Feign" class="headerlink" title="整合Feign"></a><a href="https://www.processon.com/view/link/5e80ae79e4b03b99653fe42f" target="_blank" rel="noopener">整合Feign</a></h3><p><strong>FeignClientsRegistrar</strong></p>
+<p><img src="../../../../img/Spring相关的面试题/clipboard-16293616286161.png" alt="img"></p>
+<p><strong>FeignClientFactorybean</strong></p>
+<p><img src="../../../../img/Spring相关的面试题/clipboard.png" alt="img"></p>
+<h3 id="整合Ribbon"><a href="#整合Ribbon" class="headerlink" title="整合Ribbon"></a><a href="https://www.processon.com/view/link/5e7466dce4b027d999bdaddb" target="_blank" rel="noopener"><strong>整合Ribbon</strong></a></h3><p><strong>LoadBalancerAutoConfiguration</strong></p>
+<p>对SmartInitializingSingleton的扩展，为所有用@LaodBalanced修饰的restTemplate（利用了@Qualifier）绑定实现了负载均衡逻辑的拦截器LoadBalancerInterceptor</p>
+<p><img src="../../../../img/Spring相关的面试题/clipboard-16293616691022.png" alt="img"></p>
+<p><strong>LoadBalancerInterceptor</strong></p>
+<p><img src="../../../../img/Spring相关的面试题/clipboard-16293616827233.png" alt="img"></p>
+<h3 id="整合sentinel"><a href="#整合sentinel" class="headerlink" title="整合sentinel"></a><strong>整合sentinel</strong></h3><p><strong>AbstractSentinelInterceptor</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Webmvc接口资源保护入口</span></span><br><span class="line">AbstractSentinelInterceptor#preHandle</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/Spring相关的面试题/clipboard-16293617337284.png" alt="img"></p>
+<p><strong>SentinelDataSourceHandler</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Sentinel持久化读数据源设计，利用了SmartInitializingSingleton扩展点</span></span><br><span class="line">SentinelDataSourceHandler#afterSingletonsInstantiated</span><br><span class="line"><span class="comment"># 注册一个FactoryBean类型的数据源 </span></span><br><span class="line">》SentinelDataSourceHandler#registerBean</span><br><span class="line">》》NacosDataSourceFactoryBean#getObject</span><br><span class="line"><span class="comment"># 利用FactoryBean获取到读数据源</span></span><br><span class="line">》》new NacosDataSource(properties, groupId, dataId,converter)</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/Spring相关的面试题/clipboard-16293617650255.png" alt="img"></p>
+<p><strong>NacosDataSourceFactoryBean</strong></p>
+<p><img src="../../../../img/Spring相关的面试题/clipboard-16293617771986.png" alt="img"></p>
+<h3 id="整合seata"><a href="#整合seata" class="headerlink" title="整合seata"></a><a href="https://www.processon.com/view/link/5f743063e0b34d0711f001d2" target="_blank" rel="noopener"><strong>整合seata</strong></a></h3><p><strong>GlobalTransactionScanner</strong></p>
+<p><a href="/img/clipboard-16293618107487.png"><img src="../../../../img/Spring相关的面试题/clipboard-16293618107487.png" alt="img"></a></p>
+<p><strong>GlobalTransactionalInterceptor</strong></p>
+<p><a href="/img/clipboard-16293618173768.png"><img src="../../../../img/Spring相关的面试题/clipboard-16293618173768.png" alt="img"></a></p>
+<h3 id="Nacos配置中心源码分析"><a href="#Nacos配置中心源码分析" class="headerlink" title="Nacos配置中心源码分析"></a><a href="https://www.processon.com/view/link/603f3d2fe401fd641adb51f1" target="_blank" rel="noopener"><strong>Nacos配置中心源码分析</strong></a></h3>
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/09/04/resource-Spring-Spring-Spring底层核心原理/" data-toggle="tooltip" data-placement="top" title="Spring底层核心原理">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/08/10/resource-Spring-Spring-Spring、Spring-MVC和Spring-Boot的联系和区别/" data-toggle="tooltip" data-placement="top" title="Spring、Spring MVC和Spring Boot的联系和区别">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#面试题"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">面试题</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring是什么"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Spring是什么</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#对IOC的理解"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">对IOC的理解</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ioc容器（容器概念）"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">ioc容器（容器概念）</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#控制反转"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">控制反转</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#依赖注入"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">依赖注入</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#对AOP的理解"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">对AOP的理解</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#实现IOC容器"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">实现IOC容器</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#BeanFactory和ApplicationContext有什么区别"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">BeanFactory和ApplicationContext有什么区别</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring后置处理器作用"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Spring后置处理器作用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#BeanFactory后置处理器"><span class="toc-nav-number">7.1.</span> <span class="toc-nav-text">BeanFactory后置处理器</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Bean后置处理器"><span class="toc-nav-number">7.2.</span> <span class="toc-nav-text">Bean后置处理器</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring-Bean的生命周期"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">Spring Bean的生命周期</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring中的单例bean是线程安全的吗"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">Spring中的单例bean是线程安全的吗</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring中bean的作用域"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">Spring中bean的作用域</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring框架中的设计模式"><span class="toc-nav-number">11.</span> <span class="toc-nav-text">Spring框架中的设计模式</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring事务的实现方式和原理以及隔离级别"><span class="toc-nav-number">12.</span> <span class="toc-nav-text">Spring事务的实现方式和原理以及隔离级别</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring事务传播机制"><span class="toc-nav-number">13.</span> <span class="toc-nav-text">Spring事务传播机制</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring事务什么时候会失效？什么时候-Transactional会失效？"><span class="toc-nav-number">14.</span> <span class="toc-nav-text">Spring事务什么时候会失效？什么时候@Transactional会失效？</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#bean的自动装配，有哪些方式"><span class="toc-nav-number">15.</span> <span class="toc-nav-text">bean的自动装配，有哪些方式</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Spring扩展点"><span class="toc-nav-number">16.</span> <span class="toc-nav-text">Spring扩展点</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#应用场景"><span class="toc-nav-number">16.1.</span> <span class="toc-nav-text">应用场景</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#整合Nacos"><span class="toc-nav-number">16.1.1.</span> <span class="toc-nav-text">整合Nacos</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#整合Feign"><span class="toc-nav-number">16.1.2.</span> <span class="toc-nav-text">整合Feign</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#整合Ribbon"><span class="toc-nav-number">16.1.3.</span> <span class="toc-nav-text">整合Ribbon</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#整合sentinel"><span class="toc-nav-number">16.1.4.</span> <span class="toc-nav-text">整合sentinel</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#整合seata"><span class="toc-nav-number">16.1.5.</span> <span class="toc-nav-text">整合seata</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Nacos配置中心源码分析"><span class="toc-nav-number">16.1.6.</span> <span class="toc-nav-text">Nacos配置中心源码分析</span></a></li></ol></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
+                        
+                          <a class="tag" href="/tags/#Interview" title="Interview">Interview</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2022 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🌾&#34;,&#34;🍀&#34;,&#34;don&#39;t give up&#34;,&#34;🍂&#34;,&#34;🌻&#34;,&#34;try it again&#34;,&#34;🍃&#34;,&#34;never say die&#34;,&#34;🌵&#34;,&#34;🌿&#34;,&#34;🌴&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+</body>
+
+</html>
