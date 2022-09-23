@@ -177,13 +177,6 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/archive/">Archives</a>
                         </li>
                         
@@ -191,14 +184,21 @@
 
                         
                         <li>
-                            <a href="/project/">project</a>
+                            <a href="/categories/">Categories</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/categories/">Categories</a>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
                         </li>
                         
                     
@@ -266,11 +266,11 @@
             <!-- 标签云 -->
             <div id='tag_clouds' class="tags">
                 
-                    <a href="#Spring" title="Spring" rel="11">Spring</a>
+                    <a href="#SpringBoot" title="SpringBoot" rel="4">SpringBoot</a>
                 
                     <a href="#Interview" title="Interview" rel="3">Interview</a>
                 
-                    <a href="#SpringBoot" title="SpringBoot" rel="4">SpringBoot</a>
+                    <a href="#Spring" title="Spring" rel="11">Spring</a>
                 
                     <a href="#WebSocket" title="WebSocket" rel="1">WebSocket</a>
                 
@@ -280,8 +280,8 @@
 
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Spring">
-                    <span class="tag-text">Spring</span>
+                <span class="fa fa-tag listing-seperator" id="SpringBoot">
+                    <span class="tag-text">SpringBoot</span>
                 </span>
                 
                   <!-- <li class="listing-item">
@@ -289,13 +289,13 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2021/09/15/resource-Spring-Spring-SpringBean的销毁/">
+                     <a href="/2021/10/06/resource-Spring-SpringBoot-SpringBoot自动装配原理/">
                         <h2 class="post-title">
-                            SpringBean的销毁
+                            SpringBoot自动装配原理
                         </h2>
                         
                             <h3 class="post-subtitle">
-                                发生在Spring容器关闭过程中的
+                                @Import + @Configuration + Spring spi
                             </h3>
                         
                     </a>
@@ -308,13 +308,77 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2021/10/13/resource-Spring-Spring-SpringAOP底层原理/">
+                     <a href="/2020/10/11/resource-Spring-SpringBoot-SpringBoot自定义staters/">
                         <h2 class="post-title">
-                            SpringAOP底层原理
+                            SpringBoot自定义staters
                         </h2>
                         
                             <h3 class="post-subtitle">
-                                AOP底层原理解析
+                                SpringBoot 最强大的功能就是把我们常用的场景抽取成了一个个starter（场景启动器）
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2020/09/22/resource-Spring-SpringBoot-SpringBoot集成WebSocket通信/">
+                        <h2 class="post-title">
+                            SpringBoot集成WebSocket通信
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                WebSocket协议是基于TCP的一种新的网络协议。实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2020/10/12/resource-Spring-SpringBoot-SpringBoot集成Druid/">
+                        <h2 class="post-title">
+                            SpringBoot集成Druid
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                Apache Druid是一个高性能的实时分析数据库
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Interview">
+                    <span class="tag-text">Interview</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2021/08/09/resource-Spring-SpringBoot-SpringBoot配置文件加载顺序/">
+                        <h2 class="post-title">
+                            SpringBoot配置文件加载顺序
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                配置文件的加载顺序
                             </h3>
                         
                     </a>
@@ -346,6 +410,51 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
+                     <a href="/2021/08/18/resource-Spring-Spring-Spring相关的面试题/">
+                        <h2 class="post-title">
+                            Spring相关的面试题
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                pring使Java编程对每个人来说更快、更容易、更安全。Spring对速度、简单性和生产率的关注使它成为世界上最流行的Java框架。
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Spring">
+                    <span class="tag-text">Spring</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2021/08/09/resource-Spring-SpringBoot-SpringBoot配置文件加载顺序/">
+                        <h2 class="post-title">
+                            SpringBoot配置文件加载顺序
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                配置文件的加载顺序
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
                      <a href="/2021/09/09/resource-Spring-Spring-SpringBean的生命周期详解/">
                         <h2 class="post-title">
                             SpringBean的生命周期详解
@@ -365,13 +474,32 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2021/09/14/resource-Spring-Spring-Spring依赖注入方式和源码分析/">
+                     <a href="/2021/08/10/resource-Spring-Spring-Spring、Spring-MVC和Spring-Boot的联系和区别/">
                         <h2 class="post-title">
-                            Spring依赖注入方式和源码分析
+                            Spring、Spring MVC和Spring Boot的联系和区别
                         </h2>
                         
                             <h3 class="post-subtitle">
-                                手动注入|自动注入
+                                Spring是一个IOC容器|Spring对web框架的一个解决方案|Spring提供的一个快速开发工具包
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2021/10/13/resource-Spring-Spring-SpringAOP底层原理/">
+                        <h2 class="post-title">
+                            SpringAOP底层原理
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                AOP底层原理解析
                             </h3>
                         
                     </a>
@@ -422,6 +550,25 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
+                     <a href="/2021/09/15/resource-Spring-Spring-SpringBean的销毁/">
+                        <h2 class="post-title">
+                            SpringBean的销毁
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                发生在Spring容器关闭过程中的
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
                      <a href="/2021/07/23/resource-Spring-Spring-Spring循环依赖底层原理/">
                         <h2 class="post-title">
                             Spring循环依赖底层原理
@@ -441,6 +588,44 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
+                     <a href="/2021/09/14/resource-Spring-Spring-Spring依赖注入方式和源码分析/">
+                        <h2 class="post-title">
+                            Spring依赖注入方式和源码分析
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                手动注入|自动注入
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2021/08/18/resource-Spring-Spring-Spring相关的面试题/">
+                        <h2 class="post-title">
+                            Spring相关的面试题
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                pring使Java编程对每个人来说更快、更容易、更安全。Spring对速度、简单性和生产率的关注使它成为世界上最流行的Java框架。
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
                      <a href="/2021/05/24/resource-Spring-Spring-Spring推断构造方法/">
                         <h2 class="post-title">
                             Spring推断构造方法
@@ -448,191 +633,6 @@
                         
                             <h3 class="post-subtitle">
                                 一个构造方法|多个构造方法
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2021/08/09/resource-Spring-SpringBoot-SpringBoot配置文件加载顺序/">
-                        <h2 class="post-title">
-                            SpringBoot配置文件加载顺序
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                配置文件的加载顺序
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2021/08/18/resource-Spring-Spring-Spring相关的面试题/">
-                        <h2 class="post-title">
-                            Spring相关的面试题
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                pring使Java编程对每个人来说更快、更容易、更安全。Spring对速度、简单性和生产率的关注使它成为世界上最流行的Java框架。
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Interview">
-                    <span class="tag-text">Interview</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2021/08/10/resource-Spring-Spring-Spring、Spring-MVC和Spring-Boot的联系和区别/">
-                        <h2 class="post-title">
-                            Spring、Spring MVC和Spring Boot的联系和区别
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                Spring是一个IOC容器|Spring对web框架的一个解决方案|Spring提供的一个快速开发工具包
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2021/08/09/resource-Spring-SpringBoot-SpringBoot配置文件加载顺序/">
-                        <h2 class="post-title">
-                            SpringBoot配置文件加载顺序
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                配置文件的加载顺序
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2021/08/18/resource-Spring-Spring-Spring相关的面试题/">
-                        <h2 class="post-title">
-                            Spring相关的面试题
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                pring使Java编程对每个人来说更快、更容易、更安全。Spring对速度、简单性和生产率的关注使它成为世界上最流行的Java框架。
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="SpringBoot">
-                    <span class="tag-text">SpringBoot</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2021/10/06/resource-Spring-SpringBoot-SpringBoot自动装配原理/">
-                        <h2 class="post-title">
-                            SpringBoot自动装配原理
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                @Import + @Configuration + Spring spi
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2020/10/11/resource-Spring-SpringBoot-SpringBoot自定义staters/">
-                        <h2 class="post-title">
-                            SpringBoot自定义staters
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                SpringBoot 最强大的功能就是把我们常用的场景抽取成了一个个starter（场景启动器）
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2020/10/12/resource-Spring-SpringBoot-SpringBoot集成Druid/">
-                        <h2 class="post-title">
-                            SpringBoot集成Druid
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                Apache Druid是一个高性能的实时分析数据库
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2020/09/22/resource-Spring-SpringBoot-SpringBoot集成WebSocket通信/">
-                        <h2 class="post-title">
-                            SpringBoot集成WebSocket通信
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                WebSocket协议是基于TCP的一种新的网络协议。实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端
                             </h3>
                         
                     </a>
@@ -833,7 +833,7 @@
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🌾&#34;,&#34;🍀&#34;,&#34;don&#39;t give up&#34;,&#34;🍂&#34;,&#34;🌻&#34;,&#34;try it again&#34;,&#34;🍃&#34;,&#34;never say die&#34;,&#34;🌵&#34;,&#34;🌿&#34;,&#34;🌴&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
         
 
         <!-- background effects end -->
@@ -843,6 +843,21 @@
     
         <script src="/js/ribbonDynamic.js"></script>
     
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
