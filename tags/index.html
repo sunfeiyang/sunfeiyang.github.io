@@ -184,20 +184,6 @@
 
                         
                         <li>
-                            <a href="/sunfy-framework/categories/">Categories</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/sunfy-framework/project/">project</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/sunfy-framework/archive/">Archives</a>
                         </li>
                         
@@ -205,7 +191,21 @@
 
                         
                         <li>
+                            <a href="/sunfy-framework/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/sunfy-framework/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/sunfy-framework/project/">project</a>
                         </li>
                         
                     
@@ -386,13 +386,13 @@
             <!-- 标签云 -->
             <div id='tag_clouds' class="tags">
                 
-                    <a href="#Interview" title="Interview" rel="3">Interview</a>
+                    <a href="#SpringBoot" title="SpringBoot" rel="4">SpringBoot</a>
                 
                     <a href="#Spring" title="Spring" rel="11">Spring</a>
                 
-                    <a href="#SpringBoot" title="SpringBoot" rel="4">SpringBoot</a>
-                
                     <a href="#WebSocket" title="WebSocket" rel="1">WebSocket</a>
+                
+                    <a href="#Interview" title="Interview" rel="3">Interview</a>
                 
             </div>
 
@@ -400,8 +400,8 @@
 
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Interview">
-                    <span class="tag-text">Interview</span>
+                <span class="fa fa-tag listing-seperator" id="SpringBoot">
+                    <span class="tag-text">SpringBoot</span>
                 </span>
                 
                   <!-- <li class="listing-item">
@@ -409,13 +409,13 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/sunfy-framework/2021/08/09/resource-Spring-SpringBoot-SpringBoot配置文件加载顺序/">
+                     <a href="/sunfy-framework/2021/10/06/resource-Spring-SpringBoot-SpringBoot自动装配原理/">
                         <h2 class="post-title">
-                            SpringBoot配置文件加载顺序
+                            SpringBoot自动装配原理
                         </h2>
                         
                             <h3 class="post-subtitle">
-                                配置文件的加载顺序
+                                @Import + @Configuration + Spring spi
                             </h3>
                         
                     </a>
@@ -428,13 +428,13 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/sunfy-framework/2021/08/10/resource-Spring-Spring-Spring、Spring-MVC和Spring-Boot的联系和区别/">
+                     <a href="/sunfy-framework/2020/10/11/resource-Spring-SpringBoot-SpringBoot自定义staters/">
                         <h2 class="post-title">
-                            Spring、Spring MVC和Spring Boot的联系和区别
+                            SpringBoot自定义staters
                         </h2>
                         
                             <h3 class="post-subtitle">
-                                Spring是一个IOC容器|Spring对web框架的一个解决方案|Spring提供的一个快速开发工具包
+                                SpringBoot 最强大的功能就是把我们常用的场景抽取成了一个个starter（场景启动器）
                             </h3>
                         
                     </a>
@@ -447,13 +447,32 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/sunfy-framework/2021/08/18/resource-Spring-Spring-Spring相关的面试题/">
+                     <a href="/sunfy-framework/2020/10/12/resource-Spring-SpringBoot-SpringBoot集成Druid/">
                         <h2 class="post-title">
-                            Spring相关的面试题
+                            SpringBoot集成Druid
                         </h2>
                         
                             <h3 class="post-subtitle">
-                                pring使Java编程对每个人来说更快、更容易、更安全。Spring对速度、简单性和生产率的关注使它成为世界上最流行的Java框架。
+                                Apache Druid是一个高性能的实时分析数据库
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/sunfy-framework/2020/09/22/resource-Spring-SpringBoot-SpringBoot集成WebSocket通信/">
+                        <h2 class="post-title">
+                            SpringBoot集成WebSocket通信
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                WebSocket协议是基于TCP的一种新的网络协议。实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端
                             </h3>
                         
                     </a>
@@ -467,25 +486,6 @@
                 <span class="fa fa-tag listing-seperator" id="Spring">
                     <span class="tag-text">Spring</span>
                 </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/sunfy-framework/2021/08/09/resource-Spring-SpringBoot-SpringBoot配置文件加载顺序/">
-                        <h2 class="post-title">
-                            SpringBoot配置文件加载顺序
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                配置文件的加载顺序
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
                 
                   <!-- <li class="listing-item">
                   <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
@@ -511,25 +511,6 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/sunfy-framework/2021/09/15/resource-Spring-Spring-SpringBean的销毁/">
-                        <h2 class="post-title">
-                            SpringBean的销毁
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                发生在Spring容器关闭过程中的
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
                      <a href="/sunfy-framework/2021/08/10/resource-Spring-Spring-Spring、Spring-MVC和Spring-Boot的联系和区别/">
                         <h2 class="post-title">
                             Spring、Spring MVC和Spring Boot的联系和区别
@@ -537,25 +518,6 @@
                         
                             <h3 class="post-subtitle">
                                 Spring是一个IOC容器|Spring对web框架的一个解决方案|Spring提供的一个快速开发工具包
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/sunfy-framework/2021/09/09/resource-Spring-Spring-SpringBean的生命周期详解/">
-                        <h2 class="post-title">
-                            SpringBean的生命周期详解
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                Spring源码分析，详细分析理解Spring整个bean的生命周期，理解整个Bean的生成过程
                             </h3>
                         
                     </a>
@@ -587,6 +549,44 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
+                     <a href="/sunfy-framework/2021/09/15/resource-Spring-Spring-SpringBean的销毁/">
+                        <h2 class="post-title">
+                            SpringBean的销毁
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                发生在Spring容器关闭过程中的
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/sunfy-framework/2021/09/09/resource-Spring-Spring-SpringBean的生命周期详解/">
+                        <h2 class="post-title">
+                            SpringBean的生命周期详解
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                Spring源码分析，详细分析理解Spring整个bean的生命周期，理解整个Bean的生成过程
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
                      <a href="/sunfy-framework/2021/09/26/resource-Spring-Spring-Spring启动过程源码解析/">
                         <h2 class="post-title">
                             Spring启动过程源码解析
@@ -606,13 +606,13 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/sunfy-framework/2021/05/24/resource-Spring-Spring-Spring推断构造方法/">
+                     <a href="/sunfy-framework/2021/08/09/resource-Spring-SpringBoot-SpringBoot配置文件加载顺序/">
                         <h2 class="post-title">
-                            Spring推断构造方法
+                            SpringBoot配置文件加载顺序
                         </h2>
                         
                             <h3 class="post-subtitle">
-                                一个构造方法|多个构造方法
+                                配置文件的加载顺序
                             </h3>
                         
                     </a>
@@ -663,6 +663,25 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
+                     <a href="/sunfy-framework/2021/05/24/resource-Spring-Spring-Spring推断构造方法/">
+                        <h2 class="post-title">
+                            Spring推断构造方法
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                一个构造方法|多个构造方法
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
                      <a href="/sunfy-framework/2021/08/18/resource-Spring-Spring-Spring相关的面试题/">
                         <h2 class="post-title">
                             Spring相关的面试题
@@ -670,89 +689,6 @@
                         
                             <h3 class="post-subtitle">
                                 pring使Java编程对每个人来说更快、更容易、更安全。Spring对速度、简单性和生产率的关注使它成为世界上最流行的Java框架。
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="SpringBoot">
-                    <span class="tag-text">SpringBoot</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/sunfy-framework/2020/10/11/resource-Spring-SpringBoot-SpringBoot自定义staters/">
-                        <h2 class="post-title">
-                            SpringBoot自定义staters
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                SpringBoot 最强大的功能就是把我们常用的场景抽取成了一个个starter（场景启动器）
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/sunfy-framework/2021/10/06/resource-Spring-SpringBoot-SpringBoot自动装配原理/">
-                        <h2 class="post-title">
-                            SpringBoot自动装配原理
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                @Import + @Configuration + Spring spi
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/sunfy-framework/2020/10/12/resource-Spring-SpringBoot-SpringBoot集成Druid/">
-                        <h2 class="post-title">
-                            SpringBoot集成Druid
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                Apache Druid是一个高性能的实时分析数据库
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/sunfy-framework/2020/09/22/resource-Spring-SpringBoot-SpringBoot集成WebSocket通信/">
-                        <h2 class="post-title">
-                            SpringBoot集成WebSocket通信
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                WebSocket协议是基于TCP的一种新的网络协议。实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端
                             </h3>
                         
                     </a>
@@ -779,6 +715,70 @@
                         
                             <h3 class="post-subtitle">
                                 WebSocket协议是基于TCP的一种新的网络协议。实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Interview">
+                    <span class="tag-text">Interview</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/sunfy-framework/2021/08/10/resource-Spring-Spring-Spring、Spring-MVC和Spring-Boot的联系和区别/">
+                        <h2 class="post-title">
+                            Spring、Spring MVC和Spring Boot的联系和区别
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                Spring是一个IOC容器|Spring对web框架的一个解决方案|Spring提供的一个快速开发工具包
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/sunfy-framework/2021/08/09/resource-Spring-SpringBoot-SpringBoot配置文件加载顺序/">
+                        <h2 class="post-title">
+                            SpringBoot配置文件加载顺序
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                配置文件的加载顺序
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/sunfy-framework/2021/08/18/resource-Spring-Spring-Spring相关的面试题/">
+                        <h2 class="post-title">
+                            Spring相关的面试题
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                pring使Java编程对每个人来说更快、更容易、更安全。Spring对速度、简单性和生产率的关注使它成为世界上最流行的Java框架。
                             </h3>
                         
                     </a>
