@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          docker-compose 启动容器 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/06/18/resource-RPC-Docker-docker-compose-base/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/docker/docker.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Docker" title="Docker">Docker</a>
+                            
+                        </div>
+
+                        <h1>docker-compose 启动容器</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-06-18
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">4.7k</span> and
+                                Reading Time <span class="post-count">19</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>docker 客户端非常简单 ,我们可以直接输入 docker 命令来查看到 Docker 客户端的所有命令选项。<a id="more"></a></p>
+<h2 id="docker-compose-是什么"><a href="#docker-compose-是什么" class="headerlink" title="docker-compose 是什么"></a>docker-compose 是什么</h2><p>docker-compose 是一个用来把 docker 自动化的东西。<br>有了 docker-compose 你可以把所有繁复的 docker 操作全都一条命令，自动化的完成。</p>
+<h3 id="为什么要用-docker-compose，他解决了什么"><a href="#为什么要用-docker-compose，他解决了什么" class="headerlink" title="为什么要用 docker-compose，他解决了什么"></a>为什么要用 docker-compose，他解决了什么</h3><p>用通俗的语言来说，我们平时操作 docker 还是很原始的一系列动作，你手动使用 docker 的动作可以拆分成</p>
+<blockquote>
+<ol>
+<li>找到一个系统镜像 // docker search</li>
+<li>安装好 vm 或者 virtual box // apt-get install docker</li>
+<li>在 vm 中安装镜像 // docker run -d -it 你的镜像</li>
+<li>略..</li>
+</ol>
+</blockquote>
+<p>这是最小的动作， 如果你要映射硬盘，设置nat网络或者桥接网络，等等…你就要做更多的 docker 操作， 这显然是非常没有效率的。</p>
+<p>但是我们写在 docker-compose.file 里面就很好了。 你只需要写好后 只运行一句<br><code>docker-compose up</code></p>
+<h2 id="Docker-Compose-常用命令与配置"><a href="#Docker-Compose-常用命令与配置" class="headerlink" title="Docker Compose 常用命令与配置"></a>Docker Compose 常用命令与配置</h2><h3 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令<sunfy-line></h3><ul>
+<li><strong>ps</strong>：列出所有运行容器</li>
+</ul>
+<blockquote>
+<p>docker-compose ps</p>
+</blockquote>
+<ul>
+<li><strong>logs</strong>：查看服务日志输出</li>
+</ul>
+<blockquote>
+<p>docker-compose logs</p>
+</blockquote>
+<ul>
+<li><strong>port</strong>：打印绑定的公共端口，下面命令可以输出 eureka 服务 8761 端口所绑定的公共端口</li>
+</ul>
+<blockquote>
+<p>docker-compose port eureka 8761</p>
+</blockquote>
+<ul>
+<li><strong>build</strong>：构建或者重新构建服务</li>
+</ul>
+<blockquote>
+<p>docker-compose build</p>
+</blockquote>
+<ul>
+<li><strong>start</strong>：启动指定服务已存在的容器</li>
+</ul>
+<blockquote>
+<p>docker-compose start eureka</p>
+</blockquote>
+<ul>
+<li><strong>stop</strong>：停止已运行的服务的容器</li>
+</ul>
+<blockquote>
+<p>docker-compose stop eureka</p>
+</blockquote>
+<ul>
+<li><strong>rm</strong>：删除指定服务的容器</li>
+</ul>
+<blockquote>
+<p>docker-compose rm eureka</p>
+</blockquote>
+<ul>
+<li><strong>up</strong>：构建、启动容器</li>
+</ul>
+<blockquote>
+<p>docker-compose up</p>
+</blockquote>
+<ul>
+<li><strong>kill</strong>：通过发送 SIGKILL 信号来停止指定服务的容器</li>
+</ul>
+<blockquote>
+<p>docker-compose kill eureka</p>
+</blockquote>
+<ul>
+<li><strong>pull</strong>：下载服务镜像</li>
+<li><strong>scale</strong>：设置指定服务运气容器的个数，以 service=num 形式指定</li>
+</ul>
+<blockquote>
+<p>docker-compose scale user=3 movie=3</p>
+</blockquote>
+<ul>
+<li><strong>run</strong>：在一个服务上执行一个命令</li>
+</ul>
+<blockquote>
+<p>docker-compose run web bash</p>
+</blockquote>
+<h3 id="docker-compose-yml-属性"><a href="#docker-compose-yml-属性" class="headerlink" title="docker-compose.yml 属性"></a>docker-compose.yml 属性</h3><ul>
+<li><strong>version</strong>：指定 docker-compose.yml 文件的写法格式</li>
+<li><strong>services</strong>：多个容器集合</li>
+<li><strong>build</strong>：配置构建时，Compose 会利用它自动构建镜像，该值可以是一个路径，也可以是一个对象，用于指定 Dockerfile 参数</li>
+</ul>
+<blockquote>
+<h2 id="build-dir"><a href="#build-dir" class="headerlink" title="build: ./dir"></a>build: ./dir</h2><p>build:<br>   context: ./dir<br>   dockerfile: Dockerfile<br>   args:<br>       buildno: 1</p>
+</blockquote>
+<ul>
+<li><strong>command</strong>：覆盖容器启动后默认执行的命令</li>
+</ul>
+<blockquote>
+<h2 id="command-bundle-exec-thin-p-3000"><a href="#command-bundle-exec-thin-p-3000" class="headerlink" title="command: bundle exec thin -p 3000"></a>command: bundle exec thin -p 3000</h2><p>command: [bundle,exec,thin,-p,3000]</p>
+</blockquote>
+<ul>
+<li><strong>dns</strong>：配置 dns 服务器，可以是一个值或列表</li>
+</ul>
+<blockquote>
+<h2 id="dns-8-8-8-8"><a href="#dns-8-8-8-8" class="headerlink" title="dns: 8.8.8.8"></a>dns: 8.8.8.8</h2><p>dns:</p>
+<ul>
+<li>8.8.8.8<ul>
+<li>9.9.9.9</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>dns_search</strong>：配置 DNS 搜索域，可以是一个值或列表</li>
+</ul>
+<blockquote>
+<h2 id="dns-search-example-com"><a href="#dns-search-example-com" class="headerlink" title="dns_search: example.com"></a>dns_search: example.com</h2><p>dns_search:</p>
+<ul>
+<li>dc1.example.com<ul>
+<li>dc2.example.com</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>environment</strong>：环境变量配置，可以用数组或字典两种方式</li>
+</ul>
+<blockquote>
+<p>environment:<br>   RACK_ENV: development</p>
+<h2 id="SHOW-‘ture’"><a href="#SHOW-‘ture’" class="headerlink" title="   SHOW: ‘ture’"></a>   SHOW: ‘ture’</h2><p>environment:</p>
+<ul>
+<li>RACK_ENV=development<ul>
+<li>SHOW=ture</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>env_file</strong>：从文件中获取环境变量，可以指定一个文件路径或路径列表，其优先级低于 environment 指定的环境变量</li>
+</ul>
+<blockquote>
+<h2 id="env-file-env"><a href="#env-file-env" class="headerlink" title="env_file: .env"></a>env_file: .env</h2><p>env_file:</p>
+<ul>
+<li>./common.env</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>expose</strong>：暴露端口，只将端口暴露给连接的服务，而不暴露给主机</li>
+</ul>
+<blockquote>
+<p>expose:</p>
+<ul>
+<li>“3000”<ul>
+<li>“8000”</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>image</strong>：指定服务所使用的镜像</li>
+</ul>
+<blockquote>
+<p>image: java</p>
+</blockquote>
+<ul>
+<li><strong>network_mode</strong>：设置网络模式</li>
+</ul>
+<blockquote>
+<p>network_mode: “bridge”<br>network_mode: “host”<br>network_mode: “none”<br>network_mode: “service:[service name]”<br>network_mode: “container:[container name/id]”</p>
+</blockquote>
+<ul>
+<li><strong>ports</strong>：对外暴露的端口定义，和 expose 对应</li>
+</ul>
+<blockquote>
+<p>ports:   # 暴露端口信息  - “宿主机端口:容器暴露端口”</p>
+<ul>
+<li>“8763:8763”</li>
+<li>“8763:8763”</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>links</strong>：将指定容器连接到当前连接，可以设置别名，避免ip方式导致的容器重启动态改变的无法连接情况</li>
+</ul>
+<blockquote>
+<p>links:    # 指定服务名称:别名 </p>
+<ul>
+<li>docker-compose-eureka-server:compose-eureka</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>volumes</strong>：卷挂载路径</li>
+</ul>
+<blockquote>
+<p>volumes:</p>
+<ul>
+<li>/lib</li>
+<li>/var</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>logs</strong>：日志输出信息</li>
+</ul>
+<blockquote>
+<p>—no-color          单色输出，不显示其他颜.<br>-f, —follow        跟踪日志输出，就是可以实时查看日志<br>-t, —timestamps    显示时间戳<br>—tail              从日志的结尾显示，—tail=200</p>
+</blockquote>
+<h2 id="Docker-Compose-其它"><a href="#Docker-Compose-其它" class="headerlink" title="Docker Compose 其它"></a>Docker Compose 其它</h2><h3 id="更新容器"><a href="#更新容器" class="headerlink" title="更新容器"></a>更新容器</h3><ul>
+<li>当服务的配置发生更改时，可使用 docker-compose up 命令更新配置</li>
+<li>此时，Compose 会删除旧容器并创建新容器，新容器会以不同的 IP 地址加入网络，名称保持不变，任何指向旧容起的连接都会被关闭，重新找到新容器并连接上去</li>
+</ul>
+<h3 id="links"><a href="#links" class="headerlink" title="links"></a>links</h3><ul>
+<li>服务之间可以使用服务名称相互访问，links 允许定义一个别名，从而使用该别名访问其它服务</li>
+</ul>
+<blockquote>
+<p>version: ‘2’<br>services:<br>   web:<br>       build: .<br>       links:</p>
+<pre><code>       - &quot;db:database&quot;
+   db:
+   ​        image: postgres
+</code></pre></blockquote>
+<ul>
+<li>这样 Web 服务就可以使用 db 或 database 作为 hostname 访问 db 服务了</li>
+</ul>
+<p>使用dockers-compose</p>
+<p>新建 项目 userapi</p>
+<p><img src="../../../../img/docker-compose-base/349537-20190819232634986-324677362.png" alt="img"></p>
+<p>添加引用:</p>
+<p>Microsoft.EntityFrameworkCore</p>
+<p>Microsoft.EntityFrameworkCore.Design</p>
+<p>Microsoft.EntityFrameworkCore.Tools</p>
+<p>MySql.Data.EntityFrameworkCore</p>
+<p>models 新建Users</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Users</span><br><span class="line"> &#123;</span><br><span class="line">     [Key]</span><br><span class="line">     public int Id &#123; get; set; &#125;</span><br><span class="line">     public string Name &#123; get; set; &#125;</span><br><span class="line">     public int Age &#123; get; set; &#125;</span><br><span class="line"> </span><br><span class="line">     public string Job &#123; get; set; &#125;</span><br><span class="line">     public string Company &#123; get; set; &#125;</span><br><span class="line">     public DateTime CreateTime &#123; get; set; &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>　　添加AppDbContext </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class AppDbContext : DbContext</span><br><span class="line"> &#123;</span><br><span class="line">     public AppDbContext(DbContextOptions&lt;AppDbContext&gt; options) : base(options)</span><br><span class="line">     &#123;</span><br><span class="line">     &#125;</span><br><span class="line">     protected override void OnModelCreating(ModelBuilder modelBuilder)</span><br><span class="line">     &#123;</span><br><span class="line">         base.OnModelCreating(modelBuilder);</span><br><span class="line">     &#125;</span><br><span class="line">     public DbSet&lt;Users&gt; Users &#123; get; set; &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>配置文件添加数据库连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;ConnectionStrings&quot;: &#123;</span><br><span class="line">  &quot;MysqlConnection&quot;: &quot;server&#x3D;db;port&#x3D;3306;database&#x3D;mysql;userId&#x3D;root;password&#x3D;1234.&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Startup</p>
+<p>ConfigureServices添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">services.AddDbContext&lt;AppDbContext&gt;(options &#x3D;&gt;</span><br><span class="line">     &#123;</span><br><span class="line">         options.UseMySQL(Configuration.GetConnectionString(&quot;MysqlConnection&quot;));</span><br><span class="line">     &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">configrue 添加 InitDataBase(app);</span><br><span class="line">private void InitDataBase(IApplicationBuilder app)</span><br><span class="line">&#123;</span><br><span class="line">using (var scope &#x3D; app.ApplicationServices.CreateScope())</span><br><span class="line">&#123;</span><br><span class="line">var userContext &#x3D; scope.ServiceProvider.GetRequiredService&lt;AppDbContext&gt;();</span><br><span class="line">userContext.Database.Migrate();</span><br><span class="line">if (userContext.Users !&#x3D; null)</span><br><span class="line">&#123;</span><br><span class="line">userContext.Users.Add(new Models.Users() &#123; Age &#x3D; 66, Company &#x3D; &quot;myCompany&quot;, CreateTime &#x3D; DateTime.Now, Job &#x3D; &quot;chengxuyuan&quot;, Name &#x3D; &quot;xiaohong&quot; &#125;);</span><br><span class="line">userContext.SaveChanges();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新建 ADD-Migrations init</p>
+<p>这里需要注意mysql有的时候不会生成__EFMigrationsHistory表</p>
+<p>可以在AppDbContextModelSnapshot 文件里添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">modelBuilder.Entity(&quot;__EFMigrationsHistory&quot;, b &#x3D;&gt;</span><br><span class="line">         &#123;</span><br><span class="line">             b.Property&lt;string&gt;(&quot;MigrationId&quot;);</span><br><span class="line">             b.Property&lt;string&gt;(&quot;ProductVersion&quot;);</span><br><span class="line">         &#125;);</span><br></pre></td></tr></table></figure>
+<p>　　也可以自己在mysql中新建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE &#96;__EFMigrationsHistory&#96;</span><br><span class="line">(</span><br><span class="line">    &#96;MigrationId&#96; nvarchar(150) NOT NULL,</span><br><span class="line">    &#96;ProductVersion&#96; nvarchar(32) NOT NULL,</span><br><span class="line">     PRIMARY KEY (&#96;MigrationId&#96;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>　　新建文件Dockerfile.json</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">FROM mcr.microsoft.com&#x2F;dotnet&#x2F;core&#x2F;aspnet:2.2-stretch-slim AS base</span><br><span class="line">WORKDIR &#x2F;app</span><br><span class="line">EXPOSE 80</span><br><span class="line">EXPOSE 443</span><br><span class="line"> </span><br><span class="line">FROM mcr.microsoft.com&#x2F;dotnet&#x2F;core&#x2F;sdk:2.2-stretch AS build</span><br><span class="line">WORKDIR &#x2F;src</span><br><span class="line">COPY [&quot;User.Api.csproj&quot;, &quot;&quot;]</span><br><span class="line">RUN dotnet restore &quot;.&#x2F;User.Api.csproj&quot;</span><br><span class="line">COPY . .</span><br><span class="line">WORKDIR &quot;&#x2F;src&#x2F;.&quot;</span><br><span class="line">RUN dotnet build &quot;User.Api.csproj&quot; -c Release -o &#x2F;app</span><br><span class="line"> </span><br><span class="line">FROM build AS publish</span><br><span class="line">RUN dotnet publish &quot;User.Api.csproj&quot; -c Release -o &#x2F;app</span><br><span class="line"> </span><br><span class="line">FROM base AS final</span><br><span class="line">WORKDIR &#x2F;app</span><br><span class="line">COPY --from&#x3D;publish &#x2F;app .</span><br><span class="line">ENTRYPOINT [&quot;dotnet&quot;, &quot;User.Api.dll&quot;]</span><br></pre></td></tr></table></figure>
+<p>　　新建文件docker-compose.yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">version: &#39;3.3&#39;</span><br><span class="line"> </span><br><span class="line">services:</span><br><span class="line">   db:</span><br><span class="line">    image: mysql&#x2F;mysql-server</span><br><span class="line">    container_name: mysqldb</span><br><span class="line">    command: mysqld --character-set-server&#x3D;utf8 --collation-server&#x3D;utf8_general_ci</span><br><span class="line">    restart: always</span><br><span class="line">    ports:</span><br><span class="line">     - &quot;3306:3306&quot;</span><br><span class="line">    environment:</span><br><span class="line">     MYSQL_ROOT_PASSWORD: 1234.</span><br><span class="line">     MYSQL_USER: root</span><br><span class="line">     MYSQL_PASSWORD: 1234.</span><br><span class="line">    volumes:</span><br><span class="line">       - &#x2F;d&#x2F;docker&#x2F;beta&#x2F;mysql-init:&#x2F;docker-entrypoint-initdb.d </span><br><span class="line">   web:</span><br><span class="line">     build: .</span><br><span class="line">     container_name: aspnetcore</span><br><span class="line">     ports:</span><br><span class="line">      - &quot;8004:80&quot;</span><br><span class="line">     depends_on:</span><br><span class="line">      - db</span><br></pre></td></tr></table></figure>
+<p>init.sql 添加root 授权,并刷新权限:　　</p>
+<blockquote>
+<p>ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘1234.’;<br>GRANT ALL PRIVILEGES ON <em>.</em> TO ‘root’@’%’ WITH GRANT OPTION;<br>flush privileges;</p>
+</blockquote>
+<p>cmd 到项目目录</p>
+<p>执行 : docker-compose up</p>
+<p>指定dockers ps</p>
+<p><img src="../../../../img/docker-compose-base/349537-20190819234932645-2110002229.png" alt="img"></p>
+<p>我们看到项目已经发布成功了</p>
+<p>浏览器看看</p>
+<p><img src="../../../../img/docker-compose-base/349537-20190819235244348-1639877727.png" alt="img"></p>
+<h2 id="docker-compose命令通过指定文件运行"><a href="#docker-compose命令通过指定文件运行" class="headerlink" title="docker-compose命令通过指定文件运行"></a>docker-compose命令通过指定文件运行</h2><p>启动服务<br>docker-compose -f docker-compose.yml up -d<br>停止服务<br>docker-compose -f docker-compose.yml stop<br>停止并删除服务<br>docker-compose -f docker-compose.yml down</p>
+<h2 id="常用参数："><a href="#常用参数：" class="headerlink" title="常用参数："></a>常用参数：</h2><h3 id="image"><a href="#image" class="headerlink" title="image"></a>image</h3><blockquote>
+<p>services:<br> web:<br>   image: hello-world</p>
+</blockquote>
+<p>在 services 标签下的第二级标签是 web，这个名字是用户自己自定义，它就是服务名称。<br>image 则是指定服务的镜像名称或镜像 ID。如果镜像在本地不存在，Compose 将会尝试拉取这个镜像。<br>例如下面这些格式都是可以的：</p>
+<blockquote>
+<p>image: redis<br>image: ubuntu:14.04<br>image: tutum/influxdb<br>image: example-registry.com:4000/postgresql<br>image: a4bc65fd</p>
+</blockquote>
+<h3 id="build"><a href="#build" class="headerlink" title="build"></a>build</h3><p>2.1 基本用法</p>
+<p>服务除了可以基于指定的镜像，还可以基于一份 Dockerfile，在使用 up 启动之时执行构建任务，这个构建标签就是 build，它可以指定 Dockerfile 所在文件夹的路径。Compose 将会利用它自动构建这个镜像，然后使用这个镜像启动服务容器。</p>
+<blockquote>
+<h1 id="指明绝对路径"><a href="#指明绝对路径" class="headerlink" title="指明绝对路径"></a>指明绝对路径</h1><p>build: /path/to/build/dir</p>
+<h1 id="指明相对路径，只要上下文确定就可以读取到-Dockerfile。"><a href="#指明相对路径，只要上下文确定就可以读取到-Dockerfile。" class="headerlink" title="指明相对路径，只要上下文确定就可以读取到 Dockerfile。"></a>指明相对路径，只要上下文确定就可以读取到 Dockerfile。</h1><p>build: ./dir</p>
+<h1 id="设定上下文根目录，然后以该目录为准指定-Dockerfile。"><a href="#设定上下文根目录，然后以该目录为准指定-Dockerfile。" class="headerlink" title="设定上下文根目录，然后以该目录为准指定 Dockerfile。"></a>设定上下文根目录，然后以该目录为准指定 Dockerfile。</h1><p>build:<br> context: ../<br> dockerfile: path/of/Dockerfile</p>
+</blockquote>
+<p>注意 build 都是一个目录，如果你要指定 Dockerfile 文件需要在 build 标签的子级标签中使用 dockerfile 标签指定，如上面的例子。</p>
+<p>如果你同时指定了 image 和 build 两个标签，那么 Compose 会构建镜像并且把镜像命名为 image 后面的那个名字。</p>
+<blockquote>
+<p>build: ./dir<br>image: webapp:tag</p>
+</blockquote>
+<p><strong>2.2  构建过程中的args标签</strong></p>
+<p>既然可以在 docker-compose.yml 中定义构建任务，那么一定少不了 arg 这个标签，就像 Dockerfile 中的 ARG 指令，它可以在构建过程中指定环境变量，但是在构建成功后取消，在 docker-compose.yml 文件中也支持这样的写法：</p>
+<blockquote>
+<p>build:<br> context: .<br> args:<br>   buildno: 1<br>   password: secret</p>
+</blockquote>
+<p>下面这种写法也是支持的，一般来说下面的写法更适合阅读。</p>
+<blockquote>
+<p>build:<br> context: .<br> args:</p>
+<ul>
+<li>buildno=1<ul>
+<li>password=secret</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>与 ENV 不同的是，ARG 是允许空值的。例如：</p>
+<blockquote>
+<p>args:</p>
+<ul>
+<li>buildno</li>
+<li>password</li>
+</ul>
+</blockquote>
+<p>这样构建过程可以向它们赋值。</p>
+<p>注意：YAML 的布尔值（true, false, yes, no, on, off）必须要使用引号引起来（单引号、双引号均可），否则会当成字符串解析。</p>
+<h3 id="command"><a href="#command" class="headerlink" title="command"></a>command</h3><p>使用 command 可以覆盖容器启动后默认执行的命令。</p>
+<blockquote>
+<p>command: bundle exec thin -p 3000</p>
+</blockquote>
+<p>也可以写成类似 Dockerfile 中的格式：</p>
+<blockquote>
+<p>command: [bundle, exec, thin, -p, 3000]</p>
+</blockquote>
+<h3 id="container-name"><a href="#container-name" class="headerlink" title="container_name"></a>container_name</h3><p>前面说过 Compose 的容器名称格式是：&lt;项目名称&gt;<em>&lt;服务名称&gt;</em>&lt;序号&gt;<br>虽然可以自定义项目名称、服务名称，但是如果你想完全控制容器的命名，可以使用这个标签指定：</p>
+<blockquote>
+<p>container_name: app</p>
+</blockquote>
+<p>这样容器的名字就指定为 app 了。</p>
+<h3 id="depends-on"><a href="#depends-on" class="headerlink" title="depends_on"></a>depends_on</h3><p>在使用 Compose 时，最大的好处就是少打启动命令，但是一般项目容器启动的顺序是有要求的，如果直接从上到下启动容器，必然会因为容器依赖问题而启动失败。<br>例如在没启动数据库容器的时候启动了应用容器，这时候应用容器会因为找不到数据库而退出，为了避免这种情况我们需要加入一个标签，就是 depends_on，这个标签解决了容器的依赖、启动先后的问题。<br>例如下面容器会先启动 redis 和 db 两个服务，最后才启动 web 服务：</p>
+<blockquote>
+<p>version: ‘2’<br>services:<br> web:<br>   build: .<br>   depends_on:</p>
+<pre><code> - db
+       - redis
+</code></pre><p>   redis:<br>       image: redis<br>   db:<br>       image: postgres</p>
+</blockquote>
+<p>注意的是，默认情况下使用 docker-compose up web 这样的方式启动 web 服务时，也会启动 redis 和 db 两个服务，因为在配置文件中定义了依赖关系。</p>
+<h3 id="ports"><a href="#ports" class="headerlink" title="ports"></a>ports</h3><p>映射端口的标签。<br>使用主机端口：容器端口格式 或者 只是指定容器的端口，宿主机会随机映射端口。</p>
+<blockquote>
+<p>ports:</p>
+<ul>
+<li>“3000”</li>
+<li>“8000:8000”</li>
+<li>“49100:22”</li>
+<li>“127.0.0.1:8001:8001”</li>
+</ul>
+</blockquote>
+<p>注意：当使用主机端口：宿主机端口格式来映射端口时，如果你使用的容器端口小于60你可能会得到错误得结果，因为YAML将会解析xx:yy这种数字格式为60进制，所以建议使用字符串格式</p>
+<h3 id="links-1"><a href="#links-1" class="headerlink" title="links"></a>links</h3><p>还记得上面的depends_on吧，那个标签解决的是启动顺序问题，这个标签解决的是容器连接问题，与Docker client的—link一样效果，会连接到其它服务中的容器。<br>格式如下：</p>
+<blockquote>
+<p>links:</p>
+<ul>
+<li>db</li>
+<li>db:database</li>
+<li>redis</li>
+</ul>
+</blockquote>
+<p>使用的别名将会自动在服务容器中的/etc/hosts里创建。例如：</p>
+<blockquote>
+<p>172.12.2.186  db<br>172.12.2.186  database<br>172.12.2.187  redis</p>
+</blockquote>
+<p>相应的环境变量也将被创建。</p>
+<h3 id="volumes"><a href="#volumes" class="headerlink" title="volumes"></a>volumes</h3><p>挂载一个目录或者一个已存在的数据卷容器，可以直接使用 [HOST:CONTAINER] 这样的格式，或者使用 [HOST:CONTAINER:ro] 这样的格式，后者对于容器来说，数据卷是只读的，这样可以有效保护宿主机的文件系统。<br>Compose的数据卷指定路径可以是相对路径，使用 . 或者 .. 来指定相对目录。<br>数据卷的格式可以是下面多种形式：</p>
+<blockquote>
+<p>volumes:<br> 只是指定一个路径，Docker 会自动在创建一个数据卷（这个路径是容器内部的）。</p>
+<ul>
+<li><p>/var/lib/mysql</p>
+<p>使用绝对路径挂载数据卷</p>
+</li>
+<li><p>/opt/data:/var/lib/mysql</p>
+<p>以 Compose 配置文件为中心的相对路径作为数据卷挂载到容器。</p>
+</li>
+<li><p>./cache:/tmp/cache</p>
+<p>使用用户的相对路径（~/ 表示的目录是 /home/&lt;用户目录&gt;/ 或者 /root/）。</p>
+</li>
+<li><p>~/configs:/etc/configs/:ro</p>
+<p>已经存在的命名的数据卷。</p>
+</li>
+<li>datavolume:/var/lib/mysql</li>
+</ul>
+</blockquote>
+<p>如果你不使用宿主机的路径，你可以指定一个volume_driver。 比如 —&gt;  <code>volume_driver: mydriver</code></p>
+<h3 id="environment"><a href="#environment" class="headerlink" title="environment"></a>environment</h3><p>与上面的 env_file 标签完全不同，反而和 arg 有几分类似，这个标签的作用是设置镜像变量，它可以保存变量到镜像里面，也就是说启动的容器也会包含这些变量设置，这是与 arg 最大的不同。<br>一般 arg 标签的变量仅用在构建过程中。而 environment 和 Dockerfile 中的 ENV 指令一样会把变量一直保存在镜像、容器中，类似 docker run -e 的效果，两种写法。</p>
+<blockquote>
+<p>environment:<br> RACK_ENV: development<br> SHOW: ‘true’<br> SESSION_SECRET:</p>
+<p>environment:</p>
+<ul>
+<li>RACK_ENV=development</li>
+<li>SHOW=true</li>
+<li>SESSION_SECRET</li>
+</ul>
+</blockquote>
+<h3 id="external-links"><a href="#external-links" class="headerlink" title="external_links"></a>external_links</h3><p>在使用Docker过程中，我们会有许多单独使用docker run启动的容器，为了使Compose能够连接这些不在docker-compose.yml中定义的容器，我们需要一个特殊的标签，就是external_links，它可以让Compose项目里面的容器连接到那些项目配置外部的容器（前提是外部容器中必须至少有一个容器是连接到与项目内的服务的同一个网络里面）。<br>格式如下：</p>
+<blockquote>
+<p>external_links:</p>
+<ul>
+<li>redis_1</li>
+<li>project_db_1:mysql</li>
+<li>project_db_1:postgresql</li>
+</ul>
+</blockquote>
+<h2 id="非常用参数"><a href="#非常用参数" class="headerlink" title="非常用参数"></a>非常用参数</h2><h3 id="dns"><a href="#dns" class="headerlink" title="dns"></a>dns</h3><p>和 —dns 参数一样用途，格式如下：</p>
+<blockquote>
+<p>dns: 8.8.8.8</p>
+</blockquote>
+<p>也可以是一个列表：</p>
+<blockquote>
+<p>dns:</p>
+<ul>
+<li>8.8.8.8</li>
+<li>9.9.9.9</li>
+</ul>
+</blockquote>
+<p>此外 dns_search 的配置也类似：</p>
+<blockquote>
+<p>dns_search: example.com<br>dns_search:</p>
+<ul>
+<li>dc1.example.com</li>
+<li>dc2.example.com</li>
+</ul>
+</blockquote>
+<h3 id="tmpfs"><a href="#tmpfs" class="headerlink" title="tmpfs"></a>tmpfs</h3><p>挂载临时目录到容器内部，与 run 的参数一样效果：</p>
+<blockquote>
+<p>tmpfs: /run<br>tmpfs:</p>
+<ul>
+<li>/run</li>
+<li>/tmp</li>
+</ul>
+</blockquote>
+<h3 id="entrypoint"><a href="#entrypoint" class="headerlink" title="entrypoint"></a>entrypoint</h3><p>在 Dockerfile 中有一个指令叫做 ENTRYPOINT 指令，用于指定接入点，第四章有对比过与 CMD 的区别。<br>在 docker-compose.yml 中可以定义接入点，覆盖 Dockerfile 中的定义：</p>
+<blockquote>
+<p>entrypoint: /code/entrypoint.sh</p>
+</blockquote>
+<p>格式和 Docker 类似，不过还可以写成这样：</p>
+<blockquote>
+<p>entrypoint:</p>
+<ul>
+<li>php<ul>
+<li>-d</li>
+<li>zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20100525/xdebug.so</li>
+<li>-d</li>
+<li>memory_limit=-1</li>
+<li>vendor/bin/phpunit</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="env-file"><a href="#env-file" class="headerlink" title="env_file"></a>env_file</h3><p>还记得前面提到的 .env 文件吧，这个文件可以设置 Compose 的变量。而在 docker-compose.yml 中可以定义一个专门存放变量的文件。<br>如果通过 docker-compose -f FILE 指定了配置文件，则 env_file 中路径会使用配置文件路径。</p>
+<p>如果有变量名称与 environment 指令冲突，则以后者为准。格式如下：</p>
+<blockquote>
+<p>env_file: .env</p>
+</blockquote>
+<p>或者根据 docker-compose.yml 设置多个：</p>
+<blockquote>
+<p>env_file:</p>
+<ul>
+<li>./common.env</li>
+<li>./apps/web.env</li>
+<li>/opt/secrets.env</li>
+</ul>
+</blockquote>
+<p>注意的是这里所说的环境变量是对宿主机的 Compose 而言的，如果在配置文件中有 build 操作，这些变量并不会进入构建过程中，如果要在构建中使用变量还是首选前面刚讲的 arg 标签。</p>
+<h3 id="expose"><a href="#expose" class="headerlink" title="expose"></a>expose</h3><p>这个标签与Dockerfile中的EXPOSE指令一样，用于指定暴露的端口，但是只是作为一种参考，实际上docker-compose.yml的端口映射还得ports这样的标签。</p>
+<blockquote>
+<p>expose:</p>
+<ul>
+<li>“3000”</li>
+<li>“8000”</li>
+</ul>
+</blockquote>
+<h3 id="extra-hosts"><a href="#extra-hosts" class="headerlink" title="extra_hosts"></a>extra_hosts</h3><p>添加主机名的标签，就是往/etc/hosts文件中添加一些记录，与Docker client的—add-host类似：</p>
+<blockquote>
+<p>extra_hosts:</p>
+<ul>
+<li>“somehost:162.242.195.82”</li>
+<li>“otherhost:50.31.209.229”</li>
+</ul>
+</blockquote>
+<p>启动之后查看容器内部hosts：</p>
+<blockquote>
+<p>162.242.195.82  somehost<br>50.31.209.229   otherhost</p>
+</blockquote>
+<h3 id="labels"><a href="#labels" class="headerlink" title="labels"></a>labels</h3><p>向容器添加元数据，和Dockerfile的LABEL指令一个意思，格式如下：</p>
+<blockquote>
+<p>labels:<br> com.example.description: “Accounting webapp”<br> com.example.department: “Finance”<br> com.example.label-with-empty-value: “”<br>labels:</p>
+<ul>
+<li>“com.example.description=Accounting webapp”</li>
+<li>“com.example.department=Finance”</li>
+<li>“com.example.label-with-empty-value”</li>
+</ul>
+</blockquote>
+<h3 id="logging"><a href="#logging" class="headerlink" title="logging"></a>logging</h3><p>这个标签用于配置日志服务。格式如下：</p>
+<blockquote>
+<p>logging:<br> driver: syslog<br> options:<br>   syslog-address: “tcp://192.168.0.42:123”</p>
+</blockquote>
+<p>默认的driver是json-file。只有json-file和journald可以通过docker-compose logs显示日志，其他方式有其他日志查看方式，但目前Compose不支持。对于可选值可以使用options指定。<br>有关更多这方面的信息可以阅读官方文档：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;link.jianshu.com&#x2F;?t&#x3D;https:&#x2F;&#x2F;docs.docker.com&#x2F;engine&#x2F;admin&#x2F;logging&#x2F;overview&#x2F;</span><br></pre></td></tr></table></figure>
+<h3 id="pid"><a href="#pid" class="headerlink" title="pid"></a>pid</h3><blockquote>
+<p>pid: “host”</p>
+</blockquote>
+<p>将PID模式设置为主机PID模式，跟主机系统共享进程命名空间。容器使用这个标签将能够访问和操纵其他容器和宿主机的名称空间。</p>
+<h3 id="security-opt"><a href="#security-opt" class="headerlink" title="security_opt"></a>security_opt</h3><p>为每个容器覆盖默认的标签。简单说来就是管理全部服务的标签。比如设置全部服务的user标签值为USER。</p>
+<blockquote>
+<p>security_opt:</p>
+<ul>
+<li>label:user:USER</li>
+<li>label:role:ROLE</li>
+</ul>
+</blockquote>
+<h3 id="stop-signal"><a href="#stop-signal" class="headerlink" title="stop_signal"></a>stop_signal</h3><p>设置另一个信号来停止容器。在默认情况下使用的是SIGTERM停止容器。设置另一个信号可以使用stop_signal标签。</p>
+<blockquote>
+<p>stop_signal: SIGUSR1</p>
+</blockquote>
+<h3 id="volumes-from"><a href="#volumes-from" class="headerlink" title="volumes_from"></a>volumes_from</h3><p>从其它容器或者服务挂载数据卷，可选的参数是 :ro或者 :rw，前者表示容器只读，后者表示容器对数据卷是可读可写的。默认情况下是可读可写的。</p>
+<blockquote>
+<p>volumes_from:</p>
+<ul>
+<li>service_name</li>
+<li>service_name:ro</li>
+<li>container:container_name</li>
+<li>container:container_name:rw</li>
+</ul>
+</blockquote>
+<h3 id="cap-add-cap-drop"><a href="#cap-add-cap-drop" class="headerlink" title="cap_add, cap_drop"></a>cap_add, cap_drop</h3><p>添加或删除容器的内核功能。详细信息在前面容器章节有讲解，此处不再赘述。</p>
+<blockquote>
+<p>cap_add:</p>
+<ul>
+<li>ALL</li>
+</ul>
+<p>cap_drop:</p>
+<ul>
+<li>NET_ADMIN</li>
+<li>SYS_ADMIN</li>
+</ul>
+</blockquote>
+<h3 id="cgroup-parent"><a href="#cgroup-parent" class="headerlink" title="cgroup_parent"></a>cgroup_parent</h3><p>指定一个容器的父级cgroup。</p>
+<blockquote>
+<p>cgroup_parent: m-executor-abcd</p>
+</blockquote>
+<h3 id="devices"><a href="#devices" class="headerlink" title="devices"></a>devices</h3><p>设备映射列表。与Docker client的—device参数类似。</p>
+<blockquote>
+<p>devices:</p>
+<ul>
+<li>“/dev/ttyUSB0:/dev/ttyUSB0”</li>
+</ul>
+</blockquote>
+<h3 id="extends"><a href="#extends" class="headerlink" title="extends"></a>extends</h3><p>这个标签可以扩展另一个服务，扩展内容可以是来自在当前文件，也可以是来自其他文件，相同服务的情况下，后来者会有选择地覆盖原有配置。</p>
+<blockquote>
+<p>extends:<br> file: common.yml<br> service: webapp</p>
+</blockquote>
+<p>用户可以在任何地方使用这个标签，只要标签内容包含file和service两个值就可以了。file的值可以是相对或者绝对路径，如果不指定file的值，那么Compose会读取当前YML文件的信息。<br>更多的操作细节在后面的12.3.4小节有介绍。</p>
+<h3 id="network-mode"><a href="#network-mode" class="headerlink" title="network_mode"></a>network_mode</h3><p>网络模式，与Docker client的—net参数类似，只是相对多了一个service:[service name] 的格式。<br>例如：</p>
+<blockquote>
+<p>network_mode: “bridge”<br>network_mode: “host”<br>network_mode: “none”<br>network_mode: “service:[service name]”<br>network_mode: “container:[container name/id]”</p>
+</blockquote>
+<p>可以指定使用服务或者容器的网络。</p>
+<h3 id="networks"><a href="#networks" class="headerlink" title="networks"></a>networks</h3><p>加入指定网络，格式如下：</p>
+<blockquote>
+<p>services:<br> some-service:<br>   networks:</p>
+<pre><code>- some-network
+     - other-network
+</code></pre></blockquote>
+<p>关于这个标签还有一个特别的子标签aliases，这是一个用来设置服务别名的标签，例如：</p>
+<blockquote>
+<p>services:<br> some-service:<br>   networks:<br>     some-network:<br>       aliases:</p>
+<pre><code>    - alias1
+             - alias3
+       other-network:
+           aliases:
+             - alias2
+</code></pre></blockquote>
+<p>相同的服务可以在不同的网络有不同的别名。</p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>还有这些标签：cpu_shares, cpu_quota, cpuset, domainname, hostname, ipc, mac_address, mem_limit, memswap_limit, privileged, read_only, restart, shm_size, stdin_open, tty, user, working_dir<br>上面这些都是一个单值的标签，类似于使用docker run的效果。</p>
+<blockquote>
+<p>cpu_shares: 73<br>cpu_quota: 50000<br>cpuset: 0,1</p>
+<p>user: postgresql<br>working_dir: /code</p>
+<p>domainname: foo.com<br>hostname: foo<br>ipc: host<br>mac_address: 02:42:ac:11:65:43</p>
+<p>mem_limit: 1000000000<br>memswap_limit: 2000000000<br>privileged: true</p>
+<p>restart: always</p>
+<p>read_only: true<br>shm_size: 64M<br>stdin_open: true<br>tty: true</p>
+</blockquote>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/07/01/resource-desk-js-js替换功能/" data-toggle="tooltip" data-placement="top" title="js替换功能">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/05/24/resource-Spring-Spring-Spring推断构造方法/" data-toggle="tooltip" data-placement="top" title="Spring推断构造方法">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#docker-compose-是什么"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">docker-compose 是什么</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#为什么要用-docker-compose，他解决了什么"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">为什么要用 docker-compose，他解决了什么</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Docker-Compose-常用命令与配置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Docker Compose 常用命令与配置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#常见命令"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">常见命令</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#docker-compose-yml-属性"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">docker-compose.yml 属性</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#build-dir"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">build: .&#x2F;dir</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#command-bundle-exec-thin-p-3000"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">command: bundle exec thin -p 3000</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#dns-8-8-8-8"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">dns: 8.8.8.8</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#dns-search-example-com"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">dns_search: example.com</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#SHOW-‘ture’"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">   SHOW: ‘ture’</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#env-file-env"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">env_file: .env</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Docker-Compose-其它"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">Docker Compose 其它</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#更新容器"><span class="toc-nav-number">9.1.</span> <span class="toc-nav-text">更新容器</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#links"><span class="toc-nav-number">9.2.</span> <span class="toc-nav-text">links</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#docker-compose命令通过指定文件运行"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">docker-compose命令通过指定文件运行</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#常用参数："><span class="toc-nav-number">11.</span> <span class="toc-nav-text">常用参数：</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#image"><span class="toc-nav-number">11.1.</span> <span class="toc-nav-text">image</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#build"><span class="toc-nav-number">11.2.</span> <span class="toc-nav-text">build</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#指明绝对路径"><span class="toc-nav-number"></span> <span class="toc-nav-text">指明绝对路径</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#指明相对路径，只要上下文确定就可以读取到-Dockerfile。"><span class="toc-nav-number"></span> <span class="toc-nav-text">指明相对路径，只要上下文确定就可以读取到 Dockerfile。</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#设定上下文根目录，然后以该目录为准指定-Dockerfile。"><span class="toc-nav-number"></span> <span class="toc-nav-text">设定上下文根目录，然后以该目录为准指定 Dockerfile。</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#command"><span class="toc-nav-number">0.1.</span> <span class="toc-nav-text">command</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#container-name"><span class="toc-nav-number">0.2.</span> <span class="toc-nav-text">container_name</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#depends-on"><span class="toc-nav-number">0.3.</span> <span class="toc-nav-text">depends_on</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ports"><span class="toc-nav-number">0.4.</span> <span class="toc-nav-text">ports</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#links-1"><span class="toc-nav-number">0.5.</span> <span class="toc-nav-text">links</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#volumes"><span class="toc-nav-number">0.6.</span> <span class="toc-nav-text">volumes</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#environment"><span class="toc-nav-number">0.7.</span> <span class="toc-nav-text">environment</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#external-links"><span class="toc-nav-number">0.8.</span> <span class="toc-nav-text">external_links</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#非常用参数"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">非常用参数</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#dns"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">dns</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#tmpfs"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">tmpfs</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#entrypoint"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">entrypoint</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#env-file"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">env_file</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#expose"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">expose</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#extra-hosts"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">extra_hosts</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#labels"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">labels</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#logging"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">logging</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#pid"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">pid</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#security-opt"><span class="toc-nav-number">1.10.</span> <span class="toc-nav-text">security_opt</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#stop-signal"><span class="toc-nav-number">1.11.</span> <span class="toc-nav-text">stop_signal</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#volumes-from"><span class="toc-nav-number">1.12.</span> <span class="toc-nav-text">volumes_from</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#cap-add-cap-drop"><span class="toc-nav-number">1.13.</span> <span class="toc-nav-text">cap_add, cap_drop</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#cgroup-parent"><span class="toc-nav-number">1.14.</span> <span class="toc-nav-text">cgroup_parent</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#devices"><span class="toc-nav-number">1.15.</span> <span class="toc-nav-text">devices</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#extends"><span class="toc-nav-number">1.16.</span> <span class="toc-nav-text">extends</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#network-mode"><span class="toc-nav-number">1.17.</span> <span class="toc-nav-text">network_mode</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#networks"><span class="toc-nav-number">1.18.</span> <span class="toc-nav-text">networks</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#其它"><span class="toc-nav-number">1.19.</span> <span class="toc-nav-text">其它</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Docker" title="Docker">Docker</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          SQLSERVER数据库触发器 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2022/06/06/resource-DB-SQLServer-触发器/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/DB/Databasetrigger.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#sqlServer" title="sqlServer">sqlServer</a>
+                            
+                        </div>
+
+                        <h1>SQLSERVER数据库触发器</h1>
+                        <h2 class="subheading">数据库触发器</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2022-06-06
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">4.3k</span> and
+                                Reading Time <span class="post-count">15</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="SqlServer基础之-触发器"><a href="#SqlServer基础之-触发器" class="headerlink" title="SqlServer基础之(触发器)"></a><a href="http://www.cnblogs.com/selene/p/4493311.html" target="_blank" rel="noopener">SqlServer基础之(触发器)</a></h1><p> <strong>阅读目录</strong></p>
+<ul>
+<li><a href="https://www.cnblogs.com/selene/p/4493311.html#_label0" target="_blank" rel="noopener">一:触发器的优点</a></li>
+<li><a href="https://www.cnblogs.com/selene/p/4493311.html#_label1" target="_blank" rel="noopener">二:触发器的作用</a></li>
+<li><a href="https://www.cnblogs.com/selene/p/4493311.html#_label2" target="_blank" rel="noopener">三:触发器的分类</a></li>
+<li><a href="https://www.cnblogs.com/selene/p/4493311.html#_label3" target="_blank" rel="noopener">四：触发器的工作原理</a></li>
+<li><a href="https://www.cnblogs.com/selene/p/4493311.html#_label4" target="_blank" rel="noopener">五:创建触发器</a></li>
+<li><a href="https://www.cnblogs.com/selene/p/4493311.html#_label5" target="_blank" rel="noopener">六:管理触发器　</a></li>
+</ul>
+<p><strong>概念：</strong></p>
+<p>  触发器（trigger）是SQL server 提供给程序员和数据分析员来保证数据完整性的一种方法，它是与表事件相关的特殊的存储过程，它的执行不是由程序调用，也不是手工启动，而是由事件来触发，当对一个表进行操作（ insert，delete， update）时就会激活它执行。触发器经常用于加强数据的完整性约束和业务规则等。 触发器可以从 DBA_TRIGGERS ，USER_TRIGGERS 数据字典中查到。</p>
+<p><strong>触发器和存储过程的区别:</strong><sunfy-line></p>
+<p>  触发器与存储过程的区别是运行方式的不同，触发器不能执行EXECUTE语句调用，而是在用户执行Transact-SQL语句时自动触发执行而存储过程需要用户，应用程序或者触发器来显示地调用并执行。</p>
+<h2 id="一-触发器的优点"><a href="#一-触发器的优点" class="headerlink" title="一:触发器的优点"></a><strong>一:触发器的优点</strong></h2><p> 1.触发器是自动的。当对表中的数据做了任何修改之后立即被激活。</p>
+<p> 2.触发器可以通过数据库中的相关表进行层叠修改。</p>
+<p> 3.触发器可以强制限制。这些限制比用CHECK约束所定义的更复杂。与CHECK约束不同的是，触发器可以引用其他表中的列。</p>
+<h2 id="二-触发器的作用"><a href="#二-触发器的作用" class="headerlink" title="二:触发器的作用"></a>二:触发器的作用</h2><p> 触发器的主要作用就是其能够实现由主键和外键所不能保证的复杂参照完整性和数据的一致性，它能够对数据库中的相关表进行级联修改，提高比CHECK约束更复杂的的数据完整性，并自定义错误消息。触发器的主要作用主要有以下接个方面：</p>
+<ol>
+<li>强制数据库间的引用完整性</li>
+<li>级联修改数据库中所有相关的表，自动触发其它与之相关的操作</li>
+<li>跟踪变化，撤销或回滚违法操作，防止非法修改数据</li>
+<li>返回自定义的错误消息，约束无法返回信息，而触发器可以</li>
+<li>触发器可以调用更多的存储过程</li>
+</ol>
+<h2 id="三-触发器的分类"><a href="#三-触发器的分类" class="headerlink" title="三:触发器的分类"></a><strong>三:触发器的分类</strong></h2><p> SqlServer包括三种常规类型的触发器：DML触发器、DDL触发器和登录触发器。</p>
+<p><strong>1.DML(数据操作语言,Data Manipulation Language)触发器</strong></p>
+<p> DML触发器是一些附加在特定表或视图上的操作代码，当数据库服务器中发生数据操作语言事件时执行这些操作。SqlServer中的DML触发器有三种：</p>
+<ol>
+<li>insert触发器:向表中插入数据时被触发；</li>
+<li>delete触发器：从表中删除数据时被触发；</li>
+<li>update触发器：修改表中数据时被触发。</li>
+</ol>
+<p><strong>当遇到下列情形时，应考虑使用DML触发器：</strong></p>
+<ol>
+<li>通过数据库中的相关表实现级联更改</li>
+<li>防止恶意或者错误的insert、update和delete操作，并强制执行check约束定义的限制更为复杂的其他限制。</li>
+<li>评估数据修改前后表的状态，并根据该差异才去措施。</li>
+</ol>
+<p><strong>2.DDL(数据定义语言,Data Definition Language)触发器</strong></p>
+<p> DDL触发器是当服务器或者数据库中发生数据定义语言(主要是以create,drop,alter开头的语句)事件时被激活使用，使用DDL触发器可以防止对数据架构进行的某些更改或记录数据中的更改或事件操作。</p>
+<p><strong>3.登录触发器</strong></p>
+<p>    登录触发器将为响应 LOGIN 事件而激发存储过程。与 SQL Server 实例建立用户会话时将引发此事件。登录触发器将在登录的身份验证阶段完成之后且用户会话实际建立之前激发。因此，来自触发器内部且通常将到达用户的所有消息（例如错误消息和来自 PRINT 语句的消息）会传送到 SQL Server 错误日志。如果身份验证失败，将不激发登录触发器。</p>
+<h2 id="四：触发器的工作原理"><a href="#四：触发器的工作原理" class="headerlink" title="四：触发器的工作原理"></a>四：触发器的工作原理</h2><p>触发器触发时：</p>
+<ol>
+<li>系统自动在内存中创建deleted表或inserted表；</li>
+<li>只读，不允许修改，触发器执行完成后，自动删除。</li>
+</ol>
+<p>inserted表：</p>
+<ol>
+<li>临时保存了插入或更新后的记录行；</li>
+<li>可以从inserted表中检查插入的数据是否满足业务需求；</li>
+<li>如果不满足，则向用户发送报告错误消息，并回滚插入操作。　</li>
+</ol>
+<p>deleted表：</p>
+<ol>
+<li>临时保存了删除或更新前的记录行；</li>
+<li>可以从deleted表中检查被删除的数据是否满足业务需求；</li>
+<li>如果不满足，则向用户报告错误消息，并回滚插入操作。</li>
+</ol>
+<p>inserted表和deleted表对照：　</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>修改操作记录</strong></th>
+<th><strong>inserted表</strong></th>
+<th><strong>deleted表</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>增加(insert)记录</strong></td>
+<td><strong>存放新增的记录</strong></td>
+<td><strong>…………</strong></td>
+</tr>
+<tr>
+<td><strong>删除(deleted)记录</strong></td>
+<td><strong>…………..</strong></td>
+<td><strong>存放被删除的记录</strong></td>
+</tr>
+<tr>
+<td><strong>修改(update)记录</strong></td>
+<td><strong>存放更新后的记录</strong></td>
+<td><strong>存放更新前的记录</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p> <img src="../../../../img/触发器/102349323603836.png" alt="img"></p>
+<h2 id="五-创建触发器"><a href="#五-创建触发器" class="headerlink" title="五:创建触发器"></a>五:创建触发器</h2><p> <strong>创建触发器的语法：</strong> </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> trigger_name</span><br><span class="line"> <span class="keyword">ON</span> table_name</span><br><span class="line"> [<span class="keyword">WITH</span> ENCRYPTION]</span><br><span class="line">  <span class="keyword">FOR</span> | <span class="keyword">AFTER</span> | INSTEAD <span class="keyword">OF</span> [<span class="keyword">DELETE</span>, <span class="keyword">INSERT</span>, <span class="keyword">UPDATE</span>]</span><br><span class="line"> <span class="keyword">AS</span> </span><br><span class="line">  T-<span class="keyword">SQL</span>语句</span><br><span class="line"><span class="keyword">GO</span></span><br><span class="line"><span class="comment">--with encryption 表示加密触发器定义的sql文本</span></span><br><span class="line"><span class="comment">--delete,insert,update指定触发器的类型</span></span><br></pre></td></tr></table></figure>
+<p> 准备测试数据:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建学生表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> student(</span><br><span class="line">    stu_id <span class="built_in">int</span> <span class="keyword">identity</span>(<span class="number">1</span>,<span class="number">1</span>) primary <span class="keyword">key</span>,</span><br><span class="line">    stu_name <span class="built_in">varchar</span>(<span class="number">10</span>),</span><br><span class="line">    stu_gender <span class="built_in">char</span>(<span class="number">2</span>),</span><br><span class="line">    stu_age <span class="built_in">int</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><strong>1.创建insert触发器</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建insert触发器</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> trig_insert</span><br><span class="line"><span class="keyword">on</span> student</span><br><span class="line"><span class="keyword">after</span> <span class="keyword">insert</span></span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> object_id(N<span class="string">'student_sum'</span>,N<span class="string">'U'</span>) <span class="keyword">is</span> <span class="literal">null</span><span class="comment">--判断student_sum表是否存在</span></span><br><span class="line">        <span class="keyword">create</span> <span class="keyword">table</span> student_sum(stuCount <span class="built_in">int</span> <span class="keyword">default</span>(<span class="number">0</span>));<span class="comment">--创建存储学生人数的student_sum表</span></span><br><span class="line">    <span class="keyword">declare</span> @stuNumber <span class="built_in">int</span>;</span><br><span class="line">    <span class="keyword">select</span> @stuNumber = <span class="keyword">count</span>(*)<span class="keyword">from</span> student;</span><br><span class="line">    if not exists (<span class="keyword">select</span> * <span class="keyword">from</span> student_sum)<span class="comment">--判断表中是否有记录</span></span><br><span class="line">        <span class="keyword">insert</span> <span class="keyword">into</span> student_sum <span class="keyword">values</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">update</span> student_sum <span class="keyword">set</span> stuCount =@stuNumber; <span class="comment">--把更新后总的学生数插入到student_sum表中</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--测试触发器trig_insert--&gt;功能是向student插入数据的同时级联插入到student_sum表中，更新stuCount</span></span><br><span class="line"><span class="comment">--因为是后触发器，所以先插入数据后，才触发触发器trig_insert;</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> student(stu_name,stu_gender,stu_age)<span class="keyword">values</span>(<span class="string">'吕布'</span>,<span class="string">'男'</span>,<span class="number">30</span>);</span><br><span class="line"><span class="keyword">select</span> stuCount 学生总人数 <span class="keyword">from</span> student_sum;    </span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> student(stu_name,stu_gender,stu_age)<span class="keyword">values</span>(<span class="string">'貂蝉'</span>,<span class="string">'女'</span>,<span class="number">30</span>);            </span><br><span class="line"><span class="keyword">select</span> stuCount 学生总人数 <span class="keyword">from</span> student_sum;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> student(stu_name,stu_gender,stu_age)<span class="keyword">values</span>(<span class="string">'曹阿瞒'</span>,<span class="string">'男'</span>,<span class="number">40</span>);                </span><br><span class="line"><span class="keyword">select</span> stuCount 学生总人数 <span class="keyword">from</span> student_sum;</span><br></pre></td></tr></table></figure>
+<p>执行上面的语句后，结果如下图所示：</p>
+<p><img src="../../../../img/触发器/122240125791087.png" alt="img"></p>
+<p> 既然定义了学生总数表student_sum表是向student表中插入数据后才计算学生总数的，所以学生总数表应该禁止用户向其中插入数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建insert_forbidden,禁止用户向student_sum表中插入数据</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> insert_forbidden</span><br><span class="line"><span class="keyword">on</span> student_sum</span><br><span class="line"><span class="keyword">after</span> <span class="keyword">insert</span></span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    RAISERROR(<span class="string">'禁止直接向该表中插入记录，操作被禁止'</span>,<span class="number">1</span>,<span class="number">1</span>)<span class="comment">--raiserror 是用于抛出一个错误</span></span><br><span class="line"><span class="keyword">rollback</span> <span class="keyword">transaction</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--触发触发器insert_forbidden</span></span><br><span class="line"><span class="keyword">insert</span> student_sum (stuCount) <span class="keyword">values</span>(<span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<p><img src="../../../../img/触发器/122251400794718.png" alt="img"></p>
+<p> <strong>2.创建delete触发器</strong></p>
+<p>　　用户执行delete操作，就会激活delete触发器，从而控制用户能够从数据库中删除数据记录，触发delete触发器后，用户删除的记录会被添加到deleted表中，原来表的相应记录被删除，所以在deleted表中查看删除的记录。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建delete触发器</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> trig_delete</span><br><span class="line"><span class="keyword">on</span> student </span><br><span class="line"><span class="keyword">after</span> <span class="keyword">delete</span></span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">select</span> stu_id <span class="keyword">as</span> 已删除的学生编号,stu_name stu_gender,stu_age</span><br><span class="line">    <span class="keyword">from</span> deleted</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--执行一一条delete语句触发trig_delete触发器</span></span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> student <span class="keyword">where</span> stu_id=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<p><img src="../../../../img/触发器/122300063451583.png" alt="img"></p>
+<p> <strong>3.创建UPDATE触发器</strong></p>
+<p>　　update触发器是当用户在指定表上执行update语句时被调用被调用，这种类型的触发器用来约束用户对数据的修改。update触发器可以执行两种操作：更新前的记录存储在deleted表中，更新后的记录存储在inserted表中。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建update触发器</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> trig_update</span><br><span class="line"><span class="keyword">on</span> student</span><br><span class="line"><span class="keyword">after</span> <span class="keyword">update</span></span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">declare</span> @stuCount <span class="built_in">int</span>;</span><br><span class="line">    <span class="keyword">select</span> @stuCount=<span class="keyword">count</span>(*) <span class="keyword">from</span> student;</span><br><span class="line">    <span class="keyword">update</span> student_sum <span class="keyword">set</span> stuCount =@stuCount;</span><br><span class="line">    <span class="keyword">select</span> stu_id <span class="keyword">as</span> 更新前学生编号,stu_name <span class="keyword">as</span> 更新前学生姓名 <span class="keyword">from</span> deleted</span><br><span class="line">    <span class="keyword">select</span> stu_id <span class="keyword">as</span> 更新后学生编号,stu_name <span class="keyword">as</span> 更新后学生姓名 <span class="keyword">from</span> inserted</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--创建完成，执行一条update语句触发trig_update触发器</span><br><span class="line">update student set stu_name&#x3D;&#39;张飞&#39; where stu_id&#x3D;2;</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/触发器/122310574237241.png" alt="img"></p>
+<p> <strong>4.创建替代触发器</strong></p>
+<p>　　<strong>与前面介绍的三种after触发器不同，SqlServer服务器在执行after触发器的sql代码后，先建立临时的inserted表和deleted表，然后执行代码中对数据库操作，最后才激活触发器中的代码。而对于替代(instead of**</strong>)触发器,SqlServer服务器在执行触发instead of 触发器的代码时，先建立临时的inserted表和deleted表，然后直接触发instead of触发器，而拒绝执行用户输入的DML操作语句。**</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建instead of 触发器 </span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">trigger</span> trig_insteadOf</span><br><span class="line"><span class="keyword">on</span> student </span><br><span class="line">instead <span class="keyword">of</span> <span class="keyword">insert</span></span><br><span class="line"><span class="keyword">as</span> </span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">declare</span> @stuAge <span class="built_in">int</span>;</span><br><span class="line">    <span class="keyword">select</span> @stuAge=(<span class="keyword">select</span> stu_age <span class="keyword">from</span> inserted)</span><br><span class="line"><span class="keyword">if</span>(@stuAge &gt;<span class="number">120</span>)</span><br><span class="line">    <span class="keyword">select</span> <span class="string">'插入年龄错误'</span> <span class="keyword">as</span> <span class="string">'失败原因'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>创建完成，执行一条insert语句触发触发器trig_insteadOf</p>
+<p><img src="../../../../img/触发器/122331585647090.png" alt="img"></p>
+<p><strong>5.嵌套触发器介绍</strong></p>
+<p>　如果一个触发器在执行操作时调用了另外一个触发器，而这个触发器又接着调用了下一个触发器，那么就形成了嵌套触发器。嵌套触发器在安装时就被启用，但是可以使用系统存储过程sp_configure禁用和重新启用嵌套触发器。</p>
+<p>　　嵌套触发器不一定要形成一个环，它可以 T1-&gt;T2-&gt;T3…这样一直触发下去，最多允许嵌套 32 层。如果嵌套的次数超过限制，那么该触发器将被终止，并回滚整个事务，使用嵌套触发器需要注意以下几点：</p>
+<ul>
+<li>默认情况下，嵌套触发器配置选项是开启的。</li>
+<li>在同一个触发器事务中，一个嵌套触发器不能被触发两次。</li>
+<li>由于触发器是一个事务，如果在一系列嵌套触发器的任意层次中发生错误，则整个事物都将取消，而且所有数据回滚。</li>
+</ul>
+<p>嵌套是用来保持整个数据库的完整性的重要功能，但有时可能需要禁用嵌套，如果禁用了嵌套，那么修改一个触发器的实现不会再触发该表上的任何触发器。在下述情况下，需要禁用嵌套触发器：</p>
+<ul>
+<li>嵌套触发要求复杂而有理论的设计，级联修改可能会修改用户不想涉及的数据。</li>
+<li>在一系列嵌套触发器中的任意点的时间修改操作都会触发一些触发器，尽管这时数据库提供很强的保护功能，但如果以特定的顺序更新表，就会产生问题。</li>
+</ul>
+<p><strong>使用下列语句禁用嵌套和再次启用嵌套：</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--禁用嵌套</span></span><br><span class="line">exce sp_configure 'nested triggers',0;</span><br><span class="line"><span class="comment">--启用嵌套</span></span><br><span class="line">exce sp_configure 'nested triggers',1;</span><br></pre></td></tr></table></figure>
+<p><strong>6.递归触发器</strong></p>
+<p>　　触发器的递归是指一个触发器从其内部再一次激活该触发器，例如update操作激活的触发器内部还有一条数据表的更新语句，那么这个更新语句就有可能激活这个触发器本身，当然，这种递归的触发器内部还会有判断语句，只有一定情况下才会执行那个T_SQL语句，否则就成为无线调用的死循环了。</p>
+<p>SqlServer中的递归触发器包括两种：直接递归和间接递归。</p>
+<ul>
+<li>直接递归：触发器被触发后并执行一个操作，而该操作又使用一个触发器再次被触发。</li>
+<li>间接递归：触发器被触发并执行一个操作，而该操作又使另一个表中的某个触发器被触发，第二个触发器使原始表得到更新，从而再次触发第一个触发器。</li>
+</ul>
+<p>默认情况下，递归触发器选项是禁用的。递归触发器最多只能递归16层，如果递归中的第16个触发器激活了第17个触发器，则结果与发布的rollback命令一样，所有数据都将回滚。 </p>
+<p>我们举例解释如下，假如有表1、表2名称分别为 T1、T2，在 T1、T2 上分别有触发器 G1、G2。</p>
+<ul>
+<li>间接递归：对 T1 操作从而触发 G1，G1 对 T2 操作从而触发 G2，G2 对 T1 操作从而再次触发 G1…</li>
+<li>直接递归：对 T1 操作从而触发 G1，G1 对 T1 操作从而再次触发 G1… </li>
+</ul>
+<p>设置直接递归：</p>
+<p>默认情况下是禁止直接递归的，要设置为允许有两种方法：</p>
+<ul>
+<li>T-SQL：exec sp_dboption ‘dbName’, ‘recursive triggers’, true；</li>
+<li>EM：数据库上点右键-&gt;属性-&gt;选项。 </li>
+</ul>
+<h2 id="六-管理触发器"><a href="#六-管理触发器" class="headerlink" title="六:管理触发器　"></a>六:管理触发器　</h2><p><strong>1.查看触发器</strong></p>
+<p><strong>(1).查看数据库中所有的触发器</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--查看数据库中所有的触发器</span></span><br><span class="line"><span class="keyword">use</span> 数据库名</span><br><span class="line"><span class="keyword">go</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> sysobjects <span class="keyword">where</span> xtype=<span class="string">'TR'</span></span><br></pre></td></tr></table></figure>
+<p>sysobjects 保存着数据库的对象，其中 xtype 为 TR 的记录即为触发器对象。在 name 一列，我们可以看到触发器名称。</p>
+<p><strong>(2).sp_helptext 查看触发器内容</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> 数据库名</span><br><span class="line"><span class="keyword">go</span></span><br><span class="line">exec sp_helptext <span class="string">'触发器名称'</span></span><br></pre></td></tr></table></figure>
+<p> 将会以表的样式显示触发器内容。 </p>
+<p> 除了触发器外，sp_helptext 还可以显示 规则、默认值、未加密的存储过程、用户定义函数、视图的文本。</p>
+<p><strong>(3).sp_helptrigger 用于查看触发器的属性</strong></p>
+<p>　　sp_helptrigger 有两个参数：第一个参数为表名；第二个为触发器类型，为 char(6) 类型，可以是 INSERT、UPDATE、DELETE，如果省略则显示指定表中所有类型触发器的属性。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> 数据库名</span><br><span class="line"><span class="keyword">go</span></span><br><span class="line">exec sp_helptrigger tableName</span><br></pre></td></tr></table></figure>
+<p><strong>2.禁用启用触发器</strong></p>
+<p>　　禁用:alter table 表名 disable trigger 触发器名称<br>　　启用:alter table 表名 enable trigger 触发器名称</p>
+<p>　　如果有多个触发器，则各个触发器名称之间用英文逗号隔开。</p>
+<p>　　如果把“触发器名称”换成“ALL”，则表示禁用或启用该表的全部触发器。</p>
+<p><strong>3修改触发器</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--修改触发器语法</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TRIGGER</span>  trigger_name </span><br><span class="line">     <span class="keyword">ON</span>  table_name </span><br><span class="line">     [ <span class="keyword">WITH</span> ENCRYPTION ] </span><br><span class="line">     <span class="keyword">FOR</span> &#123;[<span class="keyword">DELETE</span>][,][<span class="keyword">INSERT</span>][,][<span class="keyword">UPDATE</span>]&#125;</span><br><span class="line">     <span class="keyword">AS</span></span><br><span class="line">       sql_statement;</span><br></pre></td></tr></table></figure>
+<p><strong>4.删除触发器</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">--语法格式:</span></span><br><span class="line">      <span class="keyword">DROP</span>  <span class="keyword">TRIGGER</span>   &#123; <span class="keyword">trigger</span> &#125; [ ,...n ]</span><br><span class="line">参数:</span><br><span class="line"> <span class="keyword">trigger</span>: 要删除的触发器名称</span><br><span class="line"> n:表示可以删除多个触发器的占位符</span><br></pre></td></tr></table></figure>
+<h1 id="SQLServer之删除触发器"><a href="#SQLServer之删除触发器" class="headerlink" title="SQLServer之删除触发器"></a>SQLServer之删除触发器</h1><h1 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h1><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>可以通过删除DML触发器或删除触发器表来删除DML触发器。 删除表时，将同时删除与表关联的所有触发器。</p>
+<p>删除触发器时，会从 sys.objects、sys.triggers 和 sys.sql_modules 目录视图中删除有关该触发器的信息。</p>
+<p>仅当所有触发器均使用相同的 ON 子句创建时，才能使用一个 DROP TRIGGER 语句删除多个 DDL 触发器。</p>
+<p>若要重命名触发器，可使用 DROP TRIGGER 和 CREATE TRIGGER。 若要更改触发器的定义，可使用 ALTER TRIGGER。</p>
+<p>有关确定特定触发器依赖关系的详细信息，请参阅 sys.sql_expression_dependencies、sys.dm_sql_referenced_entities (Transact-SQL) 和 sys.dm_sql_referencing_entities (Transact-SQL)。</p>
+<p>有关查看触发器文本的详细信息，请参阅 sp_helptext (Transact-SQL) 和 sys.sql_modules (Transact-SQL)。</p>
+<p>有关查看现有触发器列表的详细信息，请参阅 sys.triggers (Transact-SQL) 和 sys.server_triggers (Transact-SQL)。</p>
+<h2 id="权限方面"><a href="#权限方面" class="headerlink" title="权限方面"></a>权限方面</h2><p>要删除 DML 触发器，需要具有对于定义该触发器所在的表或视图的 ALTER 权限。</p>
+<p>若要删除定义了服务器范围 (ON ALL SERVER) 的 DDL 触发器或删除登录触发器，需要对服务器拥有 CONTROL SERVER 权限。 若要删除定义了数据库范围 (ON DATABASE) 的 DDL 触发器，要求在当前数据库中具有 ALTER ANY DATABASE DDL TRIGGER 权限。</p>
+<h1 id="使用SSMS数据库管理工具删除触发器"><a href="#使用SSMS数据库管理工具删除触发器" class="headerlink" title="使用SSMS数据库管理工具删除触发器"></a>使用SSMS数据库管理工具删除触发器</h1><h2 id="删除DML触发器"><a href="#删除DML触发器" class="headerlink" title="删除DML触发器"></a>删除DML触发器</h2><p>1、连接数据库，选择数据库，选择数据表-》展开数据表-》展开触发器-》右键点击-》选择删除。</p>
+<p><img src="../../../../img/触发器/1454490300-5bcd8293b3b83_articlex" alt="clipboard.png"></p>
+<p>2、在删除对象弹出框-》点击确定-》不用刷新即可看到删除结果。</p>
+<p><img src="../../../../img/触发器/885443489-5bcd82a710cb1_articlex" alt="clipboard.png"></p>
+<p><img src="../../../../img/触发器/2983610003-5bcd82b5ee554_articlex" alt="clipboard.png"></p>
+<h2 id="删除DDL触发器"><a href="#删除DDL触发器" class="headerlink" title="删除DDL触发器"></a>删除DDL触发器</h2><p>1、连接数据库，选择数据库-》展开可编程性-》展开数据库触发器-》右键点击-》选择删除。</p>
+<p><img src="../../../../img/触发器/2801269302-5bcd82cd2ae74_articlex" alt="clipboard.png"></p>
+<p>2、在删除对象弹出框-》点击确定-》不用刷新即可看到删除结果。</p>
+<p><img src="../../../../img/触发器/1477303913-5bcd82dd3a333_articlex" alt="clipboard.png"></p>
+<p><img src="../../../../img/触发器/1594388431-5bcd82eb228ba_articlex" alt="clipboard.png"></p>
+<h2 id="删除LOGON触发器"><a href="#删除LOGON触发器" class="headerlink" title="删除LOGON触发器"></a>删除LOGON触发器</h2><p>1、连接数据库-》展开服务器对象-》展开触发器-》右键点击-》选择删除。</p>
+<p><img src="../../../../img/触发器/4158032664-5bcd8308b802c_articlex" alt="clipboard.png"></p>
+<p>2、在删除对象弹出框-》点击确定-》不用刷新即可看到删除结果。</p>
+<p><img src="../../../../img/触发器/3358885642-5bcd831ba8845_articlex" alt="clipboard.png"></p>
+<p><img src="../../../../img/触发器/1811725707-5bcd832a7e843_articlex" alt="clipboard.png"></p>
+<h1 id="使用T-SQL脚本删除触发器"><a href="#使用T-SQL脚本删除触发器" class="headerlink" title="使用T-SQL脚本删除触发器"></a>使用T-SQL脚本删除触发器</h1><h2 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h2><p>—声明数据库引用<br>use 数据库;<br>go</p>
+<p>—判断是否存在，如果存在则删除<br>if exists(select * from sys.triggers where name=触发器名)</p>
+<p>—删除DML触发器<br>drop trigger 触发器名;</p>
+<p>——删除DDL触发器<br>—drop trigger 触发器名 on database;</p>
+<p>—删除登录触发器<br>—drop trigger 触发器名 on all server;</p>
+<p>go</p>
+<h2 id="示例：本示例演示删除DML更新触发器。"><a href="#示例：本示例演示删除DML更新触发器。" class="headerlink" title="示例：本示例演示删除DML更新触发器。"></a>示例：本示例演示删除DML更新触发器。</h2><p>—声明数据库引用<br>use testss;<br>go</p>
+<p>—判断是否存在，如果存在则删除<br>if exists(select * from sys.triggers where name=’updatetri’)<br>drop trigger updatetri;<br>go</p>
+<h2 id="示例结果："><a href="#示例结果：" class="headerlink" title="示例结果："></a>示例结果：</h2><p><img src="../../../../img/触发器/108804467-5bcd8362d55ff_articlex" alt="clipboard.png"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2022/06/09/resource-DB-SQLServer-常用查询/" data-toggle="tooltip" data-placement="top" title="SQLSERVER数据库常用查询">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2022/06/02/resource-DB-SQLServer-查询执行效率、锁表等情况/" data-toggle="tooltip" data-placement="top" title="SQLSERVER数据库查询执行效率、锁表等情况">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#SqlServer基础之-触发器"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">SqlServer基础之(触发器)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一-触发器的优点"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一:触发器的优点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#二-触发器的作用"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二:触发器的作用</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#三-触发器的分类"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">三:触发器的分类</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#四：触发器的工作原理"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">四：触发器的工作原理</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#五-创建触发器"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">五:创建触发器</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#六-管理触发器"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">六:管理触发器　</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#SQLServer之删除触发器"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">SQLServer之删除触发器</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#删除触发器"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">删除触发器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#注意事项"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">注意事项</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#权限方面"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">权限方面</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#使用SSMS数据库管理工具删除触发器"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">使用SSMS数据库管理工具删除触发器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#删除DML触发器"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">删除DML触发器</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#删除DDL触发器"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">删除DDL触发器</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#删除LOGON触发器"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">删除LOGON触发器</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#使用T-SQL脚本删除触发器"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">使用T-SQL脚本删除触发器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#语法："><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">语法：</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#示例：本示例演示删除DML更新触发器。"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">示例：本示例演示删除DML更新触发器。</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#示例结果："><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">示例结果：</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#sqlServer" title="sqlServer">sqlServer</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

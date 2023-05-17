@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          RocketMQ基本概念和安装测试 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2022/01/18/resource-MQ-RocketMQ-RocketMQBase/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/MQ/RocketMQ.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#MQ" title="MQ">MQ</a>
+                            
+                        </div>
+
+                        <h1>RocketMQ基本概念和安装测试</h1>
+                        <h2 class="subheading">MQ功能比较完备，扩展性佳</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2022-01-18
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">6.1k</span> and
+                                Reading Time <span class="post-count">22</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p><a href="/pages/detail/detail?id=api/articles/resource-MQ-rabbitMQ-RabbitMQBase.json">MQ优劣相关内容</a></p>
+<h1 id="RocketMQ介绍"><a href="#RocketMQ介绍" class="headerlink" title="RocketMQ介绍"></a>RocketMQ介绍</h1><p>RocketMQ是阿里巴巴开源的一个消息中间件，在阿里内部历经了双十一等很多高并发场景的考验，能够处理亿万级别的消息。2016年开源后捐赠给Apache，现在是Apache的一个顶级项目。</p>
+<p>目前RocketMQ在阿里云上有一个购买即可用的商业版本，商业版本集成了阿里内部一些更深层次的功能及运维定制。我们这里学习的是Apache的开源版本。开源版本相对于阿里云上的商业版本，功能上略有缺失，但是大体上功能是一样的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RocketMQ的官网地址：</span><br><span class="line">http:&#x2F;&#x2F;rocketmq.apache.org ，</span><br><span class="line">github地址是 https:&#x2F;&#x2F;github.com&#x2F;apache&#x2F;rocketmq</span><br><span class="line">本blog基于4.7.1版本来进行学习。</span><br></pre></td></tr></table></figure>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="1-消息模型（Message-Model）"><a href="#1-消息模型（Message-Model）" class="headerlink" title="1 消息模型（Message Model）"></a>1 消息模型（Message Model）</h3><p>RocketMQ主要由 Producer、Broker、Consumer 三部分组成，其中Producer 负责生产消息，Consumer 负责消费消息，Broker 负责存储消息。Broker 在实际部署过程中对应一台服务器，每个 Broker 可以存储多个Topic的消息，每个Topic的消息也可以分片存储于不同的 Broker。Message Queue 用于存储消息的物理地址，每个Topic中的消息地址存储于多个 Message Queue 中。ConsumerGroup 由多个Consumer 实例构成。</p>
+<h3 id="2-消息生产者（Producer）"><a href="#2-消息生产者（Producer）" class="headerlink" title="2 消息生产者（Producer）"></a>2 消息生产者（Producer）</h3><p>负责生产消息，一般由业务系统负责生产消息。一个消息生产者会把业务应用系统里产生的消息发送到broker服务器。RocketMQ提供多种发送方式，同步发送、异步发送、顺序发送、单向发送。同步和异步方式均需要Broker返回确认信息，单向发送不需要。</p>
+<h3 id="3-消息消费者（Consumer）"><a href="#3-消息消费者（Consumer）" class="headerlink" title="3 消息消费者（Consumer）"></a>3 消息消费者（Consumer）</h3><p>负责消费消息，一般是后台系统负责异步消费。一个消息消费者会从Broker服务器拉取消息、并将其提供给应用程序。从用户应用的角度而言提供了两种消费形式：拉取式消费、推动式消费。</p>
+<h3 id="4-主题（Topic）"><a href="#4-主题（Topic）" class="headerlink" title="4 主题（Topic）"></a>4 主题（Topic）</h3><p>表示一类消息的集合，每个主题包含若干条消息，每条消息只能属于一个主题，是RocketMQ进行消息订阅的基本单位。</p>
+<h3 id="5-代理服务器（Broker-Server）"><a href="#5-代理服务器（Broker-Server）" class="headerlink" title="5 代理服务器（Broker Server）"></a>5 代理服务器（Broker Server）</h3><p>消息中转角色，负责存储消息、转发消息。代理服务器在RocketMQ系统中负责接收从生产者发送来的消息并存储、同时为消费者的拉取请求作准备。代理服务器也存储消息相关的元数据，包括消费者组、消费进度偏移和主题和队列消息等。</p>
+<h3 id="6-名字服务（Name-Server）"><a href="#6-名字服务（Name-Server）" class="headerlink" title="6 名字服务（Name Server）"></a>6 名字服务（Name Server）</h3><p>名称服务充当路由消息的提供者。生产者或消费者能够通过名字服务查找各主题相应的Broker IP列表。多个Namesrv实例组成集群，但相互独立，没有信息交换。</p>
+<h3 id="7-拉取式消费（Pull-Consumer）"><a href="#7-拉取式消费（Pull-Consumer）" class="headerlink" title="7 拉取式消费（Pull Consumer）"></a>7 拉取式消费（Pull Consumer）</h3><p>Consumer消费的一种类型，应用通常主动调用Consumer的拉消息方法从Broker服务器拉消息、主动权由应用控制。一旦获取了批量消息，应用就会启动消费过程。</p>
+<h3 id="8-推动式消费（Push-Consumer）"><a href="#8-推动式消费（Push-Consumer）" class="headerlink" title="8 推动式消费（Push Consumer）"></a>8 推动式消费（Push Consumer）<sunfy-line></h3><p>Consumer消费的一种类型，该模式下Broker收到数据后会主动推送给消费端，该消费模式一般实时性较高。</p>
+<h3 id="9-生产者组（Producer-Group）"><a href="#9-生产者组（Producer-Group）" class="headerlink" title="9 生产者组（Producer Group）"></a>9 生产者组（Producer Group）</h3><p>同一类Producer的集合，这类Producer发送同一类消息且发送逻辑一致。如果发送的是事务消息且原始生产者在发送之后崩溃，则Broker服务器会联系同一生产者组的其他生产者实例以提交或回溯消费。</p>
+<h3 id="10-消费者组（Consumer-Group）"><a href="#10-消费者组（Consumer-Group）" class="headerlink" title="10 消费者组（Consumer Group）"></a>10 消费者组（Consumer Group）</h3><p>同一类Consumer的集合，这类Consumer通常消费同一类消息且消费逻辑一致。消费者组使得在消息消费方面，实现负载均衡和容错的目标变得非常容易。要注意的是，消费者组的消费者实例必须订阅完全相同的Topic。RocketMQ 支持两种消息模式：集群消费（Clustering）和广播消费（Broadcasting）。</p>
+<h3 id="11-集群消费（Clustering）"><a href="#11-集群消费（Clustering）" class="headerlink" title="11 集群消费（Clustering）"></a>11 集群消费（Clustering）</h3><p>集群消费模式下,相同Consumer Group的每个Consumer实例平均分摊消息。</p>
+<h3 id="12-广播消费（Broadcasting）"><a href="#12-广播消费（Broadcasting）" class="headerlink" title="12 广播消费（Broadcasting）"></a>12 广播消费（Broadcasting）</h3><p>广播消费模式下，相同Consumer Group的每个Consumer实例都接收全量的消息。</p>
+<h3 id="13-普通顺序消息（Normal-Ordered-Message）"><a href="#13-普通顺序消息（Normal-Ordered-Message）" class="headerlink" title="13 普通顺序消息（Normal Ordered Message）"></a>13 普通顺序消息（Normal Ordered Message）</h3><p>普通顺序消费模式下，消费者通过同一个消息队列（ Topic 分区，称作 Message Queue） 收到的消息是有顺序的，不同消息队列收到的消息则可能是无顺序的。</p>
+<h3 id="14-严格顺序消息（Strictly-Ordered-Message）"><a href="#14-严格顺序消息（Strictly-Ordered-Message）" class="headerlink" title="14 严格顺序消息（Strictly Ordered Message）"></a>14 严格顺序消息（Strictly Ordered Message）</h3><p>严格顺序消息模式下，消费者收到的所有消息均是有顺序的。</p>
+<h3 id="15-消息（Message）"><a href="#15-消息（Message）" class="headerlink" title="15 消息（Message）"></a>15 消息（Message）</h3><p>消息系统所传输信息的物理载体，生产和消费数据的最小单位，每条消息必须属于一个主题。RocketMQ中每个消息拥有唯一的Message ID，且可以携带具有业务标识的Key。系统提供了通过Message ID和Key查询消息的功能。</p>
+<h3 id="16-标签（Tag）"><a href="#16-标签（Tag）" class="headerlink" title="16 标签（Tag）"></a>16 标签（Tag）</h3><p>为消息设置的标志，用于同一主题下区分不同类型的消息。来自同一业务单元的消息，可以根据不同业务目的在同一主题下设置不同标签。标签能够有效地保持代码的清晰度和连贯性，并优化RocketMQ提供的查询系统。消费者可以根据Tag实现对不同子主题的不同消费逻辑，实现更好的扩展性。</p>
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><h3 id="1-订阅与发布"><a href="#1-订阅与发布" class="headerlink" title="1 订阅与发布"></a>1 订阅与发布</h3><p>消息的发布是指某个生产者向某个topic发送消息；消息的订阅是指某个消费者关注了某个topic中带有某些tag的消息，进而从该topic消费数据。</p>
+<h3 id="2-消息顺序"><a href="#2-消息顺序" class="headerlink" title="2 消息顺序"></a>2 消息顺序</h3><p>消息有序指的是一类消息消费时，能按照发送的顺序来消费。例如：一个订单产生了三条消息分别是订单创建、订单付款、订单完成。消费时要按照这个顺序消费才能有意义，但是同时订单之间是可以并行消费的。RocketMQ可以严格的保证消息有序。</p>
+<p>顺序消息分为全局顺序消息与分区顺序消息，全局顺序是指某个Topic下的所有消息都要保证顺序；部分顺序消息只要保证每一组消息被顺序消费即可。</p>
+<ul>
+<li>全局顺序 对于指定的一个 Topic，所有消息按照严格的先入先出（FIFO）的顺序进行发布和消费。 适用场景：性能要求不高，所有的消息严格按照 FIFO 原则进行消息发布和消费的场景</li>
+<li>分区顺序 对于指定的一个 Topic，所有消息根据 sharding key 进行区块分区。 同一个分区内的消息按照严格的 FIFO 顺序进行发布和消费。 Sharding key 是顺序消息中用来区分不同分区的关键字段，和普通消息的 Key 是完全不同的概念。 适用场景：性能要求高，以 sharding key 作为分区字段，在同一个区块中严格的按照 FIFO 原则进行消息发布和消费的场景。</li>
+</ul>
+<h3 id="3-消息过滤"><a href="#3-消息过滤" class="headerlink" title="3 消息过滤"></a>3 消息过滤</h3><p>RocketMQ的消费者可以根据Tag进行消息过滤，也支持自定义属性过滤。消息过滤目前是在Broker端实现的，优点是减少了对于Consumer无用消息的网络传输，缺点是增加了Broker的负担、而且实现相对复杂。</p>
+<h3 id="4-消息可靠性"><a href="#4-消息可靠性" class="headerlink" title="4 消息可靠性"></a>4 消息可靠性</h3><p>RocketMQ支持消息的高可靠，影响消息可靠性的几种情况：</p>
+<p>​    1)Broker非正常关闭<br>​    2)Broker异常Crash<br>​    3)OS Crash<br>​    4)机器掉电，但是能立即恢复供电情况<br>​    5)机器无法开机（可能是cpu、主板、内存等关键设备损坏）<br>​    6)磁盘设备损坏</p>
+<p>1)、2)、3)、4) 四种情况都属于硬件资源可立即恢复情况，RocketMQ在这四种情况下能保证消息不丢，或者丢失少量数据（依赖刷盘方式是同步还是异步）。</p>
+<p>5)、6)属于单点故障，且无法恢复，一旦发生，在此单点上的消息全部丢失。RocketMQ在这两种情况下，通过异步复制，可保证99%的消息不丢，但是仍然会有极少量的消息可能丢失。通过同步双写技术可以完全避免单点，同步双写势必会影响性能，适合对消息可靠性要求极高的场合，例如与Money相关的应用。注：RocketMQ从3.0版本开始支持同步双写。</p>
+<h3 id="5-至少一次"><a href="#5-至少一次" class="headerlink" title="5 至少一次"></a>5 至少一次</h3><p>至少一次(At least Once)指每个消息必须投递一次。Consumer先Pull消息到本地，消费完成后，才向服务器返回ack，如果没有消费一定不会ack消息，所以RocketMQ可以很好的支持此特性。</p>
+<h3 id="6-回溯消费"><a href="#6-回溯消费" class="headerlink" title="6 回溯消费"></a>6 回溯消费</h3><p>回溯消费是指Consumer已经消费成功的消息，由于业务上需求需要重新消费，要支持此功能，Broker在向Consumer投递成功消息后，消息仍然需要保留。并且重新消费一般是按照时间维度，例如由于Consumer系统故障，恢复后需要重新消费1小时前的数据，那么Broker要提供一种机制，可以按照时间维度来回退消费进度。RocketMQ支持按照时间回溯消费，时间维度精确到毫秒。</p>
+<h3 id="7-事务消息"><a href="#7-事务消息" class="headerlink" title="7 事务消息"></a>7 事务消息</h3><p>RocketMQ事务消息（Transactional Message）是指应用本地事务和发送消息操作可以被定义到全局事务中，要么同时成功，要么同时失败。RocketMQ的事务消息提供类似 X/Open XA 的分布事务功能，通过事务消息能达到分布式事务的最终一致。</p>
+<h3 id="8-定时消息"><a href="#8-定时消息" class="headerlink" title="8 定时消息"></a>8 定时消息</h3><p>定时消息（延迟队列）是指消息发送到broker后，不会立即被消费，等待特定时间投递给真正的topic。 broker有配置项messageDelayLevel，默认值为“1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h”，18个level。可以配置自定义messageDelayLevel。注意，messageDelayLevel是broker的属性，不属于某个topic。发消息时，设置delayLevel等级即可：msg.setDelayLevel(level)。level有以下三种情况：</p>
+<ul>
+<li>level == 0，消息为非延迟消息</li>
+<li>1&lt;=level&lt;=maxLevel，消息延迟特定时间，例如level==1，延迟1s</li>
+<li>level &gt; maxLevel，则level== maxLevel，例如level==20，延迟2h</li>
+</ul>
+<p>定时消息会暂存在名为SCHEDULE_TOPIC_XXXX的topic中，并根据delayTimeLevel存入特定的queue，queueId = delayTimeLevel – 1，即一个queue只存相同延迟的消息，保证具有相同发送延迟的消息能够顺序消费。broker会调度地消费SCHEDULE_TOPIC_XXXX，将消息写入真实的topic。</p>
+<p>需要注意的是，定时消息会在第一次写入和调度写入真实topic时都会计数，因此发送数量、tps都会变高。</p>
+<h3 id="9-消息重试"><a href="#9-消息重试" class="headerlink" title="9 消息重试"></a>9 消息重试</h3><p>Consumer消费消息失败后，要提供一种重试机制，令消息再消费一次。Consumer消费消息失败通常可以认为有以下几种情况：</p>
+<ul>
+<li>由于消息本身的原因，例如反序列化失败，消息数据本身无法处理（例如话费充值，当前消息的手机号被注销，无法充值）等。这种错误通常需要跳过这条消息，再消费其它消息，而这条失败的消息即使立刻重试消费，99%也不成功，所以最好提供一种定时重试机制，即过10秒后再重试。</li>
+<li>由于依赖的下游应用服务不可用，例如db连接不可用，外系统网络不可达等。遇到这种错误，即使跳过当前失败的消息，消费其他消息同样也会报错。这种情况建议应用sleep 30s，再消费下一条消息，这样可以减轻Broker重试消息的压力。</li>
+</ul>
+<p>RocketMQ会为每个消费组都设置一个Topic名称为“%RETRY%+consumerGroup”的重试队列（这里需要注意的是，这个Topic的重试队列是针对消费组，而不是针对每个Topic设置的），用于暂时保存因为各种异常而导致Consumer端无法消费的消息。考虑到异常恢复起来需要一些时间，会为重试队列设置多个重试级别，每个重试级别都有与之对应的重新投递延时，重试次数越多投递延时就越大。RocketMQ对于重试消息的处理是先保存至Topic名称为“SCHEDULE_TOPIC_XXXX”的延迟队列中，后台定时任务按照对应的时间进行Delay后重新保存至“%RETRY%+consumerGroup”的重试队列中。</p>
+<h3 id="10-消息重投"><a href="#10-消息重投" class="headerlink" title="10 消息重投"></a>10 消息重投</h3><p>生产者在发送消息时，同步消息失败会重投，异步消息有重试，oneway没有任何保证。消息重投保证消息尽可能发送成功、不丢失，但可能会造成消息重复，消息重复在RocketMQ中是无法避免的问题。消息重复在一般情况下不会发生，当出现消息量大、网络抖动，消息重复就会是大概率事件。另外，生产者主动重发、consumer负载变化也会导致重复消息。如下方法可以设置消息重试策略：</p>
+<ul>
+<li>retryTimesWhenSendFailed:同步发送失败重投次数，默认为2，因此生产者会最多尝试发送retryTimesWhenSendFailed + 1次。不会选择上次失败的broker，尝试向其他broker发送，最大程度保证消息不丢。超过重投次数，抛出异常，由客户端保证消息不丢。当出现RemotingException、MQClientException和部分MQBrokerException时会重投。</li>
+<li>retryTimesWhenSendAsyncFailed:异步发送失败重试次数，异步重试不会选择其他broker，仅在同一个broker上做重试，不保证消息不丢。</li>
+<li>retryAnotherBrokerWhenNotStoreOK:消息刷盘（主或备）超时或slave不可用（返回状态非SEND_OK），是否尝试发送到其他broker，默认false。十分重要消息可以开启。</li>
+</ul>
+<h3 id="11-流量控制"><a href="#11-流量控制" class="headerlink" title="11 流量控制"></a>11 流量控制</h3><p>生产者流控，因为broker处理能力达到瓶颈；消费者流控，因为消费能力达到瓶颈。</p>
+<p>生产者流控：</p>
+<ul>
+<li>commitLog文件被锁时间超过osPageCacheBusyTimeOutMills时，参数默认为1000ms，返回流控。</li>
+<li>如果开启transientStorePoolEnable == true，且broker为异步刷盘的主机，且transientStorePool中资源不足，拒绝当前send请求，返回流控。</li>
+<li>broker每隔10ms检查send请求队列头部请求的等待时间，如果超过waitTimeMillsInSendQueue，默认200ms，拒绝当前send请求，返回流控。</li>
+<li>broker通过拒绝send 请求方式实现流量控制。</li>
+</ul>
+<p>注意，生产者流控，不会尝试消息重投。</p>
+<p>消费者流控：</p>
+<ul>
+<li>消费者本地缓存消息数超过pullThresholdForQueue时，默认1000。</li>
+<li>消费者本地缓存消息大小超过pullThresholdSizeForQueue时，默认100MB。</li>
+<li>消费者本地缓存消息跨度超过consumeConcurrentlyMaxSpan时，默认2000。</li>
+</ul>
+<p>消费者流控的结果是降低拉取频率。</p>
+<h3 id="12-死信队列"><a href="#12-死信队列" class="headerlink" title="12 死信队列"></a>12 死信队列</h3><p>死信队列用于处理无法被正常消费的消息。当一条消息初次消费失败，消息队列会自动进行消息重试；达到最大重试次数后，若消费依然失败，则表明消费者在正常情况下无法正确地消费该消息，此时，消息队列 不会立刻将消息丢弃，而是将其发送到该消费者对应的特殊队列中。</p>
+<p>RocketMQ将这种正常情况下无法被消费的消息称为死信消息（Dead-Letter Message），将存储死信消息的特殊队列称为死信队列（Dead-Letter Queue）。在RocketMQ中，可以通过使用console控制台对死信队列中的消息进行重发来使得消费者实例再次进行消费。</p>
+<h2 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h2><h3 id="1-技术架构"><a href="#1-技术架构" class="headerlink" title="1 技术架构"></a>1 技术架构</h3><p><img src="../../../../img/RocketMQBase/rocketmq_architecture_1.png" alt="img"></p>
+<p>RocketMQ架构上主要分为四部分，如上图所示:</p>
+<ul>
+<li>Producer：消息发布的角色，支持分布式集群方式部署。Producer通过MQ的负载均衡模块选择相应的Broker集群队列进行消息投递，投递的过程支持快速失败并且低延迟。</li>
+<li>Consumer：消息消费的角色，支持分布式集群方式部署。支持以push推，pull拉两种模式对消息进行消费。同时也支持集群方式和广播方式的消费，它提供实时消息订阅机制，可以满足大多数用户的需求。</li>
+<li>NameServer：NameServer是一个非常简单的Topic路由注册中心，其角色类似Dubbo中的zookeeper，支持Broker的动态注册与发现。主要包括两个功能：Broker管理，NameServer接受Broker集群的注册信息并且保存下来作为路由信息的基本数据。然后提供心跳检测机制，检查Broker是否还存活；路由信息管理，每个NameServer将保存关于Broker集群的整个路由信息和用于客户端查询的队列信息。然后Producer和Conumser通过NameServer就可以知道整个Broker集群的路由信息，从而进行消息的投递和消费。NameServer通常也是集群的方式部署，各实例间相互不进行信息通讯。Broker是向每一台NameServer注册自己的路由信息，所以每一个NameServer实例上面都保存一份完整的路由信息。当某个NameServer因某种原因下线了，Broker仍然可以向其它NameServer同步其路由信息，Producer和Consumer仍然可以动态感知Broker的路由的信息。</li>
+<li>BrokerServer：Broker主要负责消息的存储、投递和查询以及服务高可用保证，为了实现这些功能，Broker包含了以下几个重要子模块。<ol>
+<li>Remoting Module：整个Broker的实体，负责处理来自Client端的请求。</li>
+<li>Client Manager：负责管理客户端(Producer/Consumer)和维护Consumer的Topic订阅信息。</li>
+<li>Store Service：提供方便简单的API接口处理消息存储到物理硬盘和查询功能。</li>
+<li>HA Service：高可用服务，提供Master Broker 和 Slave Broker之间的数据同步功能。</li>
+<li>Index Service：根据特定的Message key对投递到Broker的消息进行索引服务，以提供消息的快速查询。</li>
+</ol>
+</li>
+</ul>
+<p><img src="../../../../img/RocketMQBase/rocketmq_architecture_2.png" alt="img"></p>
+<h3 id="2-部署架构"><a href="#2-部署架构" class="headerlink" title="2 部署架构"></a>2 部署架构</h3><p><img src="../../../../img/RocketMQBase/rocketmq_architecture_3.png" alt="img"></p>
+<h3 id="RocketMQ-网络部署特点"><a href="#RocketMQ-网络部署特点" class="headerlink" title="RocketMQ 网络部署特点"></a>RocketMQ 网络部署特点</h3><ul>
+<li>NameServer是一个几乎无状态节点，可集群部署，节点之间无任何信息同步。</li>
+<li>Broker部署相对复杂，Broker分为Master与Slave，一个Master可以对应多个Slave，但是一个Slave只能对应一个Master，Master与Slave 的对应关系通过指定相同的BrokerName，不同的BrokerId 来定义，BrokerId为0表示Master，非0表示Slave。Master也可以部署多个。每个Broker与NameServer集群中的所有节点建立长连接，定时注册Topic信息到所有NameServer。 注意：当前RocketMQ版本在部署架构上支持一Master多Slave，但只有BrokerId=1的从服务器才会参与消息的读负载。</li>
+<li>Producer与NameServer集群中的其中一个节点（随机选择）建立长连接，定期从NameServer获取Topic路由信息，并向提供Topic 服务的Master建立长连接，且定时向Master发送心跳。Producer完全无状态，可集群部署。</li>
+<li>Consumer与NameServer集群中的其中一个节点（随机选择）建立长连接，定期从NameServer获取Topic路由信息，并向提供Topic服务的Master、Slave建立长连接，且定时向Master、Slave发送心跳。Consumer既可以从Master订阅消息，也可以从Slave订阅消息，消费者在向Master拉取消息时，Master服务器会根据拉取偏移量与最大偏移量的距离（判断是否读老消息，产生读I/O），以及从服务器是否可读等因素建议下一次是从Master还是Slave拉取。</li>
+</ul>
+<p>结合部署架构图，描述集群工作流程：</p>
+<ul>
+<li>启动NameServer，NameServer起来后监听端口，等待Broker、Producer、Consumer连上来，相当于一个路由控制中心。</li>
+<li>Broker启动，跟所有的NameServer保持长连接，定时发送心跳包。心跳包中包含当前Broker信息(IP+端口等)以及存储所有Topic信息。注册成功后，NameServer集群中就有Topic跟Broker的映射关系。</li>
+<li>收发消息前，先创建Topic，创建Topic时需要指定该Topic要存储在哪些Broker上，也可以在发送消息时自动创建Topic。</li>
+<li>Producer发送消息，启动时先跟NameServer集群中的其中一台建立长连接，并从NameServer中获取当前发送的Topic存在哪些Broker上，轮询从队列列表中选择一个队列，然后与队列所在的Broker建立长连接从而向Broker发消息。</li>
+<li>Consumer跟Producer类似，跟其中一台NameServer建立长连接，获取当前订阅Topic存在哪些Broker上，然后直接跟Broker建立连接通道，开始消费消息。</li>
+</ul>
+<h1 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h1><p>RocketMQ的安装非常简单，就是上传解压就可以了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">	RocketMQ运行版本下载地址： https:&#x2F;&#x2F;www.apache.org&#x2F;dyn&#x2F;closer.cgi?path&#x3D;rocketmq&#x2F;4.7.1&#x2F;rocketmq-all-4.7.1-bin-release.zip</span><br><span class="line"></span><br><span class="line">​	RocketMQ源码版本下载地址： https:&#x2F;&#x2F;www.apache.org&#x2F;dyn&#x2F;closer.cgi?path&#x3D;rocketmq&#x2F;4.7.1&#x2F;rocketmq-all-4.7.1-source-release.zip</span><br></pre></td></tr></table></figure>
+<p>解压下载后的文件</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>RocketMQ由以下这几个组件组成</p>
+<ul>
+<li>NameServer : 提供轻量级的Broker路由服务。</li>
+<li>Broker：实际处理消息存储、转发等服务的核心组件。</li>
+<li>Producer：消息生产者集群。通常是业务系统中的一个功能模块。</li>
+<li>Consumer：消息消费者集群。通常也是业务系统中的一个功能模块。</li>
+</ul>
+<p>启动MQ只要要确保本机由java运行环境，本文就不对jdk的安装做过多说明，重点介绍RocketMQ。</p>
+<p>配置环境变量。使用 vi ~/.bash_profile编辑文件，在下面加入以下内容：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> ROCKETMQ_HOME=/app/rocketmq/rocketmq-all-4.7.1-bin-release</span><br><span class="line">PATH=<span class="variable">$ROCKETMQ_HOME</span>/bin:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span>:<span class="variable">$HOME</span>/.<span class="built_in">local</span>/bin:<span class="variable">$HOME</span>/bin</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/RocketMQBase/image-20220228165232414.png" alt="image-20220228165232414"></p>
+<p>执行source ~/.bash_profile让环境变量生效</p>
+<p>​    这样RocketMQ就安装完成了。我们把他运行起来。</p>
+<p>这个ROCKETMQ_HOME的环境变量是必须要单独配置的，如果不配置的话，启动NameSever和Broker都会报错。</p>
+<p>这个环境变量的作用是用来加载$ROCKETMQ_HOME/conf下的除broker.conf以外的几个配置文件。所以实际情况中，可以不按这个配置，但是一定要能找到配置文件。</p>
+<h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><p>启动NameServer、Broker之前根据本机实际情况，判断本机的内存是否满足启动RocketMQ的内存要求，如果不满足先调整参数后再进行启动。</p>
+<p>NameServer默认参数设置（bin/<a href="http://xn--runserver-z89na9857bcqmtlfda85rmzcf95l5zb.sh" target="_blank" rel="noopener">runserver.sh</a>）</p>
+<p><img src="../../../../img/RocketMQBase/image-20220228165629873.png" alt="image-20220228165629873"></p>
+<p>NameServer启动命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup sh bin/mqadminsrv &amp;</span><br></pre></td></tr></table></figure>
+<p>Broker默认参数设置（bin/<a href="http://xn--Brokerrunbroker-wy8y53qb44gl6dtn1h9p4b.sh" target="_blank" rel="noopener">runbroker.sh</a>）</p>
+<p>NameServer启动命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup sh mqbroker -n localhost:9876 autoCreateTopicEnable=<span class="literal">true</span> &amp;</span><br></pre></td></tr></table></figure>
+<p>broker默认设置为8G，可以根据实际机器情况调整</p>
+<p>在启动之前都将对应的参数进行调整如下</p>
+<p><img src="../../../../img/RocketMQBase/image-20220228165815145.png" alt="image-20220228165815145"></p>
+<p>启动成功后都可以在控制台看到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The broker[worker1, 192.168.232.128:10911] boot success. serializeType&#x3D;JSON</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/RocketMQBase/image-20220228170409619.png" alt="image-20220228170409619"></p>
+<h1 id="命令行快速验证"><a href="#命令行快速验证" class="headerlink" title="命令行快速验证"></a>命令行快速验证</h1><p>执行如下命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/tools.sh org.apache.rocketmq.example.quickstart.Producer</span><br></pre></td></tr></table></figure>
+<p>我们可以看到发送消息的日志：</p>
+<p><img src="../../../../img/RocketMQBase/image-20220228170423468.png" alt="image-20220228170423468"></p>
+<p>这日志中，上面部分就是我们发送的消息的内容。后面两句标识消息生产者正常关闭。</p>
+<p>然后启动消息消费者接收消息：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/tools.sh  org.apache.rocketmq.example.quickstart.Consumer</span><br></pre></td></tr></table></figure>
+<p>启动后，可以看到消费到的消息。</p>
+<p><img src="../../../../img/RocketMQBase/image-20220228170442267.png" alt="image-20220228170442267"></p>
+<p>日志中MessageExt后的整个内容就是一条完整的RocketMQ消息。对这个消息的结构有个大概的了解</p>
+<p>其中比较关键的属性有：brokerName，queueId，msgId，topic，cluster，tags，body，transactionId。</p>
+<p>而这个Consume指令并不会结束，他会继续挂起，等待消费其他的消息。我们可以使用CTRL+C停止该进程。</p>
+<h1 id="停止"><a href="#停止" class="headerlink" title="停止"></a>停止</h1><p>要关闭RocketMQ服务可以通过mqshutdown脚本直接关闭</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.关闭NameServer</span></span><br><span class="line">sh bin/mqshutdown namesrv</span><br><span class="line"><span class="comment"># 2.关闭Broker</span></span><br><span class="line">sh bin/mqshutdown broker</span><br></pre></td></tr></table></figure>
+<h1 id="图形化页面"><a href="#图形化页面" class="headerlink" title="图形化页面"></a>图形化页面</h1><p>项目源码地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;apache&#x2F;rocketmq-externals.git</span><br></pre></td></tr></table></figure>
+<p>将项目检出，然后配置地址启动即可，项目的端口根据自己需求自定义</p>
+<p><img src="../../../../img/RocketMQBase/image-20220228171208642.png" alt="image-20220228171208642"></p>
+<p>启动之后便可在浏览器访问图像界面</p>
+<p><img src="../../../../img/RocketMQBase/image-20220228171841658.png" alt="image-20220228171841658"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2022/02/15/resource-java-algorithm-LRU/" data-toggle="tooltip" data-placement="top" title="LRU缓存算法的实现">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2022/01/15/resource-tools-IDEA-IDEA-eclipse/" data-toggle="tooltip" data-placement="top" title="IDEA导入eclipse项目">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#RocketMQ介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">RocketMQ介绍</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#基本概念"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">基本概念</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-消息模型（Message-Model）"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">1 消息模型（Message Model）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-消息生产者（Producer）"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">2 消息生产者（Producer）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-消息消费者（Consumer）"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">3 消息消费者（Consumer）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-主题（Topic）"><span class="toc-nav-number">1.1.4.</span> <span class="toc-nav-text">4 主题（Topic）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-代理服务器（Broker-Server）"><span class="toc-nav-number">1.1.5.</span> <span class="toc-nav-text">5 代理服务器（Broker Server）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-名字服务（Name-Server）"><span class="toc-nav-number">1.1.6.</span> <span class="toc-nav-text">6 名字服务（Name Server）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#7-拉取式消费（Pull-Consumer）"><span class="toc-nav-number">1.1.7.</span> <span class="toc-nav-text">7 拉取式消费（Pull Consumer）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#8-推动式消费（Push-Consumer）"><span class="toc-nav-number">1.1.8.</span> <span class="toc-nav-text">8 推动式消费（Push Consumer）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#9-生产者组（Producer-Group）"><span class="toc-nav-number">1.1.9.</span> <span class="toc-nav-text">9 生产者组（Producer Group）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#10-消费者组（Consumer-Group）"><span class="toc-nav-number">1.1.10.</span> <span class="toc-nav-text">10 消费者组（Consumer Group）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#11-集群消费（Clustering）"><span class="toc-nav-number">1.1.11.</span> <span class="toc-nav-text">11 集群消费（Clustering）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#12-广播消费（Broadcasting）"><span class="toc-nav-number">1.1.12.</span> <span class="toc-nav-text">12 广播消费（Broadcasting）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#13-普通顺序消息（Normal-Ordered-Message）"><span class="toc-nav-number">1.1.13.</span> <span class="toc-nav-text">13 普通顺序消息（Normal Ordered Message）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#14-严格顺序消息（Strictly-Ordered-Message）"><span class="toc-nav-number">1.1.14.</span> <span class="toc-nav-text">14 严格顺序消息（Strictly Ordered Message）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#15-消息（Message）"><span class="toc-nav-number">1.1.15.</span> <span class="toc-nav-text">15 消息（Message）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#16-标签（Tag）"><span class="toc-nav-number">1.1.16.</span> <span class="toc-nav-text">16 标签（Tag）</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#特性"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">特性</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-订阅与发布"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">1 订阅与发布</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-消息顺序"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">2 消息顺序</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-消息过滤"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">3 消息过滤</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-消息可靠性"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">4 消息可靠性</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-至少一次"><span class="toc-nav-number">1.2.5.</span> <span class="toc-nav-text">5 至少一次</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-回溯消费"><span class="toc-nav-number">1.2.6.</span> <span class="toc-nav-text">6 回溯消费</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#7-事务消息"><span class="toc-nav-number">1.2.7.</span> <span class="toc-nav-text">7 事务消息</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#8-定时消息"><span class="toc-nav-number">1.2.8.</span> <span class="toc-nav-text">8 定时消息</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#9-消息重试"><span class="toc-nav-number">1.2.9.</span> <span class="toc-nav-text">9 消息重试</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#10-消息重投"><span class="toc-nav-number">1.2.10.</span> <span class="toc-nav-text">10 消息重投</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#11-流量控制"><span class="toc-nav-number">1.2.11.</span> <span class="toc-nav-text">11 流量控制</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#12-死信队列"><span class="toc-nav-number">1.2.12.</span> <span class="toc-nav-text">12 死信队列</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#架构设计"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">架构设计</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-技术架构"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">1 技术架构</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-部署架构"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">2 部署架构</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#RocketMQ-网络部署特点"><span class="toc-nav-number">1.3.3.</span> <span class="toc-nav-text">RocketMQ 网络部署特点</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#下载"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">下载</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#安装"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">安装</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#启动"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">启动</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#命令行快速验证"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">命令行快速验证</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#停止"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">停止</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#图形化页面"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">图形化页面</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#MQ" title="MQ">MQ</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          并发-分布式锁质量保障总结 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2022/04/05/resource-java-concurrent-lock/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/concurrent/lockQuality.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>并发-分布式锁质量保障总结</h1>
+                        <h2 class="subheading">分布式锁的方式来进行叙述如何进行质量保障</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2022-04-05
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">3.3k</span> and
+                                Reading Time <span class="post-count">11</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="一-背景"><a href="#一-背景" class="headerlink" title="一 背景"></a><strong>一 背景</strong></h1><p>并发问题是电商系统最常见的问题之一，例如库存超卖、抽奖多发、券多发放、积分多发少发等场景；之所以会出现上述问题，是因为存在多机器多请求同时对同一个共享资源进行修改，如果不加以限制，将导致数据错乱和数据不一致性；解决并发问题的方式有很多，例如：队列、异步、响应式、锁都可以；由于当前互联网都是分布式系统，因此本文只针对使用较为广泛的分布式锁的方式来进行叙述如何进行质量保障。</p>
+<h1 id="二-分布式锁介绍"><a href="#二-分布式锁介绍" class="headerlink" title="二 分布式锁介绍"></a><strong>二 分布式锁介绍</strong></h1><h2 id="1-什么是分布式锁"><a href="#1-什么是分布式锁" class="headerlink" title="1 什么是分布式锁"></a>1 什么是分布式锁</h2><p>先了解一下什么是锁，在单机系统中，多个线程同时改变一个变量时，需要对变量或者代码块做同步从而保证串行修改变量，该同步实质上就是通过锁来实现。为了实现多个线程在同一个时刻针对同一块代码串行执行，就需要在某个地方做个标记，该标记必须每个线程都能看到，当标记不存在时可以设置该标记，其余后续线程发现已经有标记了则等待拥有标记的线程结束同步代码块取消标记后再去尝试设置标记，此标记可以理解为锁。分布式锁就是在多机系统下的该标记。</p>
+<p><img src="../../../../img/lock/image-20220408134506988.png" alt="image-20220408134506988"></p>
+<h2 id="2-实现分布式锁的主流方式"><a href="#2-实现分布式锁的主流方式" class="headerlink" title="2 实现分布式锁的主流方式"></a>2 实现分布式锁的主流方式</h2><p>目前分布式锁的实现方式有3种主流方法，即：</p>
+<ul>
+<li><p>基于数据库实现分布式锁，此处的数据库指的是MySQL关系型数据库</p>
+</li>
+<li><ul>
+<li>基于MySQL锁表</li>
+<li>数据库版本号乐观锁</li>
+</ul>
+</li>
+<li><p>基于缓存实现分布式锁，此处的缓存指的是Redis</p>
+</li>
+<li><p>基于zookeeper/etcd实现分布式锁</p>
+</li>
+</ul>
+<p>具体的关于锁的实现方式，已经有太多的文章进行介绍，本文就不再赘述。</p>
+<h1 id="三-质量保障"><a href="#三-质量保障" class="headerlink" title="三 质量保障"></a><strong>三 质量保障</strong></h1><p>并发问题一旦涉及到钱，通常都会导致不同程度的资损，而且在我们的功能测试中是很难发现，因此对于并发的质量保障显得尤为的重要，可以抽象为3层来保障：事前、事中、事后三大步骤；事前保障通过Review 方式提前规避技术上的风险，事中保障验证在技术实现过程中是否存在漏洞，事后保障校验数据是否符合预期，对于有并发风险的项目上述三个步骤的保障缺一不可。</p>
+<h2 id="1-事前质量保障"><a href="#1-事前质量保障" class="headerlink" title="1 事前质量保障"></a>1 事前质量保障</h2><p>事前保障的阶段发生在技术评审阶段，在此阶段，我们需要评估出当前业务场景下是否存在并发风险；如果存在，确定我们的技术选型。</p>
+<h3 id="评估并发风险"><a href="#评估并发风险" class="headerlink" title="评估并发风险"></a><strong>评估并发风险</strong></h3><p>评估并发风险的关键点在于是否存在多个进程同时访问共享资源，简单来说是否存在多个进程在同一时间对同一个数据进行更新的操作；例如：电商中的库存，多人同时购买同一个商品，也就是会存在同一时间对同一个商品的库存进行更新，此处就存在并发风险。</p>
+<h3 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a><strong>技术选型</strong></h3><p>要做到正确的技术选型，我们就需要对上述3种方式实现的锁的优缺点以及应用场景需要进行了解。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>实现方式</th>
+<th>优点</th>
+<th>缺点</th>
+<th>应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MySQL数据库表</td>
+<td>易于理解/易于实现</td>
+<td>容易出现单点故障、死锁性能低/可靠性低</td>
+<td>适用于并发量低、性能要求低的场景</td>
+</tr>
+<tr>
+<td>Redis分布式锁</td>
+<td>性能高/易于实现可跨集群部署，无单点故障</td>
+<td>锁失效时间的控制不稳定稳定性低于ZooKeeper</td>
+<td>适用于高并发、高性能场景</td>
+</tr>
+<tr>
+<td>ZooKeeper分布式锁</td>
+<td>无单点故障/可靠性高不可重入/无死锁问题</td>
+<td>实现复杂性能低于缓存分布式锁</td>
+<td>适用于大部分分布式场景，除对性能要求极高的场景</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>MySQL数据库表的乐观锁适用于读多写少的场景且共享资源为数据库的单行数据；MySQL表锁实现的锁一般都不推荐使用；ZooKeeper分布式锁虽然适用于大部分分布式场景，但是由于其实现复杂度相对较高以及需要额外引入中间件，在大部分业务场景中的应用比较少，而基于Redis的缓存分布式锁应用较为广泛；但是具体业务实现采用哪种类型的分布式锁，还是需要基于当前的业务特性来进行决定；</p>
+<p>在技术评审阶段，一方面我们要评估出是否存在并发风险，另外一方面，我们需要识别开发同学在技术的实现上可能存在的漏洞，针对分布式锁的实现漏洞可参考下文的CodeReview的关注点。</p>
+<h2 id="2-事中保障"><a href="#2-事中保障" class="headerlink" title="2 事中保障"></a>2 事中保障</h2><h3 id="CodeReview"><a href="#CodeReview" class="headerlink" title="CodeReview"></a><strong>CodeReview</strong></h3><h4 id="1）Redis缓存分布式锁"><a href="#1）Redis缓存分布式锁" class="headerlink" title="1）Redis缓存分布式锁"></a>1）Redis缓存分布式锁</h4><p>Redis通常可以使用setnx(key,value)函数来实现分布式锁。key和value就是基于缓存的分布式锁的两个属性，其中key表示锁id。setnx函数返回1表示获得锁，返回0表示其他服务器已经获得了锁;</p>
+<ul>
+<li>Redis缓存分布式锁CodeReview注意点</li>
+</ul>
+<p>1、Redis Key</p>
+<ul>
+<li><p>全面梳理业务场景，对于同一共同资源，key要保持一致；</p>
+</li>
+<li><p>key是识别共享资源的唯一键，key的设计既需要能够锁住当前共享资源又不能影响到其他资源；</p>
+</li>
+</ul>
+<p>例如：商品库存，我们的key应该是具体到某个商品，而不是所有商品，锁住A商品，不会影响B商品。</p>
+<p>2、锁释放</p>
+<ul>
+<li><p>锁一定需明确释放，try/finally 结构加锁解锁，finally内释放锁;</p>
+</li>
+<li><p>锁只能被加锁的对象释放，此处是经常出问题的点，如下图所示，A加锁被B释放锁，导致锁失效，锁被C抢占到；</p>
+</li>
+</ul>
+<p><img src="../../../../img/lock/image-20220408134700433.png" alt="image-20220408134700433"></p>
+<p>针对上述问题，释放锁时需要先读取当前key的value,再和传入的value进行比较；上述是两个步骤一定要保证原子性,如果原生Redis可采用lua脚本保证原子性；如果tair，可采取TairString的cad方法；value必须是一个唯一值，唯一标记是当前对象加的锁。</p>
+<p>3、锁超时</p>
+<ul>
+<li><p>一定要设置key的超时时间；例如:客户端A 抢到锁后，系统突然异常，A就无法释放锁，变成死锁；设置超时时间就是为了防止此种情况发生，在时间到期后，自动删除key，间接释放锁;</p>
+</li>
+<li><p>超时时间的设置一般来讲大于服务的最大执行时间即可，但是服务最大的执行时间会受很多因素影响，是不可控的；例如：A服务一般执行时间是30ms，设置的锁超时时间为100ms，受网络影响服务执行时间变成了200ms，在100ms的时候锁就会被释放了；在大部分场景下，开发不会处理此种情况，此种极端情况是否需要处理，需要进行协商；处理方式如下2种：</p>
+</li>
+<li><p>可以再开启一个线程，为当前超时时间续时，但增加了系统的复杂度；</p>
+</li>
+<li><p>将过期时间设置非常长，一定能保证逻辑在锁释放之前能够执行完成；此方案简单但是有缺陷，当遇到系统突发异常时，锁无法被释放，只能等待redis key超时，而超时时间又设置的较长，因此在当前时间内谁都无法获取到锁，阻断业务执行，很有可能造成故障；</p>
+</li>
+</ul>
+<p><img src="../../../../img/lock/image-20220408134732891.png" alt="image-20220408134732891"></p>
+<p>4、锁粒度</p>
+<p>如果针对某个共享资源的写是基于另外一个共享资源的值计算而来，那么锁的范围必须包含读共享资源；范围不包含读共享资源会导致脏读，最终导致数据的错误，如下图所示，Client B最终计算的B的结果就是错误的。</p>
+<p><img src="../../../../img/lock/image-20220408134900417.png" alt="image-20220408134900417"></p>
+<p>5、获取锁失败</p>
+<p>由于其他线程已经获取到了锁，当前线程获取锁失败后有3种处理方式：异常抛出让用户重试；通过自旋再次进行抢锁；发布订阅，订阅锁释放消息；在并发度低的场景下异常抛出以及自旋抢锁都可以，在高并发场景下异常抛出和自旋抢锁都不可取。</p>
+<h4 id="2）MySQL数据库锁CR点"><a href="#2）MySQL数据库锁CR点" class="headerlink" title="2）MySQL数据库锁CR点"></a>2）MySQL数据库锁CR点</h4><ul>
+<li>数据库版本号乐观锁</li>
+</ul>
+<p>在数据库的表中需要包含一个数字类型的字段version，读取数据时把version字段读出来，更新数据时判断当前version是否等于读取出来的version，并对当前version+1；如果等于就更新成功，不等于表示数据已过期更新失败。例如以积分体系为例，存在多种场景增加积分，通过乐观锁来保证数据的正确性。</p>
+<p><img src="../../../../img/lock/image-20220408134931538.png" alt="image-20220408134931538"></p>
+<p>乐观锁CR注意点:</p>
+<ul>
+<li><ul>
+<li>where 条件一定要命中索引(最好是主键或者唯一索引)，否则会锁表；</li>
+</ul>
+</li>
+<li><ul>
+<li>update table set 中必须要包含version = version + 1；</li>
+</ul>
+</li>
+<li><ul>
+<li>update 返回结果为0时，一定要根据业务场景进行相应的处理，自主重试或者抛异常；</li>
+</ul>
+</li>
+<li><p>基于MySQL锁表</p>
+</li>
+</ul>
+<p>其实现原理是：创建一张锁表，对临界资源做唯一性约束，通过增加一条记录对某一资源上锁，释放锁时删除记录；一般不推荐此种用法。</p>
+<h3 id="并发测试"><a href="#并发测试" class="headerlink" title="并发测试"></a><strong>并发测试</strong></h3><p>并发测试总体上可以分为3大类</p>
+<ul>
+<li><p>复杂的并发场景，一次请求共享资源存在多个，且前后存在各种依赖关系，此种场景适合于链路级别压测，压测模型需要精心设计。</p>
+</li>
+<li><p>单一并发场景，一个共享资源，可以处理多次，例如：扣除某个商品的库存，可以反复调用。</p>
+</li>
+<li><ul>
+<li>可以通过接口压测的方式进行测试，通过查看最终数据是否会存在与预期不一致情况即可；</li>
+</ul>
+</li>
+<li><ul>
+<li>压测工具：jmeter 即可进行压测（集团可直接采用pas-server进行压测，方便快捷）；</li>
+</ul>
+</li>
+<li><p>单一并发场景，一个共享资源，且只能处理1次，例如：用户只有一次抽奖机会，连续点2次会不会抽2次；</p>
+</li>
+<li><ul>
+<li>可以利用JVM的并发函数CountDownLatch，CyclicBarrier等，CountDownLatch片段代码：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invokeAllTask</span><span class="params">(ConcurrencyRequest request, Runnable task)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> CountDownLatch startCountDownLatch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">final</span> CountDownLatch endCountDownLatch = <span class="keyword">new</span> CountDownLatch(request.getConcurrency());</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; request.getConcurrency(); i++) &#123;</span><br><span class="line">        Thread t = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                startCountDownLatch.await();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    task.run();</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    endCountDownLatch.countDown();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">                log.error(<span class="string">"异常"</span>, ex);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        t.start();</span><br><span class="line">    &#125;</span><br><span class="line">    startCountDownLatch.countDown();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        endCountDownLatch.await();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException ex) &#123;</span><br><span class="line">        log.error(<span class="string">"线程异常中断"</span>, ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><ul>
+<li>利用jmeter的定时器 Synchronizing Timer也可以实现此功能</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-事后保障"><a href="#3-事后保障" class="headerlink" title="3 事后保障"></a>3 事后保障</h2><h3 id="数据对账"><a href="#数据对账" class="headerlink" title="数据对账"></a><strong>数据对账</strong></h3><p>数据对账(数据一致性校验)是我们在系统上线后对并发问题的最后一道防线，通过对账来识别我们的数据的不一致性问题；压测有成本，且受技巧熟练度和压测设计的影响，不一定能暴露问题；如果被测场景评估并发问题的发生概率极低，即使发生了影响也比较小，此时review+对账方式也不失为一种好的选择；</p>
+<p>如何进行对账，不同的业务场景有不同的对账方法，例如：</p>
+<ul>
+<li><p>互动积分体系每个用户的扣除以及增加积分都会落流水表；每个用户目前有多少积分都会放在积分表；只需要把流水表的积分加总和积分表的积分进行对账；</p>
+</li>
+<li><p>互动任务体系，一笔订单只能推进一个任务，对账只需要检查任务记录中一笔订单是否存在多条记录；</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(*)  <span class="keyword">as</span> task_count,</span><br><span class="line">       scene_code,</span><br><span class="line">       order_id</span><br><span class="line">  <span class="keyword">from</span> task_record</span><br><span class="line"> <span class="keyword">where</span> unique_id <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">null</span></span><br><span class="line"> <span class="keyword">group</span> <span class="keyword">by</span> scene_code,</span><br><span class="line">         order_id</span><br><span class="line"><span class="keyword">having</span> <span class="keyword">count</span>(*)&gt; <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h1 id="四-总结"><a href="#四-总结" class="headerlink" title="四 总结"></a><strong>四 总结</strong></h1><p>作为质量保障同学一定要时刻绷着一根弦，当前场景下是否会存在并发问题；并发问题的识别简单而言就是是否存在同时更新同一个数据，如果是就一定要注意开发同学是否处理了并发，并发的实现主要是上面阐述的几种，然后按照场景进行分析即可；关于并发场景的质量保障，大体原则可以概括为如下：</p>
+<ul>
+<li>梳理并发场景</li>
+<li>带着注意点CR 代码</li>
+<li>并发测试(非银弹，不是所有场景都具备可测性)</li>
+<li>监控对账进行兜底识别并发问题</li>
+</ul>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2022/04/28/resource-java-Base-String/" data-toggle="tooltip" data-placement="top" title="Java String 对象">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2022/04/03/resource-DB-MySQL-MySQL-deep/" data-toggle="tooltip" data-placement="top" title="MySQL - MDL 锁的实现与获取机制">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#一-背景"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一 背景</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#二-分布式锁介绍"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二 分布式锁介绍</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-什么是分布式锁"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">1 什么是分布式锁</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-实现分布式锁的主流方式"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2 实现分布式锁的主流方式</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#三-质量保障"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三 质量保障</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-事前质量保障"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1 事前质量保障</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#评估并发风险"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">评估并发风险</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#技术选型"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">技术选型</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-事中保障"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2 事中保障</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#CodeReview"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">CodeReview</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1）Redis缓存分布式锁"><span class="toc-nav-number">3.2.1.1.</span> <span class="toc-nav-text">1）Redis缓存分布式锁</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2）MySQL数据库锁CR点"><span class="toc-nav-number">3.2.1.2.</span> <span class="toc-nav-text">2）MySQL数据库锁CR点</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#并发测试"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">并发测试</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-事后保障"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3 事后保障</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#数据对账"><span class="toc-nav-number">3.3.1.</span> <span class="toc-nav-text">数据对账</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#四-总结"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四 总结</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

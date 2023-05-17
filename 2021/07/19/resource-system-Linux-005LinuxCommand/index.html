@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          面试题-如何回答好Linux常用命令 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/07/19/resource-system-Linux-005LinuxCommand/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/11.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+                            
+                              <a class="tag" href="/tags/#Interview" title="Interview">Interview</a>
+                            
+                        </div>
+
+                        <h1>面试题-如何回答好Linux常用命令</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-07-19
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">14.2k</span> and
+                                Reading Time <span class="post-count">55</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p><strong>思路</strong></p>
+<ul>
+<li>文件操作</li>
+<li>ssh/scp远程操作</li>
+<li>磁盘管理</li>
+<li>用户管理</li>
+<li>网络管理</li>
+<li>系统命令</li>
+<li>其他命令</li>
+</ul>
+<hr>
+<p> Linux几种文件类型:<br> d  表示此文件是一个目录<br> -  表示此文件是一个普通文件<br> b  表示此文件是一个特殊的块设备I/O文件<br> c  表示此文件是一个特殊的字符设备I/O文件<br> l  表示此文件是一个连接文件。在其文件名称后紧跟与它连接的文件路径及名称</p>
+<h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><h2 id="文件增删改查"><a href="#文件增删改查" class="headerlink" title="文件增删改查"></a>文件增删改查</h2><h3 id="文件目录查询"><a href="#文件目录查询" class="headerlink" title="文件目录查询"></a>文件目录查询</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /root/Docements <span class="comment"># 切换到目录/root/Docements</span></span><br><span class="line"><span class="built_in">cd</span> ./path          <span class="comment"># 切换到当前目录下的path目录中，“.”表示当前目录  </span></span><br><span class="line"><span class="built_in">cd</span> ../path         <span class="comment"># 切换到上层目录中的path目录中，“..”表示上一层目录</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">pwd</span>				   <span class="comment"># 当前工作目录</span></span><br><span class="line"><span class="built_in">pwd</span> -P <span class="comment"># 显示出实际路径，而非使用连接（link）路径；pwd显示的是连接路径</span></span><br><span class="line"></span><br><span class="line">ls				   <span class="comment"># 展示文件夹内内容</span></span><br><span class="line">-a ：全部的档案，连同隐藏档( 开头为 . 的档案) 一起列出来～ </span><br><span class="line">-A ：全部的档案，连同隐藏档，但不包括 . 与 .. 这两个目录，一起列出来～ </span><br><span class="line">-d ：仅列出目录本身，而不是列出目录内的档案数据 </span><br><span class="line">-f ：直接列出结果，而不进行排序 (ls 预设会以档名排序！) </span><br><span class="line">-F ：根据档案、目录等信息，给予附加数据结构，例如： </span><br><span class="line">*：代表可执行档； /：代表目录； =：代表 socket 档案； |：代表 FIFO 档案； </span><br><span class="line">-h ：将档案容量以人类较易读的方式(例如 GB, KB 等等)列出来； </span><br><span class="line">-i ：列出 inode 位置，而非列出档案属性； </span><br><span class="line">-l ：长数据串行出，包含档案的属性等等数据； </span><br><span class="line">-n ：列出 UID 与 GID 而非使用者与群组的名称 (UID与GID会在账号管理提到！) </span><br><span class="line">-r ：将排序结果反向输出，例如：原本档名由小到大，反向则为由大到小； </span><br><span class="line">-R ：连同子目录内容一起列出来； </span><br><span class="line">-S ：以档案容量大小排序！ </span><br><span class="line">-t ：依时间排序 </span><br><span class="line">--color=never ：不要依据档案特性给予颜色显示； </span><br><span class="line">--color=always ：显示颜色 </span><br><span class="line">--color=auto ：让系统自行依据设定来判断是否给予颜色 </span><br><span class="line">--full-time ：以完整时间模式 (包含年、月、日、时、分) 输出 </span><br><span class="line">--time=&#123;atime,ctime&#125; ：输出 access 时间或 改变权限属性时间 (ctime) </span><br><span class="line">而非内容变更时间 (modification time)     例如：ls [-aAdfFhilRS] 目录名称 ls [--color=&#123;none,auto,always&#125;] 目录名称 ls [--full-time] 目录名称  </span><br><span class="line"></span><br><span class="line">查看目录</span><br><span class="line">du -sh  目录或者文件</span><br><span class="line">du -m  du系统默认输出是以KB,以参数-m表示以MB显示.</span><br><span class="line">cat /etc/fstab  查看分区列表</span><br><span class="line">fdisk -l </span><br><span class="line">df -h</span><br><span class="line">df -ah</span><br></pre></td></tr></table></figure>
+<h3 id="创建、删除、复制目录-文件"><a href="#创建、删除、复制目录-文件" class="headerlink" title="创建、删除、复制目录|文件"></a>创建、删除、复制目录|文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir创建目录</span></span><br><span class="line">mkdir [选项]... 目录...  </span><br><span class="line">-m, --mode=模式，设定权限&lt;模式&gt; (类似 chmod)，而不是 rwxrwxrwx 减 <span class="built_in">umask</span></span><br><span class="line">-p, --parents  可以是一个路径名称。此时若路径中的某些目录尚不存在,加上此选项后,系统将自动建立好那些尚不存在的目录,即一次可以建立多个目录; </span><br><span class="line">-v, --verbose  每次创建新目录都显示信息</span><br><span class="line"></span><br><span class="line"><span class="comment"># rmdir删除空目录</span></span><br><span class="line">rmdir [选项]... 目录...</span><br><span class="line">-p 递归删除目录dirname，当子目录删除后其父目录为空时，也一同被删除。如果整个路径被删除或者由于某种原因保留部分路径，则系统在标准输出上显示相应的信息。 </span><br><span class="line">-v --verbose  显示指令执行过程 </span><br><span class="line"></span><br><span class="line"><span class="comment">#递归删除目录中所有内容</span></span><br><span class="line">rm -rf deleteFile 		</span><br><span class="line">-f ：就是force的意思，忽略不存在的文件，不会出现警告消息</span><br><span class="line">-i ：互动模式，在删除前会询问用户是否操作</span><br><span class="line">-r ：递归删除，最常用于目录删除，它是一个非常危险的参数</span><br><span class="line"></span><br><span class="line"><span class="comment"># cp命令</span></span><br><span class="line">用法：cp [选项]... [-T] 源文件 目标文件</span><br><span class="line">　或：cp [选项]... 源文件... 目录</span><br><span class="line">　或：cp [选项]... -t 目录 源文件...</span><br><span class="line">-a ：将文件的特性一起复制</span><br><span class="line">-p ：连同文件的属性一起复制，而非使用默认方式，与-a相似，常用于备份</span><br><span class="line">-i ：若目标文件已经存在时，在覆盖时会先询问操作的进行</span><br><span class="line">-r ：递归持续复制，用于目录的复制行为</span><br><span class="line">-u ：目标文件与源文件有差异时才会复制</span><br><span class="line"></span><br><span class="line"><span class="comment"># mv命令 移动文件|重命名文件</span></span><br><span class="line">用法：mv [选项]... [-T] 源文件 目标文件</span><br><span class="line">　或：mv [选项]... 源文件... 目录</span><br><span class="line">　或：mv [选项]... -t 目录 源文件...</span><br><span class="line">-f ：force强制的意思，如果目标文件已经存在，不会询问而直接覆盖</span><br><span class="line">-i ：若目标文件已经存在，就会询问是否覆盖</span><br><span class="line">-u ：若目标文件已经存在，且比目标文件新，才会更新</span><br><span class="line"></span><br><span class="line"><span class="comment"># alias 别名</span></span><br><span class="line"><span class="built_in">alias</span> [-p] [名称[=值] ... ]</span><br><span class="line"><span class="built_in">alias</span> dir=<span class="string">'ls -l'</span>  输入dir，其实就相当于执行了ls -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立文件和目录</span></span><br><span class="line">touch 1.txt</span><br><span class="line">cat &gt; 2.txt (用定向符创建文件，填写内容后，按ctrl+d保存内容)</span><br><span class="line">mkdir mywork 建立mywork这个目录</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件下载</span></span><br><span class="line">wget http://file.tgz</span><br><span class="line">curl http://file.tgz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改文件权限</span></span><br><span class="line">chmod 777 file.java file.java 的权限-rwxrwxrwx，r表示读、w表示写、x表示可执行</span><br><span class="line">chmod +x hello.sh 赋于可执行权限.</span><br><span class="line"> (详细介绍一下权限的控制)</span><br><span class="line">chmod 命令 权限修改 用法：chmod 一位8进制数 filename (rwx 421)</span><br><span class="line">　eg: chmod u+xfilenmame   只想给自己运行，别人只能读</span><br><span class="line">chown netseek.netseek mydir 改变用户属组</span><br><span class="line">-u：表示文件所有者</span><br><span class="line">-g：表示同组用户</span><br><span class="line">-o：表示其它用户</span><br><span class="line">-a：表示所有用户</span><br><span class="line">-opt则是代表操作，可以为：</span><br><span class="line">-+：添加某个权限</span><br><span class="line">--：取消某个权限</span><br><span class="line">-=：赋予给定的权限，并取消原有的权限</span><br><span class="line">  而mode则代表权限：</span><br><span class="line">  r：可读 4</span><br><span class="line">  w：可写 2</span><br><span class="line">  x：可执行 1</span><br></pre></td></tr></table></figure>
+<h3 id="编辑查看文件命令"><a href="#编辑查看文件命令" class="headerlink" title="编辑查看文件命令"></a>编辑查看文件命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">vi /var/<span class="built_in">log</span>/aa.log 		<span class="comment"># 打开 /var/log/aa.log文件并编辑</span></span><br><span class="line">vim /var/<span class="built_in">log</span>/aa.log 		<span class="comment"># 打开 /var/log/aa.log文件并编辑</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cat [选项] [文件]...	  <span class="comment"># 用途是连接文件或标准输入并打印。这个命令常用来显示文件内容，或者将几个文件连接起来显示，或者从标准输入读取内容并显示，它常与重定向符号配合使用。 </span></span><br><span class="line">-A, --show-all           等价于 -vET</span><br><span class="line">-b, --number-nonblank    对非空输出行编号</span><br><span class="line">-e                       等价于 -vE</span><br><span class="line">-E, --show-ends          在每行结束处显示 $</span><br><span class="line">-n, --number     对输出的所有行编号,由1开始对所有输出的行数编号</span><br><span class="line">-s, --squeeze-blank  有连续两行以上的空白行，就代换为一行的空白行 </span><br><span class="line">-t                       与 -vT 等价</span><br><span class="line">-T, --show-tabs          将跳格字符显示为 ^I</span><br><span class="line">-u                       (被忽略)</span><br><span class="line">-v, --show-nonprinting   使用 ^ 和 M- 引用，除了 LFD 和 TAB 之外</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># more 命令和cat的功能一样都是查看文件里的内容，但有所不同的是more可以按页来查看文件的内容，还支持直接跳转行等功能：</span></span><br><span class="line">more [-dlfpcsu ] [-num ] [+/ pattern] [+ linenum] [file ... ] </span><br><span class="line">命令参数：</span><br><span class="line">+n 从笫n行开始显示</span><br><span class="line">-n 定义屏幕大小为n行</span><br><span class="line">+/pattern 在每个档案显示前搜寻该字串（pattern），然后从该字串前两行之后开始显示 </span><br><span class="line">-c 从顶部清屏，然后显示</span><br><span class="line">-d 提示“Press space to <span class="built_in">continue</span>，’q’ to quit（按空格键继续，按q键退出）”，禁用响铃功能</span><br><span class="line">-l 忽略Ctrl+l（换页）字符</span><br><span class="line">-p 通过清除窗口而不是滚屏来对文件进行换页，与-c选项相似</span><br><span class="line">-s 把连续的多个空行显示为一行</span><br><span class="line">-u 把文件内容中的下画线去掉</span><br><span class="line">常用操作命令：</span><br><span class="line">Enter 向下n行，需要定义。默认为1行</span><br><span class="line">Ctrl+F 向下滚动一屏</span><br><span class="line">空格键 向下滚动一屏</span><br><span class="line">Ctrl+B 返回上一屏</span><br><span class="line">= 输出当前行的行号</span><br><span class="line">：f 输出文件名和当前行的行号</span><br><span class="line">V 调用vi编辑器</span><br><span class="line">!命令 调用Shell，并执行命令 </span><br><span class="line">q 退出more</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#  less　命令用法比起 more 更加的有弹性。在 more 的时候，我们并没有办法向前面翻， 只能往后面看，但若使用了 less 时，就可以使用 [pageup] [pagedown] 等按键的功能来往前往后翻看文件，更容易用来查看一个文件的内容！除此之外，在 less 里头可以拥有更多的搜索功能，不止可以向下搜，也可以向上搜。</span></span><br><span class="line">less [参数]  文件 </span><br><span class="line">-b &lt;缓冲区大小&gt; 设置缓冲区的大小</span><br><span class="line">-e 当文件显示结束后，自动离开</span><br><span class="line">-f 强迫打开特殊文件，例如外围设备代号、目录和二进制文件</span><br><span class="line">-g 只标志最后搜索的关键词</span><br><span class="line">-i 忽略搜索时的大小写</span><br><span class="line">-m 显示类似more命令的百分比</span><br><span class="line">-N 显示每行的行号</span><br><span class="line">-o &lt;文件名&gt; 将less 输出的内容在指定文件中保存起来</span><br><span class="line">-Q 不使用警告音</span><br><span class="line">-s 显示连续空行为一行</span><br><span class="line">-S 行过长时间将超出部分舍弃</span><br><span class="line">-x &lt;数字&gt; 将“tab”键显示为规定的数字空格</span><br><span class="line">/字符串：向下搜索“字符串”的功能</span><br><span class="line">?字符串：向上搜索“字符串”的功能</span><br><span class="line">n：重复前一个搜索（与 / 或 ? 有关）</span><br><span class="line">N：反向重复前一个搜索（与 / 或 ? 有关）</span><br><span class="line">b 向后翻一页</span><br><span class="line">d 向后翻半页</span><br><span class="line">h 显示帮助界面</span><br><span class="line">Q 退出less 命令</span><br><span class="line">u 向前滚动半页</span><br><span class="line">y 向前滚动一行</span><br><span class="line">空格键 滚动一行</span><br><span class="line">回车键 滚动一页</span><br><span class="line">[pagedown]： 向下翻动一页</span><br><span class="line">[pageup]： 向上翻动一页</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># tail 命令 从指定点开始将文件写到标准输出.使用tail命令的-f选项可以方便的查阅正在改变的日志文件,tail -f filename会把filename里最尾部的内容显示在屏幕上,并且不但刷新,使你看到最新的文件内容. </span></span><br><span class="line">tail[必要参数][选择参数][文件]   </span><br><span class="line">-f 循环读取</span><br><span class="line">-q 不显示处理信息</span><br><span class="line">-v 显示详细的处理信息</span><br><span class="line">-c&lt;数目&gt; 显示的字节数</span><br><span class="line">-n&lt;行数&gt; 显示行数</span><br><span class="line">--pid=PID 与-f合用,表示在进程ID,PID死掉之后结束. </span><br><span class="line">-q, --quiet, --silent 从不输出给出文件名的首部 </span><br><span class="line">-s, --sleep-interval=S 与-f合用,表示在每次反复的间隔休眠S秒 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># head 命令用于显示档案的开头至标准输出中，默认head命令打印其相应文件的开头10行：</span></span><br><span class="line">head [参数]... [文件]...  </span><br><span class="line">-q 隐藏文件名</span><br><span class="line">-v 显示文件名</span><br><span class="line">-c&lt;字节&gt; 显示字节数</span><br><span class="line">-n&lt;行数&gt; 显示的行数</span><br></pre></td></tr></table></figure>
+<h3 id="文件压缩"><a href="#文件压缩" class="headerlink" title="文件压缩"></a>文件压缩</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tar命令，用于压缩解压</span></span><br><span class="line">压缩：tar -jcv -f filename.tar.bz2 要被处理的文件或目录名称</span><br><span class="line">查询：tar -jtv -f filename.tar.bz2</span><br><span class="line">解压：tar -jxv -f filename.tar.bz2 -C 欲解压缩的目录</span><br><span class="line">-c ：新建打包文件</span><br><span class="line">-t ：查看打包文件的内容含有哪些文件名</span><br><span class="line">-x ：解打包或解压缩的功能，可以搭配-C（大写）指定解压的目录，注意-c,-t,-x不能同时出现在同一条命令中</span><br><span class="line">-j ：通过bzip2的支持进行压缩/解压缩</span><br><span class="line">-z ：通过gzip的支持进行压缩/解压缩</span><br><span class="line">-v ：在压缩/解压缩过程中，将正在处理的文件名显示出来</span><br><span class="line">-f filename ：filename为要处理的文件</span><br><span class="line">-C dir ：指定压缩/解压缩的目录dir</span><br><span class="line"></span><br><span class="line"> tar czvf aaa.tar.gz aaa 将目录aaa压缩成aaa.tar.gz</span><br><span class="line">  tar -N <span class="string">'2007/03/01'</span> -zcvf home.tar.gz/home 在/home当中,比2007/03/01新的文件才备份.</span><br><span class="line">  tar --exclude /home/cao -zxvf myfile.tar.gz /home/* /etc 要备份/home,/etc，但不要/home/cao</span><br><span class="line">  <span class="built_in">cd</span> /tmp; tar -cvf -/etc | tar -xvf - 将/etc/打包后直接解开/tmp底下，而不产生文件.</span><br><span class="line">  tar zxvf aaa.tar.gz 解压缩命令.</span><br><span class="line">  tar jxvf aaa.tar.bz2 解压命令</span><br><span class="line">  tar zxvf aaa.tar.gz -C /var/www 将aaa.tar.gz解压到/var/www目录下</span><br><span class="line">  cpio -covB &gt; [file|device] 备份</span><br><span class="line">  cpio -icduv &lt; [file|device] 还原</span><br><span class="line"></span><br><span class="line"><span class="comment"># gzip 命令压缩文件或文件夹为 .gz文件：</span></span><br><span class="line">gzip[参数][文件或者目录]</span><br><span class="line">  gzip aaa 压缩命令</span><br><span class="line">  gzip -d aaa.gz 解压命令</span><br><span class="line">-a or --ascii 　使用ASCII文字模式。 </span><br><span class="line">-c or --stdout or --to-stdout 　把压缩后的文件输出到标准输出设备，不去更动原始文件。 </span><br><span class="line">-d or --decompress or ----uncompress 　解开压缩文件。 </span><br><span class="line">-f or --force 　强行压缩文件。不理会文件名称 or 硬连接是否存在以及该文件是否为符号连接。 </span><br><span class="line">-h or --<span class="built_in">help</span> 　在线帮助。 </span><br><span class="line">-l or --list 　列出压缩文件的相关信息。 </span><br><span class="line">-L or --license 　显示版本与版权信息。 </span><br><span class="line">-n or --no-name 　压缩文件时，不保存原来的文件名称及时间戳记。 </span><br><span class="line">-N or --name 　压缩文件时，保存原来的文件名称及时间戳记。 </span><br><span class="line">-q or --quiet 　不显示警告信息。 </span><br><span class="line">-r or --recursive 　递归处理，将指定目录下的所有文件及子目录一并处理。 </span><br><span class="line">-S&lt;压缩字尾字符串&gt; or ----suffix&lt;压缩字尾字符串&gt; 　更改压缩字尾字符串。 </span><br><span class="line">-t or --<span class="built_in">test</span> 　测试压缩文件是否正确无误。 </span><br><span class="line">-v or --verbose 　显示指令执行过程。 </span><br><span class="line">-V or --version 　显示版本信息。 </span><br><span class="line">-num 用指定的数字num调整压缩的速度，-1 or --fast表示最快压缩方法（低压缩比），-9 or --best表示最慢压缩方法（高压缩比）。系统缺省值为6。</span><br><span class="line"></span><br><span class="line">compress aaa 将aaa文件压缩成为aaa.Z</span><br><span class="line">compress -d aaa.z 将aaa.z文件压缩成aaa</span><br><span class="line"></span><br><span class="line">bzip2 -z filename 压缩,同上加-d参数解压</span><br><span class="line">bzcat filename.bz 查看压缩文件内容</span><br></pre></td></tr></table></figure>
+<h2 id="文件搜索"><a href="#文件搜索" class="headerlink" title="文件搜索"></a>文件搜索</h2><h3 id="whereis-命令"><a href="#whereis-命令" class="headerlink" title="whereis 命令"></a>whereis 命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># whereis命令只能用于程序名的搜索，而且只搜索二进制文件（参数-b）、man说明文件（参数-m）和源代码文件（参数-s）。如果省略参数，则返回所有信息。和find相比，whereis查找的速度非常快，这是因为linux系统会将 系统内的所有文件都记录在一个数据库文件中，当使用whereis和locate时，会从数据库中查找数据，而不是像find命令那样，通过遍历硬盘来查找，效率自然会很高。 但是该数据库文件并不是实时更新，默认情况下时一星期更新一次，因此，我们在用whereis和locate 查找文件时，有时会找到已经被删除的数据，或者刚刚建立文件，却无法查找到，原因就是因为数据库文件没有被更新。 </span></span><br><span class="line"></span><br><span class="line"> whereis [-bmsu] [BMS 目录名 -f ] 文件名</span><br></pre></td></tr></table></figure>
+<p>　-b 定位可执行文件。<br>　-m 定位帮助文件。<br>　-s 定位源代码文件。<br>　-u 搜索默认路径下除可执行文件、源代码文件、帮助文件以外的其它文件。<br>　-B 指定搜索可执行文件的路径。<br>　-M 指定搜索帮助文件的路径。<br>　-S 指定搜索源代码文件的路径。</p>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507154350125-1160038978.png" alt="img"></p>
+<h3 id="which命令"><a href="#which命令" class="headerlink" title="which命令"></a>which命令</h3><p>会在PATH变量指定的路径中，搜索某个系统命令的位置，并且返回第一个搜索结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> 可执行文件名称 </span><br><span class="line">-n 　指定文件名长度，指定的长度必须大于或等于所有文件中最长的文件名。</span><br><span class="line">-p 　与-n参数相同，但此处的包括了文件的路径。</span><br><span class="line">-w 　指定输出时栏位的宽度。</span><br><span class="line">-V 　显示版本信息</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507153657531-704023018.png" alt="img"></p>
+<h3 id="locate命令"><a href="#locate命令" class="headerlink" title="locate命令"></a>locate命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">＃ locate命令可以在搜寻数据库时快速找到档案，数据库由updatedb程序来更新，updatedb是由cron daemon周期性建立的，locate命令在搜寻数据库时比由整个由硬盘资料来搜寻资料来得快，但较差劲的是locate所找到的档案若是最近才建立或 刚更名的，可能会找不到，在内定值中，updatedb每天会跑一次，可以由修改crontab来更新设定值。(etc/crontab)Locate [选择参数] [样式]</span><br><span class="line">-e   将排除在寻找的范围之外。</span><br><span class="line">-1  如果 是 1．则启动安全模式。在安全模式下，使用者不会看到权限无法看到 的档案。这会始速度减慢，因为 locate 必须至实际的档案系统中取得档案的 权限资料。</span><br><span class="line">-f   将特定的档案系统排除在外，例如我们没有到理要把 proc 档案系统中的档案 放在资料库中。</span><br><span class="line">-q  安静模式，不会显示任何错误讯息。</span><br><span class="line">-n 至多显示 n个输出。</span><br><span class="line">-r 使用正规运算式 做寻找的条件。</span><br><span class="line">-o 指定资料库存的名称。</span><br><span class="line">-d 指定资料库的路径</span><br><span class="line">-h 显示辅助讯息</span><br><span class="line">-V 显示程式的版本讯息</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507155323671-910488154.png" alt="img"></p>
+<h3 id="diff-命令"><a href="#diff-命令" class="headerlink" title="diff 命令"></a>diff 命令</h3><p>用于比较两个文件或目录的不同：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"> diff[参数][文件1或目录1][文件2或目录2]</span><br><span class="line"><span class="comment"># diff命令能比较单个文件或者目录内容。如果指定比较的是文件，则只有当输入为文本文件时才有效。以逐行的方式，比较文本文件的异同处。如果指定比较的是目录的的时候，diff 命令会比较两个目录下名字相同的</span></span><br><span class="line"><span class="comment"># 文本文件。列出不同的二进制文件、公共子目录和只在一个目录出现的文件。</span></span><br><span class="line"></span><br><span class="line">-a or --text 　<span class="comment">#diff预设只会逐行比较文本文件。</span></span><br><span class="line">-b or --ignore-space-change 　<span class="comment">#不检查空格字符的不同。</span></span><br><span class="line">-B or --ignore-blank-lines 　<span class="comment">#不检查空白行。</span></span><br><span class="line">-c 　<span class="comment">#显示全部内文，并标出不同之处。</span></span><br><span class="line">-C or --context 　<span class="comment">#与执行"-c-"指令相同。</span></span><br><span class="line">-d or --minimal 　<span class="comment">#使用不同的演算法，以较小的单位来做比较。</span></span><br><span class="line">-D or ifdef 　<span class="comment">#此参数的输出格式可用于前置处理器巨集。</span></span><br><span class="line">-e or --ed 　<span class="comment">#此参数的输出格式可用于ed的script文件。</span></span><br><span class="line">-f or -forward-ed 　<span class="comment">#输出的格式类似ed的script文件，但按照原来文件的顺序来显示不同处。</span></span><br><span class="line">-H or --speed-large-files 　<span class="comment">#比较大文件时，可加快速度。</span></span><br><span class="line">-l or --ignore-matching-lines 　<span class="comment">#若两个文件在某几行有所不同，而这几行同时都包含了选项中指定的字符 or 字符串，则不显示这两个文件的差异。</span></span><br><span class="line">-i or --ignore-case 　<span class="comment">#不检查大小写的不同。</span></span><br><span class="line">-l or --paginate 　<span class="comment">#将结果交由pr程序来分页。</span></span><br><span class="line">-n or --rcs 　<span class="comment">#将比较结果以RCS的格式来显示。</span></span><br><span class="line">-N or --new-file 　<span class="comment">#在比较目录时，若文件A仅出现在某个目录中，预设会显示：Only in目录：文件A若使用-N参数，则diff会将文件A与一个空白的文件比较。</span></span><br><span class="line">-p 　<span class="comment">#若比较的文件为C语言的程序码文件时，显示差异所在的函数名称。</span></span><br><span class="line">-P or --unidirectional-new-file 　<span class="comment">#与-N类似，但只有当第二个目录包含了一个第一个目录所没有的文件时，才会将这个文件与空白的文件做比较。</span></span><br><span class="line">-q or --brief 　<span class="comment">#仅显示有无差异，不显示详细的信息。</span></span><br><span class="line">-r or --recursive 　<span class="comment">#比较子目录中的文件。</span></span><br><span class="line">-s or --report-identical-files 　<span class="comment">#若没有发现任何差异，仍然显示信息。</span></span><br><span class="line">-S or --starting-file 　<span class="comment">#在比较目录时，从指定的文件开始比较。</span></span><br><span class="line">-t or --expand-tabs 　<span class="comment">#在输出时，将tab字符展开。</span></span><br><span class="line">-T or --initial-tab 　<span class="comment">#在每行前面加上tab字符以便对齐。</span></span><br><span class="line">-u,-U or --unified= 　<span class="comment">#以合并的方式来显示文件内容的不同。</span></span><br><span class="line">-v or --version 　<span class="comment">#显示版本信息。</span></span><br><span class="line">-w or --ignore-all-space 　<span class="comment">#忽略全部的空格字符。</span></span><br><span class="line">-W or --width 　<span class="comment">#在使用-y参数时，指定栏宽。</span></span><br><span class="line">-x or --exclude 　<span class="comment">#不比较选项中所指定的文件 or 目录。</span></span><br><span class="line">-X or --exclude-from 　<span class="comment">#您可以将文件 or 目录类型存成文本文件，然后在=中指定此文本文件。</span></span><br><span class="line">-y or --side-by-side 　<span class="comment">#以并列的方式显示文件的异同之处。</span></span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506231719044-1459869351.png" alt="img"></p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506231937419-1089214833.png" alt="img"></p>
+<p>24.文件比软件:<br>  cmp cmp（“compare”的缩写）命令用来简要指出两个文件是否存在差异，它的使用权限是所有用户<br>  diff diff命令用于两个文件之间的比较，并指出两者的不同，它的使用权限是所有用户</p>
+<h3 id="find命令"><a href="#find命令" class="headerlink" title="find命令"></a>find命令</h3><p>基本语法参数如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">find [PATH] [option] [action]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 与时间有关的参数：</span></span><br><span class="line">-mtime n : n为数字，意思为在n天之前的“一天内”被更改过的文件；</span><br><span class="line">-mtime +n : 列出在n天之前（不含n天本身）被更改过的文件名；</span><br><span class="line">-mtime -n : 列出在n天之内（含n天本身）被更改过的文件名；</span><br><span class="line">-newer file : 列出比file还要新的文件名</span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line">find /root -mtime 0 <span class="comment"># 在当前目录下查找今天之内有改动的文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 与用户或用户组名有关的参数：</span></span><br><span class="line">-user name : 列出文件所有者为name的文件</span><br><span class="line">-group name : 列出文件所属用户组为name的文件</span><br><span class="line">-uid n : 列出文件所有者为用户ID为n的文件</span><br><span class="line">-gid n : 列出文件所属用户组为用户组ID为n的文件</span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line">find /home/hadoop -user hadoop <span class="comment"># 在目录/home/hadoop中找出所有者为hadoop的文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 与文件权限及名称有关的参数：</span></span><br><span class="line">-name filename ：找出文件名为filename的文件</span><br><span class="line">-size [+-]SIZE ：找出比SIZE还要大（+）或小（-）的文件</span><br><span class="line">-tpye TYPE ：查找文件的类型为TYPE的文件，TYPE的值主要有：一般文件（f)、设备文件（b、c）、</span><br><span class="line">             目录（d）、连接文件（l）、socket（s）、FIFO管道文件（p）；</span><br><span class="line">-perm mode ：查找文件权限刚好等于mode的文件，mode用数字表示，如0755；</span><br><span class="line">-perm -mode ：查找文件权限必须要全部包括mode权限的文件，mode用数字表示</span><br><span class="line">-perm +mode ：查找文件权限包含任一mode的权限的文件，mode用数字表示</span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line">find / -name passwd <span class="comment"># 查找文件名为passwd的文件</span></span><br><span class="line">find . -perm 0755 <span class="comment"># 查找当前目录中文件权限的0755的文件</span></span><br><span class="line">find . -size +12k <span class="comment"># 查找当前目录中大于12KB的文件，注意c表示byte</span></span><br><span class="line"></span><br><span class="line">查看找文件(find,grep,awk更多的请参照man page或shell编程专题讲解)</span><br><span class="line"> 几种介绍:</span><br><span class="line"> find 路径 -name 文件名</span><br><span class="line"> find /etc -name named.conf</span><br><span class="line"> locate 通过文件名搜索文件的工具(要先通过updatedb建立索引数据库)</span><br><span class="line"> localte named.conf</span><br><span class="line"> whereis 是寻找二进制文件，同时也会找到其帮助文件</span><br><span class="line"> <span class="built_in">which</span> 和<span class="built_in">where</span> 相似，只是我们所设置的环境变量中设置好的路径中寻找；比如；</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">find / -name filename.txt 根据名称查找/目录下的filename.txt文件。</span><br><span class="line">find . -name “*.xml” 递归查找所有的xml文件</span><br><span class="line">find . -name “*.xml” |xargs grep “hello world” 递归查找所有文件内容中包含hello world的xml文件</span><br><span class="line">grep -H ‘spring’ *.xml 查找所以有的包含spring的xml文件</span><br><span class="line">find ./ -size 0 | xargs rm -f &amp; 删除文件大小为零的文件</span><br><span class="line">ls -l | grep ‘.jar’ 查找当前目录中的所有jar文件</span><br><span class="line">grep ‘<span class="built_in">test</span>’ d* 显示所有以d开头的文件中包含<span class="built_in">test</span>的行。</span><br><span class="line">grep ‘<span class="built_in">test</span>’ aa bb cc 显示在aa，bb，cc文件中匹配<span class="built_in">test</span>的行。</span><br><span class="line">grep ‘[a-z]&#123;5&#125;’ aa 显示所有包含每个字符串至少有5个连续小写字符的字符串的行。</span><br></pre></td></tr></table></figure>
+<p> 使用截图：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160504211338122-1598976431.png" alt="img"></p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160504211629560-1737782460.png" alt="img"></p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160504212137576-1297477565.png" alt="img"></p>
+<h3 id="tree命令"><a href="#tree命令" class="headerlink" title="tree命令"></a>tree命令</h3><p>显示树形的层级目录结构，非原生命令，需要安装tree</p>
+<p>tree a</p>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160505224228810-901250058.png" alt="img"></p>
+<h1 id="ssh-scp-远程操作"><a href="#ssh-scp-远程操作" class="headerlink" title="ssh/scp 远程操作"></a>ssh/scp 远程操作</h1><p>ssh 命令用于远程登录上Linux主机：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">远程登录</span><br><span class="line">ssh userName@ip</span><br><span class="line"></span><br><span class="line">ssh [-l login_name] [-p port] [user@]hostname</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p> <img src="../../../../img/005LinuxCommand/947313-20160507161933859-275513198.png" alt="img"></p>
+<p>scp 命令是secure copy的简写，用于在Linux下进行远程拷贝文件的命令，和它类似的命令有cp，不过cp只是在本机进行拷贝不能跨服务器，而且scp传输是加密的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">远程操作与文件传输</span><br><span class="line">  ssh user@remote.machine</span><br><span class="line">  scp user@remote.machine:/remote/path /<span class="built_in">local</span>/path</span><br><span class="line">  scp /<span class="built_in">local</span>/path user@remote.machine:/remote/path</span><br><span class="line"></span><br><span class="line">scp [参数] [原路径] [目标路径]</span><br><span class="line"></span><br><span class="line">-1 强制scp命令使用协议ssh1 </span><br><span class="line">-2 强制scp命令使用协议ssh2 </span><br><span class="line">-4 强制scp命令只使用IPv4寻址 </span><br><span class="line">-6 强制scp命令只使用IPv6寻址 </span><br><span class="line">-B 使用批处理模式（传输过程中不询问传输口令或短语） </span><br><span class="line">-C 允许压缩。（将-C标志传递给ssh，从而打开压缩功能） </span><br><span class="line">-p 保留原文件的修改时间，访问时间和访问权限。 </span><br><span class="line">-q 不显示传输进度条。 </span><br><span class="line">-r 递归复制整个目录。 </span><br><span class="line">-v 详细方式显示输出。scp和ssh(1)会显示出整个过程的调试信息。这些信息用于调试连接，验证和配置问题。 </span><br><span class="line">-c cipher 以cipher将数据传输进行加密，这个选项将直接传递给ssh。 </span><br><span class="line">-F ssh_config 指定一个替代的ssh配置文件，此参数直接传递给ssh。 </span><br><span class="line">-i identity_file 从指定文件中读取传输时使用的密钥文件，此参数直接传递给ssh。 </span><br><span class="line">-l <span class="built_in">limit</span> 限定用户所能使用的带宽，以Kbit/s为单位。 </span><br><span class="line">-o ssh_option 如果习惯于使用ssh_config(5)中的参数传递方式， </span><br><span class="line">-P port 注意是大写的P, port是指定数据传输用到的端口号 </span><br><span class="line">-S program 指定加密传输时所使用的程序。此程序必须能够理解ssh(1)的选项。</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p> <img src="../../../../img/005LinuxCommand/947313-20160507162205062-1894875589.png" alt="img"></p>
+<h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mount 加载一个硬件设备</span><br><span class="line">　用法:mount [参数] 要加载的设备 载入点</span><br><span class="line">　 eg: mount /dev/cdrom</span><br><span class="line">　 <span class="built_in">cd</span> /mnt/cdrom //进入光盘目录</span><br><span class="line">　 </span><br><span class="line"> u盘:</span><br><span class="line">  mkdir /mnt/usb；（注：创建挂载目录）</span><br><span class="line">  mount /mnt/sda1 /mnt/usb；(注：挂载U盘)</span><br><span class="line">  现在就可以使用U盘了，在/mnt/usb目录下的内容就是U盘里的内容了；</span><br><span class="line">  使用完后，用以下命令卸载U盘即可。</span><br><span class="line">  umount /mnt/usb</span><br><span class="line">  mount   列出系统所有的分区</span><br><span class="line">  mount -t iso9660 /dev/cdrom /mnt/cdrom  挂载光盘</span><br><span class="line">  mount -t vfat /dev/fd0/mnt/floppy    挂载软盘</span><br><span class="line">  mount -t vfat -o iocharset=utf8,<span class="built_in">umask</span>=000 /dev/hda2 /mnt/hda2 挂载fat32分区</span><br><span class="line">  mount -t ntfs -o nls=utf8,<span class="built_in">umask</span>=000 /dev/hda3/mnt/hda3     挂载ntfs分区</span><br><span class="line">  Linux-NTFS Project: http://linux-ntfs.sourceforge.net/</span><br><span class="line">  umount /mnt/hda3 缷载</span><br><span class="line">  注:挂载设备前，请先fdisk<span class="_">-l</span> 看一下.</span><br><span class="line"></span><br><span class="line">fdisk /mbr 删除GRUB</span><br></pre></td></tr></table></figure>
+<h1 id="用户和用户组管理"><a href="#用户和用户组管理" class="headerlink" title="用户和用户组管理"></a>用户和用户组管理</h1><p>切换用户<br><code>su -username</code></p>
+<p><code>chmod</code>命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">chmod [-R] xyz 文件或目录</span><br><span class="line">-R：进行递归的持续更改，即连同子目录下的所有文件都会更改</span><br><span class="line"><span class="comment">#同时，chmod还可以使用u（user）、g（group）、o（other）、a（all）和+（加入）、-（删除）、=（设置）跟rwx搭配来对文件的权限进行更改，编号是各种权限的数字代码，示例：</span></span><br><span class="line">chmod 0755 file <span class="comment"># 把file的文件权限改变为-rxwr-xr-x</span></span><br><span class="line">chmod g+w file <span class="comment"># 向file的文件权限中加入用户组可写权限</span></span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p> <img src="../../../../img/005LinuxCommand/947313-20160505230950685-1272260286.png" alt="img"></p>
+<p> <code>chown</code>命令改变文件所有者：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">chown [para]... [owner][:[group]] file...</span><br><span class="line"></span><br><span class="line">  -c 显示更改的部分的信息</span><br><span class="line">　-f 忽略错误信息</span><br><span class="line">　-h 修复符号链接</span><br><span class="line">　-R 处理指定目录以及其子目录下的所有文件</span><br><span class="line">　-v 显示详细的处理信息</span><br><span class="line">　-deference 作用于符号链接的指向，而不是链接文件本身</span><br></pre></td></tr></table></figure>
+<p> 使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160505231105997-1606687502.png" alt="img"></p>
+<p><code>chgrp</code>命令，改变文件所属组：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-c 当发生改变时输出调试信息</span><br><span class="line">-f 不显示错误信息</span><br><span class="line">-R 处理指定目录以及其子目录下的所有文件</span><br><span class="line">-v 运行时显示详细的处理信息</span><br><span class="line">--dereference 作用于符号链接的指向，而不是符号链接本身</span><br><span class="line">--no-dereference 作用于符号链接本身</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160505231700810-1726632197.png" alt="img"></p>
+<p><code>useradd</code> 命令建立用户账号：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">useradd [-mMnr][-c &lt;备注&gt;][-d &lt;登入目录&gt;][-e &lt;有效期限&gt;][-f &lt;缓冲天数&gt;][-g &lt;群组&gt;][-G &lt;群组&gt;][-s ][-u ][用户帐号] </span><br><span class="line"></span><br><span class="line">    -c <span class="comment">#&lt;备注&gt; 　加上备注文字。备注文字会保存在passwd的备注栏位中。　</span></span><br><span class="line">　　-d <span class="comment">#&lt;登入目录&gt; 　指定用户登入时的启始目录。</span></span><br><span class="line">　　-D <span class="comment">#　变更预设值．</span></span><br><span class="line">　　-e <span class="comment"># &lt;有效期限&gt; 　指定帐号的有效期限。</span></span><br><span class="line">　　-f <span class="comment"># &lt;缓冲天数&gt; 　指定在密码过期后多少天即关闭该帐号。</span></span><br><span class="line">　　-g <span class="comment"># &lt;群组&gt; 　指定用户所属的群组。</span></span><br><span class="line">　　-G <span class="comment"># &lt;群组&gt; 　指定用户所属的附加群组。</span></span><br><span class="line">　　-m <span class="comment"># 自动建立用户的登入目录。</span></span><br><span class="line">　　-M <span class="comment"># 不要自动建立用户的登入目录。</span></span><br><span class="line">　　-n <span class="comment"># 取消建立以用户名称为名的群组．</span></span><br><span class="line">　　-r <span class="comment"># 建立系统帐号。</span></span><br><span class="line">　　-s <span class="comment"># 指定用户登入后所使用的shell。</span></span><br><span class="line">　　-u <span class="comment"># 指定用户ID。</span></span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506222603232-107798777.png" alt="img"></p>
+<p> usermod 修改用户信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">usermod -h</span><br><span class="line">usermod [options] LOGIN</span><br><span class="line"></span><br><span class="line">-c <span class="comment">#后面接账号的说明，即/etc/passwd第五栏的说明栏，可以加入一些账号的说明</span></span><br><span class="line">-d <span class="comment">#后面接账号的家目录，即修改/etc/passwd的第六栏</span></span><br><span class="line">-e <span class="comment">#后面接日期，格式是YYYY-MM-DD也就是在/etc/shadow内的第八栏</span></span><br><span class="line">-f <span class="comment">#后面接天数，修改shadow的第七栏</span></span><br><span class="line">-g <span class="comment">#后面接主群组，修改/etc/passwd的第四个字段，即是GID的字段</span></span><br><span class="line">-G <span class="comment">#后面接附加群组，修改这个使用者能够支持的群组，修改的是/etc/group</span></span><br><span class="line">-a <span class="comment">#与 -G 合用，可增加附加群组的支持而非设定</span></span><br><span class="line">-l <span class="comment">#后面接账号名称。修改账号名称，/etc/passwd的第一栏</span></span><br><span class="line">-s <span class="comment">#后面接Shell的文件，例如/bin/bash或/bin/csh等等</span></span><br><span class="line">-u <span class="comment">#后面接 UID 数字，修改用户的UID /etc/passwd第三栏</span></span><br><span class="line">-L <span class="comment">#暂时将用户的密码冻结，让他无法登入。其实就是在/etc/shadow的密码栏前面加上了“!”</span></span><br><span class="line">-U <span class="comment">#将/etc/shadow 密码栏的“!”去掉</span></span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506224058326-369798119.png" alt="img"></p>
+<p><code>userdel</code> 删除用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">userdel [options] LOGIN</span><br><span class="line">-f <span class="comment"># 强制删除，包括用户的一切相关内容，这个参数是危险的参数，不建议大家使用。详细说明看MAN</span></span><br><span class="line">-r <span class="comment"># 删除用户的家目录和用户的邮件池</span></span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506224959201-1248912852.png" alt="img"></p>
+<p><code>groupadd</code>命令用于将新组加入系统：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">groupadd [－g gid] [－o]] [－r] [－f] groupname</span><br><span class="line"></span><br><span class="line">－g gid：指定组ID号。</span><br><span class="line">－o：允许组ID号，不必惟一。</span><br><span class="line">－r：加入组ID号，低于499系统账号。</span><br><span class="line">－f：加入已经有的组时，发展程序退出。</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507160630437-2146888110.png" alt="img"></p>
+<p> <code>groupdel</code>命令删除组：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">＃　用于删除不再需要的组，如果指定的组中包含用户，则必须先删除组里面的用户&gt;以后，才能删除组</span><br><span class="line">groupdel [options] GROUP</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507160852921-1183669033.png" alt="img"></p>
+<p> <code>sudo</code>用来以其他身份来执行命令，预设的身份为root:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo(选项)(参数)</span><br><span class="line"></span><br><span class="line">-b：在后台执行指令；</span><br><span class="line">-h：显示帮助；</span><br><span class="line">-H：将HOME环境变量设为新身份的HOME环境变量；</span><br><span class="line">-k：结束密码的有效期限，也就是下次再执行sudo时便需要输入密码；。</span><br><span class="line">-l：列出目前用户可执行与无法执行的指令；</span><br><span class="line">-p：改变询问密码的提示符号；</span><br><span class="line">-s：执行指定的shell；</span><br><span class="line">-u&lt;用户&gt;：以指定的用户作为新的身份。若不加上此参数，则预设以root作为新的身份；</span><br><span class="line">-v：延长密码有效期限5分钟；</span><br><span class="line">-V ：显示版本信息。</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507161225125-119277344.png" alt="img"> </p>
+<p><code>passwd</code> 设置用户的密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">passwd [OPTION...] &lt;accountName&gt;</span><br><span class="line">-k, --keep-tokens       keep non-expired authentication tokens</span><br><span class="line">-d, --delete            delete the password <span class="keyword">for</span> the named account (root only)</span><br><span class="line">-l, --lock              lock the named account (root only)</span><br><span class="line">-u, --unlock            unlock the named account (root only)</span><br><span class="line">-f, --force             force operation</span><br><span class="line">-x, --maximum=DAYS      maximum password lifetime (root only)</span><br><span class="line">-n, --minimum=DAYS      minimum password lifetime (root only)</span><br><span class="line">-w, --warning=DAYS      number of days warning users receives before password expiration (root only)</span><br><span class="line">-i, --inactive=DAYS     number of days after password expiration when an account becomes disabled (root only)</span><br><span class="line">-S, --status            report password status on the named account (root)</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506224436591-1531781308.png" alt="img"></p>
+<p>groups 显示用户所属组：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">groups <span class="comment"># 默认显示当前用户的组</span></span><br><span class="line"></span><br><span class="line">groups hadoop2 <span class="comment"># 显示hadoop2用户的组</span></span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506222910826-1820606760.png" alt="img"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">使用超级管理员身份执行命令</span><br><span class="line">sudo rm a.txt 使用管理员身份删除文件</span><br><span class="line"></span><br><span class="line"><span class="comment"># 表示权限用户(如:root),$ 表示普通用户</span></span><br><span class="line"> 开机提示:Login:输入用户名</span><br><span class="line"> password:输入口令  用户是系统注册用户成功登陆后，可以进入相应的用户环境.</span><br><span class="line"> 退出当前shell,输入:<span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line">useradd netseek 添加一个netseek用户</span><br><span class="line"> passwd netseek 给netseek这个用户设置密码.</span><br><span class="line"> (/etc/passwd /etc/group)</span><br><span class="line"> userdel netseek 删除账号</span><br><span class="line"> userdel -r netseek 删除账号连同自家目录.</span><br><span class="line"> [更详细的操作请参阅man page,和账号管理篇]</span><br><span class="line"></span><br><span class="line">su在不退出登陆的情况下，切换到另一个身份</span><br><span class="line">  用法: su -l 用户名(如果用户名缺省,则切换到root状态)</span><br><span class="line">　　eg:su -l netseek (切换到netseek这个用户，将提示输入密码),加上-表示切换到用户的环境变量.</span><br><span class="line"></span><br><span class="line">  sudo 利用他可以执行root执行的权限</span><br><span class="line"></span><br><span class="line">用户用过的命令和执行历史执行的命令</span><br><span class="line">  <span class="built_in">history</span> 显示用户过去命用的命令</span><br><span class="line">  !!执行最近一次的命令</span><br><span class="line"></span><br><span class="line">whoami,id,w,lastlog,users,groups</span><br><span class="line">  w    查看用户登陆信息</span><br><span class="line">  who   查看当前登陆用户</span><br><span class="line">  last  最近一个月用户登陆情况</span><br><span class="line">  lastlog 检查某特定用户上次登录的时间，并格式化输出上次登录日志/var/<span class="built_in">log</span>/lastlog的内容</span><br><span class="line">  whoami 确认自己身份.</span><br><span class="line">  id   打印出自己的UID以及GID.(UID:用户身份唯一标识.GID:用户组身份唯一标识.每一个用户只能有一个唯一的UID和GID.)</span><br><span class="line">  users</span><br><span class="line">  groups 用户所归属的用户组查询；</span><br><span class="line">  finger -l netseek root</span><br><span class="line">  finger -s 或者直接finger</span><br><span class="line">  可以让使用者查询一些其他使用者的资料</span><br><span class="line">　 eg: finger //查看所用用户的使用资料</span><br><span class="line">　 finger root //查看root的资料</span><br></pre></td></tr></table></figure>
+<h1 id="程序、线程管理"><a href="#程序、线程管理" class="headerlink" title="程序、线程管理"></a>程序、线程管理</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">查看一个程序是否运行</span><br><span class="line">ps -ef|grep tomcat 查看所有有关tomcat的进程</span><br><span class="line"></span><br><span class="line">终止线程</span><br><span class="line"><span class="built_in">kill</span> -9 19979 终止线程号位19979的进程</span><br><span class="line"></span><br><span class="line">查看进程</span><br><span class="line">ps aux|grep java 查看java进程</span><br><span class="line"></span><br><span class="line">ps aux 查看所有进程</span><br><span class="line"></span><br><span class="line">查杀进程</span><br><span class="line">ps aux</span><br><span class="line">ps -ef |grep</span><br><span class="line"><span class="built_in">kill</span> -9</span><br><span class="line">看看哪个进程占用的内存最大</span><br><span class="line">ps -aux|sort +5n</span><br><span class="line"></span><br><span class="line">将程序放在前后台执行</span><br><span class="line">cp file1 file2 &amp;</span><br><span class="line">&amp;与ctrl+z 你可以使用&amp;或ctrl+z来将命令放在后台执行.</span><br><span class="line"><span class="built_in">fg</span> 是将放在后台执行的程序再放回前台.</span><br><span class="line"><span class="built_in">jobs</span></span><br><span class="line"></span><br><span class="line">ps 命令显示运行的进程，还会显示进程的一些信息如pid, cpu和内存使用情况等：</span><br><span class="line">-A ：所有的进程均显示出来</span><br><span class="line">-a ：不与terminal有关的所有进程</span><br><span class="line">-u ：有效用户的相关进程</span><br><span class="line">-x ：一般与a参数一起使用，可列出较完整的信息</span><br><span class="line">-l ：较长，较详细地将PID的信息列出</span><br></pre></td></tr></table></figure>
+<p> 使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160505224418591-275764025.png" alt="img"></p>
+<p>kill 命令用于终止进程，参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -signal PID</span><br><span class="line"></span><br><span class="line">1：SIGHUP，启动被终止的进程</span><br><span class="line">2：SIGINT，相当于输入ctrl+c，中断一个程序的进行</span><br><span class="line">9：SIGKILL，强制中断一个进程的进行</span><br><span class="line">15：SIGTERM，以正常的结束进程方式来终止进程</span><br><span class="line">17：SIGSTOP，相当于输入ctrl+z，暂停一个进程的进行</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p> <img src="../../../../img/005LinuxCommand/947313-20160505225210732-1807560971.png" alt="img"></p>
+<p> killall 命令和参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">killall [-iIe] [<span class="built_in">command</span> name]</span><br><span class="line"></span><br><span class="line">-i ：交互式的意思，若需要删除时，会询问用户</span><br><span class="line">-e ：表示后面接的<span class="built_in">command</span> name要一致，但<span class="built_in">command</span> name不能超过15个字符</span><br><span class="line">-I ：命令名称忽略大小写</span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line">killall -SIGHUP syslogd <span class="comment"># 重新启动syslogd</span></span><br></pre></td></tr></table></figure>
+<p> 使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160505225507372-1783107642.png" alt="img"></p>
+<p><code>crntab</code>命令是启动Linux定时任务的服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">service cron start <span class="comment"># 启动cronjob</span></span><br><span class="line">service cron stop <span class="comment"># 停止cronjob</span></span><br><span class="line">service cron restart <span class="comment">#  重启cronjob</span></span><br><span class="line">crontab -e <span class="comment"># 编辑cronjob任务</span></span><br></pre></td></tr></table></figure>
+<p>使用示例：打开<code>crontab -e</code>后通过vi方式编辑任务列表</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506214702935-34258368.png" alt="img"></p>
+<p>free 命令用于显示Linux系统中空闲的、已用的物理内存及swap内存,及被内核使用的buffer：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">free [参数]</span><br><span class="line">-b 　以Byte为单位显示内存使用情况。 </span><br><span class="line">-k 　以KB为单位显示内存使用情况。 </span><br><span class="line">-m 　以MB为单位显示内存使用情况。</span><br><span class="line">-g   以GB为单位显示内存使用情况。 </span><br><span class="line">-o 　不显示缓冲区调节列。 </span><br><span class="line">-s&lt;间隔秒数&gt; 　持续观察内存使用状况。 </span><br><span class="line">-t 　显示内存总和列。 </span><br><span class="line">-V 　显示版本信息。</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507163128234-1829425279.png" alt="img"></p>
+<p>top 命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">top [参数]</span><br><span class="line">-b 批处理</span><br><span class="line">-c 显示完整的治命令</span><br><span class="line">-I 忽略失效过程</span><br><span class="line">-s 保密模式</span><br><span class="line">-S 累积模式</span><br><span class="line">-i&lt;时间&gt; 设置间隔时间</span><br><span class="line">-u&lt;用户名&gt; 指定用户名</span><br><span class="line">-p&lt;进程号&gt; 指定进程</span><br><span class="line">-n&lt;次数&gt; 循环显示的次数</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507163348515-842969886.png" alt="img"> </p>
+<h1 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h1><p>防火墙相关命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">firewalld的基本使用</span><br><span class="line">systemctl start firewalld 	<span class="comment">#启用</span></span><br><span class="line">systemctl status firewalld 	<span class="comment">#查看状态</span></span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld	<span class="comment">#停止</span></span><br><span class="line">systemctl stop firewalld	<span class="comment">#禁用</span></span><br><span class="line"></span><br><span class="line">systemctl是CentOS7的服务管理工具中主要的工具，它融合之前service和chkconfig的功能于一体。</span><br><span class="line">启动一个服务：systemctl start firewalld.service</span><br><span class="line">关闭一个服务：systemctl stop firewalld.service</span><br><span class="line">重启一个服务：systemctl restart firewalld.service</span><br><span class="line">显示一个服务的状态：systemctl status firewalld.service</span><br><span class="line">在开机时启用一个服务：systemctl <span class="built_in">enable</span> firewalld.service</span><br><span class="line">在开机时禁用一个服务：systemctl <span class="built_in">disable</span> firewalld.service</span><br><span class="line">查看服务是否开机启动：systemctl is-enabled firewalld.service</span><br><span class="line">查看已启动的服务列表：systemctl list-unit-files|grep enabled</span><br><span class="line">查看启动失败的服务列表：systemctl --failed</span><br><span class="line"></span><br><span class="line">3.配置firewalld-cmd</span><br><span class="line">查看版本： firewall-cmd --version</span><br><span class="line">查看帮助： firewall-cmd --<span class="built_in">help</span></span><br><span class="line">显示状态： firewall-cmd --state</span><br><span class="line">查看所有打开的端口： firewall-cmd --zone=public --list-ports</span><br><span class="line">更新防火墙规则： firewall-cmd --reload</span><br><span class="line">查看区域信息:  firewall-cmd --get-active-zones</span><br><span class="line">查看指定接口所属区域： firewall-cmd --get-zone-of-interface=eth0</span><br><span class="line">拒绝所有包：firewall-cmd --panic-on</span><br><span class="line">取消拒绝状态： firewall-cmd --panic-off</span><br><span class="line">查看是否拒绝： firewall-cmd --query-panic</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">那怎么开启一个端口呢</span><br><span class="line">添加</span><br><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent    （--permanent永久生效，没有此参数重启后失效）</span><br><span class="line">重新载入</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">查看</span><br><span class="line">firewall-cmd --zone= public --query-port=80/tcp</span><br><span class="line">删除</span><br><span class="line">firewall-cmd --zone= public --remove-port=80/tcp --permanent</span><br></pre></td></tr></table></figure>
+<p>ping 用于确定主机与外部连接状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ping [参数] [主机名或IP地址]</span><br><span class="line">-d 使用Socket的SO_DEBUG功能。</span><br><span class="line">-f  极限检测。大量且快速地送网络封包给一台机器，看它的回应。</span><br><span class="line">-n 只输出数值。</span><br><span class="line">-q 不显示任何传送封包的信息，只显示最后的结果。</span><br><span class="line">-r 忽略普通的Routing Table，直接将数据包送到远端主机上。通常是查看本机的网络接口是否有问题。</span><br><span class="line">-R 记录路由过程。</span><br><span class="line">-v 详细显示指令的执行过程。</span><br><span class="line">&lt;p&gt;-c 数目：在发送指定数目的包后停止。</span><br><span class="line">-i 秒数：设定间隔几秒送一个网络封包给一台机器，预设值是一秒送一次。</span><br><span class="line">-I 网络界面：使用指定的网络界面送出数据包。</span><br><span class="line">-l 前置载入：设置在送出要求信息之前，先行发出的数据包。</span><br><span class="line">-p 范本样式：设置填满数据包的范本样式。</span><br><span class="line">-s 字节数：指定发送的数据字节数，预设值是56，加上8字节的ICMP头，一共是64ICMP数据字节。</span><br><span class="line">-t 存活数值：设置存活数值TTL的大小。</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506233110654-1816209180.png" alt="img"></p>
+<p>telnet 命令用来远程登录操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">telnet[参数][主机]-8 允许使用8位字符资料，包括输入与输出。</span><br><span class="line">-a 尝试自动登入远端系统。</span><br><span class="line">-b&lt;主机别名&gt; 使用别名指定远端主机名称。</span><br><span class="line">-c 不读取用户专属目录里的.telnetrc文件。</span><br><span class="line">-d 启动排错模式。</span><br><span class="line">-e&lt;脱离字符&gt; 设置脱离字符。</span><br><span class="line">-E 滤除脱离字符。</span><br><span class="line">-f 此参数的效果和指定<span class="string">"-F"</span>参数相同。</span><br><span class="line">-F 使用Kerberos V5认证时，加上此参数可把本地主机的认证数据上传到远端主机。</span><br><span class="line">-k&lt;域名&gt; 使用Kerberos认证时，加上此参数让远端主机采用指定的领域名，而非该主机的域名。</span><br><span class="line">-K 不自动登入远端主机。</span><br><span class="line">-l&lt;用户名称&gt; 指定要登入远端主机的用户名称。</span><br><span class="line">-L 允许输出8位字符资料。</span><br><span class="line">-n&lt;记录文件&gt; 指定文件记录相关信息。</span><br><span class="line">-r 使用类似rlogin指令的用户界面。</span><br><span class="line">-S&lt;服务类型&gt; 设置telnet连线所需的IP TOS信息。</span><br><span class="line">-x 假设主机有支持数据加密的功能，就使用它。</span><br><span class="line">-X&lt;认证形态&gt; 关闭指定的认证形态。</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507170054765-1719215967.png" alt="img"></p>
+<p><code>wget</code> 是从远程下载的工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">wget [参数] [URL地址]</span><br><span class="line"></span><br><span class="line">启动参数：</span><br><span class="line">-V, –version 显示wget的版本后退出</span><br><span class="line">-h, –<span class="built_in">help</span> 打印语法帮助</span><br><span class="line">-b, –background 启动后转入后台执行</span><br><span class="line">-e, –execute=COMMAND 执行`.wgetrc’格式的命令，wgetrc格式参见/etc/wgetrc或~/.wgetrc</span><br><span class="line"></span><br><span class="line">记录和输入文件参数：</span><br><span class="line">-o, –output-file=FILE 把记录写到FILE文件中</span><br><span class="line">-a, –append-output=FILE 把记录追加到FILE文件中</span><br><span class="line">-d, –debug 打印调试输出</span><br><span class="line">-q, –quiet 安静模式(没有输出)</span><br><span class="line">-v, –verbose 冗长模式(这是缺省设置)</span><br><span class="line">-nv, –non-verbose 关掉冗长模式，但不是安静模式</span><br><span class="line">-i, –input-file=FILE 下载在FILE文件中出现的URLs</span><br><span class="line">-F, –force-html 把输入文件当作HTML格式文件对待</span><br><span class="line">-B, –base=URL 将URL作为在-F -i参数指定的文件中出现的相对链接的前缀</span><br><span class="line">–sslcertfile=FILE 可选客户端证书</span><br><span class="line">–sslcertkey=KEYFILE 可选客户端证书的KEYFILE</span><br><span class="line">–egd-file=FILE 指定EGD socket的文件名</span><br><span class="line"></span><br><span class="line">下载参数：</span><br><span class="line">–<span class="built_in">bind</span>-address=ADDRESS 指定本地使用地址(主机名或IP，当本地有多个IP或名字时使用)</span><br><span class="line">-t, –tries=NUMBER 设定最大尝试链接次数(0 表示无限制).</span><br><span class="line">-O –output-document=FILE 把文档写到FILE文件中</span><br><span class="line">-nc, –no-clobber 不要覆盖存在的文件或使用.<span class="comment">#前缀</span></span><br><span class="line">-c, –<span class="built_in">continue</span> 接着下载没下载完的文件</span><br><span class="line">–progress=TYPE 设定进程条标记</span><br><span class="line">-N, –timestamping 不要重新下载文件除非比本地文件新</span><br><span class="line">-S, –server-response 打印服务器的回应</span><br><span class="line">–spider 不下载任何东西</span><br><span class="line">-T, –timeout=SECONDS 设定响应超时的秒数</span><br><span class="line">-w, –<span class="built_in">wait</span>=SECONDS 两次尝试之间间隔SECONDS秒</span><br><span class="line">–waitretry=SECONDS 在重新链接之间等待1…SECONDS秒</span><br><span class="line">–random-wait 在下载之间等待0…2*WAIT秒</span><br><span class="line">-Y, –proxy=on/off 打开或关闭代理</span><br><span class="line">-Q, –quota=NUMBER 设置下载的容量限制</span><br><span class="line">–<span class="built_in">limit</span>-rate=RATE 限定下载输率</span><br><span class="line"></span><br><span class="line">目录参数：</span><br><span class="line">-nd –no-directories 不创建目录</span><br><span class="line">-x, –force-directories 强制创建目录</span><br><span class="line">-nH, –no-host-directories 不创建主机目录</span><br><span class="line">-P, –directory-prefix=PREFIX 将文件保存到目录 PREFIX/…</span><br><span class="line">–cut-dirs=NUMBER 忽略 NUMBER层远程目录</span><br><span class="line"></span><br><span class="line">HTTP 选项参数：</span><br><span class="line">–http-user=USER 设定HTTP用户名为 USER.</span><br><span class="line">–http-passwd=PASS 设定http密码为 PASS</span><br><span class="line">-C, –cache=on/off 允许/不允许服务器端的数据缓存 (一般情况下允许)</span><br><span class="line">-E, –html-extension 将所有text/html文档以.html扩展名保存</span><br><span class="line">–ignore-length 忽略 `Content-Length’头域</span><br><span class="line">–header=STRING 在headers中插入字符串 STRING</span><br><span class="line">–proxy-user=USER 设定代理的用户名为 USER</span><br><span class="line">–proxy-passwd=PASS 设定代理的密码为 PASS</span><br><span class="line">–referer=URL 在HTTP请求中包含 `Referer: URL’头</span><br><span class="line">-s, –save-headers 保存HTTP头到文件</span><br><span class="line">-U, –user-agent=AGENT 设定代理的名称为 AGENT而不是 Wget/VERSION</span><br><span class="line">–no-http-keep-alive 关闭 HTTP活动链接 (永远链接)</span><br><span class="line">–cookies=off 不使用 cookies</span><br><span class="line">–load-cookies=FILE 在开始会话前从文件 FILE中加载cookie</span><br><span class="line">–save-cookies=FILE 在会话结束后将 cookies保存到 FILE文件中</span><br><span class="line"></span><br><span class="line">FTP 选项参数：</span><br><span class="line">-nr, –dont-remove-listing 不移走 `.listing’文件</span><br><span class="line">-g, –glob=on/off 打开或关闭文件名的 globbing机制</span><br><span class="line">–passive-ftp 使用被动传输模式 (缺省值).</span><br><span class="line">–active-ftp 使用主动传输模式</span><br><span class="line">–retr-symlinks 在递归的时候，将链接指向文件(而不是目录)</span><br><span class="line"></span><br><span class="line">递归下载参数：</span><br><span class="line">-r, –recursive 递归下载－－慎用!</span><br><span class="line">-l, –level=NUMBER 最大递归深度 (inf 或 0 代表无穷)</span><br><span class="line">–delete-after 在现在完毕后局部删除文件</span><br><span class="line">-k, –convert-links 转换非相对链接为相对链接</span><br><span class="line">-K, –backup-converted 在转换文件X之前，将之备份为 X.orig</span><br><span class="line">-m, –mirror 等价于 -r -N -l inf -nr</span><br><span class="line">-p, –page-requisites 下载显示HTML文件的所有图片</span><br><span class="line"></span><br><span class="line">递归下载中的包含和不包含(accept/reject)：</span><br><span class="line">-A, –accept=LIST 分号分隔的被接受扩展名的列表</span><br><span class="line">-R, –reject=LIST 分号分隔的不被接受的扩展名的列表</span><br><span class="line">-D, –domains=LIST 分号分隔的被接受域的列表</span><br><span class="line">–exclude-domains=LIST 分号分隔的不被接受的域的列表</span><br><span class="line">–follow-ftp 跟踪HTML文档中的FTP链接</span><br><span class="line">–follow-tags=LIST 分号分隔的被跟踪的HTML标签的列表</span><br><span class="line">-G, –ignore-tags=LIST 分号分隔的被忽略的HTML标签的列表</span><br><span class="line">-H, –span-hosts 当递归时转到外部主机</span><br><span class="line">-L, –relative 仅仅跟踪相对链接</span><br><span class="line">-I, –include-directories=LIST 允许目录的列表</span><br><span class="line">-X, –exclude-directories=LIST 不被包含目录的列表</span><br><span class="line">-np, –no-parent 不要追溯到父目录</span><br><span class="line">wget -S –spider url 不下载只显示过程</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506232247638-1707921731.png" alt="img"></p>
+<p><code>ifconfig</code>　命令用来查看和配置网络设备。当网络环境发生改变时可通过此命令对网络进行相应的配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ifconfig 显示或设置网络设备,可以查看当前ip,类似于windows里的ipconfig</span></span><br><span class="line">ifconfig [网络设备] [参数]</span><br><span class="line"></span><br><span class="line">up 启动指定网络设备/网卡。</span><br><span class="line">down 关闭指定网络设备/网卡。该参数可以有效地阻止通过指定接口的IP信息流，如果想永久地关闭一个接口，我们还需要从核心路由表中将该接口的路由信息全部删除。</span><br><span class="line">arp 设置指定网卡是否支持ARP协议。</span><br><span class="line">-promisc 设置是否支持网卡的promiscuous模式，如果选择此参数，网卡将接收网络中发给它所有的数据包</span><br><span class="line">-allmulti 设置是否支持多播模式，如果选择此参数，网卡将接收网络中所有的多播数据包</span><br><span class="line">-a 显示全部接口信息</span><br><span class="line">-s 显示摘要信息（类似于 netstat -i）</span><br><span class="line">add 给指定网卡配置IPv6地址</span><br><span class="line">del 删除指定网卡的IPv6地址</span><br><span class="line">&lt;硬件地址&gt; 配置网卡最大的传输单元</span><br><span class="line">mtu&lt;字节数&gt; 设置网卡的最大传输单元 (bytes)</span><br><span class="line">netmask&lt;子网掩码&gt; 设置网卡的子网掩码。掩码可以是有前缀0x的32位十六进制数，也可以是用点分开的4个十进制数。如果不打算将网络分成子网，可以不管这一选项；如果要使用子网，那么请记住，网络中每一个系统必须有相同子网掩码。</span><br><span class="line">tunel 建立隧道</span><br><span class="line">dstaddr 设定一个远端地址，建立点对点通信</span><br><span class="line">-broadcast&lt;地址&gt; 为指定网卡设置广播协议</span><br><span class="line">-pointtopoint&lt;地址&gt; 为网卡设置点对点通讯协议</span><br><span class="line">multicast 为网卡设置组播标志</span><br><span class="line">address 为网卡设置IPv4地址</span><br><span class="line">txqueuelen&lt;长度&gt; 为网卡设置传输列队的长度</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启网卡</span></span><br><span class="line">service network restart(/etc/rc.d/init.d/network restart) </span><br><span class="line">  ifdown eth0 关闭网卡</span><br><span class="line">  ifup eth0 开启网卡</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看路由表</span></span><br><span class="line">route -n 查看路由表</span><br><span class="line">route [-f] [-p] [Command [Destination] [mask Netmask] [Gateway] [metric Metric]] [<span class="keyword">if</span> Interface]] </span><br><span class="line">-c  <span class="comment"># 显示更多信息</span></span><br><span class="line">-n  <span class="comment"># 不解析名字</span></span><br><span class="line">-v  <span class="comment"># 显示详细的处理信息</span></span><br><span class="line">-F  <span class="comment"># 显示发送信息</span></span><br><span class="line">-C <span class="comment"># 显示路由缓存</span></span><br><span class="line">-f  <span class="comment"># 清除所有网关入口的路由表。 </span></span><br><span class="line">-p <span class="comment"># 与 add 命令一起使用时使路由具有永久性。</span></span><br><span class="line">route add -net 192.168.20.1 netmask 255.255.255.0 dev eth0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#查看端口占用情况</span></span><br><span class="line">netstat -tln | grep 8080 查看端口8080的使用情况</span><br><span class="line">netstat 查看网络连接情况</span><br><span class="line">netstat -i 显示网卡运行情况</span><br><span class="line">netstat -r 查看主机的路由列表</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看端口属于哪个程序</span></span><br><span class="line">lsof -i :8080</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">traceroute</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507155647328-1087993873.png" alt="img"></p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507164049640-1243837423.png" alt="img"></p>
+<h1 id="系统命令"><a href="#系统命令" class="headerlink" title="系统命令"></a>系统命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">  hostname 显示主机名</span><br><span class="line">  hostname -i 显示当前主机名的IP.</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 系统集成管理菜单.</span></span><br><span class="line">  setup  系统服务管理命令</span><br><span class="line">  ntsysv 设置系统服务</span><br><span class="line"></span><br><span class="line"><span class="comment"># 改变程序执行的优秀级</span></span><br><span class="line">  nice  设置优先权 nice-n -5 vi &amp; 用root给一个nice值为-5,用于执行vi</span><br><span class="line">  renice 调整已存在优先权</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模块相关的命令</span></span><br><span class="line">  lsmod 显示已经载入系统的模块</span><br><span class="line">  depmod 分析可载入系统的相依性</span><br><span class="line">  modinfo 显示kernel模块的信息</span><br><span class="line">  insmod 载入模块</span><br><span class="line">  modprobe 自动处理可载入模块</span><br><span class="line">  rmmod  删除模块</span><br><span class="line"></span><br><span class="line">chkconfig --list 显示各种服务的状态，利用chkconfig可以轻松管理init脚本.</span><br><span class="line"></span><br><span class="line">dmesg |more 显示开机信息(查看系统启动时硬件信息)</span><br><span class="line"></span><br><span class="line">uname 查看linux系统信息</span><br><span class="line">  参数:-a 所有信息 -r 版本号 -n 主机名</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看linux系统占用的资源(top,free,uptime)</span></span><br><span class="line">  top  查看后台程序，监控系统性能</span><br><span class="line">  top -d 2 每两秒列新一次</span><br><span class="line">  top -d -2 -p3690 查看某个PID</span><br><span class="line">  top -b -n 2 &gt;/tmp/top.txt 将top的信息进行2次，然后将结果输出到/tmp/top.txt</span><br><span class="line"></span><br><span class="line">  free -m 查看系统内存使用情况</span><br><span class="line"></span><br><span class="line">  uptime 显示目前系统开机时间(查看开机多久，多少人登陆，过去1,5,15分钟系统的负载)</span><br></pre></td></tr></table></figure>
+<h2 id="关机和重启"><a href="#关机和重启" class="headerlink" title="关机和重启"></a>关机和重启</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">shutwond [-t 秒数] [-rkhncff] 时间 [警告信息]</span><br><span class="line">  -t 秒数:设置在切换至不同的runlevel之前，警告和删除两信号之彰间的延迟时间(秒)</span><br><span class="line">  -k 发出警告信息，但不是真的要shutdown</span><br><span class="line">  -r shutdown这后重新开机</span><br><span class="line">  -h shutdown这后开机</span><br><span class="line">  -n 不经过init,由shutdown命令本身来做开机工作(不建议你使用)</span><br><span class="line">  -f 重新开机时，跳过fsck指令，不检查文件系统.</span><br><span class="line">  -F 重新开机时，强迫做fsck检查.</span><br><span class="line">  -c 将已经正在shutdown的动作取消</span><br><span class="line">  shutdown -h now 立刻关机，其中now相当于时间为0,halt,poweroff也可以关机,或者直接init 0</span><br><span class="line">  shutdown -h 20:30 系统将在今晚的8:30关机</span><br><span class="line">  shutdown -h +10  系统再过十分钟后自动关机.</span><br><span class="line">  shutdown -t3 -r now 立刻重新开机，但在警告和删除processes这间，</span><br><span class="line">  shutdown -k now <span class="string">'Hey! Go away! now...'</span> 发出警告信息，但没有真的关机.</span><br><span class="line"></span><br><span class="line">reboot</span><br><span class="line">  shutdown -r now 几乎与reboot相同，不关建议用reboot执行如下:</span><br><span class="line">  shutdown -r +30 <span class="string">'The system wiil reboot'</span></span><br><span class="line">  shutdown -r +10 <span class="string">'Hey!Go away!'</span> 10分钟后系统重启.</span><br><span class="line">  \<span class="comment">#sync; sync; sync; reboot  注：sync将数据同步写入硬盘</span></span><br><span class="line">  halt命令相当于shutdown -h now ，表示立刻关机。</span><br><span class="line">  reboot命令相当于shutown -r now ，表示立刻重起。</span><br></pre></td></tr></table></figure>
+<h2 id="如何改变启动模式运行级别"><a href="#如何改变启动模式运行级别" class="headerlink" title="如何改变启动模式运行级别"></a>如何改变启动模式运行级别</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/inittab</span><br><span class="line"> 将5改成3，启动后就可以变成字符模式。</span><br><span class="line"> startx 或者 init 5 就可以进入图形化界面.</span><br><span class="line"> runlevel 显示当前运行级别</span><br><span class="line"></span><br><span class="line">如何切换至单用户模式</span><br><span class="line">利用telinit或init(其实telinit只是一个synbollink to init)</span><br><span class="line">telinit 1 或者 init S 即可，当然telinitS也是可以的.</span><br><span class="line"></span><br><span class="line">如何使ctrl+alt+del 三键失效的方法</span><br><span class="line">\<span class="comment">#vi /etc/inittab</span></span><br><span class="line">在ca::ctrlaltdel:/sbin/shutdonw -t3 -r now之前加上注释<span class="comment">#</span></span><br><span class="line">然后执行<span class="comment">#telinit q ,参数q是要telinit重新检查一次/etc/inittab</span></span><br></pre></td></tr></table></figure>
+<p>TAB 巧用tab键，当你不知道文件或命令的全名是请连续按两下tab键.</p>
+<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><p>打印信息<br><code>echo $JAVA_HOME</code>  打印java home环境变量的值</p>
+<p>java 常用命令<br><code>java javac jps ,jstat ,jmap, jstack</code></p>
+<p>其他命令<br><code>svn git maven</code></p>
+<p>设置Linux时间和日期</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">date 命令(<span class="string">"date MMDDhhmmYYYY.ss"</span>)</span><br><span class="line"> 2006年7月24日12:37,30秒</span><br><span class="line"> date 072412372006.30</span><br><span class="line"> date -s 20:30:30 <span class="comment">#设置系统时间为20: 30:30</span></span><br><span class="line"> date -s 2006-7-24 <span class="comment">#设置系统时期为2006-7-24</span></span><br><span class="line"> clock -r <span class="comment">#对系统Bios中读取时间参数</span></span><br><span class="line"> clock -w <span class="comment">#将系统时间(如由date设置的时间)写入Bios</span></span><br><span class="line"> </span><br><span class="line">date [参数]... [+格式]</span><br><span class="line"></span><br><span class="line">必要参数:</span><br><span class="line">%H 小时(以00-23来表示)。 </span><br><span class="line">%I 小时(以01-12来表示)。 </span><br><span class="line">%K 小时(以0-23来表示)。 </span><br><span class="line">%l 小时(以0-12来表示)。 </span><br><span class="line">%M 分钟(以00-59来表示)。 </span><br><span class="line">%P AM或PM。 </span><br><span class="line">%r 时间(含时分秒，小时以12小时AM/PM来表示)。 </span><br><span class="line">%s 总秒数。起算时间为1970-01-01 00:00:00 UTC。 </span><br><span class="line">%S 秒(以本地的惯用法来表示)。 </span><br><span class="line">%T 时间(含时分秒，小时以24小时制来表示)。 </span><br><span class="line">%X 时间(以本地的惯用法来表示)。 </span><br><span class="line">%Z 市区。 </span><br><span class="line">%a 星期的缩写。 </span><br><span class="line">%A 星期的完整名称。 </span><br><span class="line"></span><br><span class="line">%b 月份英文名的缩写。 </span><br><span class="line">%B 月份的完整英文名称。 </span><br><span class="line">%c 日期与时间。只输入date指令也会显示同样的结果。 </span><br><span class="line">%d 日期(以01-31来表示)。 </span><br><span class="line">%D 日期(含年月日)。 </span><br><span class="line">%j 该年中的第几天。 </span><br><span class="line">%m 月份(以01-12来表示)。 </span><br><span class="line">%U 该年中的周数。 </span><br><span class="line">%w 该周的天数，0代表周日，1代表周一，异词类推。 </span><br><span class="line">%x 日期(以本地的惯用法来表示)。 </span><br><span class="line">%y 年份(以00-99来表示)。 </span><br><span class="line">%Y 年份(以四位数来表示)。 </span><br><span class="line">%n 在显示时，插入新的一行。 </span><br><span class="line">%t 在显示时，插入tab。 </span><br><span class="line">MM 月份(必要) </span><br><span class="line">DD 日期(必要) </span><br><span class="line">hh 小时(必要) </span><br><span class="line">mm 分钟(必要)</span><br><span class="line">ss 秒(选择性) </span><br><span class="line"></span><br><span class="line">选择参数:</span><br><span class="line">-d&lt;字符串&gt; 　显示字符串所指的日期与时间。字符串前后必须加上双引号。 </span><br><span class="line">-s&lt;字符串&gt; 　根据字符串来设置日期与时间。字符串前后必须加上双引号。 </span><br><span class="line">-u 　显示GMT。</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507170629203-1386945480.png" alt="img"></p>
+<p>自动化执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">at 执行一次</span><br><span class="line">  crontab 定时循环执行程序</span><br><span class="line">  crontab 介绍</span><br><span class="line">  1 以root登录</span><br><span class="line">  2 <span class="comment"># crontab -e</span></span><br><span class="line">  3 加入一行</span><br><span class="line">  1 */12 * * * /usr/sbin/ntpdate pool.ntp.org</span><br><span class="line">  分钟　（0-59）</span><br><span class="line">  小時　（0-23）</span><br><span class="line">  日 期　（1-31）</span><br><span class="line">  月份　（1-12）</span><br><span class="line">  星期　（0-6）//0代表星期天</span><br></pre></td></tr></table></figure>
+<p>编译c/c++文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc</span><br><span class="line">  gcc -v 查看GCC版本</span><br><span class="line">  gcc -o <span class="built_in">test</span> test.c 2&gt;errfile 编译test.c时若有错误信息，则将错误信息重定向到errfile</span><br></pre></td></tr></table></figure>
+<p><code>dd</code>命令备份</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dd <span class="keyword">if</span>=<span class="string">"input_file"</span> of=<span class="string">"out_file"</span>bs=<span class="string">"block_size"</span> count=<span class="string">"number"</span></span><br><span class="line"> 参数:</span><br><span class="line"> -<span class="keyword">if</span>:就是input file可以是设备</span><br><span class="line"> -of:就是output file也可以是设备</span><br><span class="line"> -bs:规划的一个block的大小，如果没有设定时，预设是512bytes</span><br><span class="line"> -count:多少个bs的意思.</span><br><span class="line"> </span><br><span class="line">dd <span class="keyword">if</span>=/etc/password of=/tmp/passwd.bak 备份</span><br></pre></td></tr></table></figure>
+<p>数据库启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动mysql：</span></span><br><span class="line">service mysqld start(/etc/rc.d/init.d/mysqld start)</span><br><span class="line">mysql -uroot -p 输入密码即可操作mysql数据库.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动Oracle</span></span><br><span class="line">su - oracle</span><br><span class="line"><span class="variable">$lsnrctl</span> stop</span><br><span class="line"><span class="variable">$lsnrctl</span> start</span><br><span class="line">sqlplus /nolog</span><br><span class="line">conn /as sysdba(connected)</span><br><span class="line">startup</span><br></pre></td></tr></table></figure>
+<p>安装软件包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">rpm包安装:</span><br><span class="line">rpm -ivh xxx.rpm     安装rpm包</span><br><span class="line">rpm -qa --last | less  根据安装日期显示已经安装的包</span><br><span class="line">rpm -qa |grep mysql -i  查询系统是否安装mysql包(-i,忽略大小写)</span><br><span class="line">rpm<span class="_">-e</span>         删除安装的软件包</span><br><span class="line">rpm -e mysql* --nodpes  强制删除相关的软件包</span><br><span class="line">rpm--<span class="built_in">test</span>       测试安装</span><br><span class="line">rpm-qi         查询mysql套件的说明资料</span><br><span class="line">rpm -qpl xxx.rpm     查看rpm包内含的内容.</span><br><span class="line">rpm-qc[d]       设定档与说明档</span><br><span class="line">rpm-Uvh        升级安装</span><br><span class="line">rpmbuild --bb SPECS/xxx.spec 重新装将xxx.spec编译成rpm包.</span><br><span class="line">rpmbuild --rebuild packagename.src.rpm 重新把.src.rpm编译成rpm包.</span><br><span class="line"></span><br><span class="line">源码编译安装(经典)</span><br><span class="line">./configure       检查系统信息(./configure --<span class="built_in">help</span> | more 帮助信息，可以看到相关的参数设定)</span><br><span class="line">makeclean       清除之前留下的文件</span><br><span class="line">make          编译</span><br><span class="line">makeinstall      安装</span><br><span class="line">注:源码包安装，一般先将文件解压，安装过程大致上面几步，具体说明一般见解压后目录里的(INSTALL,READEME说明.)</span><br></pre></td></tr></table></figure>
+<p>禁止删除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chattr +i filename 禁止删除，chattr -i filename 取消禁止</span><br><span class="line">  lsattr 查看隐藏档属性</span><br></pre></td></tr></table></figure>
+<p><code>grep</code>命令</p>
+<p>该命令常用于分析一行的信息，若当中有我们所需要的信息，就将该行显示出来，该命令通常与管道命令一起使用，用于对一些命令的输出进行筛选加工等等，比如可以加在ps, tail, cat后面</p>
+<p>它的简单语法为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep [-acinv] [--color=auto] <span class="string">'查找字符串'</span> filename</span><br></pre></td></tr></table></figure>
+<p> 使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160506225115169-5091461.png" alt="img"></p>
+<p>ln 命令</p>
+<p>是为某一个文件在另外一个位置建立一个同步的链接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建立软连接</span></span><br><span class="line">  ln [-sf] <span class="built_in">source</span> target</span><br><span class="line">  ln souce-file hard-link</span><br><span class="line">  ln -sf <span class="built_in">source</span>-file soft-link</span><br><span class="line">  s表示软连接,f表示，若有同名文件在，则将它覆盖过去.</span><br><span class="line">  注：硬链接不能为目录创建，只有文件才能创建硬链接。</span><br><span class="line"></span><br><span class="line">Linux文件系统中，有所谓的链接(link)，我们可以将其视为档案的别名，而链接又可分为两种 : 硬链接(hard link)与软链接(symbolic link)，硬链接的意思是一个档案可以有多个名称，而软链接的方式则是产生一个特殊的档案，该档案的内容是指向另一个档案的位置。硬链接是存在同一个文件系统中，而软链接却可以跨越不同的文件系统。</span><br><span class="line"></span><br><span class="line">软链接：</span><br><span class="line">1.软链接，以路径的形式存在。类似于Windows操作系统中的快捷方式</span><br><span class="line">2.软链接可以 跨文件系统 ，硬链接不可以</span><br><span class="line">3.软链接可以对一个不存在的文件名进行链接</span><br><span class="line">4.软链接可以对目录进行链接</span><br><span class="line"></span><br><span class="line">硬链接:</span><br><span class="line">1.硬链接，以文件副本的形式存在。但不占用实际空间。</span><br><span class="line">2.不允许给目录创建硬链接</span><br><span class="line">3.硬链接只有在同一个文件系统中才能创建</span><br><span class="line"></span><br><span class="line">ln [参数][源文件或目录][目标文件或目录]</span><br><span class="line"></span><br><span class="line">必要参数:</span><br><span class="line">-b 删除，覆盖以前建立的链接</span><br><span class="line">-d 允许超级用户制作目录的硬链接</span><br><span class="line">-f 强制执行</span><br><span class="line">-i 交互模式，文件存在则提示用户是否覆盖</span><br><span class="line">-n 把符号链接视为一般目录</span><br><span class="line">-s 软链接(符号链接)</span><br><span class="line">-v 显示详细的处理过程</span><br><span class="line"></span><br><span class="line">选择参数:</span><br><span class="line">-S “-S&lt;字尾备份字符串&gt; ”或 “--suffix=&lt;字尾备份字符串&gt;”</span><br><span class="line">-V “-V&lt;备份方式&gt;”或“--version-control=&lt;备份方式&gt;”</span><br></pre></td></tr></table></figure>
+<p>使用示例：</p>
+<p><img src="../../../../img/005LinuxCommand/947313-20160507171050312-1181974499.png" alt="img"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/07/21/resource-java-algorithm-803-BinarySearch/" data-toggle="tooltip" data-placement="top" title="算法常用的解题思路---二分查找（Binary search）">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/07/18/resource-desk-vue-vue解决跨域问题/" data-toggle="tooltip" data-placement="top" title="vue解决跨域问题">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#文件操作"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">文件操作</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#文件增删改查"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">文件增删改查</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#文件目录查询"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">文件目录查询</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#创建、删除、复制目录-文件"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">创建、删除、复制目录|文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#编辑查看文件命令"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">编辑查看文件命令</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#文件压缩"><span class="toc-nav-number">1.1.4.</span> <span class="toc-nav-text">文件压缩</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#文件搜索"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">文件搜索</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#whereis-命令"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">whereis 命令</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#which命令"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">which命令</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#locate命令"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">locate命令</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#diff-命令"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">diff 命令</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#find命令"><span class="toc-nav-number">1.2.5.</span> <span class="toc-nav-text">find命令</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#tree命令"><span class="toc-nav-number">1.2.6.</span> <span class="toc-nav-text">tree命令</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#ssh-scp-远程操作"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">ssh&#x2F;scp 远程操作</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#磁盘管理"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">磁盘管理</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#用户和用户组管理"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">用户和用户组管理</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#程序、线程管理"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">程序、线程管理</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#网络管理"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">网络管理</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#系统命令"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">系统命令</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#关机和重启"><span class="toc-nav-number">7.1.</span> <span class="toc-nav-text">关机和重启</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#如何改变启动模式运行级别"><span class="toc-nav-number">7.2.</span> <span class="toc-nav-text">如何改变启动模式运行级别</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#其他命令"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">其他命令</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+                        
+                          <a class="tag" href="/tags/#Interview" title="Interview">Interview</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

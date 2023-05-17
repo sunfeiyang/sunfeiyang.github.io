@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          SQLSERVER数据库事务隔离级别 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2022/07/06/resource-DB-SQLServer-事务隔离级别/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/DB/Transactionisolationlevel.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#sqlServer" title="sqlServer">sqlServer</a>
+                            
+                        </div>
+
+                        <h1>SQLSERVER数据库事务隔离级别</h1>
+                        <h2 class="subheading">事务隔离级别</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2022-07-06
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">219</span> and
+                                Reading Time <span class="post-count">1</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="SQL-Server-事务隔离级别详解"><a href="#SQL-Server-事务隔离级别详解" class="headerlink" title="SQL Server 事务隔离级别详解"></a><a href="https://www.cnblogs.com/chenmh/p/3998614.html" target="_blank" rel="noopener">SQL Server 事务隔离级别详解</a></h2><p>标签： SQL SEERVER/MSSQL SERVER/SQL/事务隔离级别选项/设置数据库事务级别</p>
+<p><strong>SQL 事务隔离级别</strong></p>
+<p><strong>概述</strong></p>
+<p>​     隔离级别用于决定如果控制并发用户如何读写数据的操作，同时对性能也有一定的影响作用。</p>
+<p><strong>步骤</strong></p>
+<p>事务隔离级别通过影响读操作来间接地影响写操作；可以在回话级别上设置事务隔离级别也可以在查询（表级别）级别上设置事务隔离级别。<br>事务隔离级别总共有6个隔离级别：<br>READ UNCOMMITTED(未提交读,读脏),相当于(NOLOCK)<br>READ COMMITTED(已提交读,默认级别)<br>REPEATABLE READ(可以重复读),相当于(HOLDLOCK)<br>SERIALIZABLE(可序列化)<br>SNAPSHOT(快照)<br>READ COMMITTED SNAPSHOT(已经提交读隔离)<br>对于前四个隔离级别：READ UNCOMMITTED<READ COMMITTED<REPEATABLE READ<SERIALIZABLE
+隔离级别越高,读操作的请求锁定就越严格,锁的持有时间久越长;所以隔离级别越高,一致性就越高,并发性就越低,同时性能也相对影响越大.<sunfy-line></p>
+<p><strong>获取事务隔离级别(isolation level)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DBCC USEROPTIONS</span><br></pre></td></tr></table></figure>
+<p><strong>设置隔离</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">设置回话隔离</span><br><span class="line">SET TRANSACTION ISOLATION LEVEL &lt;ISOLATION NAME&gt;</span><br><span class="line">--注意:在设置回话隔离时(REPEATABLE READ)两个单词需要用空格间隔开,但是在表隔离中可以粘在一起(REPEATABLEREAD)</span><br><span class="line"></span><br><span class="line">设置查询表隔离</span><br><span class="line">SELECT ....FROM &lt;TABLE&gt; WITH (&lt;ISOLATION NAME&gt;)</span><br></pre></td></tr></table></figure>
+<p><strong>1.READ UNCOMMITTED</strong></p>
+<p>READ UNCOMMITTED:未提交读，读脏数据<br>默认的读操作:需要请求共享锁,允许其他事物读锁定的数据但不允许修改.<br>READ UNCOMMITTED:读操作不申请锁,运行读取未提交的修改,也就是允许读脏数据,读操作不会影响写操作请求排他锁.</p>
+<p> 创建测试数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IF OBJECT_ID(&#39;Orders&#39;,&#39;U&#39;) IS NOT NULL DROP TABLE Orders </span><br><span class="line">GO</span><br><span class="line">CREATE TABLE Orders</span><br><span class="line">(ID INT NOT NULL,</span><br><span class="line">Price FLOAT NOT NULL</span><br><span class="line">);</span><br><span class="line">INSERT INTO Orders VALUES(10,10.00),(11,11.00),(12,12.00),(13,13.00),(14,14.00);</span><br><span class="line">GO</span><br><span class="line">SELECT ID,Price FROM Orders</span><br></pre></td></tr></table></figure>
+<p>新建回话1将订单10的价格加1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BEGIN TRANSACTION</span><br><span class="line">UPDATE Orders </span><br><span class="line">SET Price&#x3D;Price+1</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line"></span><br><span class="line">SELECT ID,Price FROM Orders </span><br><span class="line">WHERE ID&#x3D;10</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/事务隔离级别/281738195298579.png" alt="img"></p>
+<p>在另一个回话2中执行查询操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">首先不添加隔离级别,默认是READ COMMITTED,由于数据之前的更新操作使用了排他锁，所以查询一直在等待锁释放*&#x2F;</span><br><span class="line">SELECT ID,Price FROM Orders </span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line">---将查询的隔离级别设置为READ UNCOMMITTED允许未提交读，读操作之前不请求共享锁。</span><br><span class="line">SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED</span><br><span class="line">SELECT ID,Price FROM Orders </span><br><span class="line">WHERE ID&#x3D;10;</span><br><span class="line">--当然也可以使用表隔离,效果是一样的</span><br><span class="line">SELECT ID,Price FROM Orders WITH (NOLOCK)</span><br><span class="line">WHERE ID&#x3D;10</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/事务隔离级别/281741564356912.png" alt="img"></p>
+<p>假设在回话1中对操作执行回滚操作,这样价格还是之前的10,但是回话2中则读取到的是回滚前的价格11,这样就属于一个读脏操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ROLLBACK TRANSACTION</span><br></pre></td></tr></table></figure>
+<p><strong>2.READ COMMITTED</strong></p>
+<p>READ COMMITTED（已提交读）是SQL SERVER默认的隔离级别，可以避免读取未提交的数据，隔离级别比<strong>READ UNCOMMITTED</strong>未提交读的级别更高;<br>该隔离级别读操作之前首先申请并获得共享锁，允许其他读操作读取该锁定的数据，但是写操作必须等待锁释放，一般读操作读取完就会立刻释放共享锁。</p>
+<p>新建回话1将订单10的价格加1,此时回话1的排他锁锁住了订单10的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">BEGIN TRANSACTION</span><br><span class="line">UPDATE Orders </span><br><span class="line">SET Price&#x3D;Price+1</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line"></span><br><span class="line">SELECT ID,Price FROM Orders </span><br><span class="line">WHERE ID&#x3D;10</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/事务隔离级别/281747098898874.png" alt="img"></p>
+<p>在回话2中执行查询，将隔离级别设置为READ COMMITTED</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SET TRANSACTION ISOLATION LEVEL READ COMMITTED</span><br><span class="line">SELECT ID,Price FROM Orders </span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line">---由于READ COMMITTED需要申请获得共享锁，而锁与回话1的排他锁冲突，回话被堵塞，</span><br><span class="line"></span><br><span class="line">----在回话1中执行事务提交</span><br><span class="line">COMMIT TRANSACTION</span><br><span class="line">&#x2F;*由于回话1事务提交，释放了订单10的排他锁，此时回话2申请共享锁成功查到到订单10的价格为修改后的价格11，READ COMMITTED由于是已提交读隔离级别，所以不会读脏数据.</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>
+<p>重置数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE Orders </span><br><span class="line">SET Price&#x3D;10</span><br><span class="line">WHERE ID&#x3D;10</span><br></pre></td></tr></table></figure>
+<p>注意：但是由于READ COMMITTED读操作一完成就立即释放共享锁,读操作不会在一个事务过程中保持共享锁,也就是说在一个事务的的两个查询过程之间有另一个回话对数据资源进行了更改,会导致一个事务的两次查询得到的结果不一致,这种现象称之为不可重复读.</p>
+<p><strong>3.REPEATABLE READ</strong></p>
+<p>REPEATABLE READ(可重复读)：保证在一个事务中的两个读操作之间，其他的事务不能修改当前事务读取的数据，该级别事务获取数据前必须先获得共享锁同时获得的共享锁不立即释放一直保持共享锁至事务完成，所以此隔离级别查询完并提交事务很重要。</p>
+<p>在回话1中执行查询订单10,将回话级别设置为REPEATABLE READ</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SET TRANSACTION ISOLATION LEVEL REPEATABLE READ</span><br><span class="line">BEGIN TRANSACTION</span><br><span class="line">SELECT ID,Price FROM Orders </span><br><span class="line">WHERE ID&#x3D;10</span><br></pre></td></tr></table></figure>
+<p>新建回话2修改订单10的价格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UPDATE Orders </span><br><span class="line">SET Price&#x3D;Price+1</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line">---由于回话1的隔离级别REPEATABLE READ申请的共享锁一直要保持到事务结束，所以回话2无法获取排他锁，处于等待状态</span><br></pre></td></tr></table></figure>
+<p>在回话1中执行下面语句，然后提交事务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT ID,Price FROM Orders </span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line">COMMIT TRANSACTION</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/事务隔离级别/281800071398195.png" alt="img"></p>
+<p>回话1的两次查询得到的结果一致，前面的两个隔离级别无法得到一致的数据，此时事务已提交同时释放共享锁，回话2申请排他锁成功，对行执行更新</p>
+<p>REPEATABLE READ隔离级别保证一个事务中的两次查询到的结果一致，同时保证了丢失更新<br>丢失更新：两个事务同时读取了同一个值然后基于最初的值进行计算，接着再更新，就会导致两个事务的更新相互覆盖。<br>例如酒店订房例子，两个人同时预定同一酒店的房间，首先两个人同时查询到还有一间房间可以预定，然后两个人同时提交预定操作，事务1执行number=1-0，同时事务2也执行number=1-0最后修改number=0,这就导致两个人其中一个人的操作被另一个人所覆盖，REPEATABLE READ隔离级别就能避免这种丢失更新的现象，当事务1查询房间时事务就一直保持共享锁直到事务提交，而不是像前面的几个隔离级别查询完就是否共享锁，就能避免其他事务获取排他锁。</p>
+<p> <strong>4.SERIALIZABLE</strong></p>
+<p>SERIALIZABLE(可序列化)，对于前面的REPEATABLE READ能保证事务可重复读，但是事务只锁定查询第一次运行时获取的数据资源（数据行），而不能锁定查询结果之外的行，就是原本不存在于数据表中的数据。因此在一个事务中当第一个查询和第二个查询过程之间，有其他事务执行插入操作且插入数据满足第一次查询读取过滤的条件时，那么在第二次查询的结果中就会存在这些新插入的数据，使两次查询结果不一致，这种读操作称之为幻读。<br>为了避免幻读需要将隔离级别设置为SERIALIZABLE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IF OBJECT_ID(&#39;Orders&#39;,&#39;U&#39;) IS NOT NULL DROP TABLE Orders </span><br><span class="line">GO</span><br><span class="line">CREATE TABLE Orders</span><br><span class="line">(ID INT NOT NULL PRIMARY KEY,</span><br><span class="line">Price FLOAT NOT NULL,</span><br><span class="line">type INT NOT NULL</span><br><span class="line">);</span><br><span class="line">INSERT INTO Orders VALUES(10,10.00,1),(11,11.00,1),(12,12.00,1),(13,13.00,1),(14,14.00,1);</span><br><span class="line">GO</span><br></pre></td></tr></table></figure>
+<p>在回话1中执行查询操作,并将事务隔离级别设置为REPEATABLE READ(先测试一下前面更低级别的隔离)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SET TRANSACTION ISOLATION LEVEL REPEATABLE READ</span><br><span class="line">BEGIN TRANSACTION </span><br><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE TYPE&#x3D;1</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/事务隔离级别/281804234676071.png" alt="img"></p>
+<p>在回话2中执行插入操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO Orders VALUES(15,15.00,1)</span><br></pre></td></tr></table></figure>
+<p>返回回话1重新执行查询操作并提交事务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE TYPE&#x3D;1</span><br><span class="line">COMMIT TRANSACTION</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/事务隔离级别/281806149045782.png" alt="img"></p>
+<p>结果回话1中第二次查询到的数据包含了回话2新插入的数据，两次查询结果不一致（验证之前的隔离级别不能保证幻读）</p>
+<p>重新插入测试数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IF OBJECT_ID(&#39;Orders&#39;,&#39;U&#39;) IS NOT NULL DROP TABLE Orders </span><br><span class="line">GO</span><br><span class="line">CREATE TABLE Orders</span><br><span class="line">(ID INT NOT NULL PRIMARY KEY,</span><br><span class="line">Price FLOAT NOT NULL,</span><br><span class="line">type INT NOT NULL</span><br><span class="line">);</span><br><span class="line">INSERT INTO Orders VALUES(10,10.00,1),(11,11.00,1),(12,12.00,1),(13,13.00,1),(14,14.00,1);</span><br><span class="line">GO</span><br></pre></td></tr></table></figure>
+<p>接下来将回话级别设置为SERIALIZABLE,在回话1中执行查询操作,并将事务隔离级别设置为SERIALIZABLE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SET TRANSACTION ISOLATION LEVEL SERIALIZABLE</span><br><span class="line">BEGIN TRANSACTION </span><br><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE TYPE&#x3D;1</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/事务隔离级别/281809389821163.png" alt="img"></p>
+<p>在回话2中执行插入操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO Orders VALUES(15,15.00,1)</span><br></pre></td></tr></table></figure>
+<p>返回回话1重新执行查询操作并提交事务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE TYPE&#x3D;1</span><br><span class="line">COMMIT TRANSACTION</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/事务隔离级别/281810073734271.png" alt="img"></p>
+<p>两次执行的查询结果相同</p>
+<p>重置所有打开回话的默认隔离级别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET TRANSACTION ISOLATION LEVEL READ COMMITTED</span><br></pre></td></tr></table></figure>
+<p><strong>5.SNAPSHOT</strong></p>
+<p>SNAPSHOT快照：SNAPSHOT和READ COMMITTED SNAPSHOT两种隔离（可以把事务已经提交的行的上一版本保存在TEMPDB数据库中）<br>SNAPSHOT隔离级别在逻辑上与SERIALIZABLE类似<br>READ COMMITTED SNAPSHOT隔离级别在逻辑上与 READ COMMITTED类似<br>不过在快照隔离级别下读操作不需要申请获得共享锁，所以即便是数据已经存在排他锁也不影响读操作。而且仍然可以得到和SERIALIZABLE与READ COMMITTED隔离级别类似的一致性；如果目前版本与预期的版本不一致，读操作可以从TEMPDB中获取预期的版本。</p>
+<p>如果启用任何一种基于快照的隔离级别，DELETE和UPDATE语句在做出修改前都会把行的当前版本复制到TEMPDB中，而INSERT语句不需要在TEMPDB中进行版本控制，因为此时还没有行的旧数据</p>
+<p>无论启用哪种基于快照的隔离级别都会对更新和删除操作产生性能的负面影响，但是有利于提高读操作的性能因为读操作不需要获取共享锁；</p>
+<p><strong>5.1SNAPSHOT</strong></p>
+<p>SNAPSHOT 在SNAPSHOT隔离级别下,当读取数据时可以保证操作读取的行是事务开始时可用的最后提交版本<br>同时SNAPSHOT隔离级别也满足前面的已提交读,可重复读,不幻读;该隔离级别实用的不是共享锁,而是行版本控制<br>使用SNAPSHOT隔离级别首先需要在数据库级别上设置相关选项</p>
+<p>在打开的所有查询窗口中执行以下操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER DATABASE TEST SET ALLOW_SNAPSHOT_ISOLATION ON;</span><br></pre></td></tr></table></figure>
+<p>重置测试数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">IF OBJECT_ID(&#39;Orders&#39;,&#39;U&#39;) IS NOT NULL DROP TABLE Orders </span><br><span class="line">GO</span><br><span class="line">CREATE TABLE Orders</span><br><span class="line">(ID INT NOT NULL PRIMARY KEY,</span><br><span class="line">Price FLOAT NOT NULL,</span><br><span class="line">type INT NOT NULL</span><br><span class="line">);</span><br><span class="line">INSERT INTO Orders VALUES(10,10.00,1),(11,11.00,1),(12,12.00,1),(13,13.00,1),(14,14.00,1);</span><br><span class="line">GO</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">在回话1中打开事务,将订单10的价格加1,并查询跟新后的价格</span><br><span class="line">BEGIN TRANSACTION</span><br><span class="line">UPDATE Orders </span><br><span class="line">SET Price&#x3D;Price+1</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line"></span><br><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line">---查询到更新后的价格为11</span><br><span class="line"></span><br><span class="line">---在回话2中将隔离级别设置为SNAPSHOT,并打开事务(此时查询也不会因为回话1的排他锁而等待,依然可以查询到数据)</span><br><span class="line">SET TRANSACTION ISOLATION LEVEL SNAPSHOT</span><br><span class="line">BEGIN TRANSACTION</span><br><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line"></span><br><span class="line">---查询到的结果还是回话1修改前的价格,由于回话1在默认的READ COMMITTED隔离级别下运行,SQL SERVER必须在更新前把行的一个副本复制到TEMPDB数据库中</span><br><span class="line">--在SNAPSHOT级别启动事务会请求行版本</span><br><span class="line"></span><br><span class="line">---现在在回话1中执行提交事务,此时订单10的价格为11</span><br><span class="line">COMMIT TRANSACTION</span><br><span class="line"></span><br><span class="line">---再次在回话二中查询订单10的价格并提交事务,结果还是10,因为事务要保证两次查询的结果相同</span><br><span class="line"></span><br><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line"></span><br><span class="line">COMMIT TRANSACTION</span><br><span class="line"></span><br><span class="line">---此时如果在回话2中重新打开一个事务,查询到的订单10的价格则是11</span><br><span class="line">BEGIN TRANSACTION</span><br><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line"></span><br><span class="line">COMMIT TRANSACTION</span><br><span class="line"></span><br><span class="line">&#x2F;*SNAPSHOT隔离级别保证操作读取的行是事务开始时可用的最后已提交版本,由于回话1的事务未提交,所以订单10的最后提交版本还是修改前的价格10,所以回话2读取到的价格是回话2事务开始前的已提交版本价格10,当回话1提交事务后,回话2重新新建一个事务此时事务开启前的价格已经是11了，所以查询到的价格是11，同时SNAPSHOT隔离级别还能保证SERIALIZABLE的隔离级别*&#x2F;</span><br></pre></td></tr></table></figure>
+<p><strong>5.2READ COMMITTED SNAPSHOT</strong></p>
+<p>READ COMMITTED SNAPSHOT也是基于行版本控制,但是READ COMMITTED SNAPSHOT的隔离级别是读操作之前的最后已提交版本,而不是事务前的已提交版本，有点类似前面的READ COMMITTED能保证已提交读,但是不能保证可重复读,不能避免幻读,但是又比 READ COMMITTED隔离级别多出了不需要获取共享锁就可以读取数据</p>
+<p>要启用READ COMMITTED SNAPSHOT隔离级别同样需要修改数据库选项，在回话1，回话2中执行以下操作(执行下面的操作当前连接必须是数据库的唯一连接，可以通过查询已连接当前数据库的进程,然后KILL掉那些进程,然后再执行该操作,否则可能无法执行成功)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">ALTER DATABASE TEST SET READ_COMMITTED_SNAPSHOT ON</span><br><span class="line"></span><br><span class="line">IF OBJECT_ID(&#39;Orders&#39;,&#39;U&#39;) IS NOT NULL DROP TABLE Orders </span><br><span class="line">GO</span><br><span class="line">CREATE TABLE Orders</span><br><span class="line">(ID INT NOT NULL PRIMARY KEY,</span><br><span class="line">Price FLOAT NOT NULL,</span><br><span class="line">type INT NOT NULL</span><br><span class="line">);</span><br><span class="line">INSERT INTO Orders VALUES(10,10.00,1),(11,11.00,1),(12,12.00,1),(13,13.00,1),(14,14.00,1);</span><br><span class="line">GO</span><br><span class="line"></span><br><span class="line">-----在回话1中打开事务,将订单10的价格加1,并查询跟新后的价格,并保持事务一直处于打开状态</span><br><span class="line">BEGIN TRANSACTION</span><br><span class="line">UPDATE Orders </span><br><span class="line">SET Price&#x3D;Price+1</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line"></span><br><span class="line">--查询到的价格是11</span><br><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line"></span><br><span class="line">---在回话2中打开事务查询订单10并一直保持事务处于打开状态(此时由于回话1还未提交事务,所以回话2中查询到的还是回话1执行事务之前保存的行版本)</span><br><span class="line">BEGIN TRANSACTION</span><br><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line">--查询到的价格还是10</span><br><span class="line"></span><br><span class="line">---在回话1中提交事务</span><br><span class="line">COMMIT TRANSACTION </span><br><span class="line"></span><br><span class="line">---在回话2中再次执行查询订单10的价格,并提交事务</span><br><span class="line">SELECT ID,Price,type FROM Orders</span><br><span class="line">WHERE ID&#x3D;10</span><br><span class="line">COMMIT TRANSACTION </span><br><span class="line">--此时的价格为回话1修改后的价格11,而不是事务之前已提交版本的价格,也就是READ COMMITTED SNAPSHOT隔离级别在同一事务中两次查询的结果不一致.</span><br></pre></td></tr></table></figure>
+<p>关闭所有连接,然后打开一个新的连接,禁用之前设置的数据库快照隔离级别选项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ALTER DATABASE TEST SET ALLOW_SNAPSHOT_ISOLATION OFF;</span><br><span class="line"></span><br><span class="line">ALTER DATABASE TEST SET READ_COMMITTED_SNAPSHOT OFF;</span><br></pre></td></tr></table></figure>
+<p><strong>总结</strong></p>
+<p>   理解了事务隔离级别有助于理解事务的死锁。</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2022/07/09/resource-MicroService-other-关于2-1-的详细解释/" data-toggle="tooltip" data-placement="top" title="关于2>&1 &的详细解释">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2022/07/05/resource-java-Base-java技术栈/" data-toggle="tooltip" data-placement="top" title="java技术栈">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#SQL-Server-事务隔离级别详解"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">SQL Server 事务隔离级别详解</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#sqlServer" title="sqlServer">sqlServer</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

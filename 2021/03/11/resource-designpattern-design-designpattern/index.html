@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          java设计模式 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/03/11/resource-designpattern-design-designpattern/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/Design/design.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>java设计模式</h1>
+                        <h2 class="subheading">代表了最佳的实践，通常被有经验的面向对象的软件开发人员所采用</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-03-11
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">1.8k</span> and
+                                Reading Time <span class="post-count">6</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="设计模式简介"><a href="#设计模式简介" class="headerlink" title="设计模式简介"></a>设计模式简介</h1><p>设计模式（Design pattern）代表了最佳的实践，通常被有经验的面向对象的软件开发人员所采用。设计模式是软件开发人员在软件开发过程中面临的一般问题的解决方案。这些解决方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。</p>
+<p>设计模式是一套被反复使用的、多数人知晓的、经过分类编目的、代码设计经验的总结。使用设计模式是为了重用代码、让代码更容易被他人理解、保证代码可靠性。 毫无疑问，设计模式于己于他人于系统都是多赢的，设计模式使代码编制真正工程化，设计模式是软件工程的基石，如同大厦的一块块砖石一样。项目中合理地运用设计模式可以完美地解决很多问题，每种模式在现实中都有相应的原理来与之对应，每种模式都描述了一个在我们周围不断重复发生的问题，以及该问题的核心解决方案，这也是设计模式能被广泛应用的原因。</p>
+<h2 id="设计模式的使用"><a href="#设计模式的使用" class="headerlink" title="设计模式的使用"></a>设计模式的使用<sunfy-line></h2><p>设计模式在软件开发中的两个主要用途。</p>
+<h3 id="开发人员的共同平台"><a href="#开发人员的共同平台" class="headerlink" title="开发人员的共同平台"></a>开发人员的共同平台</h3><p>设计模式提供了一个标准的术语系统，且具体到特定的情景。例如，单例设计模式意味着使用单个对象，这样所有熟悉单例设计模式的开发人员都能使用单个对象，并且可以通过这种方式告诉对方，程序使用的是单例模式。</p>
+<h3 id="最佳的实践"><a href="#最佳的实践" class="headerlink" title="最佳的实践"></a>最佳的实践</h3><p>设计模式已经经历了很长一段时间的发展，它们提供了软件开发过程中面临的一般问题的最佳解决方案。学习这些模式有助于经验不足的开发人员通过一种简单快捷的方式来学习软件设计。</p>
+<h2 id="设计模式的类型"><a href="#设计模式的类型" class="headerlink" title="设计模式的类型"></a>设计模式的类型</h2><p>根据设计模式的参考书 <strong>Design Patterns - Elements of Reusable Object-Oriented Software（中文译名：设计模式 - 可复用的面向对象软件元素）</strong> 中所提到的，总共有 23 种设计模式。这些模式可以分为三大类：创建型模式（Creational Patterns）、结构型模式（Structural Patterns）、行为型模式（Behavioral Patterns）。当然，我们还会讨论另一类设计模式：J2EE 设计模式。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">模式 &amp; 描述</th>
+<th style="text-align:left">包括</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>创建型模式</strong> 这些设计模式提供了一种<br />在创建对象的同时隐藏创建逻辑的方式，<br />而不是使用 new 运算符直接实例化对象。<br />这使得程序在判断针对某个给定实例<br />需要创建哪些对象时更加灵活。</td>
+<td style="text-align:left"><a href="https://sunfy.top/2020/09/10/resource-designpattern-build-factory/" target="_blank" rel="noopener">工厂模式（Factory Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-build-factory.json">移动端</a><br /><a href="https://sunfy.top/2020/09/10/resource-designpattern-build-Abstractfactory/" target="_blank" rel="noopener">抽象工厂模式（Abstract Factory Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-build-Abstractfactory.json">移动端</a><br /><a href="https://sunfy.top/2019/07/03/resource-designpattern-build-singleton/" target="_blank" rel="noopener">单例模式（Singleton Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-build-singleton.json">移动端</a><br /><a href="https://sunfy.top/2019/07/06/resource-designpattern-build-builder/" target="_blank" rel="noopener">建造者模式（Builder Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-build-builder.json">移动端</a><br /><a href="https://sunfy.top/2020/10/10/resource-designpattern-build-Prototype/" target="_blank" rel="noopener">原型模式（Prototype Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-build-Prototype.json">移动端</a></td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>结构型模式</strong> 这些设计模式关注类和对象的组合。<br />继承的概念被用来组合接口和定义组合对象获得新功能的方式。</td>
+<td style="text-align:left"><a href="https://sunfy.top/2020/09/10/resource-designpattern-structure-Adapter/" target="_blank" rel="noopener">适配器模式（Adapter Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-structure-Adapter.json">移动端</a><br /><a href="https://sunfy.top/2020/10/10/resource-designpattern-structure-Bridge/" target="_blank" rel="noopener">桥接模式（Bridge Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-structure-Bridge.json">移动端</a><br /><a href="https://sunfy.top/2020/09/10/resource-designpattern-structure-Filter/" target="_blank" rel="noopener">过滤器模式（Filter、Criteria Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-structure-Filter.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-structure-Composite/" target="_blank" rel="noopener">组合模式（Composite Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-structure-Composite.json">移动端</a><br /><a href="https://sunfy.top/2020/09/10/resource-designpattern-structure-Decorator/" target="_blank" rel="noopener">装饰器模式（Decorator Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-structure-Decorator.json">移动端</a><br /><a href="https://sunfy.top/2020/10/10/resource-designpattern-structure-Facade/" target="_blank" rel="noopener">外观模式（Facade Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-structure-Facade.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-structure-Flyweight/" target="_blank" rel="noopener">享元模式（Flyweight Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-structure-Flyweight.json">移动端</a><br /><a href="https://sunfy.top/2020/08/11/resource-designpattern-structure-proxy/" target="_blank" rel="noopener">代理模式（Proxy Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-structure-proxy.json">移动端</a></td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>行为型模式</strong> 这些设计模式特别关注对象之间的通信。</td>
+<td style="text-align:left"><a href="https://sunfy.top/2020/09/10/resource-designpattern-behavior-Responsibility/" target="_blank" rel="noopener">责任链模式（Chain of Responsibility Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-Responsibility.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-behavior-Command/" target="_blank" rel="noopener">命令模式（Command Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-Command.json">移动端</a><br /><a href="https://sunfy.top/2020/10/11/resource-designpattern-behavior-Interpreter/" target="_blank" rel="noopener">解释器模式（Interpreter Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-Interpreter.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-behavior-Iterator/" target="_blank" rel="noopener">迭代器模式（Iterator Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-Iterator.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-behavior-Mediator/" target="_blank" rel="noopener">中介者模式（Mediator Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-Mediator.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-behavior-Memento/" target="_blank" rel="noopener">备忘录模式（Memento Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-Memento.json">移动端</a><br /><a href="https://sunfy.top/2020/07/10/resource-designpattern-behavior-observer/" target="_blank" rel="noopener">观察者模式（Observer Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-observer.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-behavior-State/" target="_blank" rel="noopener">状态模式（State Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-State.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-behavior-Null/" target="_blank" rel="noopener">空对象模式（Null Object Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-Null.json">移动端</a><br /><a href="https://sunfy.top/2019/07/06/resource-designpattern-behavior-Strategy/" target="_blank" rel="noopener">策略模式（Strategy Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-Strategy.json">移动端</a><br /><a href="https://sunfy.top/2019/07/06/resource-designpattern-behavior-Template/" target="_blank" rel="noopener">模板模式（Template Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-Template.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-behavior-Visitor/" target="_blank" rel="noopener">访问者模式（Visitor Pattern）</a> <a href="/pages/detail/detail?id=api/articles/resource-designpattern-behavior-Visitor.json">移动端</a></td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>J2EE 模式</strong> 这些设计模式特别关注表示层。<br />这些模式是由 Sun Java Center 鉴定的。</td>
+<td style="text-align:left"><a href="https://sunfy.top/2020/10/10/resource-designpattern-J2EE-mvc/" target="_blank" rel="noopener">MVC 模式（MVC Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-J2EE-mvc.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-J2EE-Business/" target="_blank" rel="noopener">业务代表模式（Business Delegate Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-J2EE-Business.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-J2EE-Composite/" target="_blank" rel="noopener">组合实体模式（Composite Entity Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-J2EE-Composite.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-J2EE-DataAccess/" target="_blank" rel="noopener">数据访问对象模式（Data Access Object Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-J2EE-DataAccess.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-J2EE-Front/" target="_blank" rel="noopener">前端控制器模式（Front Controller Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-J2EE-Front.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-J2EE-Intercepting/" target="_blank" rel="noopener">拦截过滤器模式（Intercepting Filter Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-J2EE-Intercepting.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-J2EE-Service/" target="_blank" rel="noopener">服务定位器模式（Service Locator Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-J2EE-Service.json">移动端</a><br /><a href="https://sunfy.top/2020/10/12/resource-designpattern-J2EE-Transfer/" target="_blank" rel="noopener">传输对象模式（Transfer Object Pattern）</a><a href="/pages/detail/detail?id=api/articles/resource-designpattern-J2EE-Transfer.json">移动端</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><a href="/img/the-relationship-between-design-patterns.jpg">下面用一个图片来整体描述一下设计模式之间的关系：</a></p>
+<p><img src="../../../../img/designpattern/the-relationship-between-design-patterns.jpg" alt="设计模式之间的关系"></p>
+<h2 id="设计模式的六大原则"><a href="#设计模式的六大原则" class="headerlink" title="设计模式的六大原则"></a>设计模式的六大原则</h2><p><strong>1、开闭原则（Open Close Principle）</strong></p>
+<p>开闭原则的意思是：<strong>对扩展开放，对修改关闭</strong>。在程序需要进行拓展的时候，不能去修改原有的代码，实现一个热插拔的效果。简言之，是为了使程序的扩展性好，易于维护和升级。想要达到这样的效果，我们需要使用接口和抽象类，后面的具体设计中我们会提到这点。</p>
+<p><strong>2、里氏代换原则（Liskov Substitution Principle）</strong></p>
+<p>里氏代换原则是面向对象设计的基本原则之一。 里氏代换原则中说，任何基类可以出现的地方，子类一定可以出现。LSP 是继承复用的基石，只有当派生类可以替换掉基类，且软件单位的功能不受到影响时，基类才能真正被复用，而派生类也能够在基类的基础上增加新的行为。里氏代换原则是对开闭原则的补充。实现开闭原则的关键步骤就是抽象化，而基类与子类的继承关系就是抽象化的具体实现，所以里氏代换原则是对实现抽象化的具体步骤的规范。</p>
+<p><strong>3、依赖倒转原则（Dependence Inversion Principle）</strong></p>
+<p>这个原则是开闭原则的基础，具体内容：针对接口编程，依赖于抽象而不依赖于具体。</p>
+<p><strong>4、接口隔离原则（Interface Segregation Principle）</strong></p>
+<p>这个原则的意思是：使用多个隔离的接口，比使用单个接口要好。它还有另外一个意思是：降低类之间的耦合度。由此可见，其实设计模式就是从大型软件架构出发、便于升级和维护的软件设计思想，它强调降低依赖，降低耦合。</p>
+<p><strong>5、迪米特法则，又称最少知道原则（Demeter Principle）</strong></p>
+<p>最少知道原则是指：一个实体应当尽量少地与其他实体之间发生相互作用，使得系统功能模块相对独立。</p>
+<p><strong>6、合成复用原则（Composite Reuse Principle）</strong></p>
+<p>合成复用原则是指：尽量使用合成/聚合的方式，而不是使用继承。</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/03/16/resource-DB-SQLServer-Centos-sqlServer/" data-toggle="tooltip" data-placement="top" title="Centos 安装 sqlServer">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/03/11/resource-tools-git-maven-mavenInstallJar/" data-toggle="tooltip" data-placement="top" title="使用maven命令安装指定(第三方)jar包到本地仓库">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#设计模式简介"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">设计模式简介</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#设计模式的使用"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">设计模式的使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#开发人员的共同平台"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">开发人员的共同平台</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#最佳的实践"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">最佳的实践</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#设计模式的类型"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">设计模式的类型</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#设计模式的六大原则"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">设计模式的六大原则</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

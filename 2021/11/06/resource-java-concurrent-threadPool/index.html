@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          并发线程池原理分析 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/11/06/resource-java-concurrent-threadPool/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/concurrent/threadpool.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>并发线程池原理分析</h1>
+                        <h2 class="subheading">并发线程与线程池区别以及线程池原理分析</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-11-06
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.3k</span> and
+                                Reading Time <span class="post-count">9</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="线程池与线程对比"><a href="#线程池与线程对比" class="headerlink" title="线程池与线程对比"></a>线程池与线程对比</h1><h2 id="new-Thread-的弊端"><a href="#new-Thread-的弊端" class="headerlink" title="new Thread 的弊端"></a>new Thread 的弊端</h2><ul>
+<li><strong>创建：</strong>每次new Thread时，新建对象性能差。</li>
+<li><strong>管理：</strong>线程缺乏统一管理，可能无限制新建线程，相互之间竞争，可能占用过多系统资源导致死机或<code>oom</code>。</li>
+<li><strong>功能：</strong>缺乏更多功能，如定时执行、定期执行、线程中断。</li>
+</ul>
+<h2 id="Java提供的四种线程池相比new-Thread的优势"><a href="#Java提供的四种线程池相比new-Thread的优势" class="headerlink" title="Java提供的四种线程池相比new Thread的优势"></a>Java提供的四种线程池相比new Thread的优势</h2><ul>
+<li><strong>创建：</strong>重用存在的线程，减少对象创建、消亡的开销，性能佳。</li>
+<li><strong>管理：</strong>可有效控制最大并发线程数，提高系统资源的使用率，同时避免过多资源竞争，避免堵塞。</li>
+<li><strong>功能：</strong>提供定时执行、定期执行、单线程、并发数控制等功能。</li>
+</ul>
+<h2 id="Java线程池"><a href="#Java线程池" class="headerlink" title="Java线程池"></a>Java线程池</h2><p>Java通过Executors提供四种线程池<sunfy-line></p>
+<ul>
+<li><code>newCachedThreadPool</code> 创建一个可缓存的线程池。如果线程池的大小超过了处理任务所需要的线程，那么就会回收部分空闲（60秒不执行任务）的线程，当任务数增加时，此线程池又可以智能的添加新线程来处理任务。此线程池不会对线程池大小做限制，线程池大小完全依赖 于操作系统（或者说JVM）能够创建的最大线程大小。</li>
+<li><code>newFixedThreadPool</code> 创建固定大小的线程池。每次提交一个任务就创建一个线程，直到线程达到线程池的最大大小。线程池的大小一旦达到最大值就会保持不变，如果某个线程因为执行异常而结束 ，那么线程池会补充一个新线程。</li>
+<li><code>newScheduledThreadPool</code> 创建一个大小无限的线程池。此线程池支持定时以及周期性执行任务的需求。</li>
+<li><code>newSingleThreadExecutor</code> 创建一个单线程的线程池。这个线程池只有一个线程在工作，也就是相当于单线程串行执行所有任务。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它。此线程池保证所有任务的执行顺序按照任务的提交顺序执行(FIFO, LIFO)。</li>
+</ul>
+<h1 id="实例对比"><a href="#实例对比" class="headerlink" title="实例对比"></a>实例对比</h1><p>看一个例子，来对别线程与线程池的执行效率</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 线程执行情况</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="comment">// 记录开始时间</span></span><br><span class="line">    Long start = System.currentTimeMillis();</span><br><span class="line">    <span class="keyword">final</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line">    <span class="keyword">final</span> List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</span><br><span class="line">        Thread thread = <span class="keyword">new</span> Thread() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                list.add(random.nextInt());</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        thread.start();</span><br><span class="line">        thread.join();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 输出运行时间和运行list结果</span></span><br><span class="line">    System.out.println(<span class="string">"时间："</span> + (System.currentTimeMillis() - start));</span><br><span class="line">    System.out.println(<span class="string">"大小："</span> + list.size());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行结果，因电脑而异</span></span><br><span class="line">时间：<span class="number">16733</span></span><br><span class="line">大小：<span class="number">100000</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// java线程池执行相同的任务</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    Long start = System.currentTimeMillis();</span><br><span class="line">    <span class="keyword">final</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line">    <span class="keyword">final</span> List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">    <span class="comment">// 创建一个单线程化的线程池</span></span><br><span class="line">    ExecutorService executorService = Executors.newSingleThreadExecutor();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</span><br><span class="line">        executorService.execute(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                list.add(random.nextInt());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    executorService.shutdown();</span><br><span class="line">    <span class="comment">// 阻塞直到所有任务在关闭请求后完成执行，或发生超时，或当前线程被中断，以先发生者为准。</span></span><br><span class="line">    executorService.awaitTermination(<span class="number">1</span>, TimeUnit.DAYS);</span><br><span class="line">    System.out.println(<span class="string">"时间："</span>+(System.currentTimeMillis() - start));</span><br><span class="line">    System.out.println(<span class="string">"大小："</span>+list.size());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行结果，因电脑而异</span></span><br><span class="line">时间：<span class="number">62</span></span><br><span class="line">大小：<span class="number">100000</span></span><br></pre></td></tr></table></figure>
+<p>从执行结果看，很显而易见。线程池和线程执行效率完全不在一个数量级。</p>
+<p>对比来看，使用线程运行的程序：</p>
+<ul>
+<li>创建线程数：100001个</li>
+<li>创建对象数：100000个</li>
+</ul>
+<p>使用线程池的程序：</p>
+<ul>
+<li>创建线程数：2个</li>
+<li>创建对象数：100000个</li>
+</ul>
+<p>从上面的例子来看，确实线程池比线程的执行效率快很多，但是使用线程池一定比线程快吗？</p>
+<p>这个答案肯定也是否定的，接下来我们来对比一下java中提供的几种线程池的执行？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 线程池执行方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ExecutorService cachedThreadPool = Executors.newCachedThreadPool();<span class="comment">//快</span></span><br><span class="line">    ExecutorService fixedThreadPool = Executors.newFixedThreadPool(<span class="number">2</span>);<span class="comment">//慢</span></span><br><span class="line">    ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();<span class="comment">//最慢</span></span><br><span class="line">    <span class="comment">// 使用线程池执行任务</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++) &#123;</span><br><span class="line">        singleThreadExecutor.execute(<span class="keyword">new</span> MyTask(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 任务</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTask</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyTask</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.i = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 输出打印日志</span></span><br><span class="line">        System.out.println(<span class="string">"线程"</span> + Thread.currentThread().getName() + <span class="string">"执行第"</span> + i + <span class="string">"个任务"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000L</span>);<span class="comment">//业务逻辑</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果分析：</p>
+<p>最终不论采用哪个线程池，最终十个任务都会被执行这个是必然的，但是在执行的效率上差别还是很大的。</p>
+<ul>
+<li><p><code>cachedThreadPool</code>：可以看到执行效率是最快的，从执行结果来看，分别为每一个任务new了一个线程是去单独执行相应的任务。</p>
+<blockquote>
+<p>线程pool-1-thread-1执行第1个任务<br>线程pool-1-thread-2执行第2个任务<br>线程pool-1-thread-3执行第3个任务<br>线程pool-1-thread-4执行第4个任务<br>线程pool-1-thread-5执行第5个任务<br>线程pool-1-thread-6执行第6个任务<br>线程pool-1-thread-7执行第7个任务<br>线程pool-1-thread-8执行第8个任务<br>线程pool-1-thread-9执行第9个任务<br>线程pool-1-thread-10执行第10个任务</p>
+</blockquote>
+</li>
+<li><p><code>fixedThreadPool</code>：这个线程池执行效率应该是居中，同时这个线程池的执行效率和传入的参数是有关的，从输出的结果可以看到，传入参数是多少，就会创建多少个线程同步执行任务。</p>
+<blockquote>
+<p>线程pool-2-thread-2执行第2个任务<br>线程pool-2-thread-1执行第1个任务<br>线程pool-2-thread-2执行第3个任务<br>线程pool-2-thread-1执行第4个任务<br>线程pool-2-thread-2执行第5个任务<br>线程pool-2-thread-1执行第6个任务<br>线程pool-2-thread-2执行第7个任务<br>线程pool-2-thread-1执行第8个任务<br>线程pool-2-thread-2执行第9个任务<br>线程pool-2-thread-1执行第10个任务</p>
+</blockquote>
+</li>
+<li><p><code>singleThreadExecutor</code>：从线程池的名称也可以猜到，这个是一个单线程的线程池，每次只能执行一个任务，自然效率也是最低的。执行结果中也可以很明显看到只有一个线程在执行任务。</p>
+<blockquote>
+<p>线程pool-3-thread-1执行第1个任务<br>线程pool-3-thread-1执行第2个任务<br>线程pool-3-thread-1执行第3个任务<br>线程pool-3-thread-1执行第4个任务<br>线程pool-3-thread-1执行第5个任务<br>线程pool-3-thread-1执行第6个任务<br>线程pool-3-thread-1执行第7个任务<br>线程pool-3-thread-1执行第8个任务<br>线程pool-3-thread-1执行第9个任务<br>线程pool-3-thread-1执行第10个任务</p>
+</blockquote>
+</li>
+</ul>
+<p>由上面分析我们可以看到java中提供了不同情况的线程池，但是在阿里代码手册中并不让使用java默认的线程池，那这又是为什么呢？</p>
+<p>我们看下阿里开发手册中关于线程与线程池的创建是如何规定的：</p>
+<p><img src="../../../../img/threadPool/image-20211106231735493.png" alt="image-20211106231735493"></p>
+<p>要求自定义线程工厂。</p>
+<blockquote>
+<p>//自定义线程</p>
+<p>ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(10, 20, 20L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue(10));</p>
+</blockquote>
+<h1 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h1><h2 id="线程池执行流程"><a href="#线程池执行流程" class="headerlink" title="线程池执行流程"></a>线程池执行流程</h2><p><img src="../../../../img/threadPool/image-20211107145649860.png" alt="image-20211107145649860"></p>
+<p><img src="../../../../img/threadPool/image-20211107145215044.png" alt="image-20211107145215044"></p>
+<h2 id="线程池的五种状态"><a href="#线程池的五种状态" class="headerlink" title="线程池的五种状态"></a>线程池的五种状态</h2><p><img src="../../../../img/threadPool/image-20211107152353491.png" alt="image-20211107152353491"></p>
+<p>线程池的5种状态：<code>Running</code>、<code>ShutDown</code>、<code>Stop</code>、<code>Tidying</code>、<code>Terminated</code>。</p>
+<p><strong>RUNNING</strong></p>
+<ul>
+<li>状态说明：线程池处在<code>RUNNING</code>状态时，能够接收新任务（线程池没有满的情况下），以及对已添加的任务进行处理。</li>
+<li>状态切换：线程池的初始化状态是<code>RUNNING</code>。换句话说，线程池一旦被创建，就处于<code>RUNNING</code>状态，并且线程池中的任务数为<code>0</code>。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> AtomicInteger ctl = <span class="keyword">new</span> AtomicInteger(ctlOf(RUNNING, <span class="number">0</span>));</span><br></pre></td></tr></table></figure>
+<p><strong>SHUTDOWN</strong></p>
+<ul>
+<li>状态说明：线程池处在<code>SHUTDOWN</code>状态时，不接收新任务，但能处理已添加的任务。</li>
+<li>状态切换：调用线程池的<code>shutdown()</code>接口时，线程池由<code>RUNNING</code> -&gt; <code>SHUTDOWN</code>。</li>
+</ul>
+<p><strong>STOP</strong></p>
+<ul>
+<li>状态说明：线程池处在<code>STOP</code>状态时，不接收新任务，不处理已添加的任务，并且会中断正在处理的任务。</li>
+<li>状态切换：调用线程池的<code>shutdownNow()</code>接口时，线程池由(<code>RUNNING</code> or <code>SHUTDOWN</code> ) -&gt; <code>STOP</code>。</li>
+</ul>
+<p><strong>TIDYING</strong></p>
+<ul>
+<li>状态说明：当所有的任务已终止，<code>ctl</code>记录的<code>任务数量</code>为<code>0</code>，线程池会变为<code>TIDYING</code>状态。当线程池变为<code>TIDYING</code>状态时，会执行钩子函数<code>terminated()</code>。<code>terminated()</code>在<code>ThreadPoolExecutor</code>类中是空的，若用户想在线程池变为<code>TIDYING</code>时，进行相应的处理；可以通过重载<code>terminated()</code>函数来实现。</li>
+<li>状态切换：当线程池在<code>SHUTDOWN</code>状态下，阻塞队列（任务队列）为空并且线程池中执行的任务也为空时，就会由 <code>SHUTDOWN</code> -&gt;<code>TIDYING</code>。 当线程池在<code>STOP</code>状态下，线程池中执行的任务为空时，就会由<code>STOP</code> -&gt; <code>TIDYING</code>。</li>
+</ul>
+<p><strong>TERMINATED</strong></p>
+<ul>
+<li>状态说明：线程池彻底终止，就变成<code>TERMINATED</code>状态。</li>
+<li>状态切换：线程池处在<code>TIDYING</code>状态时，执行完<code>terminated()</code>之后，就会由 <code>TIDYING</code> -&gt; <code>TERMINATED</code>。</li>
+</ul>
+<h2 id="四种拒绝策略"><a href="#四种拒绝策略" class="headerlink" title="四种拒绝策略"></a>四种拒绝策略</h2><p><code>ThreadPoolExecutor</code>内部有实现4个拒绝策略： </p>
+<h3 id="核心参数"><a href="#核心参数" class="headerlink" title="核心参数"></a>核心参数</h3><ul>
+<li>corePoolSize：核心线程数</li>
+<li>maximumPoolSize：最大线程数</li>
+<li>workQueue：阻塞队列，存储等待执行的任务</li>
+<li>keepAliveTime：线程没有任务执行时保持存活时间</li>
+<li>unit：keepAliveTime的时间单位</li>
+<li>threadFactory：线程工厂</li>
+<li>rejectHandler：拒绝策略，当阻塞队列满了时，没有空闲的线程池，此时需要一种策略处理当前任务</li>
+</ul>
+<p><img src="../../../../img/threadPool/image-20211108092550393.png" alt="image-20211108092550393"></p>
+<p><img src="../../../../img/threadPool/image-20220919223930024.png" alt="image-20220919223930024"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/11/07/resource-java-concurrent-CAS/" data-toggle="tooltip" data-placement="top" title="CAS操作分析">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/10/26/resource-java-concurrent-visibility/" data-toggle="tooltip" data-placement="top" title="并发的可见性深入分析">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#线程池与线程对比"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">线程池与线程对比</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#new-Thread-的弊端"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">new Thread 的弊端</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Java提供的四种线程池相比new-Thread的优势"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Java提供的四种线程池相比new Thread的优势</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Java线程池"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Java线程池</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#实例对比"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">实例对比</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#源码分析"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">源码分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#线程池执行流程"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">线程池执行流程</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#线程池的五种状态"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">线程池的五种状态</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#四种拒绝策略"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">四种拒绝策略</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#核心参数"><span class="toc-nav-number">3.3.1.</span> <span class="toc-nav-text">核心参数</span></a></li></ol></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

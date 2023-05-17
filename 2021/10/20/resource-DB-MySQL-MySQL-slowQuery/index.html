@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          MySQL慢查询 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/10/20/resource-DB-MySQL-MySQL-slowQuery/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/DB/slowQuery.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+                            
+                        </div>
+
+                        <h1>MySQL慢查询</h1>
+                        <h2 class="subheading">由long_query_time执行时间超过几秒钟并且至少min_examined_row_limit需要检查行的SQL语句组成</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-10-20
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2k</span> and
+                                Reading Time <span class="post-count">7</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>以下基于mysql5.7版本</p>
+<p>官方说明：慢查询日志由<a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_long_query_time" target="_blank" rel="noopener"><code>long_query_time</code></a>执行时间超过几秒钟并且至少 <a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_min_examined_row_limit" target="_blank" rel="noopener"><code>min_examined_row_limit</code></a>需要检查行的 SQL 语句组成 。慢查询日志可用于查找需要很长时间执行的查询，因此可以进行优化。但是，检查长而缓慢的查询日志可能是一项耗时的任务。为了使这更容易，您可以使用 <a href="https://dev.mysql.com/doc/refman/5.7/en/mysqldumpslow.html" target="_blank" rel="noopener"><strong>mysqldumpslow</strong></a>命令来处理慢查询日志文件并总结其内容。请参阅 <a href="https://dev.mysql.com/doc/refman/5.7/en/mysqldumpslow.html" target="_blank" rel="noopener">第 4.6.8 节，“mysqldumpslow - 总结慢查询日志文件”</a>。</p>
+<p>获取初始锁的时间不计入执行时间。<a href="https://dev.mysql.com/doc/refman/5.7/en/mysqld.html" target="_blank" rel="noopener"><strong>mysqld</strong></a>会在执行完所有锁后，将语句写入慢查询日志，因此日志顺序可能与执行顺序不同。</p>
+<p>MySQL的慢查询，全名是慢查询日志，是MySQL提供的一种日志记录，用来记录MySQL中响应时间超过阈值的语句。</p>
+<p>具体的环境中，运行时间超过<code>long_query_time</code>值的SQL语句，则会被记录到慢查询日志中。</p>
+<p><code>long_query_time</code>默认值为10，就是SQL查询时间超过设定值时，会记录当前SQL。</p>
+<p>MySQL默认不启动慢查询日志，非调优需要，一般不建议启动该参数，因为开启慢查询后或多或少会对性能有一些影响。</p>
+<p>MySQL（5.7）官方对慢查询的说明：<a href="https://dev.mysql.com/doc/refman/5.7/en/slow-query-log.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/slow-query-log.html</a></p>
+<h1 id="日志参数"><a href="#日志参数" class="headerlink" title="日志参数"></a>日志参数</h1><p><strong>slow_query_log</strong> 设置<a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_slow_query_log" target="_blank" rel="noopener"><code>slow_query_log</code></a> 为 0 以禁用日志或设置为 1 以启用它。</p>
+<p><strong>slow_query_log_file</strong> 设置 <a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_slow_query_log_file" target="_blank" rel="noopener"><code>slow_query_log_file</code></a>以指定日志文件的名称</p>
+<p><strong>log_queries_not_using_indexes</strong> 要在写入慢查询日志的语句中包含不使用行查找索引的查询，请启用 <a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_log_queries_not_using_indexes" target="_blank" rel="noopener"><code>log_queries_not_using_indexes</code></a> 系统变量。（即使启用了该变量，服务器也不会记录由于表的行数少于两行而不会从索引的存在中受益的查询。）</p>
+<p><strong>log_throttle_queries_not_using_indexes</strong> 当记录不使用索引的查询时，慢查询日志可能会快速增长。可以通过设置<a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_log_throttle_queries_not_using_indexes" target="_blank" rel="noopener"><code>log_throttle_queries_not_using_indexes</code></a> 系统变量对这些查询设置速率限制 。默认情况下，此变量为 0，这意味着没有限制。正值对不使用索引的查询的日志记录施加了每分钟限制。第一个这样的查询打开一个 60 秒的窗口，在该窗口中服务器记录查询达到给定的限制，然后抑制其他查询。如果在窗口结束时有被抑制的查询，服务器会记录一个摘要，指示有多少查询以及在这些查询中花费的总时间。当服务器记录下一个不使用索引的查询时，下一个 60 秒窗口开始。</p>
+<p>服务器按照以下顺序使用控制参数来决定是否将查询写入慢查询日志：</p>
+<ul>
+<li>查询必须不是管理语句，或者 <a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_log_slow_admin_statements" target="_blank" rel="noopener"><code>log_slow_admin_statements</code></a> 必须启用。</li>
+<li>查询必须至少花费了 <a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_long_query_time" target="_blank" rel="noopener"><code>long_query_time</code></a>几秒钟，或者 <a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_log_queries_not_using_indexes" target="_blank" rel="noopener"><code>log_queries_not_using_indexes</code></a> 必须启用并且查询没有使用索引进行行查找。</li>
+<li>查询必须至少检查过 <a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_min_examined_row_limit" target="_blank" rel="noopener"><code>min_examined_row_limit</code></a> 行。</li>
+<li>不得根据<a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_log_throttle_queries_not_using_indexes" target="_blank" rel="noopener"><code>log_throttle_queries_not_using_indexes</code></a> 设置抑制查询 。</li>
+</ul>
+<h1 id="慢查询日志内容"><a href="#慢查询日志内容" class="headerlink" title="慢查询日志内容"></a>慢查询日志内容</h1><p>启用慢查询日志后，服务器将输出写入<a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_log_output" target="_blank" rel="noopener"><code>log_output</code></a>系统变量指定的任何目的地 。如果启用日志，服务器将打开日志文件并将启动消息写入其中。但是，除非<code>FILE</code>选择了日志目标，否则不会将查询进一步记录到文件中。如果目标是 <code>NONE</code>，则即使启用了慢查询日志，服务器也不会写入任何查询。如果<code>FILE</code>未选择作为输出目的地，则设置日志文件名对日志记录没有影响。</p>
+<p>如果启用慢查询日志并<code>FILE</code>选择作为输出目标，则写入日志的每个语句前面都有一行以<code>#</code>字符开头 并具有以下字段（所有字段在一行中）：</p>
+<ul>
+<li><p><code>Query_time:</code>duration</p>
+<p>语句执行时间（以秒为单位）。</p>
+</li>
+<li><p><code>Lock_time:</code>duration</p>
+<p>以秒为单位获取锁的时间。</p>
+</li>
+<li><p><code>Rows_sent:</code>N</p>
+<p>发送到客户端的行数。</p>
+</li>
+<li><p><code>Rows_examined:</code></p>
+<p>服务器层检查的行数（不包括存储引擎内部的任何处理）。</p>
+</li>
+</ul>
+<p>写入慢查询日志文件的每个语句前面都有一个<a href="https://dev.mysql.com/doc/refman/5.7/en/set-variable.html" target="_blank" rel="noopener"><code>SET</code></a> 包含时间戳的语句，该时间戳指示记录慢语句的时间（在语句完成执行后发生）。</p>
+<p>写入慢查询日志的语句中的密码由服务器重写，不会以纯文本的形式出现。请参阅<a href="https://dev.mysql.com/doc/refman/5.7/en/password-logging.html" target="_blank" rel="noopener">第 6.1.2.3 节，“密码和日志记录”</a>。</p>
+<h1 id="参数配置"><a href="#参数配置" class="headerlink" title="参数配置"></a>参数配置</h1><h2 id="slow-query-log"><a href="#slow-query-log" class="headerlink" title="slow_query_log"></a>slow_query_log</h2><p>使用<code>set global slow_query_log=1</code>开启了慢查询日志只对当前数据库生效，MySQL重启后则会失效。</p>
+<p>如果要永久生效，就必须修改配置文件<code>my.cnf</code>（其它系统变量也是如此）。</p>
+<p><code>my.cnf</code>要增加或修改参数<code>slow_query_log</code> 和<code>slow_query_log_file</code>，如下所示</p>
+<blockquote>
+<p>slow_query_log = 1</p>
+<p>slow_query_log_file = /tmp/mysql_slow.log</p>
+</blockquote>
+<p>然后重启MySQL服务器。</p>
+<h2 id="slow-query-log-file"><a href="#slow-query-log-file" class="headerlink" title="slow_query_log_file"></a>slow_query_log_file</h2><p>这个参数用于指定慢查询日志的存放路径，缺省情况是<code>host_name-slow.log</code>文件</p>
+<blockquote>
+<p>show variables like ‘slow_query_log_file’</p>
+</blockquote>
+<h2 id="long-query-time"><a href="#long-query-time" class="headerlink" title="long_query_time"></a>long_query_time</h2><p>mysql源码里是判断大于<code>long_query_time</code>，而非大于等于。</p>
+<p>从MySQL 5.1开始，<code>long_query_time</code>开始以<strong>微秒</strong>记录SQL语句运行时间，之前仅用秒为单位记录。</p>
+<p>如果记录到表里面，只会记录整数部分，不会记录微秒部分。</p>
+<p>注意：使用命令 set global long_query_time=4修改后，需要重新连接或新开一个会话才能看到修改值。</p>
+<p>用show variables like ‘long_query_time’查看是当前会话的变量值。</p>
+<p>也可以不用重新连接会话，而是用show global variables like ‘long_query_time’;。</p>
+<h2 id="log-output"><a href="#log-output" class="headerlink" title="log_output"></a>log_output</h2><p>log_output参数指定日志的存储方式。</p>
+<p>log_output=’FILE’表示将日志存入文件，默认值也是’FILE’。</p>
+<p>log_output=’TABLE’表示将日志存入数据库，这样日志信息就会被写入到mysql.slow_log表中。</p>
+<p>同时也支持两种日志存储方式，配置的时候以逗号隔开即可，如：log_output=’FILE,TABLE’。</p>
+<p>日志记录到系统的专用日志表中，要比记录到文件耗费更多的系统资源。</p>
+<p>因此对于需要启用慢查询日志，又需要能够获得更高的系统性能，那么建议优先记录到文件。</p>
+<blockquote>
+<p>show variables like ‘%log_output%’;</p>
+<p>set global log_output=’TABLE’;</p>
+</blockquote>
+<h2 id="log-queries-not-using-indexes"><a href="#log-queries-not-using-indexes" class="headerlink" title="log-queries-not-using-indexes"></a>log-queries-not-using-indexes</h2><p>该系统变量指定<strong>未使用索引的查询</strong>也被记录到慢查询日志中（可选项）。</p>
+<p>如果调优的话，建议开启这个选项。</p>
+<p>另外，开启了这个参数，其实使用<code>full index scan</code>的SQL也会被记录到慢查询日志。</p>
+<blockquote>
+<p>show variables like ‘log_queries_not_using_indexes’;</p>
+<p>set global log_queries_not_using_indexes=1;</p>
+</blockquote>
+<h2 id="log-slow-admin-statements"><a href="#log-slow-admin-statements" class="headerlink" title="log_slow_admin_statements"></a>log_slow_admin_statements</h2><p>这个系统变量表示，是否将慢管理语句例如<code>ANALYZE TABLE</code>和<code>ALTER TABLE</code>等记入慢查询日志。</p>
+<blockquote>
+<p>show variables like ‘log_slow_admin_statements’;</p>
+</blockquote>
+<h2 id="Slow-queries"><a href="#Slow-queries" class="headerlink" title="Slow_queries"></a>Slow_queries</h2><p>如果你想查询有多少条慢查询记录，可以使用<code>Slow_queries</code>系统变量。</p>
+<blockquote>
+<p>show global status like ‘%Slow_queries%’;</p>
+</blockquote>
+<p>另外，还有<code>log_slow_slave_statements</code> 和<code>--log-short-format</code> 参数，可到MySQL网站了解。</p>
+<h1 id="mysqldumpslow"><a href="#mysqldumpslow" class="headerlink" title="mysqldumpslow"></a>mysqldumpslow</h1><p>慢查询日志分析工具<br>mysqldumpslow经常使用的参数：<br>-s，是order的顺序<br>——-al 平均锁定时间<br>——-ar 平均返回记录时间<br>——-at 平均查询时间（默认）<br>——-c 计数<br>——-l 锁定时间<br>——-r 返回记录<br>——-t 查询时间<br>-t，是top n的意思，即为返回前面多少条的数据<br>-g，后边可以写一个正则匹配模式，大小写不敏感的</p>
+<p>比如，得到返回记录集最多的10个SQL。</p>
+<blockquote>
+<p>mysqldumpslow -s r -t 10 /database/mysql/mysql06_slow.log</p>
+</blockquote>
+<p>得到访问次数最多的10个SQL</p>
+<blockquote>
+<p>mysqldumpslow -s c -t 10 /database/mysql/mysql06_slow.log</p>
+</blockquote>
+<p>得到按照时间排序的前10条里面含有左连接的查询语句。</p>
+<blockquote>
+<p>mysqldumpslow -s t -t 10 -g “left join” /database/mysql/mysql06_slow.log</p>
+</blockquote>
+<p>另外建议在使用这些命令时结合 | 和more 使用 ，否则有可能出现刷屏的情况。</p>
+<blockquote>
+<p>mysqldumpslow -s r -t 20 /mysqldata/mysql/mysql06-slow.log | more</p>
+</blockquote>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/10/21/resource-MicroService-seata-distributedLock/" data-toggle="tooltip" data-placement="top" title="分布式锁的解决方案">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/10/19/resource-DB-MySQL-MySQL-index/" data-toggle="tooltip" data-placement="top" title="MySQL之索引简介">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#基本概念"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">基本概念</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#日志参数"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">日志参数</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#慢查询日志内容"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">慢查询日志内容</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#参数配置"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">参数配置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#slow-query-log"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">slow_query_log</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#slow-query-log-file"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">slow_query_log_file</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#long-query-time"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">long_query_time</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#log-output"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">log_output</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#log-queries-not-using-indexes"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">log-queries-not-using-indexes</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#log-slow-admin-statements"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">log_slow_admin_statements</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Slow-queries"><span class="toc-nav-number">4.7.</span> <span class="toc-nav-text">Slow_queries</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#mysqldumpslow"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">mysqldumpslow</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

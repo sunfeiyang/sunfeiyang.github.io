@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          什么是好的错误消息? - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2022/03/23/resource-java-Base-error/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/java/error.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>什么是好的错误消息?</h1>
+                        <h2 class="subheading">讨论一下Java系统中的错误码设计</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2022-03-23
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">4.7k</span> and
+                                Reading Time <span class="post-count">18</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="一-什么是好的错误信息-Error-Message"><a href="#一-什么是好的错误信息-Error-Message" class="headerlink" title="一 什么是好的错误信息(Error Message)?"></a><strong>一 什么是好的错误信息(Error Message)?</strong></h1><p>一个好的Error Message主要包含三个部分：</p>
+<ul>
+<li><p>Context:  什么导致了错误？发生错误的时候代码想做什么？</p>
+</li>
+<li><p>The error itself:  到底是什么导致了失败？具体的原因和当时的数据是什么？</p>
+</li>
+<li><p>Mitigation: 有什么解决方案来克服这个错误，也可以理解为 Solutions</p>
+</li>
+</ul>
+<p>听起来还是有点抽象，能否给点代码？ 刚好有一个 jdoctor 的项目，作者来自Oracle Labs[1] 样例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ProblemBuilder.newBuilder(TestProblemId.ERROR1, StandardSeverity.ERROR, <span class="string">"Hawaiian pizza"</span>)</span><br><span class="line">                .withLongDescription(<span class="string">"Pineapple on pizza would put your relationship with folks you respect at risk."</span>)</span><br><span class="line">                .withShortDescription(<span class="string">"pineapple on pizza isn't allowed"</span>)</span><br><span class="line">                .because(<span class="string">"the Italian cuisine should be respected"</span>)</span><br><span class="line">                .documentedAt(<span class="string">"https://www.bbc.co.uk/bitesize/articles/z2vftrd"</span>)</span><br><span class="line">                .addSolution(s -&gt; s.withShortDescription(<span class="string">"eat pineapple for desert"</span>))</span><br><span class="line">                .addSolution(s -&gt; s.withShortDescription(<span class="string">"stop adding pineapple to pizza"</span>));</span><br></pre></td></tr></table></figure>
+<p>这里的Problem理解为Error没有问题，核心主要包括以下几个字段：</p>
+<ul>
+<li><p>context: such as app name, component, status code，使用一个字符串描述当时的上下文，如应用名称 + 组件名称 +具体的错误状态码等，这个由你自己决定，当然JSON字符串也可以，如 {“app”:”uic”, “component”: “login”, “code”:”111”}</p>
+</li>
+<li><p>description: Long(Short) to describe error 错误描述，有Long和Short两者</p>
+</li>
+<li><p>because/reason:  explain the reason with data 详细解释错误的原因，当然必须包含相应的数据</p>
+</li>
+<li><p>documentedAt: error link 错误对应的HTTP连接，更详细地介绍该错误</p>
+</li>
+<li><p>solutions: possible solutions 可能的解决方案，如提示访问者检查email拼写是否正确，短信的Pass Code是否输入正确等。</p>
+</li>
+</ul>
+<p>有了这些具体的字段后，我们理解起来就方便多啦。<sunfy-line></p>
+<h1 id="二-错误码-Error-Code-的设计"><a href="#二-错误码-Error-Code-的设计" class="headerlink" title="二 错误码(Error Code)的设计"></a><strong>二 错误码(Error Code)的设计</strong></h1><p>各种错误处理上都建议使用错误码，错误码有非常多的优势：唯一性、搜索/统计更方便等，所以我们还是要讨论一下错误码的设计。网上也有不少错误码的设计规范，当然这篇文章也少不了重复造轮子，该设计提供给大家参考，大家自行判断啊，当然也非常欢迎留言指正。</p>
+<p>一个错误码通常包含三个部分：</p>
+<ul>
+<li><p>System/App short name: 系统或者应用的名称，如 RST, OSS等。如果你熟悉Jira的话，基本也是这个规范，Java程序员应该都知道HHH和SPR代表什么吧？ </p>
+</li>
+<li><p>Component short name or code: 系统内部的组件名称或者编码，如LOGIN,  AUDIT，001 这些都可以，方便更快地定位错误。</p>
+</li>
+<li><p>Status code: 错误的状态码，这个是一个三位数字的状态码，如200，404，500，主要是借鉴自 HTTP Status Code，毕竟绝大多数开发者都了解HTTP状态码，我们没有必要再重新设计。</p>
+</li>
+</ul>
+<p>有了上述的规范后，让我们看一下典型的错误编码长什么样子：</p>
+<ul>
+<li><p>OSS-001-404:  你应该知道是OSS的某一组件报告资源没有找到吧</p>
+</li>
+<li><p>RST-002-500：这个是一个组件的内部错误</p>
+</li>
+<li><p>UIC-LOGIN-404：这个应该是会员登录时查找不到指定的账号</p>
+</li>
+</ul>
+<p>我们采用应用名缩写， 组件名或者编码， 状态值，然后以中划线连接起来。中划线比较方便阅读，下划线有时候在显示的时候理解为空格。同时有了标准的HTTP Status Code支持，不用参考文档，你都能猜一个八九不离十。 错误码设计千万不要太复杂，试图将所有的信息都添加进去，当然信息非常全，但是也增加了开发者理解和使用成本，这个可能要做一个取舍，当然我也不是说目前这种一键三连(打赏、点赞加转发)的结构就最合理，你也可以自行调整。有没有做心里研究的同学来说一下，这种三部分组成的方式，是不是最符合人们的认知习惯？如果超过三部分，如4和5，人们能记住和使用的概率是不是就下降的非常多？</p>
+<p>还记得前面说的error的context吗？这里error code其实就是启动context的作用，如 UIC-LOGIN-404，错误发生在哪里？错误码帮你定位啦。当时代码想干什么？错误码也说明啦。虽然说错误码不能完全代表错误的上下文，但是其承载的信息已经足够我们帮我们了解当时的上下文啦，所以这里error code就是起着context的作用。目前看来至少error code要比 ProblemBuilder.newBuilder(TestProblemId.ERROR1, StandardSeverity.ERROR, “Hawaiian pizza”) 中的Hawaiian pizza 作为context更具有说服力，也规范一些。</p>
+<h1 id="三-错误消息的编写格式"><a href="#三-错误消息的编写格式" class="headerlink" title="三 错误消息的编写格式"></a><strong>三 错误消息的编写格式</strong></h1><p>错误码设计完毕后，我们还不能用错误码+简短消息方式输出错误，不然就出现类似 ORA-00942: table or view does not exist这种情况，你一定会吐槽：”你为何不告诉哪个表或者view？”。所以我们还需要设计一个message格式，能够将错误的context, description, reason, document link, solutions全部包含进来，这样对开发者会比较友好。这里我拟定了一个Message的规范，当然大家可以发表自己的意见啊，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">long description(short desc): because&#x2F;reason --- document link -- solutions</span><br></pre></td></tr></table></figure>
+<p>解释一下：</p>
+<ul>
+<li><p>错误的长描述直接书写，短描述使用括弧进行包含。这种写法在合同中非常常见，如阿里云计算有限公司(阿里云)  ，你签署劳动合同时，公司的称谓基本也是全名(代称) 这种方式。好多同学会在错误日志中书写登录失败，但是登录系统中有多种登录方式，所以远不如Failed to log in with email and password(Login Failed), Failed to log in with phone and passcode(Login Failed), Failed to log in with oauth2(Login Failed) 更清晰。</p>
+</li>
+<li><p>错误具体原因:  接下来是冒号，然后书写详细的原因，如 email user@example.com not found ，gender field is not allowed in package.json 一定要包含具体的数据信息，包括输入的，还是和劳动合同一样，抬头之后就是你的具体岗位和薪水，虽然合同是格式化的，但是每一个人具体的岗位和薪水是不同的，这些参数都是从外部获取的。此处有安全同学发问，如何数据脱敏？这个是另外的问题，大多数开发者应该了解如何进行mask，这里我们就跳过。当出现劳动纠纷这个错误时，具体原因中的数据，如岗位和薪水等，这样劳动仲裁局就可以快速定位并解决该”错误”。</p>
+</li>
+<li><p>document link: 接下来我们使用三种划线—-进行分隔，输入对应的error link。三划线作为分隔符在很多的场景中多有使用，如mdx, yaml等，大家不会太陌生。 如果没有link那就忽略就可以。</p>
+</li>
+<li><p>solutions：自然的文本表述即可，能说明清楚就可以，也是放在三中划线后。</p>
+</li>
+</ul>
+<p>看一个具体的消息格式例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">APP-100-400&#x3D;Failed to log in system with email and password(Email login failed): can not find account with email &#123;&#125; --- please refer https:&#x2F;&#x2F;example.com&#x2F;login&#x2F;byemail  --- Solutions: 1. check your email  2. check your password</span><br></pre></td></tr></table></figure>
+<p>上述的APP-100-400的错误码对应的描述基本覆盖到jdoctor中需要的信息，可以说对一个错误的描述应该非常全啦，而且有一定的格式，也方便后续的日志分析。</p>
+<h1 id="四-组装和保存错误码-Message"><a href="#四-组装和保存错误码-Message" class="headerlink" title="四 组装和保存错误码 + Message"></a><strong>四 组装和保存错误码 + Message</strong></h1><p>有了错误码和message的规范，接下来我们应该如何保存这些信息呢？如果是Java，是不是要创建对应的ErrorEnum，然后是一些POJO？这里个人建议使用properties文件来保存错误码和message的信息。文件名可以直接为ErrorMessages.properties，当然是在某一package下，文件样例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">### error messages for your App</span><br><span class="line">APP-100-400&#x3D;Failed to log in system with email and password(Email login failed): can not find account with email &#123;0&#125; --- please refer https:&#x2F;&#x2F;example.com&#x2F;login&#x2F;byemail  --- Solutions: 1. check your email  2. check your password</span><br><span class="line">APP-100-401&#x3D;Failed to log in system with phone and pass(Phone login failed): can not find account with phone &#123;0&#125; --- please refer https:&#x2F;&#x2F;example.com&#x2F;login&#x2F;byphone  --- Solutions: 1. check your phone  2. check your pass code in SMS</span><br></pre></td></tr></table></figure>
+<p>为何要选择properties文件来保存error code和message信息，主要有以下几个原因：</p>
+<ul>
+<li><p>国际化支持：Java的同学都知道，如果你的错误消息想调整为中文，创建一个ErrorMessages-zh_CN.properties 即可。原文中的建议是Don’t localize error messages，但是考虑到国内大多数程序员未必能用英文表达清楚，所以中文也是可以的。题外话：如果中国的程序员都能用英文清晰地阅读文章和表达自己的思想和观点，我们在计算机方面的水平可能会提升到更高的台阶。</p>
+</li>
+<li><p>各种语言对properties的文件解析都有支持，不只是Java，其他语言也有，而且properties文件本身也不复杂，所以该properties文件可以给Node.js, Rust等其他语言使用，如果是Java enum和POJO基本就不可能啦。</p>
+</li>
+<li><p>properties文件格式丰富：支持注释，换行符，多行转义等也都没有问题。</p>
+</li>
+</ul>
+<p><img src="../../../../img/error/image-20220324215543717.png" alt="image-20220324215543717"></p>
+<p>最后最关键的是IDE支持非常友好 , 以Java开发者使用的IntelliJ IDEA来说，对Properties文件的支持可以说是到了极致，如下：</p>
+<ul>
+<li>error code的自动提示<br><img src="../../../../img/error/image-20220324215607063.png" alt="image-20220324215607063"></li>
+<li>快速查看：鼠标移上去就可以，按下CMD鼠标移上去也可以， Alt+Space也可以，当然点击直接定位就更不用说啦。</li>
+</ul>
+<p><img src="../../../../img/error/image-20220324215640197.png" alt="image-20220324215640197"></p>
+<ul>
+<li><p>重构和查找支持：虽然Error Code是字符串，但是也是properties的key，所以rename这个error code，所有引用的地方都会rename。还支持find usage，那些地方引用了该error code等，都非常方便。当然如果Error Code在系统中没有被使用，也会灰色标识。</p>
+</li>
+<li><p>折叠自动显示功能：当你的代码处于折叠状态时，IDEA直接将message拿过来进行显示，你在code review的时候方便多啦，也便于你理解代码。</p>
+</li>
+</ul>
+<p><img src="../../../../img/error/image-20220324215718429.png" alt="image-20220324215718429"></p>
+<ul>
+<li>直接修改message的值</li>
+</ul>
+<p><img src="../../../../img/error/image-20220324215741178.png" alt="image-20220324215741178"></p>
+<p>总之IntellIJ IDEA对properties文件的支持到了极致，我们也没有理由不考虑开发者体验的问题，到处跳来跳去地找错误码，这种伤害程序员开发体验的事情不能做。 当然JetBrains的其他IDE，WebStorm等都有对proproperties文件编辑支持。</p>
+<h1 id="五-代码实现"><a href="#五-代码实现" class="headerlink" title="五 代码实现"></a><strong>五 代码实现</strong></h1><p>看起来功能挺酷炫的，是不是这种方式错误管理要介入一个开发包啊？不需要，你只需要10行代码就搞定，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.slf4j.helpers.MessageFormatter;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppErrorMessages</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String BUNDLE_FQN = <span class="string">"app.ErrorMessages"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_FQN, <span class="keyword">new</span> Locale(<span class="string">"en"</span>, <span class="string">"US"</span>));</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">message</span><span class="params">(@PropertyKey(resourceBundle = BUNDLE_FQN)</span> String key, Object... params) </span>&#123;</span><br><span class="line">         <span class="keyword">if</span> (RESOURCE_BUNDLE.containsKey(key)) &#123;</span><br><span class="line">            String value = RESOURCE_BUNDLE.getString(key);</span><br><span class="line">            <span class="keyword">final</span> FormattingTuple tuple = MessageFormatter.arrayFormat(value, params);</span><br><span class="line">            <span class="keyword">return</span> key + <span class="string">" - "</span> + tuple.getMessage();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> MessageFormatter.arrayFormat(key, params).getMessage();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样在任何地方如果你要打印错误消息的时候，这样log.info(AppErrorMessages.message(“APP-100-400”,”xxx”));就可以。如果你还有想法和log进行一下Wrapper，如 log.info(“APP-100-400”,”xxx”); ，也没有问题，样例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ErrorCodeLogger</span> <span class="keyword">implements</span> <span class="title">Logger</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Logger delegate;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String BUNDLE_FQN = <span class="string">"app.ErrorMessages"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_FQN, <span class="keyword">new</span> Locale(<span class="string">"en"</span>, <span class="string">"US"</span>));</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ErrorCodeLogger</span><span class="params">(Logger delegate)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.delegate = delegate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">trace</span><span class="params">(@PropertyKey(resourceBundle = BUNDLE_FQN)</span> String msg) </span>&#123;</span><br><span class="line">        delegate.trace(RESOURCE_BUNDLE.getString(msg));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来你就可以在log中直接整合error code，非常便捷。上述代码我已经写好，你参考文章末尾的项目地址即可。</p>
+<p><img src="../../../../img/error/image-20220324220001670.png" alt="image-20220324220001670"></p>
+<p>最终的日志输出如下：</p>
+<p><img src="../../../../img/error/image-20220324220019646.png" alt="image-20220324220019646"></p>
+<p>提醒：这里我们使用了slf4j的MessageFormatter，主要是方便后续的Slf4j的整合，而且slf4j的MessageFormatter比Java的MessageFormat容错和性能上更好一些。</p>
+<h1 id="六-FAQ"><a href="#六-FAQ" class="headerlink" title="六 FAQ"></a><strong>六 FAQ</strong></h1><h3 id="1-为何选择3位的HTTP-Status-Code作为Error的Status-Code？"><a href="#1-为何选择3位的HTTP-Status-Code作为Error的Status-Code？" class="headerlink" title="1  为何选择3位的HTTP Status Code作为Error的Status Code？"></a>1  为何选择3位的HTTP Status Code作为Error的Status Code？</h3><p>大多数开发者对HTTP Status Code都比较熟悉，所以看到这些code就大致明白什么意思，当然对应用开发者也有严格的要求，你千万别将404解释为内部错误，如数据库连接失败这样的，逆正常思维的事情不要做。HTTP status code归类如下，当然你也可以参考一下 HTTP Status Codes Cheat Sheet[2]。</p>
+<ul>
+<li>Informational responses (100–199)</li>
+<li>Successful responses (200–299)</li>
+<li>Redirection messages (300–399)</li>
+<li>Client error responses (400–499)</li>
+<li>Server error responses (500–599)</li>
+</ul>
+<p>但是Error Status Code不局限在HTTP Status Code，你也可以参考SMTP， POP3等Status Code，此外你也自行可以选择诸如007，777这样的编码，只要能解释的合理就可以啦。</p>
+<p>在日常的生活中，我们会使用一些特殊意义的数字或者和数字谐音，以下是一些友情提醒：</p>
+<ul>
+<li><p>UIC-LOGIN-666:  太顺利啦，完美登录。但是你团队中有欧美老外的话，他可能理解为理解为恶意登录，登录失败</p>
+</li>
+<li><p>APP-LOGIN-062:  如果你团队有杭州土著的话，不要使用62这个数字</p>
+</li>
+<li><p>APP-001-013: 如果该error code要透传给最终用户，请不要使用13这个数字，会引发不适</p>
+</li>
+</ul>
+<p>这种有特殊意义的数字或者数字谐音，如520，886，999，95等，如果能使用的恰当非常方便理解或更友好，如透传给用户UIC-REG-200(注册成功)，如果调整为UIC-REG-520可能更温馨一些。总的来说使用这些数字要注意场景，当然比较保险的做法就是参考HTTP，SMTP等设计的status code。</p>
+<h3 id="2-properties文件存储error-code和message，真的比enum和POJO好吗？"><a href="#2-properties文件存储error-code和message，真的比enum和POJO好吗？" class="headerlink" title="2  properties文件存储error code和message，真的比enum和POJO好吗？"></a>2  properties文件存储error code和message，真的比enum和POJO好吗？</h3><p>就Java和IntelliJ IDEA的支持来看，目前的配合还是比较好的，如i18n，维护成本等，而且这些ErrorMessages.properties也可以提交到中心仓库进行Error Code集中管理，如果是Java Enum+POJO对i18n和集中管理都比较麻烦，而且代码量也比较大，你从上述的jdoctor的problem builder的就可以看出。当然在不同的语言中也未必是绝对的，如在Rust中，由于enum的特性比较丰富，所以在Rust下使用enum来实现error code可能是比较好的选择。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#[derive(Debug)]</span><br><span class="line"><span class="keyword">enum</span> ErrorMessages &#123;</span><br><span class="line">    AppLogin404 &#123;</span><br><span class="line">        email: String,</span><br><span class="line">    &#125;,</span><br><span class="line">    AppLogin405(String),</span><br><span class="line">&#125;</span><br><span class="line">impl fmt::Display <span class="keyword">for</span> ErrorMessages &#123;</span><br><span class="line">    <span class="function">fn <span class="title">fmt</span><span class="params">(&amp;self, f: &amp;mut fmt::Formatter)</span> -&gt; fmt::Result </span>&#123;</span><br><span class="line">        <span class="comment">// extract enum name parameter</span></span><br><span class="line">        <span class="comment">// output message from java-properties</span></span><br><span class="line">        write!(f, <span class="string">"&#123;:?&#125;"</span>, self)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-为何不在Error-Code中提供错误级别"><a href="#3-为何不在Error-Code中提供错误级别" class="headerlink" title="3 为何不在Error Code中提供错误级别"></a>3 为何不在Error Code中提供错误级别</h3><p>不少错误码设计中会添加错误级别，如 RS-001-404-9 这样，最后一位表示错误的严重级别。这样做没有问题，但是也要考虑现实因素，如下：</p>
+<ul>
+<li><p>错误的级别会动态调整的：如随着时空的变化，之前非常严重的错误级别，现在并不那么严重啦。如果资源找不到可能之前非常严重，但是现在添加了备份方案，可以从备份服务器中再查找一次，所以这个错误出现在主服务上可能现在就不是那么严重啦。</p>
+</li>
+<li><p>不同团队对错误级别的认知不一样：如OSS-404在OSS团队的data server上找不到，元信息都是有的，结果在data server上没有找到对应的数据，这个是非常严重的错误。雷卷在业务团队，如负责Serverless Jamstack，其中的一个文件缺失，如html, css, image，可能并不是一个大问题，等一会重试下，不行就再上传一下。我想表达的是同样的错误，在不同团队中的重要性并不一样。</p>
+</li>
+</ul>
+<p>如果将错误的基本固化到error code中，这个后续你就没法调整啦，你如果调整了错误级别，那就是可能就是另外一个错误码，给统计和理解都会造成问题。我个人是建议错误码中不要包括严重级别这些信息，而是通过外围的文档和描述进行说明，当然你也可以通过诸如 log.info , log.error来确定错误的级别。</p>
+<h3 id="4-能否提供共享库？"><a href="#4-能否提供共享库？" class="headerlink" title="4  能否提供共享库？"></a>4  能否提供共享库？</h3><p>由于IntelliJ IDEA并不支持动态的properties文件名称，如果你用动态的properties文件名称，就不能进行代码提示，查找等功能也都不能使用，所以必须是这种 @PropertyKey(resourceBundle = BUNDLE_FQN) 静态的properties文件名方式。就一个Java类，你就受累Copy一下这个Java类，毕竟是一次性的工作，当然你想个性化调整代码也更方便，如和Log4j 2.x或自定也的logging框架整合也简单些。 日志是项目最基本的需求，所以你创建的项目的时候，就把Error Code对应的代码添加到项目模板中，这样项目创建后就自动包含logging和error code的功能。</p>
+<h3 id="5-其他的考量"><a href="#5-其他的考量" class="headerlink" title="5 其他的考量"></a>5 其他的考量</h3><p>原文和Reddit上相关的讨论也进行了一些整理和说明：</p>
+<ul>
+<li><p>内外有别：如内部开发者的错误中可能会包括服务器的具体信息，当然给最终消费者，如平台的FaaS开发者，可能就不能输出这样的信息，有一定的安全风险。</p>
+</li>
+<li><p>小心在错误中暴露敏感数据：输出到错误日志的数据一定要进行mask，当然也不要影响你定位错误，这个要看具体的场景。</p>
+</li>
+<li><p>不要将错误消息作为 API 契约：在API的场景中，响应错误有两种方式：根据错误码做响应，如REST API；另外一种是根据消息做出响应，如GraphQL，所以这个你自行选择。</p>
+</li>
+<li><p>Error Code的一致性：错误消息会输出给不同的消费者，如REST API，界面等，可能错误的提示消息有所不同，如国际化、脱敏等，但是最好都是相同的error code，也就是front end + backend 共享相同的error code，方便定位错误和统计。</p>
+</li>
+</ul>
+<h1 id="七-总结"><a href="#七-总结" class="headerlink" title="七 总结"></a><strong>七 总结</strong></h1><p>采用error code + 基于properties文件存储error message，这个设计其实就是一个综合的取舍。如果IDEA不能很好地支持properties文件，你看到一个Error Code，不能直接定位到错误的消息，相反还需要跳转来跳转去找对应的消息，那么Enum + POJO可能就是好的选择。此外error code的设计也非常偏向http status code方案，这个也是主要基于大家对HTTP都非常熟悉，基本上就能猜出大概的意思，相反随机编码的数字就没有这方法的优势，要去error code中心再去查找一下，无形中也是浪费开发人员的时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">最后项目的Demo地址：http:&#x2F;&#x2F;gitlab.i-c.com&#x2F;&#x2F;java-error-messages-wizard  正确地址看留言</span><br><span class="line">[1]https:&#x2F;&#x2F;github.com&#x2F;melix&#x2F;jdoctor</span><br><span class="line">[2]https:&#x2F;&#x2F;cheatography.com&#x2F;kstep&#x2F;cheat-sheets&#x2F;http-status-codes&#x2F;</span><br><span class="line">[3]https:&#x2F;&#x2F;www.morling.dev&#x2F;blog&#x2F;whats-in-a-good-error-message&#x2F;</span><br></pre></td></tr></table></figure>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2022/03/25/resource-MQ-RocketMQ-RocketMQ/" data-toggle="tooltip" data-placement="top" title="如何在Spring生态中玩转RocketMQ？">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2022/03/22/resource-MicroService-seata-transaction2/" data-toggle="tooltip" data-placement="top" title="如何选择分布式事务解决方案？">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#一-什么是好的错误信息-Error-Message"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一 什么是好的错误信息(Error Message)?</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#二-错误码-Error-Code-的设计"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二 错误码(Error Code)的设计</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#三-错误消息的编写格式"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三 错误消息的编写格式</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#四-组装和保存错误码-Message"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四 组装和保存错误码 + Message</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#五-代码实现"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">五 代码实现</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#六-FAQ"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">六 FAQ</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-为何选择3位的HTTP-Status-Code作为Error的Status-Code？"><span class="toc-nav-number">6.0.1.</span> <span class="toc-nav-text">1  为何选择3位的HTTP Status Code作为Error的Status Code？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-properties文件存储error-code和message，真的比enum和POJO好吗？"><span class="toc-nav-number">6.0.2.</span> <span class="toc-nav-text">2  properties文件存储error code和message，真的比enum和POJO好吗？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-为何不在Error-Code中提供错误级别"><span class="toc-nav-number">6.0.3.</span> <span class="toc-nav-text">3 为何不在Error Code中提供错误级别</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-能否提供共享库？"><span class="toc-nav-number">6.0.4.</span> <span class="toc-nav-text">4  能否提供共享库？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-其他的考量"><span class="toc-nav-number">6.0.5.</span> <span class="toc-nav-text">5 其他的考量</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#七-总结"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">七 总结</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

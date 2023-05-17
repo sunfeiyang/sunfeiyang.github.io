@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          jmeter在ubuntu下面的配置以及使用 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2020/07/19/resource-system-Linux-ubuntu-jmeter/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/header_img/15.gif')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Ubuntu" title="Ubuntu">Ubuntu</a>
+                            
+                              <a class="tag" href="/tags/#jmeter" title="jmeter">jmeter</a>
+                            
+                        </div>
+
+                        <h1>jmeter在ubuntu下面的配置以及使用</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2020-07-19
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">1.2k</span> and
+                                Reading Time <span class="post-count">4</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>jmeter在ubuntu下面的配置以及使用<a id="more"></a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>jmeter是apache的一个开源压力测试工具。<br>话说，实在很好奇开发出来的程序性能如何。所以抽空配置一下jmeter，后续还会有实际压测例子。</p>
+<p>对了，可以先看看文章，参考：<br><a href="https://www.cnblogs.com/MING-FBUG/p/9153016.html" target="_blank" rel="noopener">Jmeter环境搭建与使用（Linux）</a></p>
+<p><a href="https://www.cnblogs.com/yangxia-test/p/3964881.html" target="_blank" rel="noopener">JMeter学习（一）工具简单介绍</a></p>
+<p><a href="https://www.cnblogs.com/stulzq/p/8971531.html" target="_blank" rel="noopener">使用 JMeter 进行压力测试</a></p>
+<p>几个重要地址：<br><a href="https://jmeter.apache.org/" target="_blank" rel="noopener">jmeter官网</a><br><a href="https://jmeter.apache.org/usermanual/get-started.html" target="_blank" rel="noopener">官方指导</a></p>
+<p>这里先预告一下，<br>下面这个网站看起来是相当专业的，<sunfy-line><br><a href="http://www.techempower.com/benchmarks/#section=data-r17&amp;hw=ph&amp;test=json" target="_blank" rel="noopener">Web Framework Benchmarks</a></p>
+<p>第一页，json格式化性能：<br><img src="../../../../img/ubuntu-jmeter/20190125192323368.png" alt="在这里插入图片描述"></p>
+<p>额，前面几个看不到spring，spring在这里呢：<br><img src="../../../../img/ubuntu-jmeter/20190125192407432.png" alt="在这里插入图片描述"></p>
+<p>单条数据库查询：<br><img src="../../../../img/ubuntu-jmeter/20190125192557216.png" alt="在这里插入图片描述"></p>
+<p>额，spring在后面呢：<br><img src="../../../../img/ubuntu-jmeter/20190125192611518.png" alt="在这里插入图片描述"></p>
+<p><em>写完这篇文章以后，下一个目标是，重做benchmark试验——当然就针对java web框架，譬如：vert.x还有spring什么的，还spring一个正名。额，当然用的是自己的渣渣机器，然而没问题，只要得出胜负就可以了。</em></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>在官网下载jmeter，额，这里：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo wget http:&#x2F;&#x2F;mirrors.shu.edu.cn&#x2F;apache&#x2F;&#x2F;jmeter&#x2F;binaries&#x2F;apache-jmeter-5.0.tgz</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/ubuntu-jmeter/20190125193112828.png" alt="在这里插入图片描述"></p>
+<p>解压缩到目标文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p &#x2F;usr&#x2F;local&#x2F;jmeter&#x2F;</span><br><span class="line">-- 解压到目标目录：</span><br><span class="line">sudo tar -zxvf apache-jmeter-5.0.tgz -C &#x2F;usr&#x2F;local&#x2F;jmeter&#x2F;</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/ubuntu-jmeter/20190125193257314.png" alt="在这里插入图片描述"></p>
+<p>可以得知，文件现在的jmeter的正式目录是：<br>/usr/local/jmeter/apache-jmeter-5.0/</p>
+<p>好了，将bin路径加入到环境变量中去：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+<p>写入以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#配置jmeter</span><br><span class="line">export PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;jmeter&#x2F;apache-jmeter-5.0&#x2F;bin:$PATH</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/ubuntu-jmeter/20190125193658222.png" alt="在这里插入图片描述"><br>然后，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+<p>再试试能不能运行jmeter：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmeter -v</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/ubuntu-jmeter/20190125193750436.png" alt="在这里插入图片描述"></p>
+<p><strong>成功运行，嗯，这样就配置好了。</strong></p>
+<h2 id="进行一个单机web网站测试"><a href="#进行一个单机web网站测试" class="headerlink" title="进行一个单机web网站测试"></a>进行一个单机web网站测试</h2><h3 id="受测网站准备"><a href="#受测网站准备" class="headerlink" title="受测网站准备"></a>受测网站准备</h3><p>好了，作为程序员，身边肯定会有一些网站可以随便开启随便测试的，下面我就随便测试其中一个网站，是前几篇博文提到的fileserver webapp：<br><img src="../../../../img/ubuntu-jmeter/20190125194337529.png" alt="在这里插入图片描述"></p>
+<p>测试的接口是这个。</p>
+<h3 id="测试计划"><a href="#测试计划" class="headerlink" title="测试计划"></a>测试计划</h3><p>在命令行输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmeter</span><br></pre></td></tr></table></figure>
+<p>可启动客户端，<br><img src="../../../../img/ubuntu-jmeter/2019012519460212.png" alt="在这里插入图片描述"><br>好了，现在来制定测试计划</p>
+<p><em>下面部分照着</em><br><a href="https://www.cnblogs.com/stulzq/p/8971531.html" target="_blank" rel="noopener">使用 JMeter 进行压力测试</a><br><em>来做</em>，尤其是，<strong>我压根没办法截取菜单的图片，直接引用</strong></p>
+<h4 id="1-创建线程组"><a href="#1-创建线程组" class="headerlink" title="1.创建线程组"></a>1.创建线程组</h4><p>在“测试计划”上右键 【添加】–&gt;【Threads(Users)】–&gt;【线程组】。<br><img src="../../../../img/ubuntu-jmeter/20190125201333113.png" alt="在这里插入图片描述"></p>
+<p>然后，额，根据他的来是500的，这个恐怕有点高了，不过没关系，设为500：</p>
+<blockquote>
+<p>设置线程数和循环次数。我这里设置线程数为500，循环一次。</p>
+</blockquote>
+<p><img src="../../../../img/ubuntu-jmeter/20190125201507611.png" alt="在这里插入图片描述"></p>
+<h3 id="2-配置元件"><a href="#2-配置元件" class="headerlink" title="2.配置元件"></a>2.配置元件</h3><blockquote>
+<p>在我们刚刚创建的线程组上右键 【添加】–&gt;【配置元件】–&gt;【HTTP请求默认值】。</p>
+</blockquote>
+<p><img src="../../../../img/ubuntu-jmeter/20190125201642264.png" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>配置我们需要进行测试的程序协议、地址和端口</p>
+</blockquote>
+<p><em>譬如，我本地的是：</em><br><img src="../../../../img/ubuntu-jmeter/20190125202007458.png" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>当所有的接口测试的访问域名和端口都一样时，可以使用该元件，一旦服务器地址变更，只需要修改请求默认值即可。</p>
+</blockquote>
+<h3 id="3-构造HTTP请求"><a href="#3-构造HTTP请求" class="headerlink" title="3.构造HTTP请求"></a>3.构造HTTP请求</h3><blockquote>
+<p>在“线程组”右键 【添加-】-&gt;【samlper】–&gt;【HTTP 请求】设置我们需要测试的API的请求路径和数据。</p>
+</blockquote>
+<p><img src="../../../../img/ubuntu-jmeter/20190125202225571.png" alt="在这里插入图片描述"></p>
+<p><em>根据实际情况，应该这样：</em></p>
+<p><img src="../../../../img/ubuntu-jmeter/20190125203950235.png" alt="在这里插入图片描述"></p>
+<p>注意，参数不要有空格等特殊符号—除非你将空格自己手动转为url认可的编码。</p>
+<h3 id="4-添加HTTP请求头"><a href="#4-添加HTTP请求头" class="headerlink" title="4.添加HTTP请求头"></a>4.添加HTTP请求头</h3><p><img src="../../../../img/ubuntu-jmeter/20190125202650438.png" alt="在这里插入图片描述"></p>
+<p>这个。。也加上去。。</p>
+<p><img src="../../../../img/ubuntu-jmeter/20190125202812321.png" alt="在这里插入图片描述"></p>
+<h3 id="5-添加断言"><a href="#5-添加断言" class="headerlink" title="5.添加断言"></a>5.添加断言</h3><blockquote>
+<p>在我们刚刚创建的线程组上右键 【添加】–&gt;【断言】–&gt;【响应断言】。根据响应的数据来判断请求是否正常。我在这里只判断的响应代码是否为200。还可以配置错误信息</p>
+</blockquote>
+<p><img src="../../../../img/ubuntu-jmeter/2019012520321973.png" alt="在这里插入图片描述"></p>
+<p><em>好了，按实际情况，</em></p>
+<p><img src="../../../../img/ubuntu-jmeter/20190125203305757.png" alt="在这里插入图片描述"></p>
+<h3 id="6-添加察看结果树"><a href="#6-添加察看结果树" class="headerlink" title="6.添加察看结果树"></a>6.添加察看结果树</h3><blockquote>
+<p>在我们刚刚创建的线程组上右键 【添加】–&gt;【监听器】–&gt;【察看结果树】。直接添加，然后点击运行按钮就可以看到结果了。</p>
+</blockquote>
+<p><img src="../../../../img/ubuntu-jmeter/20190125203533863.png" alt="在这里插入图片描述"><br>实际响应情况：<br><img src="../../../../img/ubuntu-jmeter/20190125204115824.png" alt="在这里插入图片描述"></p>
+<h3 id="7-添加Summary-Report"><a href="#7-添加Summary-Report" class="headerlink" title="7.添加Summary Report"></a>7.添加Summary Report</h3><blockquote>
+<p>在我们刚刚创建的线程组上右键 【添加】–&gt;【监听器】–&gt;【Summary Report】。直接添加，然后点击运行按钮就可以看到结果了。<br><img src="../../../../img/ubuntu-jmeter/20190125204307331.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<p>实际情况：<br><img src="../../../../img/ubuntu-jmeter/20190125204434827.png" alt="在这里插入图片描述"></p>
+<h3 id="8-测试计划创建完成"><a href="#8-测试计划创建完成" class="headerlink" title="8.测试计划创建完成"></a>8.测试计划创建完成</h3><blockquote>
+<p>记得点保存。</p>
+</blockquote>
+<h2 id="执行测试计划"><a href="#执行测试计划" class="headerlink" title="执行测试计划"></a>执行测试计划</h2><p>先参考：<br><img src="../../../../img/ubuntu-jmeter/20190125204641669.png" alt="在这里插入图片描述"><br>实际情况：<br><img src="../../../../img/ubuntu-jmeter/20190125204800977.png" alt="在这里插入图片描述"></p>
+<p>本地的保存地址为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;home&#x2F;too-white&#x2F;测试计划&#x2F;file-server-web-app-test1.jmx</span><br></pre></td></tr></table></figure>
+<p>实际命令为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;home&#x2F;too-white&#x2F;测试计划&#x2F;</span><br><span class="line">mkdir -p testplan&#x2F;webreport</span><br><span class="line">jmeter -n -t file-server-web-app-test1.jmx  -l result.txt -e -o testplan&#x2F;webreport</span><br></pre></td></tr></table></figure>
+<p>执行结果：<br><img src="../../../../img/ubuntu-jmeter/20190125210626864.png" alt="在这里插入图片描述"></p>
+<p><em>话说不知道为什么每次都要source /etc/profile才能识别到jmeter的目录</em></p>
+<p><img src="../../../../img/ubuntu-jmeter/20190125210805445.png" alt="在这里插入图片描述"></p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p><a href="https://www.cnblogs.com/yangxia-test/p/3964881.html" target="_blank" rel="noopener">JMeter学习（一）工具简单介绍</a><br>该文章的部分内容<br><img src="../../../../img/ubuntu-jmeter/20190125195744129.png" alt="在这里插入图片描述"></p>
+<p><img src="../../../../img/ubuntu-jmeter/20190125195752486.png" alt="在这里插入图片描述"></p>
+<p><img src="../../../../img/ubuntu-jmeter/20190125195759746.png" alt="在这里插入图片描述"><br><img src="../../../../img/ubuntu-jmeter/20190125195831146.png" alt="在这里插入图片描述"><br><img src="../../../../img/ubuntu-jmeter/20190125195858443.png" alt="在这里插入图片描述"><br><img src="../../../../img/ubuntu-jmeter/20190125195924279.png" alt="在这里插入图片描述"><br><img src="../../../../img/ubuntu-jmeter/20190125195951896.png" alt="在这里插入图片描述"></p>
+<p><img src="../../../../img/ubuntu-jmeter/20190125200031728.png" alt="在这里插入图片描述"><br><img src="../../../../img/20190125200055470.png" alt="在这里插入图片描述"><br><img src="../../../../img/ubuntu-jmeter/20190125200133287.png" alt="在这里插入图片描述"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/08/11/resource-designpattern-structure-proxy/" data-toggle="tooltip" data-placement="top" title="java设计模式之动态代理实现与原理详细分析">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/07/13/resource-tools-git-maven-gitPush/" data-toggle="tooltip" data-placement="top" title="一个项目push到多个远程Git仓库">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#前言"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">前言</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">配置</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#进行一个单机web网站测试"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">进行一个单机web网站测试</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#受测网站准备"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">受测网站准备</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#测试计划"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">测试计划</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1-创建线程组"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">1.创建线程组</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-配置元件"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">2.配置元件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-构造HTTP请求"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">3.构造HTTP请求</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-添加HTTP请求头"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">4.添加HTTP请求头</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-添加断言"><span class="toc-nav-number">3.6.</span> <span class="toc-nav-text">5.添加断言</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-添加察看结果树"><span class="toc-nav-number">3.7.</span> <span class="toc-nav-text">6.添加察看结果树</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#7-添加Summary-Report"><span class="toc-nav-number">3.8.</span> <span class="toc-nav-text">7.添加Summary Report</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#8-测试计划创建完成"><span class="toc-nav-number">3.9.</span> <span class="toc-nav-text">8.测试计划创建完成</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#执行测试计划"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">执行测试计划</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#附录"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">附录</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Ubuntu" title="Ubuntu">Ubuntu</a>
+                        
+                          <a class="tag" href="/tags/#jmeter" title="jmeter">jmeter</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

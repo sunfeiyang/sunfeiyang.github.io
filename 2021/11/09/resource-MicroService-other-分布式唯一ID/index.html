@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          关于分布式唯一ID的思考 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/11/09/resource-MicroService-other-分布式唯一ID/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/MicroService/snowflake.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#algorithm" title="algorithm">algorithm</a>
+                            
+                        </div>
+
+                        <h1>关于分布式唯一ID的思考</h1>
+                        <h2 class="subheading">对分布式唯一ID的思考，UUID、数据库自增主键、snowflake算法</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-11-09
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">4.7k</span> and
+                                Reading Time <span class="post-count">17</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="UUID"><a href="#UUID" class="headerlink" title="UUID"></a>UUID</h1><p>UUID是通用唯一识别码 (Universally Unique Identifier)，在其他语言中也叫GUID，可以生成一个长度32位的全局唯一识别码。</p>
+<blockquote>
+<p>String uuid = UUID.randomUUID().toString()</p>
+</blockquote>
+<p>结果示例：</p>
+<blockquote>
+<p>046b6c7f-0b8a-43b9-b35d-6489e6daee91</p>
+</blockquote>
+<p>UUID虽然可以保证全局唯一，但是占用32位有些太长，而且是无序的，入库时性能比较差。</p>
+<p>为什么会变差呢？</p>
+<p>这就涉及到 B+树索引的分裂：</p>
+<p><img src="../../../../img/分布式唯一ID/image-20211110091721382.png" alt="image-20211110091721382"></p>
+<p>众所周知，关系型数据库的索引大都是B+树的结构，拿ID字段来举例，索引树的每一个节点都存储着若干个ID。</p>
+<p>如果我们的ID按递增的顺序来插入，比如陆续插入8，9，10，新的ID都只会插入到最后一个节点当中。当最后一个节点满了，会裂变出新的节点。这样的插入是性能比较高的插入，因为这样节点的分裂次数最少，而且充分利用了每一个节点的空间。</p>
+<p><img src="../../../../img/分布式唯一ID/image-20211110092101266.png" alt="image-20211110092101266"></p>
+<p>但是，如果我们的插入完全无序，不但会导致一些中间节点产生分裂，也会白白创造出很多不饱和的节点，这样大大降低了数据库插入的性能。<sunfy-line></p>
+<p>优点：</p>
+<ul>
+<li>1）简单，代码方便。</li>
+<li>2）生成ID性能非常好，基本不会有性能问题。</li>
+<li>3）全球唯一，在遇见数据迁移，系统数据合并，或者数据库变更等情况下，可以从容应对。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>1）没有排序，无法保证趋势递增。</li>
+<li>2）UUID往往是使用字符串存储，查询的效率比较低。</li>
+<li>3）存储空间比较大，如果是海量数据库，就需要考虑存储量的问题。</li>
+<li>4）传输数据量大</li>
+<li>5）不可读。</li>
+</ul>
+<h1 id="数据库自增主键"><a href="#数据库自增主键" class="headerlink" title="数据库自增主键"></a>数据库自增主键</h1><p>每一次生成ID的时候，访问数据库，执行下面的语句：</p>
+<blockquote>
+<p>begin;</p>
+<p>REPLACE INTO table ( feild )  VALUES ( ‘a’ );</p>
+<p>SELECT LAST_INSERT_ID();</p>
+<p>commit;</p>
+</blockquote>
+<p>REPLACE INTO 的含义是插入一条记录，如果表中唯一索引的值遇到冲突，则替换老数据。</p>
+<p>这样一来，每次都可以得到一个递增的ID。</p>
+<p>缺点：</p>
+<ul>
+<li>1）不同数据库语法和实现不同，数据库迁移的时候或多数据库版本支持的时候需要处理。</li>
+<li>2）在单个数据库或读写分离或一主多从的情况下，只有一个主库可以生成。有单点故障的风险。</li>
+<li>3）在性能达不到要求的情况下，比较难于扩展。（不适用于海量高并发）</li>
+<li>4）如果遇见多个系统需要合并或者涉及到数据迁移会相当痛苦。</li>
+<li>5）分表分库的时候会有麻烦。</li>
+<li>6）并非一定连续，类似MySQL，当生成新ID的事务回滚，那么后续的事务也不会再用这个ID了。这个在性能和连续性的折中。如果为了保证连续，必须要在事务结束后才能生成ID，那性能就会出现问题。</li>
+<li>7）在分布式数据库中，如果采用了自增主键的话，有可能会带来尾部热点。分布式数据库常常使用range的分区方式，在大量新增记录的时候，IO会集中在一个分区上，造成热点数据。</li>
+</ul>
+<p>优化方案：</p>
+<p>为了提高性能，在分布式系统中可以用DB proxy请求不同的分库，每个分库设置不同的初始值，步长和分库数量相等：</p>
+<p><img src="../../../../img/分布式唯一ID/88f174fa4d5888a38248e9b9f6d0dc0e.png" alt="640?wx_fmt=png"></p>
+<p>最终三个数据库生成的id为</p>
+<ul>
+<li>DB1：1+步长乘以n</li>
+<li>DB2：2+步长乘以n</li>
+<li>DB3：3+步长乘以n</li>
+</ul>
+<p>但是这样ID的生成对数据库严重依赖，影响性能，而且一旦数据库挂掉，服务将变得不可用。</p>
+<h1 id="Redis生成ID"><a href="#Redis生成ID" class="headerlink" title="Redis生成ID"></a>Redis生成ID</h1><p>当使用数据库来生成ID性能不够要求的时候，我们可以尝试使用Redis来生成ID。这主要依赖于Redis是单线程的，所以也可以用生成全局唯一的ID。可以用Redis的原子操作 INCR和INCRBY来实现。</p>
+<p>可以使用Redis集群来获取更高的吞吐量。假如一个集群中有5台Redis。可以初始化每台Redis的值分别是1,2,3,4,5，然后步长都是5。各个Redis生成的ID为：</p>
+<ul>
+<li>A：1,6,11,16,21</li>
+<li>B：2,7,12,17,22</li>
+<li>C：3,8,13,18,23</li>
+<li>D：4,9,14,19,24</li>
+<li>E：5,10,15,20,25</li>
+</ul>
+<p>这个，随便负载到哪个机确定好，未来很难做修改。但是3-5台服务器基本能够满足器上，都可以获得不同的ID。但是步长和初始值一定需要事先需要了。使用Redis集群也可以方式单点故障的问题。</p>
+<p>另外，比较适合使用Redis来生成每天从0开始的流水号。比如订单号=日期+当日自增长号。可以每天在Redis中生成一个Key，使用INCR进行累加。</p>
+<p>优点：</p>
+<ul>
+<li>1）不依赖于数据库，灵活方便，且性能优于数据库。</li>
+<li>2）数字ID天然排序，对分页或者需要排序的结果很有帮助。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>1）如果系统中没有Redis，还需要引入新的组件，增加系统复杂度。</li>
+<li>2）需要编码和配置的工作量比较大。</li>
+</ul>
+<h1 id="zookeeper生成唯一ID"><a href="#zookeeper生成唯一ID" class="headerlink" title="zookeeper生成唯一ID"></a>zookeeper生成唯一ID</h1><p>zookeeper主要通过其znode数据版本来生成序列号，可以生成32位和64位的数据版本号，客户端可以使用这个版本号来作为唯一的序列号。<br>很少会使用zookeeper来生成唯一ID。主要是由于需要依赖zookeeper，并且是多步调用API，如果在竞争较大的情况下，需要考虑使用分布式锁。因此，性能在高并发的分布式环境下，也不甚理想。</p>
+<h1 id="MongoDB的ObjectId"><a href="#MongoDB的ObjectId" class="headerlink" title="MongoDB的ObjectId"></a>MongoDB的ObjectId</h1><p>MongoDB的ObjectId和snowflake算法类似。它设计成轻量型的，不同的机器都能用全局唯一的同种方法方便地生成它。MongoDB 从一开始就设计用来作为分布式数据库，处理多个节点是一个核心要求。使其在分片环境中要容易生成得多。</p>
+<p>其格式如下：</p>
+<p><img src="../../../../img/分布式唯一ID/o_111.PNG" alt="img"></p>
+<p>前4 个字节是从标准纪元开始的时间戳，单位为秒。时间戳，与随后的5 个字节组合起来，提供了秒级别的唯一性。由于时间戳在前，这意味着ObjectId 大致会按照插入的顺序排列。这对于某些方面很有用，如将其作为索引提高效率。这4 个字节也隐含了文档创建的时间。绝大多数客户端类库都会公开一个方法从ObjectId 获取这个信息。<br>接下来的3 字节是所在主机的唯一标识符。通常是机器主机名的散列值。这样就可以确保不同主机生成不同的ObjectId，不产生冲突。<br>为了确保在同一台机器上并发的多个进程产生的ObjectId 是唯一的，接下来的两字节来自产生ObjectId 的进程标识符（PID）。<br>前9 字节保证了同一秒钟不同机器不同进程产生的ObjectId 是唯一的。后3 字节就是一个自动增加的计数器，确保相同进程同一秒产生的ObjectId 也是不一样的。同一秒钟最多允许每个进程拥有2563（16 777 216）个不同的ObjectId。</p>
+<p>实现的源码可以到MongoDB官方网站下载。</p>
+<h1 id="SnowFlake（雪花算法）"><a href="#SnowFlake（雪花算法）" class="headerlink" title="SnowFlake（雪花算法）"></a>SnowFlake（雪花算法）</h1><blockquote>
+<p>snowflake是Twitter开源的分布式ID生成算法，结果是一个long型的ID。其核心思想是：使用41bit作为毫秒数，10bit作为机器的ID（5个bit是数据中心，5个bit的机器ID），12bit作为毫秒内的流水号（意味着每个节点在每毫秒可以产生 4096 个 ID），最后还有一个符号位，永远是0。</p>
+</blockquote>
+<p>实现的代码可以参看<a href="https://github.com/twitter/snowflake" target="_blank" rel="noopener">https://github.com/twitter/snowflake</a></p>
+<p>该算法实现基本就是二进制操作，如果二进制不熟悉的可以看看我之前写的相关文章：<a href="http://mp.weixin.qq.com/s/AIvthkKEqacnfZBIZAxSKA" target="_blank" rel="noopener">java二进制相关基础</a>、<a href="http://mp.weixin.qq.com/s/-bcGP4kC1LWFBJydL6dBZA" target="_blank" rel="noopener">二进制实战技巧</a>。</p>
+<p>这个算法单机每秒内理论上最多可以生成1000*(2^12)，也就是409.6万个ID，（吼吼，这个得了的快啊）。</p>
+<p><img src="../../../../img/分布式唯一ID/14deb3531bb5e24b801a2e1f397b0ff2.png" alt="640?wx_fmt=png"></p>
+<p>SnowFlake所生成的ID一共分成四部分：</p>
+<p>1.第一位</p>
+<p>占用1bit，其值始终是0，没有实际作用。</p>
+<p>2.时间戳</p>
+<p>占用41bit，精确到毫秒，总共可以容纳约140年的时间。</p>
+<p>3.工作机器id</p>
+<p>占用10bit，其中高位5bit是数据中心ID（datacenterId），低位5bit是工作节点ID（workerId），做多可以容纳1024个节点。</p>
+<p>4.序列号</p>
+<p>占用12bit，这个值在同一毫秒同一节点上从0开始不断累加，最多可以累加到4095。</p>
+<p>SnowFlake算法在同一毫秒内最多可以生成多少个全局唯一ID呢？只需要做一个简单的乘法：</p>
+<p>同一毫秒的ID数量 = 1024 X 4096 =  4194304</p>
+<p>这个数字在绝大多数并发场景下都是够用的。</p>
+<p>为了达到业务的幂等，必须要有这样一个id存在，需要满足下面几个条件：</p>
+<ul>
+<li>同一业务场景要全局唯一。</li>
+<li>该id必须是在消息的发送方进行产生发送到MQ。</li>
+<li>消费端根据该id进行判断是否重复，确保幂等。</li>
+</ul>
+<p>在那里产生，和消费端进行判断等和这个id没有关系，这个id的要求就是局部唯一或者全局唯一即可，由于这个id是唯一的，可以用来当数据库的主键，既然要做主键那么之前刚刚好发过一篇文章：<a href="http://mp.weixin.qq.com/s/0lpkoaTI8FDAsH6EwwEBfg" target="_blank" rel="noopener">从开发者角度谈Mysql（1）：主键问题</a>，文章重点提到为什么需要自增、或者趋势自增的好处。（和Mysql数据存储做法有关）。</p>
+<p><strong>那么该id需要有2个特性：</strong></p>
+<ul>
+<li>局部、全局唯一。</li>
+<li>趋势递增。</li>
+</ul>
+<p>java实现代码基本上就是类似这样的（都差不多，基本就是二进制位操作）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Twitter_Snowflake&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * SnowFlake的结构如下(每部分用-分开):&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 0 - 0000000000 0000000000 0000000000 0000000000 0 - 00000 - 00000 - 000000000000 &lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 1位标识，由于long基本类型在Java中是带符号的，最高位是符号位，正数是0，负数是1，所以id一般是正数，最高位是0&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 41位时间截(毫秒级)，注意，41位时间截不是存储当前时间的时间截，而是存储时间截的差值（当前时间截 - 开始时间截)</span></span><br><span class="line"><span class="comment"> * 得到的值），这里的的开始时间截，一般是我们的id生成器开始使用的时间，由我们程序来指定的（如下下面程序IdWorker类的startTime属性）。41位的时间截，可以使用69年，年T = (1L &lt;&lt; 41) / (1000L * 60 * 60 * 24 * 365) = 69&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 10位的数据机器位，可以部署在1024个节点，包括5位datacenterId和5位workerId&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 12位序列，毫秒内的计数，12位的计数顺序号支持每个节点每毫秒(同一机器，同一时间截)产生4096个ID序号&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 加起来刚好64位，为一个Long型。&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * SnowFlake的优点是，整体上按照时间自增排序，并且整个分布式系统内不会产生ID碰撞(由数据中心ID和机器ID作区分)，并且效率较高，经测试，SnowFlake每秒能够产生26万ID左右。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SnowflakeIdWorker</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ==============================Fields===========================================</span></span><br><span class="line">    <span class="comment">/** 开始时间截 (2015-01-01) */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> twepoch = <span class="number">1420041600000L</span>;</span><br><span class="line">    <span class="comment">/** 机器id所占的位数 */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> workerIdBits = <span class="number">5L</span>;</span><br><span class="line">    <span class="comment">/** 数据标识id所占的位数 */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> datacenterIdBits = <span class="number">5L</span>;</span><br><span class="line">    <span class="comment">/** 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数) */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> maxWorkerId = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; workerIdBits);</span><br><span class="line">    <span class="comment">/** 支持的最大数据标识id，结果是31 */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> maxDatacenterId = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; datacenterIdBits);</span><br><span class="line">    <span class="comment">/** 序列在id中占的位数 */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> sequenceBits = <span class="number">12L</span>;</span><br><span class="line">    <span class="comment">/** 机器ID向左移12位 */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> workerIdShift = sequenceBits;</span><br><span class="line">    <span class="comment">/** 数据标识id向左移17位(12+5) */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> datacenterIdShift = sequenceBits + workerIdBits;</span><br><span class="line">    <span class="comment">/** 时间截向左移22位(5+5+12) */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;</span><br><span class="line">    <span class="comment">/** 生成序列的掩码，这里为4095 (0b111111111111=0xfff=4095) */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> sequenceMask = -<span class="number">1L</span> ^ (-<span class="number">1L</span> &lt;&lt; sequenceBits);</span><br><span class="line">    <span class="comment">/** 工作机器ID(0~31) */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> workerId;</span><br><span class="line">    <span class="comment">/** 数据中心ID(0~31) */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> datacenterId;</span><br><span class="line">    <span class="comment">/** 毫秒内序列(0~4095) */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> sequence = <span class="number">0L</span>;</span><br><span class="line">    <span class="comment">/** 上次生成ID的时间截 */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> lastTimestamp = -<span class="number">1L</span>;</span><br><span class="line">    <span class="comment">//==============================Constructors=====================================</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构造函数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> workerId 工作ID (0~31)</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> datacenterId 数据中心ID (0~31)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SnowflakeIdWorker</span><span class="params">(<span class="keyword">long</span> workerId, <span class="keyword">long</span> datacenterId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (workerId &gt; maxWorkerId || workerId &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(String.format(<span class="string">"worker Id can't be greater than %d or less than 0"</span>, maxWorkerId));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (datacenterId &gt; maxDatacenterId || datacenterId &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(String.format(<span class="string">"datacenter Id can't be greater than %d or less than 0"</span>, maxDatacenterId));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.workerId = workerId;</span><br><span class="line">        <span class="keyword">this</span>.datacenterId = datacenterId;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ==============================Methods==========================================</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获得下一个ID (该方法是线程安全的)</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> SnowflakeId</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">long</span> <span class="title">nextId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> timestamp = timeGen();</span><br><span class="line">        <span class="comment">//如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常</span></span><br><span class="line">        <span class="keyword">if</span> (timestamp &lt; lastTimestamp) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(</span><br><span class="line">                    String.format(<span class="string">"Clock moved backwards.  Refusing to generate id for %d milliseconds"</span>, lastTimestamp - timestamp));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果是同一时间生成的，则进行毫秒内序列</span></span><br><span class="line">        <span class="keyword">if</span> (lastTimestamp == timestamp) &#123;</span><br><span class="line">            sequence = (sequence + <span class="number">1</span>) &amp; sequenceMask;</span><br><span class="line">            <span class="comment">//毫秒内序列溢出</span></span><br><span class="line">            <span class="keyword">if</span> (sequence == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">//阻塞到下一个毫秒,获得新的时间戳</span></span><br><span class="line">                timestamp = tilNextMillis(lastTimestamp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//时间戳改变，毫秒内序列重置</span></span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            sequence = <span class="number">0L</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//上次生成ID的时间截</span></span><br><span class="line">        lastTimestamp = timestamp;</span><br><span class="line">        <span class="comment">//移位并通过或运算拼到一起组成64位的ID</span></span><br><span class="line">        <span class="keyword">return</span> ((timestamp - twepoch) &lt;&lt; timestampLeftShift) <span class="comment">//</span></span><br><span class="line">                | (datacenterId &lt;&lt; datacenterIdShift) <span class="comment">//</span></span><br><span class="line">                | (workerId &lt;&lt; workerIdShift) <span class="comment">//</span></span><br><span class="line">                | sequence;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 阻塞到下一个毫秒，直到获得新的时间戳</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> lastTimestamp 上次生成ID的时间截</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 当前时间戳</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">long</span> <span class="title">tilNextMillis</span><span class="params">(<span class="keyword">long</span> lastTimestamp)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> timestamp = timeGen();</span><br><span class="line">        <span class="keyword">while</span> (timestamp &lt;= lastTimestamp) &#123;</span><br><span class="line">            timestamp = timeGen();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> timestamp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回以毫秒为单位的当前时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 当前时间(毫秒)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">long</span> <span class="title">timeGen</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//==============================Test=============================================</span></span><br><span class="line">    <span class="comment">/** 测试 */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SnowflakeIdWorker idWorker = <span class="keyword">new</span> SnowflakeIdWorker(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">long</span> id = idWorker.nextId();</span><br><span class="line">            System.out.println(Long.toBinaryString(id));</span><br><span class="line">            System.out.println(id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>优点：</strong></p>
+<ul>
+<li>快（哈哈，天下武功唯快不破）。</li>
+<li>没有啥依赖，实现也特别简单。</li>
+<li>知道原理之后可以根据实际情况调整各各位段，方便灵活。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>只能趋势递增。（有些也不叫缺点，网上有些如果绝对递增，竞争对手中午下单，第二天在下单即可大概判断该公司的订单量，危险！！！）</li>
+<li>依赖机器时间，如果发生回拨会导致可能生成id重复。<br>下面重点讨论时间回拨问题。</li>
+</ul>
+<h2 id="snowflake算法时间回拨问题思考"><a href="#snowflake算法时间回拨问题思考" class="headerlink" title="snowflake算法时间回拨问题思考"></a>snowflake算法时间回拨问题思考</h2><p>由于存在时间回拨问题，但是他又是那么快和简单，我们思考下是否可以解决呢？ 零度在网上找了一圈没有发现具体的解决方案，但是找到了一篇美团不错的文章：Leaf——美团点评分布式ID生成系统（<a href="https://tech.meituan.com/MT_Leaf.html）" target="_blank" rel="noopener">https://tech.meituan.com/MT_Leaf.html）</a><br>文章很不错，可惜并没有提到时间回拨如何具体解决。</p>
+<h3 id="分析时间回拨产生原因"><a href="#分析时间回拨产生原因" class="headerlink" title="分析时间回拨产生原因"></a>分析时间回拨产生原因</h3><p>第一：人为操作，在真实环境一般不会有那个傻逼干这种事情，所以基本可以排除。<br>第二：由于有些业务等需要，机器需要同步时间服务器（在这个过程中可能会存在时间回拨）。</p>
+<h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><ul>
+<li>由于是分布在各各机器自己上面，如果要几台集中的机器（并且不做时间同步），那么就基本上就不存在回拨可能性了（曲线救国也是救国，哈哈），但是也的确带来了新问题，各各结点需要访问集中机器，要保证性能，百度的uid-generator产生就是基于这种情况做的（每次取一批回来，很好的思想，性能也非常不错）<a href="https://github.com/baidu/uid-generator。" target="_blank" rel="noopener">https://github.com/baidu/uid-generator。</a></li>
+</ul>
+<p><strong>时间问题回拨的解决方法：</strong></p>
+<ol>
+<li>当回拨时间小于15ms，就等时间追上来之后继续生成。</li>
+<li>当时间大于15ms时间我们通过<strong>更换workid</strong>来产生之前都没有产生过的来解决回拨问题。</li>
+</ol>
+<p>首先把workid的位数进行了调整（15位可以达到3万多了，一般够用了）<br><img src="../../../../img/分布式唯一ID/7849276-35ba996d3f17ca43.png" alt="img"><br>Snowflake算法稍微调整下位段：</p>
+<ul>
+<li>sign(1bit)<br>固定1bit符号标识，即生成的畅途分布式唯一id为正数。</li>
+<li>delta seconds (38 bits)<br>当前时间，相对于时间基点”2017-12-21”的增量值，单位：毫秒，最多可支持约8.716年</li>
+<li>worker id (15 bits)<br>机器id，最多可支持约3.28万个节点。</li>
+<li>sequence (10 bits)<br>每秒下的并发序列，10 bits，这个算法单机每秒内理论上最多可以生成1000<em>(2^10)，也就是<em>*100W</em></em>的ID，完全能满足业务的需求。</li>
+</ul>
+<p>由于服务无状态化关系，所以一般workid也并不配置在具体配置文件里面，这里我们选择redis来进行中央存储（zk、db）都是一样的，只要是集中式的就可以。</p>
+<h4 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h4><p>现在我把3万多个workid放到一个队列中（基于redis），由于需要一个集中的地方来管理workId，每当节点启动时候，（先在本地某个地方看看是否有 借鉴弱依赖zk 本地先保存），如果有那么值就作为workid，如果不存在，就在队列中取一个当workid来使用（队列取走了就没了 ），当发现时间回拨太多的时候，我们就再去队列取一个来当新的workid使用，把刚刚那个使用回拨的情况的workid存到队列里面（队列我们每次都是从头取，从尾部进行插入，这样避免刚刚a机器使用又被b机器获取的可能性）。</p>
+<p>有几个问题值得思考：</p>
+<ul>
+<li>如果引入了redis为啥不用redis下发id？（查看分布式系统唯一ID生成方案汇总会获得答案，我们这里仅仅是用来一致性队列的，能做一致性队列的基本都可以)。</li>
+<li>引入redis就意味着引入其他第三方的架构，做基础框架最好是不要引用（越简单越好，目前还在学习提高）。</li>
+<li>redis一致性怎么保证？（redis挂了怎么办，怎么同步，的确值得商榷。可能会引入会引入很多新的小问题）。</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>所以选择类似百度的那种做法比较好，集中之后批取，零度的思考虽然思考了，但是从基础组件来看并不是特别合适，但是也算一种思路吧。</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/11/15/resource-java-concurrent-AQS/" data-toggle="tooltip" data-placement="top" title="对AQS的理解">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/11/08/resource-java-concurrent-Atomic/" data-toggle="tooltip" data-placement="top" title="Atomic原子操作分析">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#UUID"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">UUID</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#数据库自增主键"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">数据库自增主键</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Redis生成ID"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Redis生成ID</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#zookeeper生成唯一ID"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">zookeeper生成唯一ID</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#MongoDB的ObjectId"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">MongoDB的ObjectId</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#SnowFlake（雪花算法）"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">SnowFlake（雪花算法）</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#snowflake算法时间回拨问题思考"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">snowflake算法时间回拨问题思考</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分析时间回拨产生原因"><span class="toc-nav-number">6.1.1.</span> <span class="toc-nav-text">分析时间回拨产生原因</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解决方法"><span class="toc-nav-number">6.1.1.1.</span> <span class="toc-nav-text">解决方法</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#实现方式"><span class="toc-nav-number">6.1.1.2.</span> <span class="toc-nav-text">实现方式</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#总结"><span class="toc-nav-number">6.1.1.3.</span> <span class="toc-nav-text">总结</span></a></li></ol></li></ol></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#algorithm" title="algorithm">algorithm</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

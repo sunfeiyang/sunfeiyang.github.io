@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          CAS操作分析 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/11/07/resource-java-concurrent-CAS/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/concurrent/cas.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>CAS操作分析</h1>
+                        <h2 class="subheading">Compare And Swap，比较并交换</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-11-07
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.2k</span> and
+                                Reading Time <span class="post-count">9</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a><code>CAS</code></h1><p><code>CAS</code>(Compare And Swap，比较并交换)，通常值的是一种原子操作，针对一个变量，首先比较它的内存值与某个期望值是否相同，如果相同就给它赋值另一个值。正所谓比较并交换。</p>
+<blockquote>
+<p>if(value == ‘内存中的值’) { value = new }</p>
+</blockquote>
+<font color='red' style="font-weight: bolder">CAS是一种无锁算法，在不使用锁（没有线程被阻塞）的情况下实现多线程之间的变量同步。</font>
+
+<p>接下来我看下一个在理解CAS时很常见的一个例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 启动十个线程进行累加计算，每个线程计算1万次</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        Thread thread = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">10000</span>; j++) &#123;</span><br><span class="line">                sum++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        thread.start();</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">// 主线程休眠3秒钟</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">// 查看最终的计算结果</span></span><br><span class="line">    System.out.println(sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行上面的代码可以看到，最终得到的结果和我们预期结果并不一样，我们预期100000，但是最终运行结果始终比其小，且每次执行结果还不一样。从线程并发角度分析，上面的方法是存在并发安全问题的。</p>
+<p>分析：<sunfy-line>在java层面，sum++，是两个操作，等同于sum = sum + 1，线程先获取了共享变量中的sum值，然后去对sum值进行加1操作，然后再将计算结果赋值给sum。这是一个线程操作的完整过程，可见主要分为两个步骤，</p>
+<ul>
+<li>获取变量值进行累加</li>
+<li>将累加结果赋值给原对象</li>
+</ul>
+<p>那么，如果线程A在获取变量值进行累加同时，线程B也获取到了变量值进行累加，这时线程B先完成计算将结果赋值给原对象，随后线程A完成计算进行结果赋值，那最终原变量的值只增加了1，但实际上线程A和线程B分别进行了累加，我们期望结果是累加2，这就是很明显和我们预期不符。</p>
+<p>解决方法：</p>
+<p>个人分为两类：一类是加锁</p>
+<ul>
+<li><p>加锁<code>synchronized</code>，最简单粗暴，重量级锁，对性能影响较大</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将进行计算的操作进行加锁，可以解决此问题</span></span><br><span class="line"><span class="keyword">synchronized</span> (object) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">10000</span>; j++) &#123;</span><br><span class="line">        sum++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用<code>ReentrantLock</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个锁</span></span><br><span class="line"><span class="keyword">static</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 给累加计算操作加锁，这个在每次计算结束后，要在finally的第一行进行解锁</span></span><br><span class="line">lock.lock();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">10000</span>; j++) &#123;</span><br><span class="line">        sum++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>第二类是原子操作：</p>
+<ul>
+<li><p>使用<code>CAS</code>进行原子操作</p>
+<p>自定义一个CAS锁，需要用到Unsafe类，</p>
+<p><img src="../../../../img/CAS/image-20211108152724861.png" alt="image-20211108152724861"></p>
+<p>在这个类中定义了很多方法，我们要使用到的<code>public final native boolean compareAndSwapInt(Object var1, long var2, int var4, int var5)</code>，根据方法名称<code>compareAndSwapInt</code>，大概可以猜到方法的作用是先进行比较，然后进行交换一个整数值。</p>
+<p>以 <code>compareAndSwapInt</code> 为例，<code>Unsafe</code> 的 <code>compareAndSwapInt</code> 方法接收 4 个参数，分别是：对象实例、内存偏移量、字段期望值、字段新值。该方法会针对指定对象实例中的相应偏移量的字段执行 CAS 操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Unsafe工厂类，用户获取Unsafe对象和获取字段内存偏移量</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnsafeFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取 Unsafe 对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Unsafe <span class="title">getUnsafe</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Field field = Unsafe.class.getDeclaredField("theUnsafe");</span><br><span class="line">            field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            <span class="keyword">return</span> (Unsafe) field.get(<span class="keyword">null</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取字段的内存偏移量</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">getFieldOffset</span><span class="params">(Unsafe unsafe, Class clazz, String fieldName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> unsafe.objectFieldOffset(clazz.getDeclaredField(fieldName));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchFieldException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Error(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义CAS锁</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CASLock</span> </span>&#123;</span><br><span class="line">    <span class="comment">//加锁标记</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> state;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe UNSAFE;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> OFFSET;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            UNSAFE = UnsafeFactory.getUnsafe();</span><br><span class="line">            OFFSET = UnsafeFactory.getFieldOffset(</span><br><span class="line">                    UNSAFE, CASLock.class, "state");</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Error(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 进行CAS运算，返回boolean值</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">cas</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> UNSAFE.compareAndSwapInt(<span class="keyword">this</span>, OFFSET, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getState</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setState</span><span class="params">(<span class="keyword">int</span> state)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.state = state;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用自定义的CAS锁解决上述问题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> CASLock casLock = <span class="keyword">new</span> CASLock();</span><br><span class="line"><span class="comment">// 自旋尝试获取锁</span></span><br><span class="line"><span class="keyword">for</span>(;;)&#123;</span><br><span class="line">    <span class="comment">// 获取到锁，casLock.cas()进行CAS操作，返回的是原值</span></span><br><span class="line">    <span class="keyword">if</span> (casLock.getState() == <span class="number">0</span> &amp;&amp; casLock.cas()) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">10000</span>; j++) &#123;</span><br><span class="line">                sum++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            casLock.setState(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="CAS应用"><a href="#CAS应用" class="headerlink" title="CAS应用"></a><code>CAS</code>应用</h1><p>看一下UnSafe中常用的几个方法</p>
+<ul>
+<li><code>compareAndSwapInt(Object var1, long var2, int var4, int var5)</code></li>
+<li><code>compareAndSwapObject(Object var1, long var2, Object var4, Object var5)</code></li>
+<li><code>compareAndSwapLong(Object var1, long var2, long var4, long var6)</code></li>
+</ul>
+<p><img src="../../../../img/CAS/image-20211108165929154.png" alt="image-20211108165929154"></p>
+<p>这几个方法都是<code>native</code>方法，这是由java虚拟机提供具体的方法实现，这说明每个方法在不同的虚拟机中的实现可能会略有不同。</p>
+<p>他们接收的参数都是对象实例、内存偏移量、字段期望值、字段新值，这四个参数。方法会针对指定对象实例中的相应偏移量的字段执行 CAS 操作。</p>
+<h1 id="CAS分析"><a href="#CAS分析" class="headerlink" title="CAS分析"></a><code>CAS</code>分析</h1><p>虚拟机对<code>compareAndSwapInt</code>的实现采用的是C++编写的，此处不做说明，不过我们要知道</p>
+<p>不管是 Hotspot 中的 <code>Atomic::cmpxchg</code> 方法（实现CAS操作的关键方法），还是 Java 中的 <code>compareAndSwapInt</code> 方法，它 们本质上都是对相应平台的 CAS 指令的一层简单封装。CAS 指令作为一种硬件原语，有着天然 的原子性，这也正是 CAS 的价值所在。</p>
+<h1 id="CAS缺陷"><a href="#CAS缺陷" class="headerlink" title="CAS缺陷"></a><code>CAS</code>缺陷</h1><p>CAS高效解决了原子操作的问题，但是也存在一些问题</p>
+<ul>
+<li>自旋操作如果长时间不成功，会给CPU带来很大的开销</li>
+<li>CAS只能同时保证一个共享变量的原子操作</li>
+<li>ABA问题</li>
+</ul>
+<h1 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a><code>ABA</code>问题</h1><p>什么是ABA问题，首先我们理解了CAS，会在最终赋值前先进行比较，判断共享变量的初始值和计算后的值是否相同，相同才会赋值成功，否则会失败。那么如果存在这样一种情况，线程A首先获取了共享变量的值，然后进行相应的操作，在线程A执行过程中，线程B也获取到了共享变量的值，对共享变量的值增加了1并完成了赋值，紧接着线程C获取共享变量的值并对变量值减1，并完成赋值。在B和C都完成操作后，线程A才执行完成，在赋值前判断共享变量的值是否发生变更，因为线程B和线程C的操作正好互补，对于线程A来说共享变量的值并未发生变化，此时线程A会赋值成功。类似的情况就称为ABA问题。看图理解一下：</p>
+<p><img src="../../../../img/CAS/image-20211108162921037.png" alt="image-20211108162921037"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ABA问题</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 原子操作类</span></span><br><span class="line">    AtomicInteger atomicInteger = <span class="keyword">new</span> AtomicInteger(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">int</span> value = atomicInteger.get();</span><br><span class="line">        log.debug(<span class="string">"Thread1 read value: "</span> + value);</span><br><span class="line">        <span class="comment">// 阻塞1s</span></span><br><span class="line">        LockSupport.parkNanos(<span class="number">1000000000L</span>);</span><br><span class="line">        <span class="comment">// Thread1通过CAS修改value值为3</span></span><br><span class="line">        <span class="keyword">if</span> (atomicInteger.compareAndSet(value, <span class="number">3</span>)) &#123;</span><br><span class="line">            log.debug(<span class="string">"Thread1 update from "</span> + value + <span class="string">" to 3"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            log.debug(<span class="string">"Thread1 update fail!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,<span class="string">"Thread1"</span>).start();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">int</span> value = atomicInteger.get();</span><br><span class="line">        log.debug(<span class="string">"Thread2 read value: "</span> + value);</span><br><span class="line">        <span class="comment">// Thread2通过CAS修改value值为2</span></span><br><span class="line">        <span class="keyword">if</span> (atomicInteger.compareAndSet(value, <span class="number">2</span>)) &#123;</span><br><span class="line">            log.debug(<span class="string">"Thread2 update from "</span> + value + <span class="string">" to 2"</span>);</span><br><span class="line">            <span class="comment">// do something</span></span><br><span class="line">            value = atomicInteger.get();</span><br><span class="line">            log.debug(<span class="string">"Thread2 read value: "</span> + value);</span><br><span class="line">            <span class="comment">// Thread2通过CAS修改value值为1</span></span><br><span class="line">            <span class="keyword">if</span> (atomicInteger.compareAndSet(value, <span class="number">1</span>)) &#123;</span><br><span class="line">                log.debug(<span class="string">"Thread2 update from "</span> + value + <span class="string">" to 1"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,<span class="string">"Thread2"</span>).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果，出现ABA问题。</p>
+<p><img src="../../../../img/CAS/image-20211108212722738.png" alt="image-20211108212722738"></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>类比数据库中的乐观锁的情况，基于数据版本实现数据同步的机制，每次修改一次数据，版本号进行累加。</p>
+<p>java中提供的原子引用类<code>AtomicStampedReference&lt;V&gt;</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 定义AtomicStampedReference    Pair.reference值为1, Pair.stamp为1</span></span><br><span class="line">    AtomicStampedReference atomicStampedReference = <span class="keyword">new</span> AtomicStampedReference(<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">int</span>[] stampHolder = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> value = (<span class="keyword">int</span>) atomicStampedReference.get(stampHolder);</span><br><span class="line">        <span class="keyword">int</span> stamp = stampHolder[<span class="number">0</span>];</span><br><span class="line">        log.debug(<span class="string">"Thread1 read value: "</span> + value + <span class="string">", stamp: "</span> + stamp);</span><br><span class="line">        <span class="comment">// LockSupport 用于创建锁和其他同步类的基本线程阻塞原语</span></span><br><span class="line">        <span class="comment">// 阻塞1s 为线程调度目的禁用当前线程，直至指定的等待时间，除非许可可用</span></span><br><span class="line">        LockSupport.parkNanos(<span class="number">1000000000L</span>);</span><br><span class="line">        <span class="comment">// Thread1通过CAS修改value值为3   stamp是版本，每次修改可以通过+1保证版本唯一性</span></span><br><span class="line">        <span class="comment">// 如果当前引用==到预期引用并且当前标记等于预期标记，则原子地将引用和标记的值设置为给定的更新值。</span></span><br><span class="line">        <span class="keyword">if</span> (atomicStampedReference.compareAndSet(value, <span class="number">3</span>,stamp,stamp+<span class="number">1</span>)) &#123;</span><br><span class="line">            log.debug(<span class="string">"Thread1 update from "</span> + value + <span class="string">" to 3"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            log.debug(<span class="string">"Thread1 update fail!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,<span class="string">"Thread1"</span>).start();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">int</span>[] stampHolder = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> value = (<span class="keyword">int</span>)atomicStampedReference.get(stampHolder);</span><br><span class="line">        <span class="keyword">int</span> stamp = stampHolder[<span class="number">0</span>];</span><br><span class="line">        log.debug(<span class="string">"Thread2 read value: "</span> + value+ <span class="string">", stamp: "</span> + stamp);</span><br><span class="line">        <span class="comment">// Thread2通过CAS修改value值为2</span></span><br><span class="line">        <span class="keyword">if</span> (atomicStampedReference.compareAndSet(value, <span class="number">2</span>,stamp,stamp+<span class="number">1</span>)) &#123;</span><br><span class="line">            log.debug(<span class="string">"Thread2 update from "</span> + value + <span class="string">" to 2"</span>);</span><br><span class="line">            <span class="comment">// do something</span></span><br><span class="line">            value = (<span class="keyword">int</span>) atomicStampedReference.get(stampHolder);</span><br><span class="line">            stamp = stampHolder[<span class="number">0</span>];</span><br><span class="line">            log.debug(<span class="string">"Thread2 read value: "</span> + value+ <span class="string">", stamp: "</span> + stamp);</span><br><span class="line">            <span class="comment">// Thread2通过CAS修改value值为1</span></span><br><span class="line">            <span class="keyword">if</span> (atomicStampedReference.compareAndSet(value, <span class="number">1</span>,stamp,stamp+<span class="number">1</span>)) &#123;</span><br><span class="line">                log.debug(<span class="string">"Thread2 update from "</span> + value + <span class="string">" to 1"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,<span class="string">"Thread2"</span>).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/CAS/image-20211108214752255.png" alt="image-20211108214752255"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/11/08/resource-java-concurrent-Atomic/" data-toggle="tooltip" data-placement="top" title="Atomic原子操作分析">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/11/06/resource-java-concurrent-threadPool/" data-toggle="tooltip" data-placement="top" title="并发线程池原理分析">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#CAS"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">CAS</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#CAS应用"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">CAS应用</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#CAS分析"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">CAS分析</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#CAS缺陷"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">CAS缺陷</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#ABA问题"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">ABA问题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#解决方案"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">解决方案</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

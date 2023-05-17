@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          shiro入门基础教程 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2020/10/18/resource-java-shiro-shirotoUse/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/16.gif')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#shiro" title="shiro">shiro</a>
+                            
+                        </div>
+
+                        <h1>shiro入门基础教程</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2020-10-18
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">1.9k</span> and
+                                Reading Time <span class="post-count">9</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>shiro授权框架，个人理解主要适合单体应用，分布式应用和微服务架构模式下需要改造重新实现一些功能才能使用。 <a id="more"></a></p>
+<h3 id="基础环境"><a href="#基础环境" class="headerlink" title="基础环境"></a>基础环境</h3><ol>
+<li>maven依赖</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- shiro使用的是slf4j日志门面 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>基本配置类<sunfy-line></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.shiro.authc.credential.HashedCredentialsMatcher;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.authc.pam.ModularRealmAuthenticator;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.cache.MemoryConstrainedCacheManager;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.realm.AuthenticatingRealm;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.realm.AuthorizingRealm;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.spring.web.ShiroFilterFactoryBean;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.web.mgt.CookieRememberMeManager;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.web.mgt.DefaultWebSecurityManager;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.web.servlet.Cookie;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.web.servlet.SimpleCookie;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: sunfy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2020/10/19 上午11:18</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">shiroConfig</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Realm  系统资源</span></span><br><span class="line"><span class="comment">     * MyRealm类中已经注入，此处不需要重复</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">//    @Bean</span></span><br><span class="line">    <span class="comment">//    public Realm myRealm() &#123;</span></span><br><span class="line">    <span class="comment">//        return new MyRealm();</span></span><br><span class="line">    <span class="comment">//    &#125;</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * SecurityManager 流程控制</span></span><br><span class="line"><span class="comment">     * 构造方法的形式引入，创建对象的时候就可以引入Realm</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DefaultWebSecurityManager <span class="title">mySecurityManager</span><span class="params">(AuthorizingRealm myRealm, AuthenticatingRealm mobileRealm)</span> </span>&#123;</span><br><span class="line">        DefaultWebSecurityManager securityManager = <span class="keyword">new</span> DefaultWebSecurityManager();</span><br><span class="line">        <span class="comment">//密码加密</span></span><br><span class="line">        HashedCredentialsMatcher matcher = <span class="keyword">new</span> HashedCredentialsMatcher();</span><br><span class="line">        <span class="comment">// 算法名</span></span><br><span class="line">        matcher.setHashAlgorithmName(<span class="string">"MD5"</span>);</span><br><span class="line">        <span class="comment">// 迭代次数</span></span><br><span class="line">        matcher.setHashIterations(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//        private String hashAlgorithm;</span></span><br><span class="line"><span class="comment">//        private int hashIterations;</span></span><br><span class="line"><span class="comment">//        private boolean hashSalted;   已经过时</span></span><br><span class="line"><span class="comment">//        private boolean storedCredentialsHexEncoded;  设置默认的</span></span><br><span class="line">        myRealm.setCredentialsMatcher(matcher);</span><br><span class="line">        mobileRealm.setCredentialsMatcher(matcher);</span><br><span class="line">        securityManager.setRealms(Arrays.asList(myRealm, mobileRealm));</span><br><span class="line"><span class="comment">//        securityManager.setRealm(myRealm);</span></span><br><span class="line">        <span class="comment">// 设置认证策略</span></span><br><span class="line">        ModularRealmAuthenticator authenticator = <span class="keyword">new</span> ModularRealmAuthenticator();</span><br><span class="line">        <span class="comment">// 设置认证策略为有一个成功即可</span></span><br><span class="line">        authenticator.setAuthenticationStrategy(<span class="keyword">new</span> AtLeastOneSuccessfulStrategy());</span><br><span class="line">        <span class="comment">// 设置所有的认证策略都返回成功</span></span><br><span class="line"><span class="comment">//        authenticator.setAuthenticationStrategy(new AllSuccessfulStrategy());</span></span><br><span class="line">        <span class="comment">// 设置第一个认证策略返回成功后不再认证后续的</span></span><br><span class="line"><span class="comment">//        authenticator.setAuthenticationStrategy(new FirstSuccessfulStrategy());</span></span><br><span class="line">        authenticator.setRealms(Arrays.asList(myRealm, mobileRealm));</span><br><span class="line">        securityManager.setAuthenticator(authenticator);</span><br><span class="line">        CookieRememberMeManager cookieRememberMeManager = <span class="keyword">new</span> CookieRememberMeManager();</span><br><span class="line">        Cookie cookie = <span class="keyword">new</span> SimpleCookie(<span class="string">"rememberMe"</span>);</span><br><span class="line">        cookie.setHttpOnly(<span class="keyword">true</span>);</span><br><span class="line">        cookie.setMaxAge(<span class="number">5</span>);</span><br><span class="line">        cookieRememberMeManager.setCookie(cookie);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 分布式环境需要自己改造以下功能</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="comment">// 设置记住我功能</span></span><br><span class="line">        securityManager.setRememberMeManager(cookieRememberMeManager);</span><br><span class="line">        <span class="comment">// session 共享</span></span><br><span class="line"><span class="comment">//        securityManager.setSessionManager();</span></span><br><span class="line">        <span class="comment">// 缓存</span></span><br><span class="line">        MemoryConstrainedCacheManager memoryConstrainedCacheManager = <span class="keyword">new</span> MemoryConstrainedCacheManager();</span><br><span class="line">        securityManager.setCacheManager(memoryConstrainedCacheManager);</span><br><span class="line">        <span class="keyword">return</span> securityManager;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * ShiroFilterFactoryBean 请求过滤器</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ShiroFilterFactoryBean <span class="title">getShiroFilterFactoryBean</span><span class="params">(DefaultWebSecurityManager mySecurityManager)</span></span>&#123;</span><br><span class="line">        ShiroFilterFactoryBean factoryBean = <span class="keyword">new</span> ShiroFilterFactoryBean();</span><br><span class="line">        factoryBean.setSecurityManager(mySecurityManager);</span><br><span class="line">        <span class="comment">// 配置路径经过过滤器</span></span><br><span class="line">        Map&lt;String, String&gt; fifterMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">// key是ant路径，value配置shiro的默认过滤器</span></span><br><span class="line">        <span class="comment">// shiro的默认过滤器，配置DefaultFilter</span></span><br><span class="line">        <span class="comment">// anon(AnonymousFilter.class), 匿名过滤器</span></span><br><span class="line">        <span class="comment">// authc(FormAuthenticationFilter.class), 认证（登录）使用</span></span><br><span class="line">        <span class="comment">// authcBasic(BasicHttpAuthenticationFilter.class),  认证不通过跳转登录页</span></span><br><span class="line">        <span class="comment">// authcBearer(BearerHttpAuthenticationFilter.class),</span></span><br><span class="line">        <span class="comment">// logout(LogoutFilter.class),</span></span><br><span class="line">        <span class="comment">// noSessionCreation(NoSessionCreationFilter.class),</span></span><br><span class="line">        <span class="comment">// perms(PermissionsAuthorizationFilter.class),</span></span><br><span class="line">        <span class="comment">// port(PortFilter.class),</span></span><br><span class="line">        <span class="comment">// rest(HttpMethodPermissionFilter.class),</span></span><br><span class="line">        <span class="comment">// roles(RolesAuthorizationFilter.class),</span></span><br><span class="line">        <span class="comment">// ssl(SslFilter.class),</span></span><br><span class="line">        <span class="comment">// user(UserFilter.class),</span></span><br><span class="line">        <span class="comment">// invalidRequest(InvalidRequestFilter.class);</span></span><br><span class="line"><span class="comment">//        fifterMap.put("/mobile/**", "authc, perms[mobile]");</span></span><br><span class="line">        fifterMap.put(<span class="string">"/salary/**"</span>, <span class="string">"authc, perms[salary]"</span>);</span><br><span class="line">        <span class="comment">// 相当与登出方法 使用shiro提供的logout过滤器</span></span><br><span class="line">        fifterMap.put(<span class="string">"/common/logout"</span>, <span class="string">"logout"</span>);</span><br><span class="line">        <span class="comment">// 设置登录页</span></span><br><span class="line">        factoryBean.setLoginUrl(<span class="string">"/index.html"</span>);</span><br><span class="line">        <span class="comment">// 定制未授权页面</span></span><br><span class="line">        factoryBean.setUnauthorizedUrl(<span class="string">"/common/unAuth"</span>);</span><br><span class="line">        <span class="comment">// iml文件中进行相应的配置，也可以直接手动写</span></span><br><span class="line"><span class="comment">//        factoryBean.setFilterChainDefinitions("/mobile/**=authc");</span></span><br><span class="line">        factoryBean.setFilterChainDefinitionMap(fifterMap);</span><br><span class="line">        <span class="keyword">return</span> factoryBean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实现登录验证功能"><a href="#实现登录验证功能" class="headerlink" title="实现登录验证功能"></a>实现登录验证功能</h3><ol>
+<li>创建Realm对象，继承 <code>AuthorizingRealm</code></li>
+<li>实现父类的方法<ol>
+<li>授权方法<code>doGetAuthorizationInfo</code></li>
+<li>认证方法<code>doGetAuthenticationInfo</code></li>
+</ol>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Realm配置文件</span></span><br><span class="line"><span class="keyword">import</span> com.sunfy.shiroWeb.bean.UserBean;</span><br><span class="line"><span class="keyword">import</span> com.sunfy.shiroWeb.service.UserService;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.authc.*;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.authz.AuthorizationInfo;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.authz.SimpleAuthorizationInfo;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.realm.AuthorizingRealm;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.subject.PrincipalCollection;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.util.ByteSource;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: sunfy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2020/10/19 上午11:21</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyRealm</span> <span class="keyword">extends</span> <span class="title">AuthorizingRealm</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(MyRealm<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 授权</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> principalCollection</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> AuthorizationInfo <span class="title">doGetAuthorizationInfo</span><span class="params">(PrincipalCollection principalCollection)</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="string">"&gt;&gt;&gt;entered MyRealm doGetAuthorizationInfo method"</span>);</span><br><span class="line">        SimpleAuthorizationInfo simpleAuthorizationInfo = <span class="keyword">new</span> SimpleAuthorizationInfo();</span><br><span class="line">        <span class="comment">// 获得当前用户</span></span><br><span class="line">        UserBean userBean = (UserBean) principalCollection.asList().get(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">// 绑定角色和资源</span></span><br><span class="line">        simpleAuthorizationInfo.addRoles(userBean.getUserRoles());</span><br><span class="line">        simpleAuthorizationInfo.addStringPermissions(userBean.getUserPerms());</span><br><span class="line">        <span class="keyword">return</span> simpleAuthorizationInfo;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 认证</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> authenticationToken</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> AuthenticationException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> AuthenticationInfo <span class="title">doGetAuthenticationInfo</span><span class="params">(AuthenticationToken authenticationToken)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">        logger.info(<span class="string">"&lt;&lt;&lt;entered MyRealm doGetAuthenticationInfo method"</span>);</span><br><span class="line">        <span class="comment">// 获得当前用户</span></span><br><span class="line">        UsernamePasswordToken userToken = (UsernamePasswordToken) authenticationToken;</span><br><span class="line">        String userName = userToken.getUsername();</span><br><span class="line">        <span class="comment">// 获得数据库中密码，来跟当前用户进行比对，认证。</span></span><br><span class="line">        UserBean userBean = userService.queryUserByName(userName);</span><br><span class="line">        <span class="comment">// 如果没有查到，没有这个用户</span></span><br><span class="line">        <span class="keyword">if</span> (userBean == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// shiro判断 抛出 UnknownAccountException 异常提醒</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ByteSource salt = ByteSource.Util.bytes(<span class="string">"salt"</span>);</span><br><span class="line">        <span class="comment">// 返回 AuthenticationInfo 完成认证流程（密码比较认证shiro进行认证）</span></span><br><span class="line">        SimpleAuthenticationInfo simpleAuthenticationInfo =</span><br><span class="line">                <span class="keyword">new</span> SimpleAuthenticationInfo(userBean, userBean.getUserPass(),salt,<span class="string">"myRealm"</span>);</span><br><span class="line">        <span class="keyword">return</span> simpleAuthenticationInfo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="认证错误访问情况设置"><a href="#认证错误访问情况设置" class="headerlink" title="认证错误访问情况设置"></a>认证错误访问情况设置</h3><p>设置登录页、登录成功也、未授权页面</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置登录页</span></span><br><span class="line">factoryBean.setLoginUrl(<span class="string">"/index.html"</span>);</span><br><span class="line"><span class="comment">// 定制未授权页面</span></span><br><span class="line">factoryBean.setUnauthorizedUrl(<span class="string">"/common/unAuth"</span>);</span><br></pre></td></tr></table></figure>
+<p>登出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 相当与登出方法 使用shiro提供的logout过滤器</span></span><br><span class="line">fifterMap.put(<span class="string">"/common/logout"</span>, <span class="string">"logout"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="授权功能"><a href="#授权功能" class="headerlink" title="授权功能"></a>授权功能</h3><ol>
+<li><p>控制主页上按钮的访问权限</p>
+<p><code>currentUser.getPricipal()</code> 来自 <code>MyRealm</code>中<code>doGetAuthenticationInfo</code>认证返回的<code>simpleAuthenticationInfo</code>对象的第一个属性</p>
+</li>
+<li><p>控制后台资源路径的访问权限</p>
+<ol>
+<li><p>方法1：硬编码的方法，自行判断权限。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"query"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">query</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Subject subject = SecurityUtils.getSubject();</span><br><span class="line">    <span class="keyword">if</span> (subject.isPermitted(<span class="string">"mobile"</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"mobile"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"error"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法2：使用shiro提供的<code>perms</code>过滤器，集中配置权限信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fifterMap.put(<span class="string">"/mobile/**"</span>, <span class="string">"authc, perms[mobile]"</span>);</span><br><span class="line">fifterMap.put(<span class="string">"/salary/**"</span>, <span class="string">"authc, perms[salary]"</span>);</span><br></pre></td></tr></table></figure>
+<p>错误补充机制：没有权限就会进入到<code>ShiroFilterFactoryBean</code>中配置的<code>UnauthorizedUrl</code></p>
+</li>
+<li><p>方法3：使用shiro提供的注解，实现方法级别的权限控制。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequiresAuthentication</span> 需要完成用户登录</span><br><span class="line"><span class="meta">@RequiresGuest</span>			未登录用户可以访问，登录用户不可访问</span><br><span class="line"><span class="meta">@RequiresPermissions</span>	需要有对应资源权限</span><br><span class="line"><span class="meta">@RequiresRoles</span>			需要有对应的角色</span><br><span class="line"><span class="meta">@RequiresUser</span>			需要完成用户登录并且实现了记住我功能</span><br></pre></td></tr></table></figure>
+<p>错误补充机制：没有权限会抛出异常（500错误）</p>
+<p>如果基本框架使用的是Spring Boot可以捕获异常处理：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.shiro.authz.AuthorizationException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ExceptionHandler;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestControllerAdvice;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: springBoot方式捕获异常处理</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: sunfy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2020/10/19 下午3:39</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyExceptionHandler</span> </span>&#123;</span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(AuthorizationException<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">    <span class="title">public</span> <span class="title">Object</span> <span class="title">unAuth</span>()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"没有资源访问权限"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="密码加密"><a href="#密码加密" class="headerlink" title="密码加密"></a>密码加密</h3><p>shiro会获得一个<code>CredentialsMatcher</code>对象，来进行密码比对。</p>
+<p>如果想使用MD 5加密，可以使用<code>HashedCredentialsMatcher</code>，<code>Md5CredentialsMatcher</code>已经过期</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//密码加密</span></span><br><span class="line">HashedCredentialsMatcher matcher = <span class="keyword">new</span> HashedCredentialsMatcher();</span><br><span class="line"><span class="comment">// 算法名</span></span><br><span class="line">matcher.setHashAlgorithmName(<span class="string">"MD5"</span>);</span><br><span class="line"><span class="comment">// 迭代次数</span></span><br><span class="line">matcher.setHashIterations(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//        private String hashAlgorithm; 				算法名</span></span><br><span class="line"><span class="comment">//        private int hashIterations; 					迭代次数</span></span><br><span class="line"><span class="comment">//        private boolean hashSalted;   				已经过时</span></span><br><span class="line"><span class="comment">//        private boolean storedCredentialsHexEncoded;  设置默认的</span></span><br><span class="line">myRealm.setCredentialsMatcher(matcher);</span><br></pre></td></tr></table></figure>
+<p>数据库数据加密方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.shiro.crypto.hash.SimpleHash;</span><br><span class="line"><span class="keyword">import</span> org.apache.shiro.util.ByteSource;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span>: 密码加密</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: sunfy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2020/10/19 下午4:40</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PasswordEncoder</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">encoder</span><span class="params">(String password)</span> </span>&#123;</span><br><span class="line">        SimpleHash simpleHash = <span class="keyword">new</span> SimpleHash(<span class="string">"MD5"</span>, ByteSource.Util.bytes(password), ByteSource.Util.bytes(<span class="string">"salt"</span>), <span class="number">3</span>);</span><br><span class="line">        <span class="keyword">return</span> simpleHash.toString();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(encoder(<span class="string">"manager"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="多Realm认证"><a href="#多Realm认证" class="headerlink" title="多Realm认证"></a>多Realm认证</h3><p>可用于实现用户名和手机号都可以登录。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">org.apache.shiro.authz.ModularRealmAuthorizer</span><br><span class="line"><span class="function"><span class="keyword">protected</span> AuthenticationInfo <span class="title">doAuthenticate</span><span class="params">(AuthenticationToken authenticationToken)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">        assertRealmsConfigured();</span><br><span class="line">        Collection&lt;Realm&gt; realms = getRealms();</span><br><span class="line">        <span class="keyword">if</span> (realms.size() == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> doSingleRealmAuthentication(realms.iterator().next(), authenticationToken);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> doMultiRealmAuthentication(realms, authenticationToken);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>实现多个Realm完成不同的认证功能，通过增加一个Realm，事项按照手机号也可以登录的功能</p>
+<p>注意可以设置不同的认证策略：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建认证策略</span></span><br><span class="line">ModularRealmAuthenticator authenticator = <span class="keyword">new</span> ModularRealmAuthenticator();</span><br><span class="line"><span class="comment">// 设置认证策略为至少有一个成功</span></span><br><span class="line">authenticator.setAuthenticationStrategy(<span class="keyword">new</span> AtLeastOneSuccessfulStrategy());</span><br><span class="line"><span class="comment">// 设置所有的认证策略都返回成功</span></span><br><span class="line">authenticator.setAuthenticationStrategy(<span class="keyword">new</span> AllSuccessfulStrategy());</span><br><span class="line"><span class="comment">// 设置第一个认证策略返回成功后不再认证后续的</span></span><br><span class="line">authenticator.setAuthenticationStrategy(<span class="keyword">new</span> FirstSuccessfulStrategy());</span><br><span class="line"><span class="comment">// 设置多个Realm</span></span><br><span class="line">authenticator.setRealms(Arrays.asList(myRealm, mobileRealm));</span><br><span class="line"><span class="comment">// 设置认证策略</span></span><br><span class="line">securityManager.setAuthenticator(authenticator);</span><br></pre></td></tr></table></figure>
+<h3 id="记住我功能"><a href="#记住我功能" class="headerlink" title="记住我功能"></a>记住我功能</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 记住我功能</span></span><br><span class="line">token.setRememberMe(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<p>记住我功能对应了默认的user过滤器。</p>
+<p>怎么设置记住我时常，以及记住我功能记录保存位置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CookieRememberMeManager cookieRememberMeManager = <span class="keyword">new</span> CookieRememberMeManager();</span><br><span class="line">Cookie cookie = <span class="keyword">new</span> SimpleCookie(<span class="string">"rememberMe"</span>);</span><br><span class="line">cookie.setHttpOnly(<span class="keyword">true</span>);</span><br><span class="line">cookie.setMaxAge(<span class="number">5</span>);</span><br><span class="line">cookieRememberMeManager.setCookie(cookie);</span><br><span class="line">securityManager.setRememberMeManager(cookieRememberMeManager);</span><br></pre></td></tr></table></figure>
+<h3 id="会话管理"><a href="#会话管理" class="headerlink" title="会话管理"></a>会话管理</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">securityManager.setSessionManager();</span><br></pre></td></tr></table></figure>
+<h3 id="认证缓存"><a href="#认证缓存" class="headerlink" title="认证缓存"></a>认证缓存</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MemoryConstrainedCacheManager memoryConstrainedCacheManager = <span class="keyword">new</span> MemoryConstrainedCacheManager();</span><br><span class="line">        securityManager.setCacheManager(memoryConstrainedCacheManager);</span><br></pre></td></tr></table></figure>
+<p>备注：记住我、会话管理以及认证缓存，都可以通过扩展对应的<code>manager</code>接口的方式，实现自己的灵活扩展，比如将对应的数据信心存储在redis中。</p>
+<h3 id="Realm类型关系图"><a href="#Realm类型关系图" class="headerlink" title="Realm类型关系图"></a>Realm类型关系图</h3><p><img src="../../../../img/shirotoUse/image-20201020144848997.png" alt="image-20201020144848997"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/10/18/resource-java-Netty-IOModule-NettyBase/" data-toggle="tooltip" data-placement="top" title="Netty入门示例及核心功能了解">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/10/12/resource-designpattern-behavior-Visitor/" data-toggle="tooltip" data-placement="top" title="java设计模式之访问者模式">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基础环境"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">基础环境</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#实现登录验证功能"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">实现登录验证功能</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#认证错误访问情况设置"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">认证错误访问情况设置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#授权功能"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">授权功能</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#密码加密"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">密码加密</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#多Realm认证"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">多Realm认证</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#记住我功能"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">记住我功能</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#会话管理"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">会话管理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#认证缓存"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">认证缓存</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Realm类型关系图"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">Realm类型关系图</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#shiro" title="shiro">shiro</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

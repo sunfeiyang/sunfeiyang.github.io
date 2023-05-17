@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Logtail技术分享二:多租户隔离技术+双十一实战效果 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/03/25/resource-DB-Logtail-Logtail2/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/DB/Logtail.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#log" title="log">log</a>
+                            
+                        </div>
+
+                        <h1>Logtail技术分享二:多租户隔离技术+双十一实战效果</h1>
+                        <h2 class="subheading">logtail是阿里云一款进行日志实时采集的Agent</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-03-25
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">5k</span> and
+                                Reading Time <span class="post-count">17</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>上一篇中我们分享了日志采集中基于Polling+Notify组合的日志保序采集技术，Logtail基于Polling+Notify的组合方案以及日志轮转队列等相关技术实现了单一配置下的日志保序、高效、可靠采集问题。</p>
+<p>然而日志采集并不仅仅是单一用户/应用需要完成的工作，例如一个典型的服务器上需要采集的日志数据有：资源类Metric数据、系统监控日志、Nginx访问数据、中间件请求数据、安全审计日志、各类应用中各个不同组件的日志等等；如果应用docker话，保守估计一个docker内的应用有6-7类日志，一台物理机运行50个docker，那即使采集docker内的日志就有300多种配置。</p>
+<p>而现在涉及需要获取数据的角色上到看交易大盘的CEO下到查询日志的debug小弟，几乎所有人都会和日志相关。正是这些宝贵的数据才让我们真正成为一家数据型公司。因此，保障各种日志的有效采集是一款合格的日志采集Agent必须要解决的问题。</p>
+<p><img src="../../../../img/Logtail2/8fceabb634f746e3a5f7b4daf38690b7.jpeg" alt="img"></p>
+<p><strong>多租户隔离的特性与挑战</strong></p>
+<p>多租户隔离技术早在20世纪60年代的大型主机中就已经开始使用，发展到今天非常多的应用/系统都应用了该技术。在每种不同的应用/系统中对于多租户隔离都有不同的诠释，本文中我们仅仅对应用在日志采集中的多租户隔离进行探讨。<sunfy-line></p>
+<p><strong>多租户隔离特性</strong></p>
+<p>首先需要搞清楚日志采集场景下的多租户隔离需具备哪些特性，这里我们总结以下5点：隔离性、公平性、可靠性、可控性、性价比</p>
+<ul>
+<li>隔离性： 多租户隔离最基本特性，多个采集工作之间互不影响，部分采集配置阻塞不影响其他正常采集</li>
+<li>公平性： 保证各个阶段（读取、处理、发送）多个配置之间的公平性，不能因为某个配置下日志写入量大而导致其他配置被处理的概率降低</li>
+<li>可靠性： 无论在何种场景，可靠性都至关重要，多租户隔离下，如果部分采集阻塞，agent可以暂停该配置采集，但恢复时需尽可能保证数据不丢失</li>
+<li>可控性： 可控性主要体现在资源和行为的可控，agent需要具备控制各个配置的资源占用在合理范围，并且具备控制采集速率、暂停/开启等行为</li>
+<li>性价比： 以上特性最终方案实现时最需要关注的就是性价比，如何在尽可能少的资源占用情况下实现尽可能优的多租户隔离方案才是技术可行性与适用性的关键</li>
+</ul>
+<p><strong>多租户隔离挑战</strong></p>
+<p>目前logtail正逐步成为集团的基础设施之一，在集团内部一台服务存在数百个采集配置属于常态，每个配置的优先级、日志产生速度、处理方式、上传目的地址等都有可能不同，如何有效隔离各种自定义配置，保证采集配置QoS不因部分配置异常而受到影响？</p>
+<p>一台服务器的数百个配置涉及不同应用的不同层面日志，其中部分日志优先级高而部分优先级低，关键时刻需要对低优先级日志降级停采，但又希望降级期间过后还能够将之前的数据追回，如何有效地限制低优先级配置以及动态降级且极可能保证日志不丢失？</p>
+<p>目前Logtail在整个集团以及公有云的部署量近百万，如果logtail能够节省1MB内存使用，那整体将能够减少近1TB的内存，同时日志采集Agent的定位是服务的辅助应用，一台服务器并不能将主要资源提供给日志采集。如何在尽可能低的资源占用情况下尽可能、尽量公平以及尽量有效地调度各个配置？</p>
+<p><strong>业界采集Agent多租户隔离方案</strong></p>
+<p>首先我们来看一下业界的采集agent对于多租户隔离方面主要采用的技术，这里主要关注Logstash、Fluentd以及最近较火的Filebeat，我们分别从以上5个特性对这三款产品进行对比和分析。</p>
+<p><img src="../../../../img/Logtail2/26165c65aebf4110af59960b593328b8.jpeg" alt="img"></p>
+<p>Logstash、Fluentd和Filebeat都属于pipeline的架构，根据语言不同，分别使用独立的线程/go runtime实现了pipeline功能，每个pipeline内部顺序执行，各个pipeline间互相独立运行，此种方式隔离性较好，实现较为简单，在小规模场景下较为适用。然而随着配置数量增长，相应的线程数/go runtime呈等比上升，在采集配置较多的情况下资源难以控制；而且由于各个pipeline间完全依赖底层（操作系统/go runtime）调度，当CPU资源无法全部满足时，数据量较高的配置会占用较多的执行时间，导致其他数据较少的配置获取资源的概率降低。</p>
+<p><strong>Logtail多租户隔离方案</strong></p>
+<p><strong>整体架构</strong></p>
+<p>不同于当前主流的开源采集agent实现，logtail采用的是更加复杂的架构，事件发现、数据读取、解析、发送等都采用固定数量的线程（解析线程可配置），线程规模不会随配置数增多。虽然所有配置都运行在同一执行环境，但我们采取了一系列的措施保障各个配置处理流程的互相隔离、配置间调度的公平、数据采集可靠性、可控性以及非常高的资源性价比。</p>
+<p><img src="../../../../img/Logtail2/ec57984c0f3e4de5868fbfd1ebea8559.jpeg" alt="img"></p>
+<p>下面我们主要介绍该方案中一些实现多租户隔离的较为关键性的技术</p>
+<p><strong>基于时间片的采集调度</strong></p>
+<p>业界主流的Agent对于每个配置会分配独立的线程/go runtime来进行数据读取，而logtail数据的读取只配置了一个线程，主要原因是：</p>
+<ul>
+<li><p>单线程足以完成所有配置的事件处理以及数据读取，数据读取的瓶颈并不在于计算而是磁盘，对于正常的服务器，每秒基本不可能产生超过100MB的日志，而logtail数据读取线程可完成每秒200MB以上的数据读取（SSD速率可以更高）</p>
+</li>
+<li><p>单线程的另一个优势是可以使事件处理和数据读取在无锁环境下运行，相对多线程处理性价比较高</p>
+</li>
+</ul>
+<p>但单线程的情况下会存在多个配置间资源分配不均的问题，如果使用简单的FCFS方式，一旦一个写入速度极高的文件占据了处理单元，它就一直运行下去，直到该文件被处理完成并主动释放资源，此方式很有可能造成其他采集的文件被饿死。因此我们采用了基于时间片的采集调度方案，使各个配置间尽可能公平的调度。</p>
+<p><img src="../../../../img/Logtail2/62c74f5dcc96470394f69e00160887bf.png" alt="img"></p>
+<ol>
+<li>Logtail会将Polling以及Inotify事件合并到无锁的事件队列中（参见上一篇），每个文件的修改事件会触发日志读取；</li>
+<li>日志读取将从上一次读取的偏移量LastReadOffset处开始，尝试在固定的时间片内将文读取到EOF处；</li>
+<li>如果时间片内读取完毕，则认为该事件处理完毕，删除该事件；</li>
+<li>如果时间片内读取未完成，则将该时间重新push到队列尾部，等待下一次调度。</li>
+</ol>
+<p>该方案使得每个采集目标得到公平地对待，所有文件都有被调度运行的机会，很好地解决了采集目标的饿死现象。</p>
+<p><strong>多级高低水位反馈队列</strong></p>
+<p>基于时间片的采集调度保证了各个配置的日志在数据读取时得到公平的调度，满足了多租户隔离中基本的公平性，但对于隔离性并未起到帮助作用。例如当部分采集配置因处理复杂或网络异常等原因阻塞时，阻塞配置依然会进行处理，最终会导致队列到达上限而阻塞数据读取线程，影响其他正常配置。</p>
+<p>为此我们设计了一套多级高低水位反馈队列用以实现多个采集配置间以及读取、解析、发送各个步骤间有效的协调和调度。虽然和进程调度中Multilevel feedback queue命名较为类似，但队列实现以及适用场景有很大区别。</p>
+<p><img src="../../../../img/Logtail2/8f741176284d486e9394fd9691e17f56.jpeg" alt="img"></p>
+<p>多级</p>
+<ul>
+<li>这里的多级指的是处理过程的多级，即各个处理过程间会有一个这样的队列且相邻队列互相关联</li>
+<li>例如在Logtail的数据读取、处理、发送流程中需要在读取-&gt;解析以及解析-&gt;发送间各自设置一个这样的队列</li>
+</ul>
+<p>高低水位：</p>
+<ul>
+<li>单一队列中设置了高低两个水位</li>
+<li>当队列增长到高水位时，停止非紧急数据写入（例如进程重启时、数据拆分等特殊情况允许写入）</li>
+<li>当队列从高水位消费到低水位时，再次允许写入</li>
+</ul>
+<p>反馈：</p>
+<ul>
+<li>反馈分为同步和异步两种</li>
+<li>在准备读取当前队列数据时会同步检查下一级队列状态，当下级队列到达高水位时跳过此队列</li>
+<li>当前队列从高水位消费到低水位时，异步通知关联的前一级队列</li>
+</ul>
+<p><img src="../../../../img/Logtail2/502ceb2c24c540d1ab53762bb2266e54.jpeg" alt="img"></p>
+<p>由于多个配置存在，所以我们会为每个配置创建一组队列，每个队列使用指针数组实现，每一级中所有配置队列公用一个锁，对于性能以及内存消耗较为友好。Logtail中的多级高低水位反馈队列结构如下：</p>
+<p><img src="../../../../img/Logtail2/17766d48b23947728f5eab578604d91b.jpeg" alt="img"></p>
+<p>我们以日志解析这个步骤的工作方式来观察多级反馈队列的行为：</p>
+<ul>
+<li>初始状态下解析线程处理Wait状态，当有数据到达或下一级发送线程某一配置的队列从高水位消费到低水位时，进入FindJob状态；</li>
+<li>FindJob会从上一次处理的队列位置顺序查找当前有数据且下一级队列可以写入的队列，若查找到则进行Process状态，否则进行Wait状态；</li>
+<li>Process对于当前job解析完后，判断该job所属队列是否从高水位到达低水位，若是则进入Feedback状态，否则回到FindJob查找下一个有效job；</li>
+<li>Feedback状态会向关联的上一级队列发送信号，参数携带当前队列ID，用以触发上一级流程运行，信号发送完毕后进入FindJob状态；</li>
+</ul>
+<p>基于多级高低水位反馈队列的处理过程中，当遇到下一级阻塞的队列时直接跳过，防止因阻塞Job的处理导致线程阻塞，具有较高的隔离性；FindJob会记录上一次查找的队列ID，下次查找时会从该ID之后的队列开始，保证了各个配置间调度的公平性。</p>
+<p><strong>流控以及阻塞处理</strong></p>
+<p>上一节的多级高低水位反馈队列解决了多配置间的隔离性和公平性问题，但对于可控性以及可靠性方面还存在一些问题。例如：</p>
+<ol>
+<li>无法精确控制每个配置的的采集流量，只能通过删除采集配置停止采集</li>
+<li>如果某一配置完全阻塞时，当该配置关联日志文件轮转，恢复阻塞时将丢失轮转前的数据</li>
+</ol>
+<p>这里主要包括三个部分：事件处理、数据读取逻辑以及数据发送控制：</p>
+<ol>
+<li>事件处理与数据读取无关，即使读取关联的队列满也照常处理，这里的处理主要是更新文件meta、将轮转文件放入轮转队列，具体可查看上一篇文章；此种方式可保证即使在配置阻塞/暂停的情况下依然保证及时文件轮转也不会丢失数据；</li>
+<li>当配置关联的解析队列满时，如果将事件重新放回队列尾，则会造成较多的无效调度，使CPU空转。因此我们在遇到解析队列满时，将该事件放到一个专门的blocked队列中，当解析队列异步反馈时重新将blocked队列中的数据放回事件队列；</li>
+<li>Sender中每个配置的队列关联一个SenderInfo，SenderInfo中记录该配置当前网络是否正常、Quota是否正常以及最大允许的发送速率。每次Sender会根据SenderInfo中的状从队列中取数据，这里包括：网络失败重试、Quota超限重试、状态更新、流控等逻辑</li>
+</ol>
+<p><strong>整体流程梳理</strong></p>
+<p>现在让我们回顾一下logtail在多租户隔离中使用的相关技术，具体如下图：</p>
+<ul>
+<li><p>通过时间片采集调度保证各个配置数据入口的隔离性和公平性</p>
+</li>
+<li><p>通过多级高低水位反馈队列保证在极低的资源占用下依然可以保证各处理流程间以及多个配置间的隔离性和公平性</p>
+</li>
+<li><p>通过事件处理不阻塞的机制保证即使在配置阻塞/停采期间发生文件轮转依然具有较高的可靠性</p>
+</li>
+<li><p>通过各个配置不同的流控/停采策略以及配置动态更新保证数据采集具备较高的可控性</p>
+</li>
+</ul>
+<p><img src="../../../../img/Logtail2/a9fc8a46712d400a9e24d5c1815baddd.jpeg" alt="img"></p>
+<p>通过以上几点设计的组合，我们使用极低的资源构建出了虚拟的多租户Pipleline结构：</p>
+<p><img src="../../../../img/Logtail2/8434ac069e394a7da3dc0b030472be32.jpeg" alt="img"></p>
+<p><strong>实战见真知</strong></p>
+<p>多租户隔离中的性价比问题只靠语言描述是苍白无力的，最好的方式还是拿数据说话：</p>
+<p><strong>双11背后的日志采集</strong></p>
+<p>目前logtail已承载阿里云全站、所有云产品服务、全球各Region部署、阿里巴巴集团（淘宝、天猫、菜鸟等）上重要服务的数据采集。每天采集接近百万服务器上的实时数据，对接数千个应用与消费者。今年双十一蚂蚁金服（支付宝）几乎所有应用、用户及服务器产生的数据都由Logtail采集。</p>
+<p>目前logtail在蚂蚁安装了数十万台，平均每台机器上存在近百个采集配置，每天采集上千个应用数PB的日志。在双11期间，为了保证核心应用数据采集正常，双11零点前对几百个应用提前降级停采，零点高峰过后逐批恢复日志采集，logtail在3个小时追完了这几百个应用5小时的高峰数据，并且保证停采期间日志即使轮转/删除也不会丢失。下图是追数据期间logtail的CPU、内存占用：</p>
+<p><img src="../../../../img/Logtail2/8d8a7e0a469a4c01af06e6bd23a8639c.png" alt="img"></p>
+<p>可以看到即使在双11期间logtail的平均cpu占用也只有单核的1.7%，平均内存最高也只有42M。追数据期间cpu相对只上升0.4%、内存只升高7M。抛开功能不谈，logtail对于资源的控制是开源采集Agent无法达到的。</p>
+<p><strong>性能对比</strong></p>
+<p>在logstash、fluentd和filebeat中，多租户实现最好且性能最高的是filebeat，所以这里我们拿filebeat进行对比。</p>
+<ul>
+<li><p>测试机配置：</p>
+<p>CPU : 16核 Intel(R) Xeon(R) CPU E5-2682 v4 @ 2.50GHz</p>
+<p>MEM : 64GB</p>
+<p>DISK: 4块1TB SSD（日志写入单独一块SSD）</p>
+</li>
+<li><p>filebeat配置优化</p>
+<p>网上filebeat的benchmark约为30K/s(日志条数每秒)，这里为了尽可能提高filebeat性能，我们把filebeat读文件缓存设置为512k，将输出配置到一块单独的SSD中并将日志rotate的size设为4GB（相对网上benchmark性能提升一倍左右）</p>
+</li>
+</ul>
+<p><strong>配置数较少情况</strong></p>
+<p>下面是logtail与filebeat在极简模式（单行日志，不对日志解析）分别在1、2、4、8个配置下、日志写入速度分别为0.1、1、5 MB/s的CPU和内存占用</p>
+<p><img src="../../../../img/Logtail2/bd027a224ef64bd08ed0e654c15deb48.jpeg" alt="img"></p>
+<p><img src="../../../../img/Logtail2/566d6420f3d44b1ca6101e5a00cd2849.jpeg" alt="img"></p>
+<p>filebeat对于内存控制较优，但性能相对logtail有一定差距：filebeat处理能力约为18MB/s，测试中一条日志约为300字节，换算成日志条数约为60K/s（网上benchmark约为30K/s）。</p>
+<p>可以看出filebeat相对logstash和fluentd有一定的优势(快10倍左右)；logtail的极简模式（不对日志解析，和filebeat类似）下的处理能力约为150M/s，相对优化后的filebeat有8倍左右的性能提升。由于filebeat达到18MB/s耗费了200%左右的cpu，logtail达到150MB/s只需消耗100%的cpu，所以如果从cpu的性价比上logtail相比filebeat有十多倍的优势。</p>
+<p><strong>配置数量较多</strong></p>
+<p>下面对比100个配置情况下filebeat和logtail的性能：</p>
+<p><img src="../../../../img/Logtail2/6d344a4fd6f746e4a9ace8bfe8a07042.png" alt="img"></p>
+<p><img src="../../../../img/Logtail2/a308244b53df45e3bc91c419ad82e7e8.jpeg" alt="img"></p>
+<p>当配置上升至100个时，filebeat 内存占用明显升高，而logtail的内存相对增长较低；100个配置下logtail的cpu消耗与相同数据量情况下2配置的基本无区别。同时观察filebeat cpu消耗情况，可以看到约20%的cpu消耗在涉及和调度相关的futex调用，可见当配置数增多时即使依赖go的协程调度方式也会消耗较多的cpu。</p>
+<p><img src="../../../../img/Logtail2/609b1dd3eff4423e87be777a97750597.jpeg" alt="img"></p>
+<p><strong>总结</strong></p>
+<p>一个数据采集软件看起来很微小很简单，但当遇到超大的规模、超多的用户、超级的数据量时一切都需要重新考虑。阿里云日志服务的logtail就是这样一款历经上百万的部署量、每天数PB的数据、近万个应用洗礼的日志采集Agent。</p>
+<p>相对开源软件，我们最大的优势是有阿里、有双11这样的环境给我们练兵、采坑。今天分享的多租户隔离技术，对于开源agent或许都不会考虑这个问题，但相信未来业务规模上升到一定体量肯定会遇到，希望到时候我们的分享能给大家一定的帮助。</p>
+<p><strong>展望</strong></p>
+<p><strong>改进</strong></p>
+<ul>
+<li>目前logtail虽然在多租户的公平性上做的比较好，但对于配置的优先级上面并没有做太多的优化，未来我们需要在这方面多下功夫，毕竟不同类型的数据重要程度是不一致的，采集的优先级也需要更精确。</li>
+<li>当前logtail的监控功能对于用户的可见度太低，未来我们考虑会将logtail的运行数据、错误数据等打包成一套Agent监控报警方案，将logtail的一体化采集方案做的更加完备。</li>
+</ul>
+<p><strong>新功能</strong></p>
+<p>logtail即将推出的新版本中还将支持http、mysql binlog以及mysql sql输入源，欢迎大家体验：</p>
+<ul>
+<li>支持http作为输入源，用户可以配置特定的url，logtail会定期请求并将请求数据处理并上传到日志服务。此方式能支持采集nginx、haproxy、docker daemon等能提供http接口的数据。</li>
+<li>支持mysql binlog作为输入源（包括RDS），以binlog形式同步数据到日志服务中，类似canal</li>
+<li>支持mysql sql作为输入源，可通过select语句自定义将数据采集到日志服务中，支持增量采集</li>
+</ul>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/03/26/resource-DB-SQLServer-DB-bak/" data-toggle="tooltip" data-placement="top" title="Windows下SQLSERVER数据库自动备份">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/03/18/resource-system-Windows-winKill/" data-toggle="tooltip" data-placement="top" title="Cmd批量结束所有进程命令kill使用方法">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#log" title="log">log</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          MySQL - MDL 锁的实现与获取机制 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2022/04/03/resource-DB-MySQL-MySQL-deep/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/DB/MDL.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+                            
+                        </div>
+
+                        <h1>MySQL - MDL 锁的实现与获取机制</h1>
+                        <h2 class="subheading">MDL 系统中常用的数据结构及含义</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2022-04-03
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">7.2k</span> and
+                                Reading Time <span class="post-count">30</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="一-背景"><a href="#一-背景" class="headerlink" title="一 背景"></a><strong>一 背景</strong></h1><p>为了满足数据库在并发下的事务的隔离性和一致性，同时针对 MySQL 插件式多种存储引擎都能发挥作用，MySQL 在 Server 层实现了 Metadata Locking（MDL）机制。达到的效果比如可以在事务访问数据库的某种资源时，限制其他并发事务删除该资源。这是一种逻辑意义上的锁，与操作系统内核提供的有限种类 mutex 不同，MDL 可以灵活自定义锁的对象、锁的类型以及不同锁类型的优先级，甚至可以做到在系统不同状态时动态调整不同锁类型的兼容性，极大的方便了数据库对各种查询请求进行合理的并发控制。</p>
+<p>本文将介绍在 MDL 系统中常用的数据结构及含义，然后从实现角度讨论 MDL 的获取机制与死锁检测，最后分享在实践中如何监控 MDL 状态。</p>
+<h1 id="二-基本概念"><a href="#二-基本概念" class="headerlink" title="二 基本概念"></a><strong>二 基本概念</strong></h1><h2 id="1-MDL-key"><a href="#1-MDL-key" class="headerlink" title="1 MDL_key"></a>1 MDL_key</h2><p>MDL 的对象是采用键值对（key-value）的方式描述的，每一个 key 值都唯一的代表了锁的对象（value 代表数据库的某种资源）。key 是由 MDL_key 表示的，用字符串的形式表示了对象的名称。</p>
+<p><img src="../../../../img/MySQL-deep/image-20220406170746765-7034966.png" alt="image-20220406170746765"><br>完整的字符串由 namespace、按层次每一级的名称组成，多种命名空间可以将不同类型的同名对象区分开。命名空间包括 GLOBAL、SCHEMA、TABLE、FUNCTION、PROCEDURE 等数据库中可以创建的不同对象类型组成。</p>
+<p>对象的名称根据类型的不同可以由多种层次组成。比如表对象就由数据库名和表名唯一的描述；如果是 SCHEMA 对象，那就只有数据库名这一个层次。名称之间用字符串结束符 ‘\0’ 分隔。因此由这几部分组成的字符串整体就能作为 key 唯一的表示数据库的某种对象。</p>
+<h2 id="2-enum-mdl-type"><a href="#2-enum-mdl-type" class="headerlink" title="2 enum_mdl_type"></a>2 enum_mdl_type</h2><sunfy-line>
+
+<p>对于同一个数据库对象而言，不同的查询也有着不同的访问模式，比如 SELECT 语句是想要读取对象的内容，INSERT / UPDATE 语句是想要修改对象的内容，DDL 语句是想要修改对象的结构和定义。这些语句对于对象的影响程度和并发隔离性的要求不同，因此 MySQL 定义了不同类型的 MDL 以及他们之间的兼容性来控制这些语句的并发访问。</p>
+<p>MDL 的类型由 enum_mdl_type 表示，最常用的类型包括:</p>
+<ul>
+<li><p>MDL_SHARED(S)，可以共享访问对象的元数据，比如 SHOW CREATE TABLE 语句</p>
+</li>
+<li><p>MDL_SHARED_READ(SR)，可以共享访问对象的数据，比如 SELECT 语句</p>
+</li>
+<li><p>MDL_SHARED_WRITE(SW)，可以修改对象的数据，比如 INSERT / UPDATE 语句</p>
+</li>
+<li><p>MDL_SHARED_UPGRADABLE(SU)，可升级的共享锁，后面可升级到更强的锁（比如 X 锁，阻塞并发访问），比如 DDL 的第一阶段</p>
+</li>
+<li><p>MDL_EXCLUSIVE(X)，独占锁，阻塞其他线程对该对象的并发访问，可以修改对象的元数据，比如 DDL 的第二阶段</p>
+</li>
+</ul>
+<p>不同的查询语句通过请求不同类型的 MDL，结合不同类型的 MDL 之间灵活定制的兼容性，就可以对相互冲突的语句进行并发控制。对于同一对象而言，不同类型的 MDL 之间的默认兼容性如下所述。</p>
+<h3 id="不同类型的-MDL-兼容性"><a href="#不同类型的-MDL-兼容性" class="headerlink" title="不同类型的 MDL 兼容性"></a><strong>不同类型的 MDL 兼容性</strong></h3><p>MySQL 将锁类型划分为范围锁和对象锁。</p>
+<h4 id="1）范围锁"><a href="#1）范围锁" class="headerlink" title="1）范围锁"></a>1）范围锁</h4><p>范围锁种类较少（IX、S、X），主要用于 GLOBAL、COMMIT、TABLESPACE、BACKUP_LOCK 和 SCHEMA 命名空间的对象。这几种类型的兼容性简单，主要是从整体上去限制并发操作，比如全局的读锁来阻塞事务提交、DDL 更新表对象的元信息通过请求 SCHEMA 范围的意向独占锁（IX）来阻塞 SCHEMA 层面的修改操作。</p>
+<p>这几种类型的 MDL 兼容性关系由两个矩阵定义。对于同一个对象来说，一个是已经获取到的 MDL 类型对新请求类型的兼容性情况；另一个是未获取到，正在等待的 MDL 请求类型对新请求类型的兼容性。由于 IS(INTENTION_SHARE) 在所有情况下与其他锁都兼容，在 MDL 系统中可忽略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">        | Type of active   |</span><br><span class="line">Request |   scoped lock    |</span><br><span class="line"> type   | IS(*)  IX   S  X |</span><br><span class="line">---------+------------------+</span><br><span class="line">IS       |  +      +   +  + |</span><br><span class="line">IX       |  +      +   -  - |</span><br><span class="line">S        |  +      -   +  - |</span><br><span class="line">X        |  +      -   -  - |</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">         |    Pending      |</span><br><span class="line"> Request |  scoped lock    |</span><br><span class="line">  type   | IS(*)  IX  S  X |</span><br><span class="line"> ---------+-----------------+</span><br><span class="line">IS       |  +      +  +  + |</span><br><span class="line">IX       |  +      +  -  - |</span><br><span class="line">S        |  +      +  +  - |</span><br><span class="line">X        |  +      +  +  + |</span><br><span class="line">Here: &quot;+&quot; -- means that request can be satisfied</span><br><span class="line"> &quot;-&quot; -- means that request can&#39;t be satisfied and should wait</span><br></pre></td></tr></table></figure>
+<h4 id="2）对象锁"><a href="#2）对象锁" class="headerlink" title="2）对象锁"></a>2）对象锁</h4><p>对象锁包含的 MDL 类型比较丰富，应用于数据库绝大多数的基本对象。它们的兼容性矩阵如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">  Request  |  Granted requests for lock            |</span><br><span class="line">   type    | S  SH  SR  SW  SWLP  SU  SRO  SNW  SNRW  X  |</span><br><span class="line"> ----------+---------------------------------------------+</span><br><span class="line"> S         | +   +   +   +    +    +   +    +    +    -  |</span><br><span class="line"> SH        | +   +   +   +    +    +   +    +    +    -  |</span><br><span class="line"> SR        | +   +   +   +    +    +   +    +    -    -  |</span><br><span class="line"> SW        | +   +   +   +    +    +   -    -    -    -  |</span><br><span class="line"> SWLP      | +   +   +   +    +    +   -    -    -    -  |</span><br><span class="line"> SU        | +   +   +   +    +    -   +    -    -    -  |</span><br><span class="line"> SRO       | +   +   +   -    -    +   +    +    -    -  |</span><br><span class="line"> SNW       | +   +   +   -    -    -   +    -    -    -  |</span><br><span class="line"> SNRW      | +   +   -   -    -    -   -    -    -    -  |</span><br><span class="line"> X         | -   -   -   -    -    -   -    -    -    -  |</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; </span><br><span class="line">  Request  |         Pending requests for lock          |</span><br><span class="line">   type    | S  SH  SR  SW  SWLP  SU  SRO  SNW  SNRW  X |</span><br><span class="line"> ----------+--------------------------------------------+</span><br><span class="line"> S         | +   +   +   +    +    +   +    +     +   - |</span><br><span class="line"> SH        | +   +   +   +    +    +   +    +     +   + |</span><br><span class="line"> SR        | +   +   +   +    +    +   +    +     -   - |</span><br><span class="line"> SW        | +   +   +   +    +    +   +    -     -   - |</span><br><span class="line"> SWLP      | +   +   +   +    +    +   -    -     -   - |</span><br><span class="line"> SU        | +   +   +   +    +    +   +    +     +   - |</span><br><span class="line"> SRO       | +   +   +   -    +    +   +    +     -   - |</span><br><span class="line"> SNW       | +   +   +   +    +    +   +    +     +   - |</span><br><span class="line"> SNRW      | +   +   +   +    +    +   +    +     +   - |</span><br><span class="line"> X         | +   +   +   +    +    +   +    +     +   + |</span><br><span class="line">  Here: &quot;+&quot; -- means that request can be satisfied</span><br><span class="line">        &quot;-&quot; -- means that request can&#39;t be satisfied and should wait</span><br></pre></td></tr></table></figure>
+<p>在 MDL 获取过程中，通过这两个兼容性矩阵，就可以判断当前是否存在与请求的 MDL 不兼容的 granted / pending 状态的 MDL，来决定该请求是否能被满足，如果不能被满足则进入 pending 等待状态。</p>
+<p>MDL 系统也通过兼容性矩阵来判断锁类型的强弱，方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">  Check if ticket represents metadata lock of &quot;stronger&quot; or equal type</span><br><span class="line">  than specified one. I.e. if metadata lock represented by ticket won&#39;t</span><br><span class="line">  allow any of locks which are not allowed by specified type of lock.</span><br><span class="line">  @return true  if ticket has stronger or equal type</span><br><span class="line">          false otherwise.</span><br><span class="line">*&#x2F;</span><br><span class="line">bool MDL_ticket::has_stronger_or_equal_type(enum_mdl_type type) const &#123;</span><br><span class="line">  const MDL_lock::bitmap_t *granted_incompat_map &#x3D;</span><br><span class="line">      m_lock-&gt;incompatible_granted_types_bitmap();</span><br><span class="line">  return !(granted_incompat_map[type] &amp; ~(granted_incompat_map[m_type]));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表达式的写法有点绕，可以理解为，如果 type 类型与某种 m_type 类型兼容的 MDL 不兼容，那么 type 类型更强；否则 m_type 类型相同或更强。或者较弱的类型不兼容的 MDL 类型，较强的 MDL 都不兼容。</p>
+<h1 id="三-重要数据结构"><a href="#三-重要数据结构" class="headerlink" title="三 重要数据结构"></a><strong>三 重要数据结构</strong></h1><h2 id="1-关系示意图"><a href="#1-关系示意图" class="headerlink" title="1 关系示意图"></a>1 关系示意图</h2><p><img src="../../../../img/MySQL-deep/image-20220406170443532-7034966.png" alt="image-20220406170443532"></p>
+<h2 id="2-MDL-request"><a href="#2-MDL-request" class="headerlink" title="2 MDL_request"></a>2 MDL_request</h2><p>代表着语句对 MDL 的请求，由 MDL_key 、enum_mdl_type 和 enum_mdl_duration 组成，MDL_key 和 enum_mdl_type 确定了 MDL 的对象和锁类型。</p>
+<p>enum_mdl_duration 有三种类型，表示 MDL 的持有周期，有单条语句级的周期、事务级别的、和显式周期。</p>
+<p>MDL_request 的生命周期是在 MDL 系统之外，由用户控制的，可以是一个临时变量。但是通过该请求获取到的 MDL 生命周期是持久的，由 MDL 系统控制，并不会随着 MDL_request 的销毁而释放。</p>
+<h2 id="3-MDL-lock"><a href="#3-MDL-lock" class="headerlink" title="3 MDL_lock"></a>3 MDL_lock</h2><p>对于数据库的某一对象，仅有一个与其名字（MDL_key）对应的锁对象 MDL_lock 存在。当数据库的对象在初次被访问时，由 lock-free HASH 在其内存中创建和管理 MDL_lock；当后续访问到来时，对于相同对象的访问会引用到同一个 MDL_lock。</p>
+<p>MDL_lock 中既有当前正在等待该锁对象的 m_waiting 队列，也有该对象已经授予的 m_granted 队列，队列中的元素用 MDL_ticket 表示。</p>
+<p>使用静态 bitmap 对象组成的 MDL_lock_strategy 来存放上述范围锁和对象锁的兼容性矩阵，根据 MDL_lock 的命名空间就可以获取到该锁的兼容性情况。</p>
+<h2 id="4-MDL-ticket"><a href="#4-MDL-ticket" class="headerlink" title="4 MDL_ticket"></a>4 MDL_ticket</h2><p>MDL_lock 与 enum_mdl_type 共同组成了 MDL_ticket，代表着当前线程对数据库对象的访问权限。MDL_ticket 在每个查询请求 MDL 锁时创建，内存由 MDL 系统分配，在事务结束时摧毁。</p>
+<p>MDL_ticket 中包含两组指针分别将该线程获取到的所有 ticket 连接起来和将该 ticket 参与的锁对象的 waiting 状态或者 granted 状态的 ticket 连接起来。</p>
+<h2 id="5-MDL-context"><a href="#5-MDL-context" class="headerlink" title="5 MDL_context"></a>5 MDL_context</h2><p>一个线程获取 MDL 锁的上下文，每个连接都对应一个，包含了该连接获取到的所有 MDL_ticket。按照不同的生命周期存放在各自的链表中，由 MDL_ticket_store 管理。</p>
+<p>一个连接获得的所有锁根据生命周期可以划分为三种：语句级，事务级和显式锁。语句级和事务级的锁都是有着自动的生命周期和作用范围，他们在一个事务过程中进行积累。语句级的锁在最外层的语句结束后自动释放，事务级的锁在COMMIT、ROLLBACK 和 ROLLBACK TO SAVEPOINT 之后释放，他们不会被手动释放。具有显式生命周期的ticket 是为了跨事务和 checkpoint 的锁所获取的，包括 HANDLER SQL locks、LOCK TABLES locks 和用户级的锁 GET_LOCK()/RELEASE_LOCK()。语句级和事务级的锁会按照时间顺序的反序被加到对应链表的前面，当我们回滚到某一检查点时，就会从链表的前面将对应的 ticket 释放出栈，直到检查点创建前最后一个获取到的 ticket。</p>
+<p>当一个线程想要获取某个 MDL 锁时，会优先在自己的 MDL_ticket_store 中查找是否在事务内已经获取到相同锁对象更强类型的 MDL_ticket。因此 MDL_ticket_store 会提供根据 MDL_request 请求查找 MDL_ticket 的接口，一种是在不同生命周期的 MDL_ticket 链表中查找；如果当前线程获取的 MDL_ticket 数量超过阈值（默认256），会将所有的 MDL_ticket 维护在额外的 std::unordered_multimap 中，来加速查找。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MDL_ticket_store::MDL_ticket_handle MDL_ticket_store::find(</span><br><span class="line">    const MDL_request &amp;req) const &#123;</span><br><span class="line">#ifndef DBUG_OFF</span><br><span class="line">  if (m_count &gt;&#x3D; THRESHOLD) &#123;</span><br><span class="line">    MDL_ticket_handle list_h &#x3D; find_in_lists(req);</span><br><span class="line">    MDL_ticket_handle hash_h &#x3D; find_in_hash(req);</span><br><span class="line">    DBUG_ASSERT(equivalent(list_h.m_ticket, hash_h.m_ticket, req.duration));</span><br><span class="line">  &#125;</span><br><span class="line">#endif &#x2F;*! DBUG_OFF *&#x2F;</span><br><span class="line">  return (m_map &#x3D;&#x3D; nullptr || m_count &lt; THRESHOLD) ? find_in_lists(req)</span><br><span class="line">                                                   : find_in_hash(req);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="四-MDL-获取过程"><a href="#四-MDL-获取过程" class="headerlink" title="四 MDL 获取过程"></a><strong>四 MDL 获取过程</strong></h1><p>几乎所有的查询语句（包括 DML 和 DDL 第一阶段）都是在 parse 阶段，由 LEX 和 YACC 根据语句的类型给需要访问的表初始化 MDL 锁请求，比如 SELECT 语句就是 SR，INSERT 语句就是 SW，ALTER TABLE 语句就是 SU。这个过程在以下调用栈中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PT_table_factor_table_ident::contextualize()</span><br><span class="line">  |--SELECT_LEX::add_table_to_list()</span><br><span class="line">    |--MDL_REQUEST_INIT -&gt; MDL_request::init_with_source()</span><br></pre></td></tr></table></figure>
+<p>语句在执行前会首先通过 open_tables_for_query 函数将所有需要访问的表打开，获得 TABLE 表对象。在这个过程中会先获取 MDL 锁，然后才获取表资源，防止对同一个表的元信息出现并发读写。对 MDL 锁的请求都是由当前线程的上下文 MDL_context 调用 MDL_context::acquire_lock 进行的，调用栈如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">open_tables_for_query()</span><br><span class="line">  |--open_table() &#x2F;&#x2F; 循环打开每一个表</span><br><span class="line">    |--open_table_get_mdl_lock()</span><br><span class="line">      |--MDL_context::acquire_lock() &#x2F;&#x2F; 获取lock，如果遇到锁冲突，那么等待冲突的锁被释放</span><br><span class="line">        |--MDL_context::try_acquire_lock_impl()</span><br></pre></td></tr></table></figure>
+<h2 id="1-MDL-context-try-acquire-lock-impl"><a href="#1-MDL-context-try-acquire-lock-impl" class="headerlink" title="1 MDL_context::try_acquire_lock_impl"></a>1 MDL_context::try_acquire_lock_impl</h2><p>接下来我们重点看一下 MDL_context::try_acquire_lock_impl 的过程。这个函数包含了各种类型锁（兼容性好的，兼容性差的）的获取以及锁冲突检测，传入参数是当前的 MDL_request，输出参数为获取到的 MDL_ticket。</p>
+<p>首先会根据 MDL_request 在当前线程已持有的相同对象 MDL_ticket 中查找类型更强、生命周期相同或不同的 ticket。如果已经持有相同生命周期的，那么直接返回；持有不同生命周期的，根据 ticket 克隆出一个相同周期的返回即可。</p>
+<p>我们在前面提到了根据锁类型的兼容性情况，可以划分为 unobtrusive 和 obtrusive 的锁，在锁获取过程中也分别对应 fast path 和 slow path，代表获取的难易度不同。</p>
+<h3 id="Unobtrusive-fast-path"><a href="#Unobtrusive-fast-path" class="headerlink" title="Unobtrusive(fast path)"></a><strong>Unobtrusive(fast path)</strong></h3><p>对于一些弱类型（unobtrusive，例如 SR/SW 等）的 MDL 请求，由于这部分的请求占绝大多数，且兼容性较好，获取后不用记录下是哪个具体的 MDL_ticket，只需要记录有多少请求已获取。因此在 MDL_lock 中使用整型原子变量 std::atomic m_fast_path_state 来统计该锁授予的所有 unobtrusive 的锁类型数量，每种 unobtrusive 的锁有不同的数值表示，留下固定的 bit 范围存放该种锁类型累加后的结果，相当于用一个 longlong 类型统计了所有 unobtrusive 锁的授予个数，同时可以通过 CAS 无锁修改。另外在 m_fast_path_state 的高位 bit，还存在三个状态指示位，分别是 IS_DESTROYED/HAS_OBTRUSIVE/HAS_SLOW_PATH。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">   Array of increments for &quot;unobtrusive&quot; types of lock requests for</span><br><span class="line">   per-object locks.</span><br><span class="line">   @sa MDL_lock::get_unobtrusive_lock_increment().</span><br><span class="line">   For per-object locks:</span><br><span class="line">   - &quot;unobtrusive&quot; types: S, SH, SR and SW</span><br><span class="line">   - &quot;obtrusive&quot; types: SU, SRO, SNW, SNRW, X</span><br><span class="line">   Number of locks acquired using &quot;fast path&quot; are encoded in the following</span><br><span class="line">   bits of MDL_lock::m_fast_path_state:</span><br><span class="line">   - bits 0 .. 19  - S and SH (we don&#39;t differentiate them once acquired)</span><br><span class="line">   - bits 20 .. 39 - SR</span><br><span class="line">   - bits 40 .. 59 - SW and SWLP (we don&#39;t differentiate them once acquired)</span><br><span class="line">   Overflow is not an issue as we are unlikely to support more than 2^20 - 1</span><br><span class="line">   concurrent connections in foreseeable future.</span><br><span class="line">   This encoding defines the below contents of increment array.</span><br><span class="line">*&#x2F;</span><br><span class="line">&#123;0, 1, 1, 1ULL &lt;&lt; 20, 1ULL &lt;&lt; 40, 1ULL &lt;&lt; 40, 0, 0, 0, 0, 0&#125;,</span><br></pre></td></tr></table></figure>
+<p>根据 MDL_request 的请求类型，获取对应类型的 unobtrusive 整型递增值，如果递增值为 0，则代表是 obtrusive 的锁，需要走 slow path。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">  @returns &quot;Fast path&quot; increment for request for &quot;unobtrusive&quot; type</span><br><span class="line">            of lock, 0 - if it is request for &quot;obtrusive&quot; type of</span><br><span class="line">            lock.</span><br><span class="line">  @sa Description at method declaration for more details.</span><br><span class="line">*&#x2F;</span><br><span class="line">MDL_lock::fast_path_state_t MDL_lock::get_unobtrusive_lock_increment(</span><br><span class="line">    const MDL_request *request) &#123;</span><br><span class="line">  return MDL_lock::get_strategy(request-&gt;key)</span><br><span class="line">      -&gt;m_unobtrusive_lock_increment[request-&gt;type];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果非 0，代表着该类型锁是 unobtrusive，就会走 fast path，直接通过 CAS 来给 MDL_lock::m_fast_path_state 递增上对应的整型值即可。但是需要确认一个条件，就是该对象没有被其他线程以 obtrusive 的方式锁住，因为 unobtrusive 和 obtrusive 的锁类型有些是互斥的，只有在没有 obtrusive 的锁存在时，其他的 unobtrusive 锁彼此兼容，才可以不用判断其他线程的锁持有情况直接获取。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">MDL_lock::fast_path_state_t old_state &#x3D; lock-&gt;m_fast_path_state;</span><br><span class="line">do &#123;</span><br><span class="line">  &#x2F;*</span><br><span class="line">    Check if hash look-up returned object marked as destroyed or</span><br><span class="line">    it was marked as such while it was pinned by us. If yes we</span><br><span class="line">    need to unpin it and retry look-up.</span><br><span class="line">  *&#x2F;</span><br><span class="line">  if (old_state &amp; MDL_lock::IS_DESTROYED) &#123;</span><br><span class="line">    if (pinned) lf_hash_search_unpin(m_pins);</span><br><span class="line">    goto retry;</span><br><span class="line">  &#125;</span><br><span class="line">  &#x2F;*</span><br><span class="line">    Check that there are no granted&#x2F;pending &quot;obtrusive&quot; locks and nobody</span><br><span class="line">    even is about to try to check if such lock can be acquired.</span><br><span class="line">    In these cases we need to take &quot;slow path&quot;.</span><br><span class="line">  *&#x2F;</span><br><span class="line">  if (old_state &amp; MDL_lock::HAS_OBTRUSIVE) goto slow_path;</span><br><span class="line">  &#125; while (!lock-&gt;fast_path_state_cas(</span><br><span class="line">      &amp;old_state, old_state + unobtrusive_lock_increment));</span><br></pre></td></tr></table></figure>
+<p>CAS 完成后，设置相关数据结构的状态和引用，将当前 MDL_ticket 加入到线程的 MDL_ticket_store 中即可返回：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line">  Since this MDL_ticket is not visible to any threads other than</span><br><span class="line">  the current one, we can set MDL_ticket::m_lock member without</span><br><span class="line">  protect of MDL_lock::m_rwlock. MDL_lock won&#39;t be deleted</span><br><span class="line">  underneath our feet as MDL_lock::m_fast_path_state serves as</span><br><span class="line">  reference counter in this case.</span><br><span class="line">*&#x2F;</span><br><span class="line">ticket-&gt;m_lock &#x3D; lock;</span><br><span class="line">ticket-&gt;m_is_fast_path &#x3D; true;</span><br><span class="line">m_ticket_store.push_front(mdl_request-&gt;duration, ticket);</span><br><span class="line">mdl_request-&gt;ticket &#x3D; ticket;</span><br><span class="line">mysql_mdl_set_status(ticket-&gt;m_psi, MDL_ticket::GRANTED);</span><br></pre></td></tr></table></figure>
+<h3 id="Obtrusive-slow-path"><a href="#Obtrusive-slow-path" class="headerlink" title="Obtrusive(slow path)"></a><strong>Obtrusive(slow path)</strong></h3><p>对于一些比较强类型（obtrusive，例如 SU/SRO/X 等）的 MDL 请求，会在对应 MDL_lock 的 m_granted 链表中存放对应的 MDL_ticket。因此在获取时也需要遍历这个链表和其他的 bitmap 来判断与其他线程已获取或者正在等待的 MDL_ticket 是否存在锁冲突。</p>
+<p>需要走 slow path 获取锁之前，当前线程需要将 MDL_lock::m_fast_path_state 中由当前线程之前通过 fast path 获取到的锁物化，从 bitmap 中移出，加入到 MDL_lock::m_granted 中。因为在 MDL_lock::m_fast_path_state 中包含的 bitmap 是无法区分线程的，而当前线程获取的多个锁之间是不构成锁冲突的，所以在通过 bitmap 判断前，需要确保 MDL_lock::m_fast_path_state 的 ticket 都是属于其他线程的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">  &quot;Materialize&quot; requests for locks which were satisfied using</span><br><span class="line">  &quot;fast path&quot; by properly including them into corresponding</span><br><span class="line">  MDL_lock::m_granted bitmaps&#x2F;lists and removing it from</span><br><span class="line">  packed counter in MDL_lock::m_fast_path_state.</span><br><span class="line">*&#x2F;</span><br><span class="line">void MDL_context::materialize_fast_path_locks() &#123;</span><br><span class="line">  int i;</span><br><span class="line">  for (i &#x3D; 0; i &lt; MDL_DURATION_END; i++) &#123;</span><br><span class="line">    MDL_ticket_store::List_iterator it &#x3D; m_ticket_store.list_iterator(i);</span><br><span class="line">    MDL_ticket *matf &#x3D; m_ticket_store.materialized_front(i);</span><br><span class="line">    for (MDL_ticket *ticket &#x3D; it++; ticket !&#x3D; matf; ticket &#x3D; it++) &#123;</span><br><span class="line">      if (ticket-&gt;m_is_fast_path) &#123;</span><br><span class="line">        MDL_lock *lock &#x3D; ticket-&gt;m_lock;</span><br><span class="line">        MDL_lock::fast_path_state_t unobtrusive_lock_increment &#x3D;</span><br><span class="line">            lock-&gt;get_unobtrusive_lock_increment(ticket-&gt;get_type());</span><br><span class="line">        ticket-&gt;m_is_fast_path &#x3D; false;</span><br><span class="line">        mysql_prlock_wrlock(&amp;lock-&gt;m_rwlock);</span><br><span class="line">        lock-&gt;m_granted.add_ticket(ticket);</span><br><span class="line">        &#x2F;*</span><br><span class="line">          Atomically decrement counter in MDL_lock::m_fast_path_state.</span><br><span class="line">          This needs to happen under protection of MDL_lock::m_rwlock to make</span><br><span class="line">          it atomic with addition of ticket to MDL_lock::m_granted list and</span><br><span class="line">          to enforce invariant [INV1].</span><br><span class="line">        *&#x2F;</span><br><span class="line">        MDL_lock::fast_path_state_t old_state &#x3D; lock-&gt;m_fast_path_state;</span><br><span class="line">        while (!lock-&gt;fast_path_state_cas(</span><br><span class="line">            &amp;old_state, ((old_state - unobtrusive_lock_increment) |</span><br><span class="line">                         MDL_lock::HAS_SLOW_PATH))) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">        mysql_prlock_unlock(&amp;lock-&gt;m_rwlock);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  m_ticket_store.set_materialized();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在物化完成后，就可以通过当前锁正在等待的 ticket 类型（m_waiting）、已经授予的 ticket 类型（m_granted）和 unobtrusive 的锁类型状态（MDL_lock::m_fast_path_state），结合前面的兼容性矩阵来判断当前请求的锁类型是否能获取到，这个过程主要在 MDL_lock::can_grant_lock 中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">bool MDL_lock::can_grant_lock(enum_mdl_type type_arg,</span><br><span class="line">                              const MDL_context *requestor_ctx) const &#123;</span><br><span class="line">  bool can_grant &#x3D; false;</span><br><span class="line">  bitmap_t waiting_incompat_map &#x3D; incompatible_waiting_types_bitmap()[type_arg];</span><br><span class="line">  bitmap_t granted_incompat_map &#x3D; incompatible_granted_types_bitmap()[type_arg];</span><br><span class="line">  &#x2F;*</span><br><span class="line">    New lock request can be satisfied iff:</span><br><span class="line">    - There are no incompatible types of satisfied requests</span><br><span class="line">    in other contexts</span><br><span class="line">    - There are no waiting requests which have higher priority</span><br><span class="line">    than this request.</span><br><span class="line">  *&#x2F;</span><br><span class="line">  if (!(m_waiting.bitmap() &amp; waiting_incompat_map)) &#123;</span><br><span class="line">    if (!(fast_path_granted_bitmap() &amp; granted_incompat_map)) &#123;</span><br><span class="line">      if (!(m_granted.bitmap() &amp; granted_incompat_map))</span><br><span class="line">        can_grant &#x3D; true;</span><br><span class="line">      else &#123;</span><br><span class="line">        Ticket_iterator it(m_granted);</span><br><span class="line">        MDL_ticket *ticket;</span><br><span class="line">        &#x2F;*</span><br><span class="line">          There is an incompatible lock. Check that it belongs to some</span><br><span class="line">          other context.</span><br><span class="line">        *&#x2F;</span><br><span class="line">        while ((ticket &#x3D; it++)) &#123;</span><br><span class="line">          if (ticket-&gt;get_ctx() !&#x3D; requestor_ctx &amp;&amp;</span><br><span class="line">              ticket-&gt;is_incompatible_when_granted(type_arg))</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        if (ticket &#x3D;&#x3D; NULL) &#x2F;* Incompatible locks are our own. *&#x2F;</span><br><span class="line">          can_grant &#x3D; true;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return can_grant;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 m_waiting 和 m_granted 中，除了有链表将 ticket 连接起来，也会用 bitmap 收集链表中所有 ticket 的类型，方便直接进行比较。在 m_granted 中发现不兼容类型后，还需要遍历链表，判断不兼容类型的 ticket 是不是当前线程获取的，只有是非当前线程获取的情况下，才出现锁冲突。unobtrusive 的锁如果能获取的话，会直接加入到 MDL_lock::m_granted 链表中。</p>
+<h2 id="2-锁等待和通知"><a href="#2-锁等待和通知" class="headerlink" title="2 锁等待和通知"></a>2 锁等待和通知</h2><p>上述过程中，如果能顺利获取到 MDL_ticket，就完成了 MDL 的获取，可以继续查询过程。如果无法获取到（不管是 unobtrusive 的锁由于 obtrusive 的锁存在而被迫走 slow path，还是本身 obtrusive 的锁无法获取），就需要进行锁等待，锁等待的过程是不区分是否为 unobtrusive 还是 obtrusive 的，统一进行处理。</p>
+<p>每个线程的 MDL_context 中包含一个 MDL_wait 成员，因为锁等待以及死锁检测都是以线程为对象，通过将对应请求的 MDL_ticket 加入到锁等待者队列中来订阅通知。有一组 mutex、condition variable 和枚举状态用来完成线程间的等待、通知。等待的状态包括五种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; WS_EMPTY since EMPTY conflicts with #define in system headers on some</span><br><span class="line">&#x2F;&#x2F; platforms.</span><br><span class="line">enum enum_wait_status &#123; WS_EMPTY &#x3D; 0, GRANTED, VICTIM, TIMEOUT, KILLED &#125;;</span><br></pre></td></tr></table></figure>
+<p>WS_EMPTY 为初始状态，其他的都是等待的结果状态，从命令可以看出，等待的结果分别可能是：</p>
+<ul>
+<li><p>GRANTED，该线程获取到了等待的 MDL 锁</p>
+</li>
+<li><p>VICTIM，该线程作为死锁的受害者，要求重新执行事务</p>
+</li>
+<li><p>TIMEOUT，等待超时</p>
+</li>
+<li><p>KILLED，该线程在等待过程中被 kill 掉</p>
+</li>
+</ul>
+<p>等待的线程首先将自己想要获取的 ticket 加入到 MDL_lock 的 m_waiting 队列，然后根据配置的等待时间调用 MDL_wait 的函数进行超时等待：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">  Wait for the status to be assigned to this wait slot.</span><br><span class="line">*&#x2F;</span><br><span class="line">MDL_wait::enum_wait_status MDL_wait::timed_wait(</span><br><span class="line">    MDL_context_owner *owner, struct timespec *abs_timeout,</span><br><span class="line">    bool set_status_on_timeout, const PSI_stage_info *wait_state_name) &#123;</span><br><span class="line">  enum_wait_status result;</span><br><span class="line">  int wait_result &#x3D; 0;</span><br><span class="line">  mysql_mutex_lock(&amp;m_LOCK_wait_status);</span><br><span class="line">  while (!m_wait_status &amp;&amp; !owner-&gt;is_killed() &amp;&amp; !is_timeout(wait_result)) &#123;</span><br><span class="line">    wait_result &#x3D; mysql_cond_timedwait(&amp;m_COND_wait_status, &amp;m_LOCK_wait_status,</span><br><span class="line">                                       abs_timeout);</span><br><span class="line">  &#125;</span><br><span class="line">  if (m_wait_status &#x3D;&#x3D; WS_EMPTY) &#123;</span><br><span class="line">    if (owner-&gt;is_killed())</span><br><span class="line">      m_wait_status &#x3D; KILLED;</span><br><span class="line">    else if (set_status_on_timeout)</span><br><span class="line">      m_wait_status &#x3D; TIMEOUT;</span><br><span class="line">  &#125;</span><br><span class="line">  result &#x3D; m_wait_status;</span><br><span class="line">  mysql_mutex_unlock(&amp;m_LOCK_wait_status);</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当其他持有不兼容类型锁的线程查询完成或者事务结束时，会一块释放持有的所有锁，同时根据是否是 fast path 还是 slow path 路径获取到的，恢复 MDL_lock::m_fast_path_state 的状态和 MDL_lock::m_granted 链表。除此之外，如果 MDL_lock::m_waiting 存在正在等待的 ticket，就会调用 MDL_lock::reschedule_waiters() 来唤醒可以获取到锁的线程，并设置等待状态为 GRANTED：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void MDL_lock::reschedule_waiters() &#123;</span><br><span class="line">  MDL_lock::Ticket_iterator it(m_waiting);</span><br><span class="line">  MDL_ticket *ticket;</span><br><span class="line">  while ((ticket &#x3D; it++)) &#123;</span><br><span class="line">    if (can_grant_lock(ticket-&gt;get_type(), ticket-&gt;get_ctx())) &#123;</span><br><span class="line">      if (!ticket-&gt;get_ctx()-&gt;m_wait.set_status(MDL_wait::GRANTED)) &#123;</span><br><span class="line">        m_waiting.remove_ticket(ticket);</span><br><span class="line">        m_granted.add_ticket(ticket);</span><br><span class="line"> ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">  Set the status unless it&#39;s already set. Return false if set,</span><br><span class="line">  true otherwise.</span><br><span class="line">*&#x2F;</span><br><span class="line">bool MDL_wait::set_status(enum_wait_status status_arg) &#123;</span><br><span class="line">  bool was_occupied &#x3D; true;</span><br><span class="line">  mysql_mutex_lock(&amp;m_LOCK_wait_status);</span><br><span class="line">  if (m_wait_status &#x3D;&#x3D; WS_EMPTY) &#123;</span><br><span class="line">    was_occupied &#x3D; false;</span><br><span class="line">    m_wait_status &#x3D; status_arg;</span><br><span class="line">    mysql_cond_signal(&amp;m_COND_wait_status);</span><br><span class="line">  &#125;</span><br><span class="line">  mysql_mutex_unlock(&amp;m_LOCK_wait_status);</span><br><span class="line">  return was_occupied;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>被唤醒的等待线程，如果发现 ticket 是 GRANTED 状态，就会继续执行；否则根据不同情况报错。</p>
+<h2 id="3-死锁检测"><a href="#3-死锁检测" class="headerlink" title="3 死锁检测"></a>3 死锁检测</h2><p>每个线程在进入锁等待之前，都会进行一次死锁检测，避免当前线程陷入死等。在检测死锁前，首先将当前线程所获取到的 unobtrusive 锁物化，这样这些锁才会出现在 MDL_lock::m_granted 链表中，死锁检测才有可能探测到。并且设置当前线程的等待锁 MDL_context::m_waiting_for 为当前的 ticket，每个进入等待的线程都会设置等待对象，沿着这条等待链就可以检测死锁。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;** Inform the deadlock detector there is an edge in the wait-for graph. *&#x2F;</span><br><span class="line">void will_wait_for(MDL_wait_for_subgraph *waiting_for_arg) &#123;</span><br><span class="line">  &#x2F;*</span><br><span class="line">    Before starting wait for any resource we need to materialize</span><br><span class="line">    all &quot;fast path&quot; tickets belonging to this thread. Otherwise</span><br><span class="line">    locks acquired which are represented by these tickets won&#39;t</span><br><span class="line">    be present in wait-for graph and could cause missed deadlocks.</span><br><span class="line">    It is OK for context which doesn&#39;t wait for any resource to</span><br><span class="line">    have &quot;fast path&quot; tickets, as such context can&#39;t participate</span><br><span class="line">    in any deadlock.</span><br><span class="line">  *&#x2F;</span><br><span class="line">  materialize_fast_path_locks();</span><br><span class="line">  mysql_prlock_wrlock(&amp;m_LOCK_waiting_for);</span><br><span class="line">  m_waiting_for &#x3D; waiting_for_arg;</span><br><span class="line">  mysql_prlock_unlock(&amp;m_LOCK_waiting_for);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="MDL-wait-for-subgraph"><a href="#MDL-wait-for-subgraph" class="headerlink" title="MDL_wait_for_subgraph"></a><strong>MDL_wait_for_subgraph</strong></h3><p>代表等待图中一条边的抽象类，会由死锁检测算法进行遍历。MDL_ticket 派生于 MDL_wait_for_subgraph，通过实现 accept_visitor() 函数来让辅助检测类顺着边寻找等待环。</p>
+<h3 id="Deadlock-detection-visitor"><a href="#Deadlock-detection-visitor" class="headerlink" title="Deadlock_detection_visitor"></a><strong>Deadlock_detection_visitor</strong></h3><p>在等待图中检测等待环的辅助类，包含检测过程中的状态信息，比如死锁检测的起始线程 m_start_node；在搜索过程中发生死锁后，根据权重选择的受害者线程 m_victim；搜索的线程深度，假如线程的等待链过长，超过了阈值（默认32），即使没检测到死锁也认为死锁发生。</p>
+<p>实现 enter_node() 和 leave_node() 函数来进入下一线程节点和退出，通过 inspect_edge() 来发现是否当前线程节点已经是起始节点从而判断成环。通过 opt_change_victim_to() 来比较受害者的死锁权重来决定受害者。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">  Inspect a wait-for graph edge from one MDL context to another.</span><br><span class="line">  @retval true   A loop is found.</span><br><span class="line">  @retval false  No loop is found.</span><br><span class="line">*&#x2F;</span><br><span class="line">bool Deadlock_detection_visitor::inspect_edge(MDL_context *node) &#123;</span><br><span class="line">  m_found_deadlock &#x3D; node &#x3D;&#x3D; m_start_node;</span><br><span class="line">  return m_found_deadlock;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;**</span><br><span class="line">  Change the deadlock victim to a new one if it has lower deadlock</span><br><span class="line">  weight.</span><br><span class="line">  @param new_victim New candidate for deadlock victim.</span><br><span class="line">*&#x2F;</span><br><span class="line">void Deadlock_detection_visitor::opt_change_victim_to(MDL_context *new_victim) &#123;</span><br><span class="line">  if (m_victim &#x3D;&#x3D; NULL ||</span><br><span class="line">      m_victim-&gt;get_deadlock_weight() &gt;&#x3D; new_victim-&gt;get_deadlock_weight()) &#123;</span><br><span class="line">    &#x2F;* Swap victims, unlock the old one. *&#x2F;</span><br><span class="line">    MDL_context *tmp &#x3D; m_victim;</span><br><span class="line">    m_victim &#x3D; new_victim;</span><br><span class="line">    m_victim-&gt;lock_deadlock_victim();</span><br><span class="line">    if (tmp) tmp-&gt;unlock_deadlock_victim();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="检测过程"><a href="#检测过程" class="headerlink" title="检测过程"></a><strong>检测过程</strong></h3><p>死锁检测的思路是，首先广度优先，从当前线程等待的锁出发，遍历 MDL_lock 的等待队列和授予队列，看看是否有非当前线程获取的、与等待的锁不兼容的锁存在，如果这个持有线程与算法遍历的起点线程相同，那么锁等待链存在死锁；其次深度优先，从不兼容的锁的持有或等待线程出发，如果该线程也处于等待状态，那么递归重复前述过程，直到找到等待起点线程，否则判断不存在死锁。代码逻辑如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">MDL_context::find_deadlock()</span><br><span class="line">  |--MDL_context::visit_subgraph(MDL_wait_for_graph_visitor *) &#x2F;&#x2F; 如果存在m_waiting_for的话，调用对应ticket的accept_visitor()</span><br><span class="line">    |--MDL_ticket::accept_visitor(MDL_wait_for_graph_visitor *) &#x2F;&#x2F; 根据对应MDL_lock的锁获取情况检测</span><br><span class="line">      |--MDL_lock::visit_subgraph() &#x2F;&#x2F; 递归遍历锁的授予链表(m_granted)和等待链表(m_waiting)去判断是否存在等待起始节点(死锁)情况</span><br><span class="line">         &#x2F;&#x2F; 依次递归授予链表和等待链表的MDL_context来寻找死锁</span><br><span class="line">        |--Deadlock_detection_visitor::enter_node() &#x2F;&#x2F; 首先进入当前节点</span><br><span class="line">        |--遍历授予链表(m_granted)，判断兼容性</span><br><span class="line">          |--如果不兼容的话，调用Deadlock_detection_visitor::inspect_edge()判断是否死锁</span><br><span class="line">        |--遍历等待链表(m_waiting)，同上</span><br><span class="line">        |--遍历授予链表，判断兼容性</span><br><span class="line">          |--如果不兼容的话，递归调用MDL_context::visit_subgraph()寻找连通子图。如果线程等待的ticket已经有明确的状态，非WS_EMPTY，可以直接返回</span><br><span class="line">        |--遍历等待链表，同上</span><br><span class="line">        |--Deadlock_detection_visitor::leave_node() &#x2F;&#x2F; 离开当前节点</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line">  We do a breadth-first search first -- that is, inspect all</span><br><span class="line">  edges of the current node, and only then follow up to the next</span><br><span class="line">  node. In workloads that involve wait-for graph loops this</span><br><span class="line">  has proven to be a more efficient strategy [citation missing].</span><br><span class="line">*&#x2F;</span><br><span class="line">while ((ticket &#x3D; granted_it++)) &#123;</span><br><span class="line">  &#x2F;* Filter out edges that point to the same node. *&#x2F;</span><br><span class="line">  if (ticket-&gt;get_ctx() !&#x3D; src_ctx &amp;&amp;</span><br><span class="line">      ticket-&gt;is_incompatible_when_granted(waiting_ticket-&gt;get_type()) &amp;&amp;</span><br><span class="line">      gvisitor-&gt;inspect_edge(ticket-&gt;get_ctx())) &#123;</span><br><span class="line">    goto end_leave_node;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">&#x2F;* Recurse and inspect all adjacent nodes. *&#x2F;</span><br><span class="line">granted_it.rewind();</span><br><span class="line">while ((ticket &#x3D; granted_it++)) &#123;</span><br><span class="line">  if (ticket-&gt;get_ctx() !&#x3D; src_ctx &amp;&amp;</span><br><span class="line">      ticket-&gt;is_incompatible_when_granted(waiting_ticket-&gt;get_type()) &amp;&amp;</span><br><span class="line">      ticket-&gt;get_ctx()-&gt;visit_subgraph(gvisitor)) &#123;</span><br><span class="line">    goto end_leave_node;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="受害者权重"><a href="#受害者权重" class="headerlink" title="受害者权重"></a><strong>受害者权重</strong></h3><p>在检测到死锁后，沿着线程等待链退出的时候，会根据每个线程等待 ticket 的权重，选择权重最小的作为受害者，让其放弃等待并释放持有的锁，在 Deadlock_detection_visitor::opt_change_victim_to 函数中。</p>
+<p>在权重方面做的还是比较粗糙的，并不考虑事务进行的阶段，以及执行的语句内容，仅仅是根据锁资源的类型和锁种类有一个预设的权重，在 MDL_ticket::get_deadlock_weight() 函数中。</p>
+<ul>
+<li><p>DEADLOCK_WEIGHT_DML，DML 类型语句的权重最小为 0</p>
+</li>
+<li><p>DEADLOCK_WEIGHT_ULL，用户手动上锁的权重居中为 50</p>
+</li>
+<li><p>DEADLOCK_WEIGHT_DDL，DDL 类型语句的权重最大为 100</p>
+</li>
+</ul>
+<p>由此可见，在发生死锁时更偏向于让 DML 语句报错回滚，让 DDL 语句继续执行。当同类型语句构成死锁时，更偏向让后进入等待链的线程成为受害者，让等待的比较久的线程继续等待。</p>
+<p>当前线程将死锁环上受害者线程的状态设置为 VICTIM 并唤醒后，当前线程即可进入等待状态。</p>
+<h1 id="五-MDL-监控"><a href="#五-MDL-监控" class="headerlink" title="五 MDL 监控"></a><strong>五 MDL 监控</strong></h1><p>通过 MySQL performance_schema 可以清晰的监控当前 MDL 锁的获取情况，performance_schema 是一个只读变量，设置需重启，在配置文件中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">performance_schema &#x3D; ON</span><br></pre></td></tr></table></figure>
+<p>通过 performance_schema.setup_instruments 表设置 MDL 监控项：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE performance_schema.setup_instruments</span><br><span class="line">SET ENABLED &#x3D; &#39;YES&#39;, TIMED &#x3D; &#39;YES&#39;</span><br><span class="line">WHERE NAME &#x3D; &#39;wait&#x2F;lock&#x2F;metadata&#x2F;sql&#x2F;mdl&#39;;</span><br></pre></td></tr></table></figure>
+<p>之后我们就可以访问 performance_schema.metadata_locks 表来监控 MDL 获取情况，比如有两个线程处于以下状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">connect-1 &gt; BEGIN;                    |</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)  |</span><br><span class="line">                                      |</span><br><span class="line">connect-1 &gt; SELECT * FROM t1;         |</span><br><span class="line">+------+------+------+                |</span><br><span class="line">| a    | b    | c    |                |       </span><br><span class="line">+------+------+------+                |</span><br><span class="line">|    1 |    2 |    3 |                |</span><br><span class="line">|    4 |    5 |    6 |                |</span><br><span class="line">+------+------+------+                |</span><br><span class="line">2 rows in set (0.00 sec)              | # DDL will hang</span><br><span class="line">                                      | connect-2 &gt; ALTER TABLE t1 ADD INDEX i1(a);</span><br></pre></td></tr></table></figure>
+<p>线程1事务没提交，导致线程2做 DDL hang 住，访问 performance_schema.metadata_locks 可以看到是因为线程1持有 t1 的 SHARED_READ 锁，导致需要获取 EXCLUSIVE 锁的线程2处于等待状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; SELECT * FROM performance_schema.metadata_locks;</span><br><span class="line">+-------------+--------------------+----------------+-------------+-----------------------+---------------------+---------------+-------------+--------------------+-----------------+----------------+</span><br><span class="line">| OBJECT_TYPE | OBJECT_SCHEMA      | OBJECT_NAME    | COLUMN_NAME | OBJECT_INSTANCE_BEGIN | LOCK_TYPE           | LOCK_DURATION | LOCK_STATUS | SOURCE             | OWNER_THREAD_ID | OWNER_EVENT_ID |</span><br><span class="line">+-------------+--------------------+----------------+-------------+-----------------------+---------------------+---------------+-------------+--------------------+-----------------+----------------+</span><br><span class="line">| TABLE       | test               | t1             | NULL        |       140734873224192 | SHARED_READ         | TRANSACTION   | GRANTED     | sql_parse.cc:6759  |              68 |             23 |</span><br><span class="line">| GLOBAL      | NULL               | NULL           | NULL        |       140734862726080 | INTENTION_EXCLUSIVE | STATEMENT     | GRANTED     | sql_base.cc:6137   |              69 |              6 |</span><br><span class="line">| SCHEMA      | test               | NULL           | NULL        |       140734862726240 | INTENTION_EXCLUSIVE | TRANSACTION   | GRANTED     | sql_base.cc:6124   |              69 |              6 |</span><br><span class="line">| TABLE       | test               | t1             | NULL        |       140734862726400 | SHARED_UPGRADABLE   | TRANSACTION   | GRANTED     | sql_parse.cc:6759  |              69 |              6 |</span><br><span class="line">| BACKUP LOCK | NULL               | NULL           | NULL        |       140734862726560 | INTENTION_EXCLUSIVE | TRANSACTION   | GRANTED     | sql_base.cc:6144   |              69 |              6 |</span><br><span class="line">| TABLESPACE  | NULL               | test&#x2F;t1        | NULL        |       140734862727040 | INTENTION_EXCLUSIVE | TRANSACTION   | GRANTED     | lock.cc:811        |              69 |              6 |</span><br><span class="line">| TABLE       | test               | #sql-5a52_a    | NULL        |       140734862726720 | EXCLUSIVE           | STATEMENT     | GRANTED     | sql_table.cc:17089 |              69 |              6 |</span><br><span class="line">| TABLE       | test               | t1             | NULL        |       140734862726880 | EXCLUSIVE           | TRANSACTION   | PENDING     | mdl.cc:4337        |              69 |              6 |</span><br><span class="line">| TABLE       | performance_schema | metadata_locks | NULL        |       140734887891904 | SHARED_READ         | TRANSACTION   | GRANTED     | sql_parse.cc:6759  |              67 |              4 |</span><br><span class="line">+-------------+--------------------+----------------+-------------+-----------------------+---------------------+---------------+-------------+--------------------+-----------------+----------------+</span><br><span class="line">9 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<h1 id="六-PolarDB-在-MDL-上的优化"><a href="#六-PolarDB-在-MDL-上的优化" class="headerlink" title="六 PolarDB 在 MDL 上的优化"></a><strong>六 PolarDB 在 MDL 上的优化</strong></h1><p>在 MySQL 社区版中，对分区表数据的访问操作（DML）与分区维护操作（DDL）是相互阻塞的，主要的原因是 DDL 需要获取分区表上的 MDL_EXCLUSIVE 锁。这使得分区维护操作只能在业务低峰时段进行，而且对分区表进行创建/删除分区的需求是比较频繁的，极大限制了分区表的使用。</p>
+<p>在 PolarDB 中，我们引入了分区级别的 MDL 锁，使 DML 和 DDL 获取的锁粒度降低到分区级，提高了并发度，实现了“在线”分区维护功能。使得分区表的数据访问和分区维护不相互影响，用户可以更自由的进行分区维护，而不影响分区表业务流量，大大增强了分区表使用的灵活度。</p>
+<p>该功能已经在 PolarDB 8.0.2.2.0 及以上版本中发布，欢迎用户使用。</p>
+<h1 id="七-参考"><a href="#七-参考" class="headerlink" title="七 参考"></a><strong>七 参考</strong></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[1] Source code mysql &#x2F; mysql-server 8.0.18：https:&#x2F;&#x2F;github.com&#x2F;mysql&#x2F;mysql-server&#x2F;tree&#x2F;mysql-8.0.18</span><br><span class="line">[2] MySQL · 源码分析 · 常用SQL语句的MDL加锁源码分析：http:&#x2F;&#x2F;mysql.taobao.org&#x2F;monthly&#x2F;2018&#x2F;02&#x2F;01&#x2F;</span><br><span class="line">[3] 在线分区维护功能：https:&#x2F;&#x2F;help.aliyun.com&#x2F;document_detail&#x2F;412379.html</span><br></pre></td></tr></table></figure>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2022/04/05/resource-java-concurrent-lock/" data-toggle="tooltip" data-placement="top" title="并发-分布式锁质量保障总结">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2022/04/03/resource-tools-Server-JBoss7多数据源配置/" data-toggle="tooltip" data-placement="top" title="JBoss7多数据源配置">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#一-背景"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一 背景</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#二-基本概念"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二 基本概念</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-MDL-key"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">1 MDL_key</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-enum-mdl-type"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">2 enum_mdl_type</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#不同类型的-MDL-兼容性"><span class="toc-nav-number">2.2.1.</span> <span class="toc-nav-text">不同类型的 MDL 兼容性</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1）范围锁"><span class="toc-nav-number">2.2.1.1.</span> <span class="toc-nav-text">1）范围锁</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2）对象锁"><span class="toc-nav-number">2.2.1.2.</span> <span class="toc-nav-text">2）对象锁</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#三-重要数据结构"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三 重要数据结构</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-关系示意图"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1 关系示意图</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-MDL-request"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2 MDL_request</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-MDL-lock"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3 MDL_lock</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-MDL-ticket"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">4 MDL_ticket</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-MDL-context"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">5 MDL_context</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#四-MDL-获取过程"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四 MDL 获取过程</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-MDL-context-try-acquire-lock-impl"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">1 MDL_context::try_acquire_lock_impl</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Unobtrusive-fast-path"><span class="toc-nav-number">4.1.1.</span> <span class="toc-nav-text">Unobtrusive(fast path)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Obtrusive-slow-path"><span class="toc-nav-number">4.1.2.</span> <span class="toc-nav-text">Obtrusive(slow path)</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-锁等待和通知"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">2 锁等待和通知</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-死锁检测"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">3 死锁检测</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#MDL-wait-for-subgraph"><span class="toc-nav-number">4.3.1.</span> <span class="toc-nav-text">MDL_wait_for_subgraph</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Deadlock-detection-visitor"><span class="toc-nav-number">4.3.2.</span> <span class="toc-nav-text">Deadlock_detection_visitor</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#检测过程"><span class="toc-nav-number">4.3.3.</span> <span class="toc-nav-text">检测过程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#受害者权重"><span class="toc-nav-number">4.3.4.</span> <span class="toc-nav-text">受害者权重</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#五-MDL-监控"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">五 MDL 监控</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#六-PolarDB-在-MDL-上的优化"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">六 PolarDB 在 MDL 上的优化</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#七-参考"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">七 参考</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

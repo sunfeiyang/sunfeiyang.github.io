@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          阿里千万实例可观测采集器-iLogtail正式开源 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2022/02/16/resource-DB-Logtail-iLogtail/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/DB/Logtail.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#log" title="log">log</a>
+                            
+                        </div>
+
+                        <h1>阿里千万实例可观测采集器-iLogtail正式开源</h1>
+                        <h2 class="subheading">阿里内部可观测数据采集的基础设施</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2022-02-16
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">4.3k</span> and
+                                Reading Time <span class="post-count">14</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>阿里开源可观测数据采集器iLogtail。作为阿里内部可观测数据采集的基础设施，iLogtail承载了阿里巴巴集团、蚂蚁的日志、监控、Trace、事件等多种可观测数据的采集工作。iLogtail运行在服务器、容器、K8s、嵌入式等多种环境，支持采集数百种可观测数据，目前已经有千万级的安装量，每天采集数十PB的可观测数据，广泛应用于线上监控、问题分析/定位、运营分析、安全分析等多种场景。</p>
+<h1 id="一-iLogtail与可观测性"><a href="#一-iLogtail与可观测性" class="headerlink" title="一 iLogtail与可观测性"></a><strong>一 iLogtail与可观测性</strong></h1><p><img src="../../../../img/iLogtail/image-20220325093239105.png" alt="image-20220325093239105"></p>
+<p>可观测性并不是一个全新的概念，而是从IT系统中的监控、问题排查、稳定性建设、运营分析、BI、安全分析等逐渐演化而来，可观测性相比传统监控，最核心的演进是尽可能多的收集各类可观测数据，来实现目标的白盒化。而iLogtail的核心定位就是可观测数据的采集器，能够尽可能多的采集各类可观测性数据，助力可观测平台打造各种上层的应用场景。</p>
+<p><img src="../../../../img/iLogtail/image-20220325093257279.png" alt="image-20220325093257279"></p>
+<h1 id="二-阿里可观测数据采集的挑战"><a href="#二-阿里可观测数据采集的挑战" class="headerlink" title="二 阿里可观测数据采集的挑战"></a><strong>二 阿里可观测数据采集的挑战</strong><sunfy-line></h1><p><img src="../../../../img/iLogtail/image-20220325093320206.png" alt="image-20220325093320206"></p>
+<p>对于可观测数据的采集，有很多开源的Agent，例如Logstash、Filebeats、Fluentd、Collectd、Telegraf等。这些Agent的功能非常丰富，使用这些Agent的组合再进行一定的扩展，基本可以满足内部各类数据的采集需求。但由于一些性能、稳定性、管控能力等关键性的挑战无法满足，最终我们还是选择自研：</p>
+<p>1、资源消耗：目前阿里内部有数百万的主机（物理机/虚拟机/容器），每天会产生几十PB的可观测数据，每1M的内存减少、每1M/s的性能提升对于我们的资源节省都是巨大的，带来的成本节约可能是数百万甚至上千万。目前众多开源Agent的设计更多的是偏重功能而非性能，基于现有开源Agent改造基本不可行。例如：</p>
+<ul>
+<li>开源Agent普遍单核处理性能在2-10M/s左右，而我们希望有一个能达到100M/s的性能</li>
+<li>在采集目标增加、数据量增加、采集延迟、服务端异常等情况下，开源Agent内存都会呈现爆炸式增长，而我们希望即使在各种环境下，内存也能处在较低的水位</li>
+<li>开源Agent的资源消耗没办法控制，只能通过cgroup强行限制，最终的效果就是不断OOM，不断重启，数据一直采集不上来。而我们希望在指定一个CPU、内存、流量等资源限制后，Agent能一直在这个限制范围内正常工作</li>
+</ul>
+<p>2、稳定性：稳定性是永恒的话题，数据采集的稳定性，除了保证数据本身采集的准确性外，还需要保证采集的Agent不能影响业务应用，否则带来的影响将是灾难性的。而稳定性建设，除了Agent自身的基础稳定性外，还有很多特性目前开源的Agent还没有提供：</p>
+<ul>
+<li>Agent自恢复：Agent遇到Critical的事件后能够自动恢复，并且提供多个维度的自恢复能力，例如进程自身、父子进程、守护进程</li>
+<li>全局的多维度监控：能够从全局的角度监控各个不同版本、不同采集配置、不同压力、不同地域/网络等属性的Agent的稳定性问题</li>
+<li>问题隔离：作为Agent，无论怎样出现问题，都需要尽可能的隔离问题，例如一个Agent上有多个采集配置，一个配置出问题，不能影响其他配置；Agent自身出现问题，不能影响机器上的应用进程的稳定性</li>
+<li>回滚能力：版本更新和发布是再所难免的问题，在出现问题的时候如何快速回滚，而且保证出问题和回滚期间的数据采集还是at least once甚至是exactly once。</li>
+</ul>
+<p>3、可管控：可观测数据的应用范围非常的广，几乎所有的业务、运维、BI、安全等部门都会要用，而一台机器上也会产生各种数据，同一台机器产生的数据上也会有多个部门的人要去使用，例如在2018年我们统计，平均一台虚拟机上有100多个不同类型的数据需要采集，设计10多个不同部门的人要去使用这些数据。除了这些之外，还会有其他很多企业级的特性需要支持，例如：</p>
+<ul>
+<li>配置的远程管理：在大规模场景下，手工登录机器修改配置基本没有可行性，因此需要一套配置的图形化管理、远程存储、自动下发的机制，而且还要能够区分不同的应用、不同的Region、不同的归属方等信息。同时因为涉及到远程配置的动态加卸载，Agent还需要能够保证配置Reload期间数据不丢不重</li>
+<li>采集配置优先级：当一台机器上有多个采集配置在运行时，如果遇到资源不足的情况，需要区分每个不同的配置优先级，资源优先供给高优先级的配置，同时还要确保低优先级的配置不被“饿死”</li>
+<li>降级与恢复能力：在阿里，大促、秒杀是家常便饭，在这种波峰期间，可能有很多不重要的应用被降级，同样对应应用的数据也需要降级，降级后，在凌晨波峰过后，还需要有足够的Burst能力快速追齐数据</li>
+<li>数据采集齐全度：监控、数据分析等场景都要求数据准确度，数据准确的前提是都能及时采集到服务端，但如何在计算前确定每台机器、每个文件的数据都采集到了对应的时间点，需要一套非常复杂的机制去计算</li>
+</ul>
+<p><img src="../../../../img/iLogtail/image-20220325093405447.png" alt="image-20220325093405447"></p>
+<p>基于以上的背景和挑战下，我们从2013年开始，不断逐渐优化和改进iLogtail来解决性能、稳定性、可管控等问题，并经历了阿里多次双十一、双十二、春晚红包等项目的考验。目前iLogtail支持包括Logs、Traces、Metrics多种类型数据的统一收集，核心的特点主要如下：</p>
+<ul>
+<li><p>支持多种Logs、Traces、Metrics数据采集，尤其对容器、Kubernetes环境支持非常友好</p>
+</li>
+<li><p>数据采集资源消耗极低，单核采集能力100M/s，相比同类可观测数据采集的Agent性能好5-20倍</p>
+</li>
+<li><p>高稳定性，在阿里巴巴以及数万阿里云客户生产中使用验证，部署量近千万，每天采集数十PB可观测数据</p>
+</li>
+<li><p>支持插件化扩展，可任意扩充数据采集、处理、聚合、发送模块</p>
+</li>
+<li><p>支持配置远程管理，支持以图形化、SDK、K8s Operator等方式进行配置管理，可轻松管理百万台机器的数据采集</p>
+</li>
+<li><p>支持自监控、流量控制、资源控制、主动告警、采集统计等多种高级管控特性</p>
+</li>
+</ul>
+<h1 id="三-iLogtail发展历程"><a href="#三-iLogtail发展历程" class="headerlink" title="三 iLogtail发展历程"></a><strong>三 iLogtail发展历程</strong></h1><p>秉承着阿里人简单的特点，iLogtail的命名也非常简单，我们最开始期望的就是能够有一个统一去Tail日志的工具，所以就叫做Logtail，添加上“i”的原因主要当时使用了inotify的技术，能够让日志采集的延迟控制在毫秒级，因此最后叫做iLogtail。从2013年开始研发，iLogtail整个发展历程概括起来大致可以分为三个阶段，分别是飞天5K阶段、阿里集团阶段和云原生阶段。</p>
+<p><img src="../../../../img/iLogtail/image-20220325093438285.png" alt="image-20220325093438285"></p>
+<h2 id="1-飞天5K阶段"><a href="#1-飞天5K阶段" class="headerlink" title="1 飞天5K阶段"></a>1 飞天5K阶段</h2><p>作为中国云计算领域的里程碑，2013年8月15日，阿里巴巴集团正式运营服务器规模达到5000（5K）的“飞天”集群，成为中国第一个独立研发拥有大规模通用计算平台的公司，也是世界上第一个对外提供5K云计算服务能力的公司。</p>
+<p>飞天5K项目从2009年开始，从最开始的30台逐渐发展到5000，不断解决系统核心的问题，比如说规模、稳定性、运维、容灾等等。而iLogtail在这一阶段诞生，最开始就是要解决5000台机器的监控、问题分析、定位的工作（如今的词语叫做“可观测性”）。从30到5000的跃升中，对于可观测问题有着诸多的挑战，包括单机瓶颈、问题复杂度、排查便捷性、管理复杂度等。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>5K之前</th>
+<th>5K（2013年）</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>监控指标</td>
+<td>通过单机飞天神农来汇聚系统的状态。只能支持1000台内的指标汇聚。</td>
+<td>数据在本地产生，由iLogtail统一收集到SLS服务端，包括：指标数据：Metrics（神农指标）日志数据：Logs（飞天日志、系统日志等）链路数据：Traces（飞天Trace）SLS根据日志处理需求提供三类处理：实时指标计算与展示（分布式版神农）索引数据提供实时查询（Logs、Traces）数据通过导入到ODPS（如今叫做MaxCompute）离线分析</td>
+</tr>
+<tr>
+<td>日志查询</td>
+<td>登录机器grep，或者用pssh工具批量grep。速度慢，日志可能被清理，影响机器性能，存在误操作/安全风险。</td>
+<td></td>
+</tr>
+<tr>
+<td>链路排查</td>
+<td>只能通过一个JobID在全部机器grep。</td>
+<td></td>
+</tr>
+<tr>
+<td>离线分析</td>
+<td>利用脚本rsync每台机器上的日志，导入到离线系统进行计算。性能差、运维管理复杂。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>在5K阶段，iLogtail本质上解决的是从单机、小规模集群到大规模的运维监控挑战，这一阶段iLogtail主要的特点有：</p>
+<ul>
+<li>功能：实时日志、监控采集，日志抓取延迟毫秒级</li>
+<li>性能：单核处理能力10M/s，5000台集群平均资源占用0.5%CPU核</li>
+<li>可靠性：自动监听新文件、新文件夹，支持文件轮转，处理网络中断</li>
+<li>管理：远程Web管理，配置文件自动下发</li>
+<li>运维：加入集团yum源，运行状态监控，异常自动上报</li>
+<li>规模：3W+部署规模，上千采集配置项，日10TB数据</li>
+</ul>
+<h2 id="2-阿里集团阶段"><a href="#2-阿里集团阶段" class="headerlink" title="2 阿里集团阶段"></a>2 阿里集团阶段</h2><p>iLogtail在阿里云飞天5K项目中的应用解决了日志、监控统一收集的问题，而当时阿里巴巴集团、蚂蚁等还缺少一套统一、可靠的日志采集系统，因此我们开始推动iLogtail作为集团、蚂蚁的日志采集基础设施。从5K这种相对独立的项目到全集团应用，不是简单复制的问题，而我们要面对的是更多的部署量、更高的要求以及更多的部门：</p>
+<ul>
+<li>百万规模运维问题：此时整个阿里、蚂蚁的物理机、虚拟机超过百万台，我们希望只用1/3的人力就可以运维管理百万规模的Logtail</li>
+<li>更高的稳定性：iLogtail最开始采集的数据主要用于问题排查，集团广泛的应用场景对于日志可靠性要求越来越高，例如计费计量数据、交易数据，而且还需要满足双十一、双十二等超大数据流量的压力考验。</li>
+<li>多部门、团队：从服务5K团队到近千个团队，会有不同的团队使用不同的iLogtail，而一个iLogtail也会被多个不同的团队使用，在租户隔离上对iLogtail是一个新的挑战。</li>
+</ul>
+<p>经过几年时间和阿里集团、蚂蚁同学的合作打磨，iLogtail在多租户、稳定性等方面取得了非常大的进步，这一阶段iLogtail主要的特点有：</p>
+<ul>
+<li><p>功能：支持更多的日志格式，例如正则、分隔符、JSON等，支持多种日志编码方式，支持数据过滤、脱敏等高级处理</p>
+</li>
+<li><p>性能：极简模式下提升到单核100M/s，正则、分隔符、JSON等方式20M/s+</p>
+</li>
+<li><p>可靠性：采集可靠性支持Polling、轮转队列顺序保证、日志清理保护、CheckPoint增强；进程可靠性增加Critical自恢复、Crash自动上报、多级守护</p>
+</li>
+</ul>
+<p><img src="../../../../img/iLogtail/image-20220325093650179.png" alt="image-20220325093650179"></p>
+<p>日志保序采集方案原理（细节可参考《iLogtail技术分享(一) : Polling + Inotify 组合下的日志保序采集方案》）</p>
+<ul>
+<li>多租户：支持全流程多租户隔离、多级高低水位队列、采集优先级、配置级/进程级流量控制、临时降级机制</li>
+</ul>
+<p><img src="../../../../img/iLogtail/image-20220325093714899.png" alt="image-20220325093714899"></p>
+<p>多租户隔离整体流程（细节可参考《iLogtail技术分享(二)：多租户隔离技术+双十一实战效果》）</p>
+<ul>
+<li><p>运维：基于集团StarAgent自动安装与守护，异常主动通知，提供多种问题自查工具</p>
+</li>
+<li><p>规模：百万+部署规模，千级别内部租户，10万+采集配置，日采集PB级数据</p>
+</li>
+</ul>
+<h2 id="3-云原生阶段"><a href="#3-云原生阶段" class="headerlink" title="3 云原生阶段"></a>3 云原生阶段</h2><p>随着阿里所有IT基础设施全面云化，以及iLogtail所属产品SLS（日志服务）正式在阿里云上商业化，iLogtail开始全面拥抱云原生。从阿里内部商业化并对外部各行各业的公司提供服务，对于iLogtail的挑战的重心已经不是性能和可靠性，而是如何适应云原生（容器化、K8s，适应云上环境）、如何兼容开源协议、如何去处理碎片化需求。这一阶段是iLogtail发展最快的时期，经历了非常多重要的变革：</p>
+<ul>
+<li><p>统一版本：iLogtail最开始的版本还是基于GCC4.1.2编译，代码还依赖飞天基座，为了能适用更多的环境，iLogtail进行了全版本的重构，基于一套代码实现Windows/Linux、X86/Arm、服务器/嵌入式等多种环境的编译发版</p>
+</li>
+<li><p>全面支持容器化、K8s：除了支持容器、K8s环境的日志、监控采集外，对于配置管理也进行了升级，支持通过Operator的方式进行扩展，只需要配置一个AliyunLogConfig的K8s自定义资源就可以实现日志、监控的采集</p>
+</li>
+</ul>
+<p><img src="../../../../img/iLogtail/image-20220325093917775.png" alt="image-20220325093917775"></p>
+<p>iLogtail Kubernetes日志采集原理（细节可参考《Kubernetes日志采集原理剖析》）</p>
+<ul>
+<li>插件化扩展：iLogtail增加插件系统，可自由扩展Input、Processor、Aggregator、Flusher插件用以实现各类自定义的功能</li>
+</ul>
+<p><img src="../../../../img/iLogtail/image-20220325093953623.png" alt="image-20220325093953623"></p>
+<p>iLogtail插件系统整体流程（细节可参考《iLogtail插件系统简介》）</p>
+<ul>
+<li>规模：千万部署规模，数万内外部客户，百万+采集配置项，日采集数十PB数据</li>
+</ul>
+<h1 id="四-开源背景与期待"><a href="#四-开源背景与期待" class="headerlink" title="四 开源背景与期待"></a><strong>四 开源背景与期待</strong></h1><p>闭源自建的软件永远无法紧跟时代潮流，尤其在当今云原生的时代，我们坚信开源才是iLogtail最优的发展策略，也是释放其最大价值的方法。iLogtail作为可观测领域最基础的软件，我们将之开源，也希望能够和开源社区一起共建，持续优化，争取成为世界一流的可观测数据采集器。对于未来iLogail的发展，我们期待：</p>
+<ul>
+<li>iLogtail在性能和资源占用上相比其他开源采集软件具备一定优势，相比开源软件，在千万部署规模、日数十PB数据的规模性下为我们减少了100TB的内存和每年1亿的CPU核小时数。我们也希望这款采集软件可以为更多的企业带来资源效率的提升，实现可观测数据采集的“共同富裕”。</li>
+<li>目前iLogtail还只是在阿里内部以及很小一部分云上企业（虽然有几万家，但是面对全球千万的企业，这个数字还很小），面对的场景相对还较少，我们希望有更多不同行业、不同特色的公司可以使用iLogtail并对其提出更多的数据源、处理、输出目标的需求，丰富iLogtail支持的上下游生态。</li>
+<li>性能、稳定性是iLogtail的最基本追求，我们也希望能够通过开源社区，吸引更多优秀的开发者，一起共建iLogtail，持续提升这款可观测数据采集器的性能和稳定性。</li>
+</ul>
+<p><strong>链接汇总：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1）阿里正式开源可观测数据采集器iLogtail：https:&#x2F;&#x2F;github.com&#x2F;alibaba&#x2F;ilogtail</span><br><span class="line">2）《iLogtail技术分享(一) : Polling + Inotify 组合下的日志保序采集方案》：https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;29303600</span><br><span class="line">3）《iLogtail技术分享(二)：多租户隔离技术+双十一实战效果》：https:&#x2F;&#x2F;www.sohu.com&#x2F;a&#x2F;205324880_465959</span><br><span class="line">4）《Kubernetes日志采集原理剖析》：https:&#x2F;&#x2F;developer.aliyun.com&#x2F;article&#x2F;806369</span><br><span class="line">5）《iLogtail插件系统简介》：https:&#x2F;&#x2F;github.com&#x2F;alibaba&#x2F;ilogtail&#x2F;blob&#x2F;main&#x2F;docs&#x2F;zh&#x2F;concept%26designs&#x2F;Overview.md</span><br></pre></td></tr></table></figure>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2022/02/20/resource-java-Base-javaNPE/" data-toggle="tooltip" data-placement="top" title="java NPE问题">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2022/02/15/resource-java-algorithm-LRU/" data-toggle="tooltip" data-placement="top" title="LRU缓存算法的实现">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#一-iLogtail与可观测性"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一 iLogtail与可观测性</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#二-阿里可观测数据采集的挑战"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二 阿里可观测数据采集的挑战</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#三-iLogtail发展历程"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三 iLogtail发展历程</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1-飞天5K阶段"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1 飞天5K阶段</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2-阿里集团阶段"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2 阿里集团阶段</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-云原生阶段"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3 云原生阶段</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#四-开源背景与期待"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四 开源背景与期待</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#log" title="log">log</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

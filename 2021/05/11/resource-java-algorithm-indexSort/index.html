@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          正排索引与倒排索引 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/05/11/resource-java-algorithm-indexSort/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/tools/sort2.gif')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>正排索引与倒排索引</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-05-11
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">1.7k</span> and
+                                Reading Time <span class="post-count">5</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>正排索引与倒排索引 <a id="more"></a></p>
+<p>正排索引：一个未经处理的数据库中，一般是以文档ID作为索引，以文档内容作为记录。<br>倒排索引：Inverted index，指的是将单词或记录作为索引，将文档ID作为记录，这样便可以方便地通过单词或记录查找到其所在的文档。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">倒排索引为什么叫倒排索引？ - 水無刹那的回答 - 知乎</span><br><span class="line">https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;23202010&#x2F;answer&#x2F;254503794</span><br><span class="line">[正排索引和倒排索引](https:&#x2F;&#x2F;blog.csdn.net&#x2F;zhangzeyuaaa&#x2F;article&#x2F;details&#x2F;48676775)</span><br><span class="line">[何为倒排](https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;37638693)</span><br></pre></td></tr></table></figure>
+<h1 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h1><p>正排索引：一个未经处理的数据库中，一般是以文档ID作为索引，以文档内容作为记录。<br>倒排索引：Inverted index，指的是将单词或记录作为索引，将文档ID作为记录，这样便可以方便地通过单词或记录查找到其所在的文档。<sunfy-line></p>
+<h1 id="倒排索引的过程"><a href="#倒排索引的过程" class="headerlink" title="倒排索引的过程"></a>倒排索引的过程</h1><p>创建倒排索引，分为以下几步：</p>
+<h2 id="倒排索引创建索引的流程"><a href="#倒排索引创建索引的流程" class="headerlink" title="倒排索引创建索引的流程"></a>倒排索引创建索引的流程</h2><h3 id="形成文档列表"><a href="#形成文档列表" class="headerlink" title="形成文档列表"></a>形成文档列表</h3><p>1） lucene首先对原始文档数据进行编号（DocID），形成列表，就是一个文档列表</p>
+<p><a href="http://qiniu.limengting.site/pic1.png" target="_blank" rel="noopener"><img src="../../../../img/indexSort/pic1.png" alt="img"></a></p>
+<h3 id="创建倒排索引列表"><a href="#创建倒排索引列表" class="headerlink" title="创建倒排索引列表"></a>创建倒排索引列表</h3><p>2）对文档中数据进行分词，得到词条。对词条进行编号，以词条创建索引。保存包含这些词条的文档的编号信息。</p>
+<p><a href="http://qiniu.limengting.site/pic2.png" target="_blank" rel="noopener"><img src="../../../../img/indexSort/pic2.png" alt="img"></a></p>
+<p>谷歌之父–&gt; 谷歌、之父</p>
+<h2 id="搜索的过程"><a href="#搜索的过程" class="headerlink" title="搜索的过程"></a>搜索的过程</h2><p>当用户输入任意的词条时，首先对用户输入的数据进行分词，得到用户要搜索的所有词条，然后拿着这些词条去倒排索引列表中进行匹配。找到这些词条就能找到包含这些词条的所有文档的编号。</p>
+<p>然后根据这些编号去文档列表中找到文档</p>
+<h1 id="正排和倒排"><a href="#正排和倒排" class="headerlink" title="正排和倒排"></a>正排和倒排</h1><h2 id="正排索引（正向索引）"><a href="#正排索引（正向索引）" class="headerlink" title="正排索引（正向索引）"></a>正排索引（正向索引）</h2><p><strong>通过文档ID查文档中的各个词：url -&gt; term，ID为关键字，后面的拉链为文档里面每个字的位置信息</strong></p>
+<p>正排表是以文档的ID为关键字，表中记录文档中每个字的位置信息，查找时扫描表中每个文档中字的信息直到找出所有包含查询关键字的文档。</p>
+<p>正排表结构如图1所示，这种组织方法在建立索引的时候结构比较简单，建立比较方便且易于维护;因为索引是基于文档建立的，若是有新的文档加入，直接为该文档建立一个新的索引块，挂接在原来索引文件的后面。若是有文档删除，则直接找到该文档号文档对应的索引信息，将其直接删除。但是在查询的时候需对所有的文档进行扫描以确保没有遗漏，这样就使得检索时间大大延长，检索效率低下。</p>
+<p>尽管正排表的工作原理非常的简单，但是由于其检索效率太低，除非在特定情况下，否则实用性价值不大。</p>
+<p><a href="http://qiniu.limengting.site/正排索引2.jpeg" target="_blank" rel="noopener"><img src="../../../../img/indexSort/正排索引2.jpeg" alt="img"></a></p>
+<h2 id="倒排索引（反向索引）"><a href="#倒排索引（反向索引）" class="headerlink" title="倒排索引（反向索引）"></a>倒排索引（反向索引）</h2><p><strong>通过某个词查到出现这个词的所有文档：term -&gt; url，后面的拉链为出现这个词的所有文档</strong></p>
+<p>倒排表以字或词为关键字进行索引，表中关键字所对应的记录表项记录了出现这个字或词的所有文档，一个表项就是一个字表段，它记录该文档的ID和字符在该文档中出现的位置情况。</p>
+<p>由于每个字或词对应的文档数量在动态变化，所以倒排表的建立和维护都较为复杂，但是在查询的时候由于可以一次得到查询关键字所对应的所有文档，所以效率高于正排表。在全文检索中，检索的快速响应是一个最为关键的性能，而索引建立由于在后台进行，尽管效率相对低一些，但不会影响整个搜索引擎的效率。<br>倒排表的结构图如图2：</p>
+<p><a href="http://qiniu.limengting.site/倒排索引22.jpeg" target="_blank" rel="noopener"><img src="../../../../img/indexSort/倒排索引22.jpeg" alt="img"></a></p>
+<p>正排索引是从文档到关键字的映射（已知文档求关键字），倒排索引是从关键字到文档的映射（已知关键字求文档）。</p>
+<h1 id="倒排"><a href="#倒排" class="headerlink" title="倒排"></a>倒排</h1><p>倒排工作原理：事先将爬虫拿到的网页数据根据<strong>关键词</strong>分组；将用户请求的<strong>关键词</strong>对应的<strong>分组</strong>返回给用户。</p>
+<h2 id="什么是倒排"><a href="#什么是倒排" class="headerlink" title="什么是倒排"></a>什么是倒排</h2><p>先看看什么是正排，<code>select * from answer where answer_id=1</code> 。我们可以拿到 answer_id = 1 的所有信息：这就是正排。我们为某个文件、某条记录编号，通过这个编号可以拿到所需的信息：这就是正排的工作流程。</p>
+<p><a href="http://qiniu.limengting.site/正排索引1.jpg" target="_blank" rel="noopener"><img src="../../../../img/indexSort/正排索引1.jpg" alt="img"></a></p>
+<p>那什么是倒排呢？正排反过来就是倒排</p>
+<p><a href="http://qiniu.limengting.site/倒排索引1.jpg" target="_blank" rel="noopener"><img src="../../../../img/indexSort/倒排索引1.jpg" alt="img"></a></p>
+<p>那么，在什么情况下，我们会根据 content 获取它的 id 呢？理论上没有这种场景。当然，任何一个项目，也不会去维护这么一种索引关系（最起码 content 这个 key 实在太大了）。</p>
+<p>但是，我们或许有这么一种场景：判断某个内容是不是已经被存到了库里 （比如防止一个 answer 重复提交）。试想我们可以用这种方案</p>
+<p><a href="http://qiniu.limengting.site/倒排索引2.jpg" target="_blank" rel="noopener"><img src="../../../../img/indexSort/倒排索引2.jpg" alt="img"></a>md5 (content) 做 key</p>
+<p>这样，我们其实是可以根据 content 信息拿到 id 的。</p>
+<h2 id="倒排的-hash-冲突"><a href="#倒排的-hash-冲突" class="headerlink" title="倒排的 hash 冲突"></a>倒排的 hash 冲突</h2><p>那么问题来了，假设真的会有 md5(content) = md5(content1)，这个 key 就不唯一了。上面的情况就会变成</p>
+<p><a href="http://qiniu.limengting.site/倒排索引3.jpg" target="_blank" rel="noopener"><img src="../../../../img/indexSort/倒排索引3.jpg" alt="img"></a></p>
+<p>这时，我们可以根据 answer_id 的正排索引，获取 content 与 content1 ，辅助倒排系统验证功能。</p>
+<p>这个过程是不是似曾相识？不错，这就是 HashMap 中解决 「hash 冲突」的经典思路。</p>
+<h2 id="倒排索引系统"><a href="#倒排索引系统" class="headerlink" title="倒排索引系统"></a>倒排索引系统</h2><p>根据业务需要，对内容选择适当的 hash 规则。将站内所有的内容，组织成的大的 HashMap 即为「倒排索引系统」。</p>
+<p><a href="http://qiniu.limengting.site/倒排索引4.jpg" target="_blank" rel="noopener"><img src="../../../../img/indexSort/倒排索引4.jpg" alt="img"></a></p>
+<p>Hash 大 Map</p>
+<ul>
+<li>所谓的查询，就是 HashMap.get(XX) 获取 list</li>
+<li>所谓的竞价排名，就是这个 list 根据 money 去排序</li>
+<li>所谓的广告植入，就是这个广告本来不在 list 里面，然后被强插进去</li>
+<li>。。。</li>
+</ul>
+<h2 id="搜索引擎的工作流程"><a href="#搜索引擎的工作流程" class="headerlink" title="搜索引擎的工作流程"></a>搜索引擎的工作流程</h2><p><a href="http://qiniu.limengting.site/倒排索引5.jpg" target="_blank" rel="noopener"><img src="../../../../img/indexSort/倒排索引5.jpg" alt="img"></a></p>
+<h2 id="倒排在-Feed-流中的使用"><a href="#倒排在-Feed-流中的使用" class="headerlink" title="倒排在 Feed 流中的使用"></a>倒排在 Feed 流中的使用</h2><p>如上所示，倒排的工作：将站内数据 hash 化为一个大 map，服务用户请求其实是在 map 里查找数据。与引擎不同的是，Feed 流的只是倒排的 hash 函数不同。</p>
+<p><a href="http://qiniu.limengting.site/倒排索引6.jpg" target="_blank" rel="noopener"><img src="../../../../img/indexSort/倒排索引6.jpg" alt="img"></a></p>
+<p><img src="../../../../img/2022/end-1660211347530.gif" alt="end"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/05/18/resource-RPC-Docker-dockerEditMySQL/" data-toggle="tooltip" data-placement="top" title="Docker 修改MySQL配置">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/05/11/resource-RPC-Docker-dockerBuildFormIdea/" data-toggle="tooltip" data-placement="top" title="idea利用docker插件打包上传">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#一句话总结"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一句话总结</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#倒排索引的过程"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">倒排索引的过程</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#倒排索引创建索引的流程"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">倒排索引创建索引的流程</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#形成文档列表"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">形成文档列表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#创建倒排索引列表"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">创建倒排索引列表</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#搜索的过程"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">搜索的过程</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#正排和倒排"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">正排和倒排</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#正排索引（正向索引）"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">正排索引（正向索引）</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#倒排索引（反向索引）"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">倒排索引（反向索引）</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#倒排"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">倒排</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#什么是倒排"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">什么是倒排</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#倒排的-hash-冲突"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">倒排的 hash 冲突</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#倒排索引系统"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">倒排索引系统</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#搜索引擎的工作流程"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">搜索引擎的工作流程</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#倒排在-Feed-流中的使用"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">倒排在 Feed 流中的使用</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

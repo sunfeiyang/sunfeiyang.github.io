@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Netty入门示例及核心功能了解 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2020/10/18/resource-java-Netty-IOModule-NettyBase/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/15.gif')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Netty" title="Netty">Netty</a>
+                            
+                              <a class="tag" href="/tags/#IO" title="IO">IO</a>
+                            
+                        </div>
+
+                        <h1>Netty入门示例及核心功能了解</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2020-10-18
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.7k</span> and
+                                Reading Time <span class="post-count">10</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>Netty是 <em>一个异步事件驱动的网络应用程序框架，</em><br>用于快速开发可维护的高性能协议服务器和客户端。<a id="more"></a></p>
+<h2 id="1、官网简介"><a href="#1、官网简介" class="headerlink" title="1、官网简介"></a>1、官网简介</h2><p><img src="../../../../img/NettyBase/image-20210119090534513.png" alt="image-20210119090534513"></p>
+<p>Netty是一个NIO客户端服务器框架，可快速轻松地开发网络应用程序，例如协议服务器和客户端。它极大地简化和简化了网络编程，例如TCP和UDP套接字服务器。Netty 对 JDK 自带的 NIO 的 API 进行了良好的封装，解决了NIO 的类库和 API 繁杂， 使用麻烦： 需要熟练掌握Selector、 ServerSocketChannel、 SocketChannel、 ByteBuffer等。 。且Netty拥有高性能、 吞吐量更高，延迟更低，减少资源消耗，最小化不必要的内存复制等优点。</p>
+<p>“快速简便”并不意味着最终的应用程序将遭受可维护性或性能问题的困扰。Netty经过精心设计，结合了许多协议（例如FTP，SMTP，HTTP以及各种基于二进制和文本的旧式协议）的实施经验。结果，Netty成功地找到了一种无需妥协即可轻松实现开发，性能，稳定性和灵活性的方法。</p>
+<p>官网地址：<a href="https://netty.io/" target="_blank" rel="noopener">https://netty.io/</a></p>
+<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><ul>
+<li>适用于各种传输类型的统一API-阻塞和非阻塞套接字</li>
+<li>基于灵活且可扩展的事件模型，可将关注点明确分离</li>
+<li>高度可定制的线程模型-单线程，一个或多个线程池，例如SEDA</li>
+<li>真正的无连接数据报套接字支持（从3.1开始）</li>
+</ul>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><ul>
+<li>更高的吞吐量，更低的延迟</li>
+<li>减少资源消耗</li>
+<li>减少不必要的内存复制</li>
+</ul>
+<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><ul>
+<li>完整的SSL / TLS和StartTLS支持</li>
+</ul>
+<h2 id="2、Netty使用场景"><a href="#2、Netty使用场景" class="headerlink" title="2、Netty使用场景"></a>2、Netty使用场景<sunfy-line></h2><h3 id="互联网行业"><a href="#互联网行业" class="headerlink" title="互联网行业"></a>互联网行业</h3><ol>
+<li>互联网行业：在分布式系统中，各个节点之间需要远程服务调用，高性能的 RPC 框架必不可少，Netty 作为 异步高性能的通信框架，往往作为基础通信组件被这些 RPC 框架使用。</li>
+<li>典型的应用有：阿里分布式服务框架 Dubbo 的 RPC 框架使用 Dubbo 协议进行节点间通信，Dubbo 协议默 认使用 Netty 作为基础通信组件，用于实现各进程节点之间的内部通信</li>
+</ol>
+<h3 id="游戏行业"><a href="#游戏行业" class="headerlink" title="游戏行业"></a>游戏行业</h3><ol>
+<li>无论是手游服务端还是大型的网络游戏，Java 语言得到了越来越广泛的应用</li>
+<li>Netty 作为高性能的基础通信组件，提供了 TCP/UDP 和 HTTP 协议栈，方便定制和开发私有协议栈，账号登 录服务器</li>
+<li>地图服务器之间可以方便的通过 Netty 进行高性能的通信</li>
+</ol>
+<h3 id="大数据领域"><a href="#大数据领域" class="headerlink" title="大数据领域"></a>大数据领域</h3><ol>
+<li>经典的 Hadoop 的高性能通信和序列化组件 Avro 的 RPC 框架，默认采用 Netty 进行跨界点通信</li>
+<li>它的 Netty Service 基于 Netty 框架二次封装实现。</li>
+</ol>
+<h3 id="其它开源项目使用到-Netty"><a href="#其它开源项目使用到-Netty" class="headerlink" title="其它开源项目使用到 Netty"></a>其它开源项目使用到 Netty</h3><p>网址: [<a href="https://netty.io/wiki/related-projects.html" target="_blank" rel="noopener">https://netty.io/wiki/related-projects.html</a>]</p>
+<h2 id="3、基于Netty的通信Demo"><a href="#3、基于Netty的通信Demo" class="headerlink" title="3、基于Netty的通信Demo"></a>3、基于Netty的通信Demo</h2><h3 id="1-添加Maven依赖"><a href="#1-添加Maven依赖" class="headerlink" title="1. 添加Maven依赖"></a>1. 添加Maven依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.netty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>netty-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.35.Final<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-服务端"><a href="#2-服务端" class="headerlink" title="2. 服务端"></a>2. 服务端</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ----------NettyServer----------</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//创建两个线程组bossGroup和workerGroup</span></span><br><span class="line">    <span class="comment">// bossGroup 接收连接请求 （如果该线程采用多个，需要分别绑定不同的端口）</span></span><br><span class="line">    <span class="comment">// workerGroup 处理具体的业务逻辑</span></span><br><span class="line">    EventLoopGroup bossGroup = <span class="keyword">new</span> NioEventLoopGroup(<span class="number">1</span>);</span><br><span class="line">    EventLoopGroup workerGroup = <span class="keyword">new</span> NioEventLoopGroup(<span class="number">100000</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//服务器端启动对象</span></span><br><span class="line">        ServerBootstrap bootstrap = <span class="keyword">new</span> ServerBootstrap();</span><br><span class="line">        bootstrap.group(bossGroup, workerGroup)</span><br><span class="line">            <span class="comment">// ......</span></span><br><span class="line">        	<span class="comment">//通过链式调用，设置两个线程组，配置参数</span></span><br><span class="line">        <span class="comment">//启动服务器(并绑定端口)</span></span><br><span class="line">        ChannelFuture cf = bootstrap.bind(<span class="number">9000</span>).sync();</span><br><span class="line">        <span class="comment">// 通过sync方法同步等待通道关闭处理完毕，方法会阻塞，直至通道关闭</span></span><br><span class="line">        cf.channel().closeFuture().sync();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        bossGroup.shutdownGracefully();</span><br><span class="line">        workerGroup.shutdownGracefully();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ----------服务器启动对象设置----------</span></span><br><span class="line">bootstrap.group(bossGroup, workerGroup)</span><br><span class="line">    <span class="comment">// 服务器的通道实现</span></span><br><span class="line">    .channel(NioServerSocketChannel<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">    // 初始化服务器连接队列大小</span></span><br><span class="line"><span class="class">    .<span class="title">option</span>(<span class="title">ChannelOption</span>.<span class="title">SO_BACKLOG</span>, 1024)</span></span><br><span class="line"><span class="class">    // 创建通道初始化对象，设置初始化参数</span></span><br><span class="line"><span class="class">    .<span class="title">childHandler</span>(<span class="title">new</span> <span class="title">ChannelInitializer</span>&lt;<span class="title">SocketChannel</span>&gt;() </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">            <span class="comment">//对workerGroup的SocketChannel设置处理器</span></span><br><span class="line">            ch.pipeline().addLast(<span class="keyword">new</span> NettyServerHandler());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ----------设置处理器----------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 需要继承netty规定好的某个HandlerAdapter(规范)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NettyServerHandler</span> <span class="keyword">extends</span> <span class="title">ChannelInboundHandlerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 读取客户端发送的数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ctx 上下文对象, 含有通道channel，管道pipeline</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> msg 就是客户端发送的数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ByteBuf buf = (ByteBuf) msg;</span><br><span class="line">        System.out.println(<span class="string">"客户端发送消息是:"</span> + buf.toString(CharsetUtil.UTF_8));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 数据读取完毕处理方法</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelReadComplete</span><span class="params">(ChannelHandlerContext ctx)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ByteBuf buf = Unpooled.copiedBuffer(<span class="string">"HelloClient"</span>.getBytes(CharsetUtil.UTF_8));</span><br><span class="line">        ctx.writeAndFlush(buf);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理异常, 关闭通道</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exceptionCaught</span><span class="params">(ChannelHandlerContext ctx, Throwable cause)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ctx.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-服务端简单总结"><a href="#3-服务端简单总结" class="headerlink" title="3. 服务端简单总结"></a>3. 服务端简单总结</h3><ul>
+<li>初始化两个线程组，一个负责处理连接，一个负责同客户端联系处理业务</li>
+<li>创建一个启动对象</li>
+<li>将两个线程组同启动对象设置关联关系<ul>
+<li>启动对象设置时需要设置自定义处理器对象</li>
+</ul>
+</li>
+<li>给启动对象绑定端口，并启动</li>
+<li>对通道关闭进行监听，同步等待关闭</li>
+</ul>
+<h3 id="4-客户端"><a href="#4-客户端" class="headerlink" title="4. 客户端"></a>4. 客户端</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ----------客户端主启动方法----------</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//客户端需要一个事件循环组</span></span><br><span class="line">    EventLoopGroup group = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//创建客户端启动对象</span></span><br><span class="line">        Bootstrap bootstrap = <span class="keyword">new</span> Bootstrap();</span><br><span class="line">        <span class="comment">//设置相关参数</span></span><br><span class="line">        bootstrap.group(group)</span><br><span class="line">            <span class="comment">// ......  同服务端一样，链式调用设置参数</span></span><br><span class="line">        <span class="comment">//启动客户端去连接服务器端</span></span><br><span class="line">        ChannelFuture channelFuture = bootstrap.connect(<span class="string">"127.0.0.1"</span>, <span class="number">9000</span>).sync();</span><br><span class="line">        <span class="comment">//对关闭通道进行监听</span></span><br><span class="line">        channelFuture.channel().closeFuture().sync();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        group.shutdownGracefully();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ----------客户端启动器参数设置----------</span></span><br><span class="line">bootstrap.group(group) <span class="comment">//设置线程组</span></span><br><span class="line">    .channel(NioSocketChannel<span class="class">.<span class="keyword">class</span>) // 使用<span class="title">NioSocketChannel</span>作为客户端的通道实现</span></span><br><span class="line"><span class="class">    .<span class="title">handler</span>(<span class="title">new</span> <span class="title">ChannelInitializer</span>&lt;<span class="title">SocketChannel</span>&gt;() </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">            <span class="comment">//加入处理器</span></span><br><span class="line">            ch.pipeline().addLast(<span class="keyword">new</span> NettyClientHandler());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ----------客户端处理器----------</span></span><br><span class="line"><span class="comment">// 同服务端一致，需要继承Netty规定好的某个HandlerAdapter(规范)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NettyClientHandler</span> <span class="keyword">extends</span> <span class="title">ChannelInboundHandlerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 客户端连接服务器完成触发该方法</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelActive</span><span class="params">(ChannelHandlerContext ctx)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ByteBuf buf = Unpooled.copiedBuffer(<span class="string">"HelloServer"</span>.getBytes(CharsetUtil.UTF_8));</span><br><span class="line">        ctx.writeAndFlush(buf);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//当通道有读取事件时会触发，即服务端发送数据给客户端</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ByteBuf buf = (ByteBuf) msg;</span><br><span class="line">        System.out.println(<span class="string">"收到服务端的消息:"</span> + buf.toString(CharsetUtil.UTF_8));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理异常, 关闭通道</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exceptionCaught</span><span class="params">(ChannelHandlerContext ctx, Throwable cause)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        cause.printStackTrace();</span><br><span class="line">        ctx.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-客户端简单总结"><a href="#5-客户端简单总结" class="headerlink" title="5.  客户端简单总结"></a>5.  客户端简单总结</h3><ul>
+<li>初始化一个事件循环组</li>
+<li>创建一个启动对象</li>
+<li>设置启动对象参数<ul>
+<li>启动对象设置时需要设置自定义处理器对象</li>
+</ul>
+</li>
+<li>给启动对象绑定服务端</li>
+<li>对通道关闭进行监听，同步等待关闭</li>
+</ul>
+<h3 id="6-服务端和客户端概要"><a href="#6-服务端和客户端概要" class="headerlink" title="6. 服务端和客户端概要"></a>6. 服务端和客户端概要</h3><p>服务端和客户端基本套路相同，都是五个基本步骤</p>
+<ol>
+<li>初始化基本参数</li>
+<li>创建启动对象</li>
+<li>设置启动对象</li>
+<li>建立关联/绑定关系</li>
+<li>监听关闭事件</li>
+</ol>
+<h2 id="4、线程模型图"><a href="#4、线程模型图" class="headerlink" title="4、线程模型图"></a>4、线程模型图</h2><p>有了上面简单实例的理解，再看下面的线程模型图就很好理解了</p>
+<p><img src="../../../../img/NettyBase/image-20210119102410757.png" alt="image-20210119102410757"></p>
+<p>模型解释:</p>
+<p>1)  Netty 抽象出两组线程池BossGroup和WorkerGroup,BossGroup专门负责接收客户端的连接,</p>
+<p>WorkerGroup专门负责网络的读写</p>
+<p>2)  BossGroup和WorkerGroup类型都是NioEventLoopGroup</p>
+<p>3)  NioEventLoopGroup 相当于一个事件循环线程组, 这个组中含有多个事件循环线程 , 每一个事件</p>
+<p>循环线程是NioEventLoop</p>
+<p>4)  每个NioEventLoop都有一个selector , 用于监听注册在其上的socketChannel的网络通讯</p>
+<p>5)  每个Boss NioEventLoop线程内部循环执行的步骤有 3 步</p>
+<ul>
+<li><p>处理accept事件 , 与client 建立连接 , 生成 NioSocketChannel</p>
+</li>
+<li><p>将NioSocketChannel注册到某个worker NIOEventLoop上的selector</p>
+</li>
+<li><p>处理任务队列的任务 , 即runAllTasks</p>
+</li>
+</ul>
+<p>6)  每个worker NIOEventLoop线程循环执行的步骤</p>
+<ul>
+<li><p>轮询注册到自己selector上的所有NioSocketChannel 的read, write事件</p>
+</li>
+<li><p>处理 I/O 事件, 即read , write 事件, 在对应NioSocketChannel 处理业务</p>
+</li>
+<li><p>runAllTasks处理任务队列TaskQueue的任务 ,一些耗时的业务处理一般可以放入</p>
+</li>
+</ul>
+<p>TaskQueue中慢慢处理,这样不影响数据在 pipeline 中的流动处理</p>
+<p>7)  每个worker NIOEventLoop处理NioSocketChannel业务时,会使用 pipeline (管道),管道中维护</p>
+<p>了很多 handler 处理器用来处理 channel 中的数据</p>
+<h2 id="5、Netty模块组件"><a href="#5、Netty模块组件" class="headerlink" title="5、Netty模块组件"></a>5、Netty模块组件</h2><p><strong>Bootstrap</strong>、<strong>ServerBootstrap</strong> : 客户端和服务端启动对象</p>
+<p><strong>Future</strong>、<strong>ChannelFuture</strong>： 注册一个监听，当操作执行成功或失败时监听会自动触发注册的监听事件。</p>
+<p><strong>Channel</strong> ：Netty 网络通信的组件，用于执行网络 I/O 操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NioSocketChannel，异步的客户端 TCP Socket 连接。</span><br><span class="line">NioServerSocketChannel，异步的服务器端 TCP Socket 连接。</span><br><span class="line">NioDatagramChannel，异步的 UDP 连接。</span><br><span class="line">NioSctpChannel，异步的客户端 Sctp 连接。</span><br><span class="line">NioSctpServerChannel，异步的 Sctp 服务器端连接。</span><br></pre></td></tr></table></figure>
+<p><strong>Selector</strong>：基于 Selector 对象实现 I/O 多路复用，通过 Selector 一个线程可以监听多个连接的 Channel 事件。</p>
+<p><strong>NioEventLoop</strong>：维护了一个线程和任务队列，支持异步提交执行任务，线程启动时会调用 NioEventLoop 的 run 方法，执行 I/O 任务和非 I/O 任务</p>
+<ul>
+<li>I/O 任务，即 selectionKey 中 ready 的事件，如 accept、connect、read、write 等，由 processSelectedKeys 方法触发。</li>
+<li>非 IO 任务，添加到 taskQueue 中的任务，如 register0、bind0 等任务，由 runAllTasks 方法触发。</li>
+</ul>
+<p><strong>NioEventLoopGroup</strong>：主要管理 eventLoop 的生命周期，可以理解为一个线程池，内部维护了一组线程，每个线程(NioEventLoop)负责处理多个 Channel 上的事件，而一个 Channel 只对应于一个线程。</p>
+<p><strong>ChannelHandler</strong>：是一个接口，处理 I/O 事件或拦截 I/O 操作，并将其转发到其 ChannelPipeline(业务处理链)中的下一个处理程序。</p>
+<p><strong>ChannelHandler</strong> 本身并没有提供很多方法，因为这个接口有许多的方法需要实现，方便使用期间，可以继承它的子类：</p>
+<ul>
+<li><strong>ChannelInboundHandler</strong> 用于处理入站 I/O 事件。 </li>
+<li><strong>ChannelOutboundHandler</strong> 用于处理出站 I/O 操作。              </li>
+</ul>
+<p>或者使用以下适配器类：</p>
+<ul>
+<li><strong>ChannelInboundHandlerAdapter</strong> 用于处理入站 I/O 事件。 </li>
+<li><strong>ChannelOutboundHandlerAdapter</strong> 用于处理出站 I/O 操作。              </li>
+</ul>
+<p><strong>ChannelHandlerContext</strong>：保存 Channel 相关的所有上下文信息，同时关联一个 ChannelHandler 对象。</p>
+<p><strong>ChannelPipline</strong>：保存 ChannelHandler 的 List，用于处理或拦截 Channel 的入站事件和出站操作。</p>
+<h2 id="6、ByteBuf特性"><a href="#6、ByteBuf特性" class="headerlink" title="6、ByteBuf特性"></a>6、ByteBuf特性</h2><h3 id="两个索引"><a href="#两个索引" class="headerlink" title="两个索引"></a>两个索引</h3><ul>
+<li>readerIndex：读索引</li>
+<li>writerIndex：写索引</li>
+</ul>
+<p>capacity：字节数的长度</p>
+<h3 id="三个方法"><a href="#三个方法" class="headerlink" title="三个方法"></a>三个方法</h3><ul>
+<li>byteBuf.writeByte: 写入数据，每写入一个数据，对应的写索引会随之加1</li>
+<li>byteBuf.getByte(i): 获取数据，获取某个索引位上的数据，但是读索引和写索引都不会改变</li>
+<li>byteBuf.readByte(i): 读取数据，读取某个索引位上的数据，对应的读索引会随之加1</li>
+</ul>
+<h3 id="三个区间"><a href="#三个区间" class="headerlink" title="三个区间"></a>三个区间</h3><p>已读区间：[0, readerIndex)</p>
+<p>可读区间：[readerIndex, writerIndex)</p>
+<p>可写区间：[writerIndex, capacity)</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/11/02/resource-RPC-Docker-Centos-Docker-jenkins/" data-toggle="tooltip" data-placement="top" title="Docker 搭建 Jenkins 实现自动部署">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/10/18/resource-java-shiro-shirotoUse/" data-toggle="tooltip" data-placement="top" title="shiro入门基础教程">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1、官网简介"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1、官网简介</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#设计"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">设计</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#性能"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">性能</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#安全"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">安全</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2、Netty使用场景"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2、Netty使用场景</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#互联网行业"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">互联网行业</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#游戏行业"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">游戏行业</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#大数据领域"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">大数据领域</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#其它开源项目使用到-Netty"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">其它开源项目使用到 Netty</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3、基于Netty的通信Demo"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3、基于Netty的通信Demo</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-添加Maven依赖"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1. 添加Maven依赖</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-服务端"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2. 服务端</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-服务端简单总结"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3. 服务端简单总结</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-客户端"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">4. 客户端</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#5-客户端简单总结"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">5.  客户端简单总结</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#6-服务端和客户端概要"><span class="toc-nav-number">3.6.</span> <span class="toc-nav-text">6. 服务端和客户端概要</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4、线程模型图"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4、线程模型图</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5、Netty模块组件"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5、Netty模块组件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6、ByteBuf特性"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">6、ByteBuf特性</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#两个索引"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">两个索引</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#三个方法"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">三个方法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#三个区间"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">三个区间</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Netty" title="Netty">Netty</a>
+                        
+                          <a class="tag" href="/tags/#IO" title="IO">IO</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

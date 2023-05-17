@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Redis集群搭建 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2019/11/23/resource-java-redis-redisCluster/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/header_img/java/redis-sentinel.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Redis" title="Redis">Redis</a>
+                            
+                        </div>
+
+                        <h1>Redis集群搭建</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2019-11-23
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">1.7k</span> and
+                                Reading Time <span class="post-count">6</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>Redis集群架构搭建。<a id="more"></a></p>
+<h3 id="Windows搭建基本步骤"><a href="#Windows搭建基本步骤" class="headerlink" title="Windows搭建基本步骤"></a>Windows搭建基本步骤</h3><p>打开redis文件路径，打开cmd.exe，在相应路径下运行</p>
+<p><code>redis-server --service-install redis.windows.conf --loglevel verbose --service-name Redis6379</code></p>
+<p>执行完成后会在服务中添加一个redis6379的服务</p>
+<p>复制redis6379，粘贴分别命名为redis6380，redis6381然后修改端口和配置主从即可。</p>
+<p><img src="../../../../img/redisCluster/image-20220510092347887.png" alt="image-20220510092347887"></p>
+<p><img src="../../../../img/redisCluster/image-20220510092428743.png" alt="image-20220510092428743"></p>
+<p>修改配置，改端口号port，slaveof</p>
+<p><strong>给从服务器加密码masterauth 配置（忘记了从服务器会没有数据）</strong><br>格式分别为<br>port 6380<br>slaveof 127.0.0.1 6379<br>masterauth +主redis的密码。</p>
+<p>然后分别创建6380和6381服务</p>
+<p><code>redis-server --service-install redis.windows.conf --loglevel verbose --service-name Redis638x</code></p>
+<p><img src="../../../../img/redisCluster/image-20220510092612918.png" alt="image-20220510092612918"></p>
+<h3 id="Linux搭建基本步骤"><a href="#Linux搭建基本步骤" class="headerlink" title="Linux搭建基本步骤"></a>Linux搭建基本步骤</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">第一步：在第一台机器的/usr/local下创建文件夹redis-cluster，然后在其下面分别创建2个文件夾如下</span><br><span class="line">	（1）mkdir -p /usr/local/redis-cluster</span><br><span class="line">	（2）mkdir 8001 8004</span><br><span class="line">第一步：把之前的redis.conf配置文件copy到8001下，修改如下内容：</span><br><span class="line">	（1）daemonize yes</span><br><span class="line">    （2）port 8001（分别对每个机器的端口号进行设置）</span><br><span class="line">    （3）dir /usr/local/redis-cluster/8001/（指定数据文件存放位置，必须要指定不同的目录位置，不然会丢失数据）</span><br><span class="line">    （4）cluster-enabled yes（启动集群模式）</span><br><span class="line">    （5）cluster-config-file nodes-8001.conf（集群节点信息文件，这里800x最好和port对应上）</span><br><span class="line">    （6）cluster-node-timeout 5000</span><br><span class="line">    （7）# bind 127.0.0.1（bind绑定的是自己机器网卡的ip，如果有多块网卡可以配多个ip，代表允许客户端通过机器的哪些网卡ip去访问，内网一般可以不配置bind，注释掉即可）</span><br><span class="line">     (8)protected-mode  no   （关闭保护模式）</span><br><span class="line">     (9)appendonly yes</span><br><span class="line">设置密码需要增加如下配置：</span><br><span class="line">     (10)requirepass zhuge     (设置redis访问密码)</span><br><span class="line">     (11)masterauth zhuge      (设置集群节点间访问密码，跟上面一致)</span><br><span class="line">第三步：把修改后的配置文件，copy到8004，修改第2、3、5项里的端口号，可以用批量替换：</span><br><span class="line">:%s/源字符串/目的字符串/g </span><br><span class="line">第四步：另外两台机器也需要做上面几步操作，第二台机器用8002和8005，第三台机器用8003和8006</span><br><span class="line">第五步：分别启动6个redis实例，然后检查是否启动成功</span><br><span class="line">    （1）src/redis-server /usr/local/redis-cluster/800*/redis.conf</span><br><span class="line">    （2）ps -ef | grep redis 查看是否启动成功</span><br><span class="line">第六步：用redis-cli创建整个redis集群(redis5以前的版本集群是依靠ruby脚本redis-trib.rb实现)</span><br><span class="line"><span class="meta">#</span><span class="bash"> 下面命令里的1代表为每个创建的主服务器节点创建一个从服务器节点</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 执行这条命令需要确认三台机器之间的redis实例要能相互访问，可以先简单把所有机器防火墙关掉，如果不关闭防火墙则需要打开redis服务端口和集群节点gossip通信端口16379(默认是在redis端口号上加1W)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭防火墙</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl stop firewalld <span class="comment"># 临时关闭防火墙</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> systemctl <span class="built_in">disable</span> firewalld <span class="comment"># 禁止开机启动</span></span></span><br><span class="line">	（1）/src/redis-cli -a [password] --cluster create --cluster-replicas 1 192.168.0.61:8001 192.168.0.62:8002 192.168.0.63:8003 192.168.0.61:8004 192.168.0.62:8005 192.168.0.63:8006 </span><br><span class="line">第七步：验证集群：</span><br><span class="line">    （1）连接任意一个客户端即可：./redis-cli -c -h -p (-a访问服务端密码，-c表示集群模式，指定ip地址和端口号）</span><br><span class="line">        如：/src/redis-cli -a zhuge -c -h 192.168.0.61 -p 800*</span><br><span class="line">    （2）进行验证： cluster info（查看集群信息）、cluster nodes（查看节点列表）</span><br><span class="line">    （3）进行数据操作验证</span><br><span class="line">	（4）关闭集群则需要逐个进行关闭，使用命令：</span><br><span class="line">/src/redis-cli -a zhuge -c -h 192.168.0.60 -p 800* shutdown</span><br></pre></td></tr></table></figure>
+<h3 id="构建集群确认截图"><a href="#构建集群确认截图" class="headerlink" title="构建集群确认截图"></a>构建集群确认截图<sunfy-line></h3><p><img src="../../../../img/redisCluster/image-20201106095855589.png" alt="image-20201106095855589"></p>
+<h3 id="集群搭建确认"><a href="#集群搭建确认" class="headerlink" title="集群搭建确认"></a>集群搭建确认</h3><p>任意链接一台集群内客户端，cluster info 查看信息</p>
+<p><img src="../../../../img/redisCluster/image-20201106100219837.png" alt="image-20201106100219837"></p>
+<h3 id="节点信息查看"><a href="#节点信息查看" class="headerlink" title="节点信息查看"></a>节点信息查看</h3><p>使用命令 cluster nodes,也可以在对应的配置目录下找到<code>nodes.conf</code>文件中查看，集群内的所有服务都会有一个对应的nodes 文件</p>
+<p><img src="../../../../img/redisCluster/image-20201106100305703.png" alt="image-20201106100305703"></p>
+<h3 id="集群横向扩容"><a href="#集群横向扩容" class="headerlink" title="集群横向扩容"></a>集群横向扩容</h3><p>配置文件如上，把对应的端口号修改即可</p>
+<p>向集群内添加节点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src/redis-cli -a [password] --cluster add-node [要添加的ip:端口号] [集群内任一节点ip：端口号]</span><br></pre></td></tr></table></figure>
+<p>此刻可以查看集群节点信息内已经可以看到新增节点信息，新加入节点都是master节点</p>
+<p><img src="../../../../img/redisCluster/image-20201106112240260.png" alt="image-20201106112240260"></p>
+<p>新加入节点并不能直接使用，因为新加入节点没有hash槽，接下来就是分配hash槽</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">src/redis-cli -a [password] --cluster reshard [集群内任一节点ip：端口号]</span><br><span class="line">How many slots do you want to move (from 1 to 16384)? [输入要给新加入节点分配的槽位个数]</span><br><span class="line">What is the receiving node ID? [待分配槽位节点ID]</span><br><span class="line">Please enter all the source node IDs.</span><br><span class="line">  Type 'all' to use all the nodes as source nodes for the hash slots.</span><br><span class="line">  Type 'done' once you entered all the source nodes IDs.</span><br><span class="line">  [输入all会从所有主节点中抽取槽位，分配给新节点]</span><br><span class="line">Source node 1:all</span><br><span class="line">Do you want to proceed with the proposed reshard plan (yes/no)? yes</span><br><span class="line">随后等待分配槽位完成</span><br></pre></td></tr></table></figure>
+<p>分配槽位完成后查看节点信息如下：</p>
+<p><img src="../../../../img/redisCluster/image-20201106112529469.png" alt="image-20201106112529469"></p>
+<p>然后将8008节点加入集群，加入后同样默认为主节点，然后将8008修改为8007的从节点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 连接要变更节点信息的节点</span></span><br><span class="line">src/redis-cli -a zhuge -c -h [变更节点信息的ip] -p [变更节点信息的端口]</span><br><span class="line"><span class="meta">#</span><span class="bash"> 执行如下命令</span></span><br><span class="line">cluster replicate [将当前节点分配给哪个主节点的id]</span><br></pre></td></tr></table></figure>
+<p>节点分配前后节点信息对比查看</p>
+<p><img src="../../../../img/redisCluster/image-20201106115432547.png" alt="image-20201106115432547"></p>
+<p>添加节点的工作就完成了</p>
+<hr>
+<p>删除节点</p>
+<p>删除从节点可以直接进行删除，但是主节点不可以，如果直接删除主节点会造成数据丢失</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src/redis-cli -a [password] --cluster del-node [要删除节点ip:端口] [删除节点id]</span><br></pre></td></tr></table></figure>
+<p>删除主节点之前需要将主节点的槽位转移给别的槽位，如下操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">src/redis-cli -a [password] --cluster reshard [要转移槽位节点ip:端口] [转移槽位节点id]</span><br><span class="line">How many slots do you want to move (from 1 to 16384)? [转移槽位个数]</span><br><span class="line">What is the receiving node ID? [将槽位转移到哪个节点的id]</span><br><span class="line">Please enter all the source node IDs.</span><br><span class="line">  Type 'all' to use all the nodes as source nodes for the hash slots.</span><br><span class="line">  Type 'done' once you entered all the source nodes IDs.</span><br><span class="line">Source node 1:[待转移槽位的id]</span><br><span class="line">Source node 2:done</span><br><span class="line">(ps:这里直接输入done 开始生成迁移计划)</span><br><span class="line"> ... ...</span><br><span class="line">Do you want to proceed with the proposed reshard plan (yes/no)? Yes</span><br><span class="line">(ps:这里输入yes开始迁移)</span><br></pre></td></tr></table></figure>
+<p>槽位转移前后节点信息对比</p>
+<p><img src="../../../../img/redisCluster/image-20201106120214347.png" alt="image-20201106120214347"></p>
+<p>转移槽位完成后就可以通过上面删除槽位的命令删除对应的槽位即可</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2019/11/26/resource-system-Windows-renameFileSuffix/" data-toggle="tooltip" data-placement="top" title="批量修改文件后缀名">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2019/11/22/resource-DB-MySQL-MySQl-install/" data-toggle="tooltip" data-placement="top" title="CentOS、windows安装MySql5.7">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Windows搭建基本步骤"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Windows搭建基本步骤</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Linux搭建基本步骤"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Linux搭建基本步骤</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#构建集群确认截图"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">构建集群确认截图</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#集群搭建确认"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">集群搭建确认</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#节点信息查看"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">节点信息查看</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#集群横向扩容"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">集群横向扩容</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Redis" title="Redis">Redis</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

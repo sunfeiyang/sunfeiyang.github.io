@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          并发基础概念 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/10/25/resource-java-concurrent-concurrent/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/concurrent/concurrentBase.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>并发基础概念</h1>
+                        <h2 class="subheading">如何充分压榨硬件性能，充分压榨CPU计算能力</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-10-25
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.4k</span> and
+                                Reading Time <span class="post-count">9</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="线程的生命周期？线程有几种状态"><a href="#线程的生命周期？线程有几种状态" class="headerlink" title="线程的生命周期？线程有几种状态"></a>线程的生命周期？线程有几种状态</h1><p>线程通常有五种状态：创建、就绪、运行、阻塞、死亡。</p>
+<ul>
+<li>新建状态（New）：新建了一个线程对象。</li>
+<li>就绪状态（Runnable）：线程对象创建后，其他线程调用了该对象的start方法。该状态的线程位于可运行的线程池中，变得可运行，等待获取CPU的使用权。</li>
+<li>运行状态（Running）：就绪状态的线程获取了CPU，执行程序代码。</li>
+<li>阻塞状态（Blocked）：阻塞状态是线程因为某种原因放弃CPU使用全，暂时停止运行，直到线程进入就绪状态，才有机会转到运行状态。</li>
+<li>死亡状态（Dead）：线程执行完或者因为异常退出了run方法，该线程结束生命周期。</li>
+</ul>
+<p><img src="../../../../img/concurrent/R-C.png" alt="R-C"></p>
+<p>阻塞又分为了三种：<sunfy-line></p>
+<ul>
+<li>等待阻塞：运行的线程执行了wait方法，线程会释放占用的所有资源，JVM会把线程放入线程等待池中。进入这个状态后，线程不能自动唤醒，必须依靠其他线程调用notify或者notifyAll方法才能被唤醒。wait是object类的方法。</li>
+<li>同步阻塞：运行的线程在获取对象的同步锁时，若同步锁被别的线程占用，则JVM会把该线程放入”锁池”中。</li>
+<li>其他阻塞：运行的线程执行sleep或join方法，或者发出了I/O请求时，JVM会把线程置为阻塞状态。当sleep状态超时、join等待线程终止或超时、或者I/O处理完毕，线程会重新转入就绪状态。</li>
+</ul>
+<h1 id="锁池"><a href="#锁池" class="headerlink" title="锁池"></a>锁池</h1><p>所有需要竞争同步锁的线程都会放在锁池中，比如当前对象的锁已经被其中一个线程得到，则其他线程需要在这个锁池进行等待，当前面的线程释放同步锁后锁池中的线程去竞争同步锁，当某个线程得到后进入就绪队列进行等待CPU资源分配。</p>
+<h1 id="等待池"><a href="#等待池" class="headerlink" title="等待池"></a>等待池</h1><p>我们调用wait()方法后，线程会放在等待池中，等待池的线程是不会去竞争同步锁，只有调用了notify()或者notifyAll()后等待池的线程才会去开始竞争锁。</p>
+<ul>
+<li>notify()是随机从等待池中选出一个线程放入锁池中</li>
+<li>notifyAll()是将等待池中所有的线程放入锁池当中。</li>
+</ul>
+<h1 id="几个常见的方法区别"><a href="#几个常见的方法区别" class="headerlink" title="几个常见的方法区别"></a>几个常见的方法区别</h1><h2 id="sleep和wait方法对比"><a href="#sleep和wait方法对比" class="headerlink" title="sleep和wait方法对比"></a>sleep和wait方法对比</h2><ul>
+<li>sleep是Thread类的静态本地方法，wait是Object类的本地方法。</li>
+<li>sleep方法不会释放锁，但是wait会释放，而且会加入到等待池中。</li>
+<li>sleep方法不依赖于同步器Synchronized，而wait需要依赖。</li>
+<li>sleep不需要被唤醒（休眠之后会退出阻塞），但是wait需要（不指定时间需要被其他线程中断）</li>
+<li>sleep一般用于当前线程休眠，或者轮询暂停操作，wait多用于多线程之间通信。</li>
+<li>sleep会让出CPU执行时间且强制上下文切换，而wait不一定，wait后可能还是有机会重新竞争到锁继续执行的。</li>
+</ul>
+<p>yield()：执行后线程直接进入就绪状态，马上释放CPU的执行权，但是依然保留了cpu的执行资格，所以有可能cpu下次进行线程调度还会让这个线程获取到执行权继续执行。</p>
+<p>join()：执行后线程进入阻塞状态，例如线程B中调用了线程A的join()，那线程B会进入到阻塞队列，直到线程A结束或中断线程。</p>
+<p>看一个非常简单的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在main方法中定义一个线程，线程sleep 3秒钟，如果正常在main中start therad1线程，那最终的输出结果会是先输出主线程运行结束，而后子线程运行结束</span></span><br><span class="line"><span class="comment">// 如果在main中调用了therad1 的join()，那main线程会等thread1执行完成后才会继续执行，最终先输出子线程运行结束，而后主线程结束</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Thread thread1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">                System.out.println(<span class="string">"====子线程运行结束===="</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    thread1.start();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        thread1.join();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"====主线程运行结束===="</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="../../../../img/concurrent/image-20211028115039877.png" alt="image-20211028115039877"></p>
+<h1 id="并发、并行、串行"><a href="#并发、并行、串行" class="headerlink" title="并发、并行、串行"></a>并发、并行、串行</h1><p>串行，在时间上不可能发生重叠，前一个任务没有搞定，下一个就只能等着。</p>
+<p>并行，在时间上是重叠的，两个任务在同一时刻互补干扰的同时执行。</p>
+<p>并发，允许两个任务彼此干扰。同一时间点，只有一个任务运行，交替执行。</p>
+<h1 id="并发的三大特性"><a href="#并发的三大特性" class="headerlink" title="并发的三大特性"></a>并发的三大特性</h1><ul>
+<li>原子性</li>
+<li>可见性</li>
+<li>有序性</li>
+</ul>
+<p>这块内容，后续更新单独博客</p>
+<h1 id="Thread和Runnable区别"><a href="#Thread和Runnable区别" class="headerlink" title="Thread和Runnable区别"></a>Thread和Runnable区别</h1><p>先看图</p>
+<p><img src="../../../../img/concurrent/image-20211028115204533.png" alt="image-20211028115204533"></p>
+<p>我们可以看到，Thread和Runnable是继承关系，两者并没有可比性，无论使用Runnable还是Thread，都会new Thread，然后执行run方法。在用法上，如果有复杂线程操作需要，就选择继承Thread，如果只是简单的执行一个任务，就选择实现Runnable。</p>
+<p>有一个网上流传很广的买票的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MyThread2 mt = <span class="keyword">new</span> MyThread2();</span><br><span class="line">        <span class="keyword">new</span> Thread(mt).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(mt).start();</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 输出结果</span></span><br><span class="line"><span class="comment">         * Runnable ticket = 5</span></span><br><span class="line"><span class="comment">         * Runnable ticket = 4</span></span><br><span class="line"><span class="comment">         * Runnable ticket = 3</span></span><br><span class="line"><span class="comment">         * Runnable ticket = 2</span></span><br><span class="line"><span class="comment">         * Runnable ticket = 1</span></span><br><span class="line"><span class="comment">         * Runnable ticket = 0</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">new</span> MyThread().start();</span><br><span class="line">        <span class="keyword">new</span> MyThread().start();</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 输出结果</span></span><br><span class="line"><span class="comment">         * Thread ticket = 5</span></span><br><span class="line"><span class="comment">         * Thread ticket = 5</span></span><br><span class="line"><span class="comment">         * Thread ticket = 4</span></span><br><span class="line"><span class="comment">         * Thread ticket = 4</span></span><br><span class="line"><span class="comment">         * Thread ticket = 3</span></span><br><span class="line"><span class="comment">         * Thread ticket = 3</span></span><br><span class="line"><span class="comment">         * Thread ticket = 2</span></span><br><span class="line"><span class="comment">         * Thread ticket = 2</span></span><br><span class="line"><span class="comment">         * Thread ticket = 1</span></span><br><span class="line"><span class="comment">         * Thread ticket = 1</span></span><br><span class="line"><span class="comment">         * Thread ticket = 0</span></span><br><span class="line"><span class="comment">         * Thread ticket = 0</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 实现RunAble</span></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread2</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> ticket = <span class="number">5</span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (ticket &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">"Runnable ticket = "</span> + ticket--);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 继承Thread</span></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> ticket = <span class="number">5</span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(ticket &lt; <span class="number">0</span>)&#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">"Thread ticket = "</span> + ticket--);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>出现上述不同的输出结果并不是网上流传的，Runnable更容易实现资源共享什么的，和这个完全没有关系。</p>
+<p>分析上面的代码</p>
+<blockquote>
+<p>MyThread2 mt = new MyThread2();<br>new Thread(mt).start();<br>new Thread(mt).start();</p>
+<p>new MyThread().start();<br>new MyThread().start();</p>
+</blockquote>
+<p>关键在这两句，MyThread2 中只new了一个，只不过是调用了两次start方法，最终只是一个线程在执行，自然就只有一份，5。MyThread中很明显是new了两次，创建了两个不同的实例，然后分别调用两个线程的start方法，两个线程具体各自的成员变量，所以会卖出两次。这个可以通过在输出语句中添加<code>Thread.currentThread().getId()</code>，输出当前执行线程的id就可以很清楚的看到两个不同线程的执行情况。</p>
+<p>出现这样的问题属于用法错误。</p>
+<blockquote>
+<p>Thread ticket = 5 == 线程id-12<br>Thread ticket = 5 == 线程id-11<br>Thread ticket = 4 == 线程id-12<br>Thread ticket = 4 == 线程id-11<br>Thread ticket = 3 == 线程id-12<br>Thread ticket = 3 == 线程id-11<br>Thread ticket = 2 == 线程id-12<br>Thread ticket = 1 == 线程id-12<br>Thread ticket = 0 == 线程id-12<br>Thread ticket = 2 == 线程id-11<br>Thread ticket = 1 == 线程id-11<br>Thread ticket = 0 == 线程id-11</p>
+</blockquote>
+<h1 id="对守护线程的理解"><a href="#对守护线程的理解" class="headerlink" title="对守护线程的理解"></a>对守护线程的理解</h1><h2 id="何为守护线程"><a href="#何为守护线程" class="headerlink" title="何为守护线程"></a>何为守护线程</h2><p>为所有非守护线程提供服务的线程；任何一个守护线程都是整个JVM中所有非守护线程的保姆。</p>
+<p>守护线程类似整个进程中的一个默默无闻的小喽啰；它的生死无关痛痒，但是它却依赖整个进程而运行；如果其他进程都结束了，没有待执行任务后，程序就结束了，不会去关注守护线程的状态。</p>
+<p>正因为守护线程的这种特性，守护线程的终止自身无法控制，因此我们在使用的过程中千万不要把IO、file等重要的操作逻辑分配给它，因为它不靠谱的。</p>
+<h2 id="守护线程的作用"><a href="#守护线程的作用" class="headerlink" title="守护线程的作用"></a>守护线程的作用</h2><p>举例：GC垃圾回收线程，就是一个守护线程，当我们程序中不再有任何运行的线程，程序就不会再产生垃圾，垃圾回收器也就无事可做，所以当垃圾回收线程是JVM中仅存的线程时，垃圾回收线程会自动离开。它始终在低级别的状态中运行，用于实时监控和管理系统中的可回收资源。</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
+<li>为其他线程提供服务支持的情况</li>
+<li>任何情况下，程序结束时，这个线程必须正常且立即关闭，就可以作为守护线程来使用。反之，如果一个正在执行某个操作的线程必须要正确关闭否则会出现不好的后果的话，那这个线程就不能作为守护线程，而是用户线程。通常的关键的事务，比如数据库录入、更新等这些都是不能中断的。</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>设置线程为守护线程使用</p>
+<blockquote>
+<p>thread.setDaemon(true)</p>
+</blockquote>
+<p>这个操作必须在线程的start()之前，否则会抛出异常<code>java.lang.IllegalThreadStateException</code>。因为我们不能把一个正在运行的线程设置为守护线程。</p>
+<p>注意：在Daemon中产生的新线程也是Daemon的。</p>
+<p>守护线程不能用于访问固定资源，比如读写操作或者计算逻辑。因为它会在任何时候甚至在一个操作中间发生中断。</p>
+<p>java自带的多线程框架，比如ExecutorService，会将守护线程转换为用户线程，所以如果要使用后台线程就不能用java的线程池。</p>
+<p><code>Thread.currentThread().isDaemon()</code>，查看当前线程是否为守护线程</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/10/25/resource-java-concurrent-JMM/" data-toggle="tooltip" data-placement="top" title="java内存模型（JMM）">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/10/21/resource-MicroService-seata-distributedLock/" data-toggle="tooltip" data-placement="top" title="分布式锁的解决方案">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#线程的生命周期？线程有几种状态"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">线程的生命周期？线程有几种状态</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#锁池"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">锁池</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#等待池"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">等待池</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#几个常见的方法区别"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">几个常见的方法区别</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#sleep和wait方法对比"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">sleep和wait方法对比</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#并发、并行、串行"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">并发、并行、串行</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#并发的三大特性"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">并发的三大特性</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Thread和Runnable区别"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Thread和Runnable区别</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#对守护线程的理解"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">对守护线程的理解</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#何为守护线程"><span class="toc-nav-number">8.1.</span> <span class="toc-nav-text">何为守护线程</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#守护线程的作用"><span class="toc-nav-number">8.2.</span> <span class="toc-nav-text">守护线程的作用</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#应用场景"><span class="toc-nav-number">8.3.</span> <span class="toc-nav-text">应用场景</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#使用"><span class="toc-nav-number">8.4.</span> <span class="toc-nav-text">使用</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Redis持久化、主从架构和哨兵架构 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2019/11/20/resource-java-redis-redisCommand-sentinel/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/header_img/java/redis-sentinel.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Redis" title="Redis">Redis</a>
+                            
+                        </div>
+
+                        <h1>Redis持久化、主从架构和哨兵架构</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2019-11-20
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">1.9k</span> and
+                                Reading Time <span class="post-count">7</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>Redis数据持久化的三种方式，基本的架构模型，主从架构和哨兵架构。主从架构是哨兵架构以及后续的分布式集群架构的基础。<a id="more"></a></p>
+<h2 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h2><h3 id="RDB（Redis-DataBase）快照（snapShot）"><a href="#RDB（Redis-DataBase）快照（snapShot）" class="headerlink" title="RDB（Redis DataBase）快照（snapShot）"></a>RDB（Redis DataBase）快照（snapShot）</h3><p>基本设置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在redis配置文件中做如下配置即可，redis在满足配置时就会自动进行持久化到本地文件中</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 60秒内至少改动1000个键值对，就会触发</span></span><br><span class="line">save 60 1000 </span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存的为二进制内容</span></span><br></pre></td></tr></table></figure>
+<p>save和bgsave</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>save</th>
+<th>bgsave</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IO类型</td>
+<td>同步</td>
+<td>异步</td>
+</tr>
+<tr>
+<td>是否阻塞Redis其他命令</td>
+<td>是（操作时会阻塞，所有命令无法继续写入）</td>
+<td>否（生成子进程执行调用fork函数时，会有短暂阻塞）</td>
+</tr>
+<tr>
+<td>复杂度</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>优点</td>
+<td>不会消耗额外内存</td>
+<td>不阻塞客户端命令</td>
+</tr>
+<tr>
+<td>缺点</td>
+<td>阻塞客户端命令</td>
+<td>需要fork子进程，消耗内存</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>1、整个Redis数据库将只包含一个文件 dump.rdb，方便持久化。 </p>
+<p>2、容灾性好，方便备份。 </p>
+<p>3、性能最大化，fork 子进程来完成写操作，让主进程继续处理命令，所以是 IO 最大化。使用单独子进 程来进行持久化，主进程不会进行任何 IO 操作，保证了 redis 的高性能 </p>
+<p>4、相对于数据集大时，比 AOF 的启动效率更高。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>1、数据安全性低。RDB 是间隔一段时间进行持久化，如果持久化之间 redis 发生故障，会发生数据丢 失。所以这种方式更适合数据要求不严谨的时候) </p>
+<p>2、由于RDB是通过fork子进程来协助完成数据持久化工作的，因此，如果当数据集较大时，可能会导 致整个服务器停止服务几百毫秒，甚至是1秒钟。</p>
+<h3 id="AOF-append-only-file"><a href="#AOF-append-only-file" class="headerlink" title="AOF(append-only file)"></a>AOF(append-only file)</h3><p>基本配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">appendonly yes</span><br><span class="line"><span class="meta">#</span><span class="bash"> 具体配置项说明</span></span><br><span class="line">appendfsync always：每次有新命令追加到 AOF 文件时就执行一次 fsync ，非常慢，也非常安全。</span><br><span class="line">appendfsync everysec：每秒 fsync 一次，足够快，并且在故障时只会丢失 1 秒钟的数据。</span><br><span class="line">appendfsync no：从不 fsync ，将数据交给操作系统来处理。更快，也更不安全的选择。</span><br></pre></td></tr></table></figure>
+<p>aof保存的是最新的set操作命令<sunfy-line></p>
+<h3 id="AOF（Append-Only-File）重写"><a href="#AOF（Append-Only-File）重写" class="headerlink" title="AOF（Append Only File）重写"></a>AOF（Append Only File）重写</h3><p>以日志的形式记录服务器所处理的每一个写、删除操作，查询操作不会记录，以文本的方式记录，可以 打开文件看到详细的操作记录。</p>
+<p>基本配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> aof重写会将一些无用命令重新合并，最终数据肯定还是和原先的一致</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> aof文件至少要达到64M才会自动重写，文件太小恢复速度本来就很快，重写的意义不大</span></span><br><span class="line">auto-aof-rewrite-min-size 64mb   </span><br><span class="line"><span class="meta">#</span><span class="bash"> aof文件自上一次重写后文件大小增长了100%则再次触发重写</span></span><br><span class="line">auto-aof-rewrite-percentage 100</span><br></pre></td></tr></table></figure>
+<p>AOF还可以手动重写，进入redis客户端执行命令<strong>bgrewriteaof</strong>重写AOF</p>
+<p>注意，<strong>AOF重写redis会fork出一个子进程去做(与bgsave命令类似)，不会对redis正常命令处理有太多影响</strong></p>
+<h3 id="RDB和AOF对比"><a href="#RDB和AOF对比" class="headerlink" title="RDB和AOF对比"></a>RDB和AOF对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>RDB</strong></th>
+<th><strong>AOF</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动优先级</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>体积</td>
+<td>小</td>
+<td>大</td>
+</tr>
+<tr>
+<td>恢复速度</td>
+<td>快</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>数据安全性</td>
+<td>容易丢数据</td>
+<td>根据策略决定</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><p>1、数据安全，Redis中提供了3中同步策略，即每秒同步、每修改同步和不同步。事实上，每秒同步也 是异步完成的，其效率也是非常高的，所差的是一旦系统出现宕机现象，那么这一秒钟之内修改的数据 将会丢失。而每修改同步，我们可以将其视为同步持久化，即每次发生的数据变化都会被立即记录到磁 盘中。</p>
+<p> 2、通过 append 模式写文件，即使中途服务器宕机也不会破坏已经存在的内容，可以通过 redis-check-aof 工具解决数据一致性问题。 </p>
+<p>3、AOF 机制的 rewrite 模式。定期对AOF文件进行重写，以达到压缩的目的</p>
+<h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><p>1、AOF 文件比 RDB 文件大，且恢复速度慢。 </p>
+<p>2、数据集大的时候，比 rdb 启动效率低。 </p>
+<p>3、运行效率没有RDB高 </p>
+<p>AOF文件比RDB更新频率高，优先使用AOF还原数据。 </p>
+<p>AOF比RDB更安全也更大 </p>
+<p>RDB性能比AOF好 </p>
+<p>如果两个都配了优先加载AOF</p>
+<h3 id="Redis4-0后的混合持久化"><a href="#Redis4-0后的混合持久化" class="headerlink" title="Redis4.0后的混合持久化"></a>Redis4.0后的混合持久化</h3><p>基本配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 混合持久化是基于aof持久化的优化，使用混合持久化必须先开启aof</span></span><br><span class="line">aof-use-rdb-preamble yes</span><br></pre></td></tr></table></figure>
+<h3 id="Redis数据备份策略"><a href="#Redis数据备份策略" class="headerlink" title="Redis数据备份策略"></a>Redis数据备份策略</h3><ol>
+<li>写crontab定时脚本，每个小时复制一份Redis持久化文件</li>
+<li>每天都保留一份数据，保留最新一月或根据需求保存，方便可随时恢复至任意日期</li>
+<li>每天复制数据时，删除最早数据，以免浪费内存</li>
+<li>多机备份，定期将备份文件复制只不同数据备份机器</li>
+</ol>
+<p>Redis数据恢复</p>
+<p>将Reids备份文件，放在Redis对应的备份文件路径下重启服务即可</p>
+<h2 id="Redis主从架构"><a href="#Redis主从架构" class="headerlink" title="Redis主从架构"></a>Redis主从架构</h2><p><img src="../../../../img/redisCommand-sentinel/image-20201102105859265.png" alt="image-20201102105859265"></p>
+<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1、复制一份redis.conf文件</span><br><span class="line">2、将相关配置修改为如下值：</span><br><span class="line">port 6380</span><br><span class="line">pidfile /var/run/redis_6380.pid  # 把pid进程号写入pidfile配置的文件</span><br><span class="line">logfile "6380.log"</span><br><span class="line">dir /usr/local/redis-5.0.3/data/6380  # 指定数据存放目录</span><br><span class="line">3、配置主从复制</span><br><span class="line">replicaof 192.168.0.60 6379   # 从本机6379的redis实例复制数据，Redis 5.0之前使用slaveof</span><br><span class="line">replica-read-only yes  # 配置从节点只读</span><br><span class="line">4、启动从节点</span><br><span class="line">redis-server redis.conf</span><br><span class="line">5、连接从节点</span><br><span class="line">redis-cli -p 6380</span><br><span class="line">6、测试在6379实例上写数据，6380实例是否能及时同步新修改数据</span><br><span class="line">7、可以自己再配置一个6381的从节点</span><br></pre></td></tr></table></figure>
+<h3 id="全量复制"><a href="#全量复制" class="headerlink" title="全量复制"></a>全量复制</h3><p>从节点首次同步数据或长时间断开链接，主节点和从节点之前数据差超过了master节点缓存队列中的数据时会采用全量复制</p>
+<h3 id="部分复制"><a href="#部分复制" class="headerlink" title="部分复制"></a>部分复制</h3><p>master会在其内存中创建一个复制数据用的缓存队列，缓存最近一段时间的数据，master和它所有的slave都维护了复制的数据下标offset和master的进程id，因此，当网络连接断开后，slave会请求master继续进行未完成的复制，从所记录的数据下标开始。如果master进程id变化了，或者从节点数据下标offset太旧，已经不在master的缓存队列里了，那么将会进行一次全量数据的复制。</p>
+<h3 id="主从复制风暴"><a href="#主从复制风暴" class="headerlink" title="主从复制风暴"></a>主从复制风暴</h3><p><img src="../../../../img/redisCommand-sentinel/image-20201102110501109.png" alt="image-20201102110501109"></p>
+<h2 id="Redis哨兵高可用架构"><a href="#Redis哨兵高可用架构" class="headerlink" title="Redis哨兵高可用架构"></a>Redis哨兵高可用架构</h2><p><img src="../../../../img/redisCommand-sentinel/image-20201102110615982.png" alt="image-20201102110615982"></p>
+<p>基本配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1、复制一份sentinel.conf文件</span><br><span class="line">cp sentinel.conf sentinel-26379.conf</span><br><span class="line">2、将相关配置修改为如下值：</span><br><span class="line">port 26379</span><br><span class="line">daemonize yes</span><br><span class="line">pidfile "/var/run/redis-sentinel-26379.pid"</span><br><span class="line">logfile "26379.log"</span><br><span class="line">dir "/usr/local/redis-5.0.3/data"</span><br><span class="line"><span class="meta">#</span><span class="bash"> sentinel monitor &lt;master-redis-name&gt; &lt;master-redis-ip&gt; &lt;master-redis-port&gt; &lt;quorum&gt;</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> quorum是一个数字，指明当有多少个sentinel认为一个master失效时(值一般为：sentinel总数/2 + 1)，master才算真正失效</span></span><br><span class="line">sentinel monitor mymaster 192.168.0.60 6379 2   # mymaster这个名字随便取，客户端访问时会用到</span><br><span class="line">3、启动sentinel哨兵实例</span><br><span class="line">src/redis-sentinel sentinel-26379.conf</span><br><span class="line">4、查看sentinel的info信息</span><br><span class="line">src/redis-cli -p 26379</span><br><span class="line">127.0.0.1:26379&gt;info</span><br><span class="line">可以看到Sentinel的info里已经识别出了redis的主从</span><br><span class="line">5、可以自己再配置两个sentinel，端口26380和26381，注意上述配置文件里的对应数字都要修改</span><br></pre></td></tr></table></figure>
+<h2 id="操作中遇到的问题"><a href="#操作中遇到的问题" class="headerlink" title="操作中遇到的问题"></a>操作中遇到的问题</h2><ol>
+<li>配置主从模式时，要注意主节点不能配置replicaof</li>
+<li>bind 0.0.0.0</li>
+</ol>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2019/11/22/resource-DB-MySQL-MySQl-install/" data-toggle="tooltip" data-placement="top" title="CentOS、windows安装MySql5.7">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2019/11/15/resource-ORM-MyBatis-MyBatisResourceBuild/" data-toggle="tooltip" data-placement="top" title="MyBatis源码编译环境构建">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Redis持久化"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Redis持久化</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#RDB（Redis-DataBase）快照（snapShot）"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">RDB（Redis DataBase）快照（snapShot）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#优点"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">优点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#缺点"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">缺点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#AOF-append-only-file"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">AOF(append-only file)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#AOF（Append-Only-File）重写"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">AOF（Append Only File）重写</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#RDB和AOF对比"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">RDB和AOF对比</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#优点-1"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">优点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#缺点-1"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">缺点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Redis4-0后的混合持久化"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">Redis4.0后的混合持久化</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Redis数据备份策略"><span class="toc-nav-number">1.10.</span> <span class="toc-nav-text">Redis数据备份策略</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Redis主从架构"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Redis主从架构</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基本配置"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">基本配置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#全量复制"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">全量复制</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#部分复制"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">部分复制</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#主从复制风暴"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">主从复制风暴</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Redis哨兵高可用架构"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Redis哨兵高可用架构</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#操作中遇到的问题"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">操作中遇到的问题</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Redis" title="Redis">Redis</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

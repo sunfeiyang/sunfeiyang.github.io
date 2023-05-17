@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Java安全管理器入门 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/09/16/resource-java-Base-securityManager/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/java/securityManager.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>Java安全管理器入门</h1>
+                        <h2 class="subheading">Java安全管理器入门的文章</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-09-16
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">3.6k</span> and
+                                Reading Time <span class="post-count">14</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="一、文章的目的"><a href="#一、文章的目的" class="headerlink" title="一、文章的目的"></a>一、文章的目的</h1><p>　　这是一篇对Java安全管理器入门的文章，目的是简单了解什么是SecurityManager，对管理器进行简单配置，解决简单问题。</p>
+<p>　　比如在阅读源码的时候，发现这样的代码，想了解是做什么的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SecurityManager security = System.getSecurityManager();</span><br><span class="line"><span class="keyword">if</span> (security != <span class="keyword">null</span>) &#123;</span><br><span class="line">    security.checkWrite(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　亦或者在本机运行正常，在服务器运行报错，想解决问题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.security.AccessControlException: <span class="function">access <span class="title">denied</span> <span class="params">(java.lang.RuntimePermission createSecurityManager)</span></span></span><br><span class="line"><span class="function">    at java.security.AccessControlContext.<span class="title">checkPermission</span><span class="params">(AccessControlContext.java:<span class="number">374</span>)</span></span></span><br><span class="line"><span class="function">    at java.security.AccessController.<span class="title">checkPermission</span><span class="params">(AccessController.java:<span class="number">549</span>)</span></span></span><br><span class="line"><span class="function">    at java.lang.SecurityManager.<span class="title">checkPermission</span><span class="params">(SecurityManager.java:<span class="number">532</span>)</span></span></span><br><span class="line"><span class="function">    at java.lang.SecurityManager.&lt;init&gt;<span class="params">(SecurityManager.java:<span class="number">282</span>)</span></span></span><br><span class="line"><span class="function">    at xia.study._01Thread.ThreadTest.<span class="title">creatThread1</span><span class="params">(ThreadTest.java:<span class="number">18</span>)</span></span></span><br><span class="line"><span class="function">    at xia.study._01Thread.ThreadTest.<span class="title">main</span><span class="params">(ThreadTest.java:<span class="number">13</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>　　这时候具备一些SecurityManager的基础知识还是有必要的。</p>
+<h1 id="二、SecurityManager应用场景"><a href="#二、SecurityManager应用场景" class="headerlink" title="二、SecurityManager应用场景"></a>二、SecurityManager应用场景</h1><p>　　当运行未知的Java程序的时候，该程序可能有恶意代码（删除系统文件、重启系统等），为了防止运行恶意代码对系统产生影响，需要对运行的代码的权限进行控制，这时候就要启用Java安全管理器。</p>
+<h1 id="三、管理器配置文件"><a href="#三、管理器配置文件" class="headerlink" title="三、管理器配置文件"></a>三、管理器配置文件<sunfy-line></h1><h2 id="3-1-默认配置文件"><a href="#3-1-默认配置文件" class="headerlink" title="3.1 默认配置文件"></a>3.1 默认配置文件</h2><p>　　默认的安全管理器配置文件是 $JAVA_HOME/jre/lib/security/java.policy，即当未指定配置文件时，将会使用该配置。内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Standard extensions get all permissions by default</span></span><br><span class="line"></span><br><span class="line">grant codeBase <span class="string">"file:$&#123;&#123;java.ext.dirs&#125;&#125;/*"</span> &#123;</span><br><span class="line">    permission java.security.AllPermission;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// default permissions granted to all domains</span></span><br><span class="line"></span><br><span class="line">grant &#123; </span><br><span class="line">    <span class="comment">// Allows any thread to stop itself using the java.lang.Thread.stop()</span></span><br><span class="line">    <span class="comment">// method that takes no argument.</span></span><br><span class="line">    <span class="comment">// Note that this permission is granted by default only to remain</span></span><br><span class="line">    <span class="comment">// backwards compatible.</span></span><br><span class="line">    <span class="comment">// It is strongly recommended that you either remove this permission</span></span><br><span class="line">    <span class="comment">// from this policy file or further restrict it to code sources</span></span><br><span class="line">    <span class="comment">// that you specify, because Thread.stop() is potentially unsafe.</span></span><br><span class="line">    <span class="comment">// See the API specification of java.lang.Thread.stop() for more</span></span><br><span class="line">        <span class="comment">// information.</span></span><br><span class="line">    permission java.lang.RuntimePermission <span class="string">"stopThread"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// allows anyone to listen on un-privileged ports</span></span><br><span class="line">    permission java.net.SocketPermission <span class="string">"localhost:1024-"</span>, <span class="string">"listen"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// "standard" properies that can be read by anyone</span></span><br><span class="line"></span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.version"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.vendor"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.vendor.url"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.class.version"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"os.name"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"os.version"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"os.arch"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"file.separator"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"path.separator"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"line.separator"</span>, <span class="string">"read"</span>;</span><br><span class="line"></span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.specification.version"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.specification.vendor"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.specification.name"</span>, <span class="string">"read"</span>;</span><br><span class="line"></span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.vm.specification.version"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.vm.specification.vendor"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.vm.specification.name"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.vm.version"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.vm.vendor"</span>, <span class="string">"read"</span>;</span><br><span class="line">    permission java.util.PropertyPermission <span class="string">"java.vm.name"</span>, <span class="string">"read"</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="3-2-配置文件详解"><a href="#3-2-配置文件详解" class="headerlink" title="3.2 配置文件详解"></a>3.2 配置文件详解</h2><p>　　详解见第五部分，此处知道有这个配置文件即可。</p>
+<h1 id="四、启动安全管理器"><a href="#四、启动安全管理器" class="headerlink" title="四、启动安全管理器"></a>四、启动安全管理器</h1><p>　　启动安全管理有两种方式，建议使用启动参数方式。</p>
+<h2 id="4-1-启动参数方式"><a href="#4-1-启动参数方式" class="headerlink" title="4.1 启动参数方式"></a>4.1 启动参数方式</h2><p>　　启动程序的时候通过附加参数启动安全管理器：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Djava.security.manager</span><br></pre></td></tr></table></figure>
+<p>　　若要同时指定配置文件的位置那么示例如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Djava.security.manager -Djava.security.policy=<span class="string">"E:/java.policy"</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-2-编码方式启动"><a href="#4-2-编码方式启动" class="headerlink" title="4.2 编码方式启动"></a>4.2 编码方式启动</h2><p>　　也可以通过编码方式启动，不过不建议：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.setSecurityManager(<span class="keyword">new</span> SecurityManager());</span><br></pre></td></tr></table></figure>
+<p>　　通过参数启动，本质上也是通过编码启动，不过参数启动使用灵活，项目启动源码如下（sun.misc.Launcher）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Finally, install a security manager if requested</span></span><br><span class="line">String s = System.getProperty(<span class="string">"java.security.manager"</span>);</span><br><span class="line"><span class="keyword">if</span> (s != <span class="keyword">null</span>) &#123;</span><br><span class="line">    SecurityManager sm = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">""</span>.equals(s) || <span class="string">"default"</span>.equals(s)) &#123;</span><br><span class="line">        sm = <span class="keyword">new</span> java.lang.SecurityManager();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            sm = (SecurityManager)loader.loadClass(s).newInstance();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassCastException e) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (sm != <span class="keyword">null</span>) &#123;</span><br><span class="line">        System.setSecurityManager(sm);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> InternalError(</span><br><span class="line">            <span class="string">"Could not create SecurityManager: "</span> + s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　可以发现将会创建一个默认的SecurityManager；</p>
+<h1 id="五、配置文件简单解释"><a href="#五、配置文件简单解释" class="headerlink" title="五、配置文件简单解释"></a>五、配置文件简单解释</h1><h2 id="5-1-配置基本原则"><a href="#5-1-配置基本原则" class="headerlink" title="5.1 配置基本原则"></a>5.1 配置基本原则</h2><p>　　在启用安全管理器的时候，配置遵循以下基本原则：</p>
+<ol>
+<li>没有配置的权限表示没有。</li>
+<li>只能配置有什么权限，不能配置禁止做什么。</li>
+<li>同一种权限可多次配置，取并集。</li>
+<li>统一资源的多种权限可用逗号分割。</li>
+</ol>
+<h2 id="5-2-默认配置文件解释"><a href="#5-2-默认配置文件解释" class="headerlink" title="5.2 默认配置文件解释"></a>5.2 默认配置文件解释</h2><p>　　第一部分授权：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grant codeBase &quot;file:$&#123;&#123;java.ext.dirs&#125;&#125;&#x2F;*&quot; &#123;</span><br><span class="line">    permission java.security.AllPermission;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>　　授权基于路径在”file:$/*”的class和jar包，所有权限。</p>
+<p>　　第二部分授权：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grant &#123; </span><br><span class="line">    permission java.lang.RuntimePermission &quot;stopThread&quot;;</span><br><span class="line">    ……   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　这是细粒度的授权，对某些资源的操作进行授权。具体不再解释，可以查看javadoc。如RuntimePermission的可授权操作经查看javadoc如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>权限所允许的操作</th>
+<th>权限目标名称</th>
+<th>允许此权限所带来的风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建类加载器</td>
+<td>createClassLoader</td>
+<td>授予该权限极其危险。能够实例化自己的类加载器的恶意应用程序可能会在系统中装载自己的恶意类。这些新加载的类可能被类加载器置于任意保护域中，从而自动将该域的权限授予这些类。</td>
+</tr>
+<tr>
+<td>类加载器的获取（即调用类的类加载器）</td>
+<td>getClassLoader</td>
+<td>这将授予攻击者得到具体类的加载器的权限。这很危险，由于攻击者能够访问类的类加载器，所以攻击者能够加载其他可用于该类加载器的类。通常攻击者不具备这些类的访问权限。</td>
+</tr>
+<tr>
+<td>线程使用的上下文类加载器的设置</td>
+<td>setContextClassLoader</td>
+<td>在需要查找可能不存在于系统类加载器中的资源时，系统代码和扩展部分会使用上下文类加载器。授予 setContextClassLoader 权限将允许代码改变特定线程（包括系统线程）使用的上下文类加载器。</td>
+</tr>
+<tr>
+<td>线程上下文类加载器方法的子类实现</td>
+<td>enableContextClassLoaderOverride</td>
+<td>在需要查找可能不存在于系统类加载器中的资源时，系统代码和扩展部分会使用上下文类加载器。授予 enableContextClassLoaderOverride 权限将允许线程的子类重写某些方法，这些方法用于得到或设置特定线程的上下文类加载器。</td>
+</tr>
+<tr>
+<td>设置安全管理器（可能会替换现有的）</td>
+<td>setSecurityManager</td>
+<td>安全管理器是允许应用程序实现安全策略的类。授予 setSecurityManager 权限将通过安装一个不同的、可能限制更少的安全管理器，来允许代码改变所用的安全管理器，因此可跳过原有安全管理器所强制执行的某些检查。</td>
+</tr>
+<tr>
+<td>创建新的安全管理器</td>
+<td>createSecurityManager</td>
+<td>授予代码对受保护的、敏感方法的访问权，可能会泄露有关其他类或执行堆栈的信息。</td>
+</tr>
+<tr>
+<td>读取指定环境变量的值</td>
+<td>getenv.{variable name}</td>
+<td>此权限允许代码读取特定环境变量的值或确定它是否存在。如果该变量含有机密数据，则这项授权是很危险的。</td>
+</tr>
+<tr>
+<td>暂停带有指定退出状态的 Java 虚拟机</td>
+<td>exitVM.{exit status}</td>
+<td>此权限允许攻击者通过自动强制暂停虚拟机来发起一次拒绝服务攻击。注意：自动为那些从应用程序类路径加载的全部代码授予 “exitVM.<em>“ 权限，从而使这些应用程序能够自行中止。此外，”exitVM” 权限等于 “exitVM.</em>“。</td>
+</tr>
+<tr>
+<td>虚拟机关闭钩子 (hook) 的注册与取消</td>
+<td>shutdownHooks</td>
+<td>此权限允许攻击者注册一个妨碍虚拟机正常关闭的恶意关闭钩子 (hook)。</td>
+</tr>
+<tr>
+<td>设置由 ServerSocket 或 Socket 使用的套接字工厂，或 URL 使用的流处理程序工厂</td>
+<td>setFactory</td>
+<td>此权限允许代码设置套接字、服务器套接字、流处理程序或 RMI 套接字工厂的实际实现。攻击者可能设置错误的实现，从而破坏数据流。</td>
+</tr>
+<tr>
+<td>System.out、System.in 和 System.err 的设置</td>
+<td>setIO</td>
+<td>此权限允许改变标准系统流的值。攻击者可以改变 System.in 来监视和窃取用户输入，或将 System.err 设置为 “null” OutputStream，从而隐藏发送到 System.err 的所有错误信息。</td>
+</tr>
+<tr>
+<td>修改线程，例如通过调用线程的 <code>interrupt</code>、<code>stop</code>、<code>suspend</code>、<code>resume</code>、<code>setDaemon</code>、<code>setPriority</code>、<code>setName</code> 和 <code>setUncaughtExceptionHandler</code> 方法</td>
+<td>modifyThread</td>
+<td>此权限允许攻击者修改系统中任意线程的行为。</td>
+</tr>
+<tr>
+<td>通过调用线程的 <code>stop</code> 方法停止线程</td>
+<td>stopThread</td>
+<td>如果系统已授予代码访问该线程的权限，则此权限允许代码停止系统中的任何线程。此权限会造成一定的危险，因为该代码可能通过中止现有的线程来破坏系统。</td>
+</tr>
+<tr>
+<td>修改线程组，例如通过调用 ThreadGroup 的 <code>destroy</code>、<code>getParent</code>、<code>resume</code>、<code>setDaemon</code>、<code>setMaxPriority</code>、<code>stop</code> 和 <code>suspend</code> 方法</td>
+<td>modifyThreadGroup</td>
+<td>此权限允许攻击者创建线程组并设置它们的运行优先级。</td>
+</tr>
+<tr>
+<td>获取类的 ProtectionDomain</td>
+<td>getProtectionDomain</td>
+<td>此权限允许代码获得特定代码源的安全策略信息。虽然获得安全策略信息并不足以危及系统安全，但这确实会给攻击者提供了能够更好地定位攻击目标的其他信息，例如本地文件名称等。</td>
+</tr>
+<tr>
+<td>获取文件系统属性</td>
+<td>getFileSystemAttributes</td>
+<td>此权限允许代码获得文件系统信息（如调用者可用的磁盘使用量或磁盘空间）。这存在潜在危险，因为它泄露了关于系统硬件配置的信息以及一些关于调用者写入文件特权的信息。</td>
+</tr>
+<tr>
+<td>读取文件描述符</td>
+<td>readFileDescriptor</td>
+<td>此权限允许代码读取与文件描述符读取相关的特定文件。如果该文件包含机密数据，则此操作非常危险。</td>
+</tr>
+<tr>
+<td>写入文件描述符</td>
+<td>writeFileDescriptor</td>
+<td>此权限允许代码写入与描述符相关的特定文件。此权限很危险，因为它可能允许恶意代码传播病毒，或者至少也会填满整个磁盘。</td>
+</tr>
+<tr>
+<td>动态链接指定的库</td>
+<td>loadLibrary.{库名}</td>
+<td>允许 applet 具有加载本机代码库的权限是危险的，因为 Java 安全架构并未设计成可以防止恶意行为，并且也无法在本机代码的级别上防止恶意行为。</td>
+</tr>
+<tr>
+<td>当类加载器调用 SecurityManager 的<code>checkPackageAccess</code>方法时，通过类加载器的 <code>loadClass</code> 方法访问指定的包</td>
+<td>accessClassInPackage.{包名}</td>
+<td>此权限允许代码访问它们通常无法访问的那些包中的类。恶意代码可能利用这些类帮助它们实现破坏系统安全的企图。</td>
+</tr>
+<tr>
+<td>当类加载器调用 SecurityManager 的 <code>checkPackageDefinition</code> 方法时，通过类加载器的 <code>defineClass</code> 方法定义指定的包中的类。</td>
+<td>defineClassInPackage.{包名}</td>
+<td>此权限允许代码在特定包中定义类。这样做很危险，因为具有此权限的恶意代码可能在受信任的包中定义恶意类，比如 <code>java.security</code>或 <code>java.lang</code>。</td>
+</tr>
+<tr>
+<td>访问类的已声明成员</td>
+<td>accessDeclaredMembers</td>
+<td>此权限允许代码查询类的公共、受保护、默认（包）访问和私有的字段和/或方法。尽管代码可以访问私有和受保护字段和方法名称，但它不能访问私有/受保护字段数据并且不能调用任何私有方法。此外，恶意代码可能使用该信息来更好地定位攻击目标。而且，它可以调用类中的任意公共方法和/或访问公共字段。如果代码不能用这些方法和字段将对象强制转换为类/接口，那么它通常无法调用这些方法和/或访问该字段，而这可能很危险。</td>
+</tr>
+<tr>
+<td>打印作业请求的开始</td>
+<td>queuePrintJob</td>
+<td>这可能向打印机输出敏感信息，或者只是浪费纸张。</td>
+</tr>
+<tr>
+<td>获取另一个线程的堆栈追踪信息。</td>
+<td>getStackTrace</td>
+<td>此权限允许获取另一个线程的堆栈追踪信息。此操作可能允许执行恶意代码监视线程并发现应用程序中的弱点。</td>
+</tr>
+<tr>
+<td>在线程由于未捕获的异常而突然终止时，设置将要使用的默认处理程序</td>
+<td>setDefaultUncaughtExceptionHandler</td>
+<td>此权限允许攻击者注册恶意的未捕获异常处理程序，可能会妨碍线程的终止</td>
+</tr>
+<tr>
+<td>表示得到 java.util.prefs.Preferences 的访问权所需的权限。java.util.prefs.Preferences 实现了用户或系统的根，这反过来又允许获取或更新 Preferences 持久内部存储中的操作。</td>
+<td>Preferences</td>
+<td>如果运行此代码的用户具有足够的读/写内部存储的 OS 特权，则此权限就允许用户读/写优先级内部存储。实际的内部存储可能位于传统的文件系统目录中或注册表中，这取决于平台 OS。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="5-3-可配置项详解"><a href="#5-3-可配置项详解" class="headerlink" title="5.3 可配置项详解"></a>5.3 可配置项详解</h2><p>　　当批量配置的时候，有三种模式：</p>
+<ul>
+<li>directory/ 表示directory目录下的所有.class文件，不包括.jar文件</li>
+<li>directory/* 表示directory目录下的所有的.class及.jar文件</li>
+<li>directory/- 表示directory目录下的所有的.class及.jar文件，包括子目录</li>
+</ul>
+<p>　　可以通过${}来引用系统属性，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;file:$&#123;&#123;java.ext.dirs&#125;&#125;&#x2F;*&quot;</span><br></pre></td></tr></table></figure>
+<h1 id="六、问题解决"><a href="#六、问题解决" class="headerlink" title="六、问题解决"></a>六、问题解决</h1><p>　　当出现关于安全管理的报错的时候，基本有两种方式来解决。</p>
+<h2 id="6-1-取消安全管理器"><a href="#6-1-取消安全管理器" class="headerlink" title="6.1 取消安全管理器"></a>6.1 取消安全管理器</h2><p>　　一般情况下都是无意启动安全管理器，所以这时候只需要把安全管理器进行关闭，去掉启动参数即可。</p>
+<h2 id="6-2-增加相应权限"><a href="#6-2-增加相应权限" class="headerlink" title="6.2 增加相应权限"></a>6.2 增加相应权限</h2><p>　　若因为没有权限报错，则报错信息中会有请求的权限和请求什么权限，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.security.AccessControlException: access denied (java.io.FilePermission E:\pack\a\a.txt write)</span><br></pre></td></tr></table></figure>
+<p>　　上面例子，请求资源E:\pack\a\a.txt，的FilePermission的写权限没有，因此被拒绝。</p>
+<p>　　也可以开放所有权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grant &#123; </span><br><span class="line">    permission java.security.AllPermission;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>　　这一篇简单介绍Java的安全管理器，后面会对其进行详细介绍，不过了解这些对一般应用已经足够了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//默认的策略是$JAVA_HOME/jre/lib/security/java.policy</span></span><br><span class="line">   <span class="comment">//如果策略文件没有，就临时扩大权限</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> HttpSession <span class="title">getSession</span><span class="params">(<span class="keyword">boolean</span> create)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>( System.getSecurityManager() != <span class="keyword">null</span> ) &#123;</span><br><span class="line">           PrivilegedGetSession dp = <span class="keyword">new</span> PrivilegedGetSession(create);</span><br><span class="line">           <span class="keyword">return</span> (HttpSession)AccessController.doPrivileged(dp);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> doGetSession(create);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="class"><span class="keyword">class</span> <span class="title">PrivilegedGetSession</span> <span class="keyword">implements</span> <span class="title">PrivilegedAction</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> create;</span><br><span class="line"></span><br><span class="line">    PrivilegedGetSession(<span class="keyword">boolean</span> create) &#123;</span><br><span class="line">        <span class="keyword">this</span>.create = create;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> doGetSession(create);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/09/18/resource-desk-vue-uniapp-微信小程序-markdown最佳渲染方案/" data-toggle="tooltip" data-placement="top" title="uniapp(微信小程序) markdown最佳渲染方案">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/09/16/resource-java-Base-jdk8-Lambda/" data-toggle="tooltip" data-placement="top" title="JDK1.8新特性之Lambda表达式">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#一、文章的目的"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一、文章的目的</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#二、SecurityManager应用场景"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二、SecurityManager应用场景</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#三、管理器配置文件"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三、管理器配置文件</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-1-默认配置文件"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">3.1 默认配置文件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-2-配置文件详解"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">3.2 配置文件详解</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#四、启动安全管理器"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四、启动安全管理器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-1-启动参数方式"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">4.1 启动参数方式</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4-2-编码方式启动"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">4.2 编码方式启动</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#五、配置文件简单解释"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">五、配置文件简单解释</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-1-配置基本原则"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">5.1 配置基本原则</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-2-默认配置文件解释"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">5.2 默认配置文件解释</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5-3-可配置项详解"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">5.3 可配置项详解</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#六、问题解决"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">六、问题解决</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-1-取消安全管理器"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">6.1 取消安全管理器</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#6-2-增加相应权限"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">6.2 增加相应权限</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

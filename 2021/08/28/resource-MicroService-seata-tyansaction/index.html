@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          事务介绍 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/08/28/resource-MicroService-seata-tyansaction/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/MicroService/transaction.PNG')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Transaction" title="Transaction">Transaction</a>
+                            
+                        </div>
+
+                        <h1>事务介绍</h1>
+                        <h2 class="subheading">事务是恢复和并发控制的基本单位。</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-08-28
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">4.5k</span> and
+                                Reading Time <span class="post-count">15</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="事务简介"><a href="#事务简介" class="headerlink" title="事务简介"></a>事务简介</h1><p><code>事务(Transaction)</code>是访问并可能更新数据库中各种数据项的一个程序执行单元(unit)。在关系数据库中，一个事务由一组SQL语句组成。事务应该具有4个属性：<code>原子性</code>、<code>一致性</code>、<code>隔离性</code>、<code>持久性</code>。这四个属性通常称为<strong><code>ACID</code></strong>特性。</p>
+<ul>
+<li><strong>原子性（atomicity）</strong>：一个事务是一个不可分割的工作单位，事务中包括的诸操作要么都做，要么都不做。</li>
+<li><strong>一致性（consistency）</strong>：事务必须是使数据库从一个一致性状态变到另一个一致性状态，事务的中间状态不能被观察到的。</li>
+<li><strong>隔离性（isolation）</strong>：一个事务的执行不能被其他事务干扰。即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。隔离性又分为四个级别：<ul>
+<li>读未提交(<code>read uncommitted</code>)、</li>
+<li>读已提交(<code>read committed</code>，解决脏读)、</li>
+<li>可重复读(<code>repeatable read</code>，解决虚读)、</li>
+<li>串行化(<code>serializable</code>，解决幻读)。</li>
+</ul>
+</li>
+<li><strong>持久性（durability）</strong>：持久性也称永久性（permanence），指一个事务一旦提交，它对数据库中数据的改变就应该是永久性的。接下来的其他操作或故障不应该对其有任何影响。</li>
+</ul>
+<p>任何事务机制在实现时，都应该考虑事务的ACID特性，包括：本地事务、分布式事务，即使不能都很好的满足，也要考虑支持到什么程度。<sunfy-line></p>
+<h1 id="本地事务"><a href="#本地事务" class="headerlink" title="本地事务"></a>本地事务</h1><p>大多数场景下，我们的应用都只需要操作单一的数据库，这种情况下的事务称之为本地事务(Local Transaction)。本地事务的ACID特性是数据库直接提供支持。本地事务应用架构如下所示：</p>
+<p><img src="../../../../img/tyansaction/718575090439.png" alt="img"></p>
+<p>在<code>JDBC</code>编程中，我们通过<code>java.sql.Connection</code>对象来开启、关闭或者提交事务。代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Connection conn = ... <span class="comment">//获取数据库连接 </span></span><br><span class="line">conn.setAutoCommit(<span class="keyword">false</span>); <span class="comment">//开启事务 </span></span><br><span class="line"><span class="keyword">try</span>&#123;  <span class="comment">//...执行增删改查sql  </span></span><br><span class="line">    conn.commit(); <span class="comment">//提交事务 </span></span><br><span class="line">&#125;<span class="keyword">catch</span> (Exception e) &#123;  </span><br><span class="line">    conn.rollback();<span class="comment">//事务回滚 </span></span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    conn.close();<span class="comment">//关闭链接 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="分布式事务典型场景"><a href="#分布式事务典型场景" class="headerlink" title="分布式事务典型场景"></a>分布式事务典型场景</h1><p>当下互联网发展如火如荼，绝大部分公司都进行了<code>数据库拆分</code>和<code>服务化(SOA)</code>。在这种情况下，完成某一个业务功能可能需要横跨多个服务，操作多个数据库。这就涉及到了分布式事务，操作的资源位于多个资源服务器上，而应用需要保证对于多个资源服务器的数据的操作，要么全部成功，要么全部失败。本质上来说，分布式事务就是为了保证不同资源服务器的数据一致性。</p>
+<h2 id="典型的分布式事务场景"><a href="#典型的分布式事务场景" class="headerlink" title="典型的分布式事务场景"></a>典型的分布式事务场景</h2><h3 id="跨库事务"><a href="#跨库事务" class="headerlink" title="跨库事务"></a>跨库事务</h3><p>跨库事务指的是，一个应用某个功能需要操作多个库，不同的库中存储不同的业务数据。笔者见过一个相对比较复杂的业务，一个业务中同时操作了9个库。下图演示了一个服务同时操作2个库的情况： </p>
+<p><img src="../../../../img/tyansaction/759221000634.png" alt="img"></p>
+<h3 id="分库分表"><a href="#分库分表" class="headerlink" title="分库分表"></a>分库分表</h3><p>通常一个库数据量比较大或者预期未来的数据量比较大，都会进行水平拆分，也就是分库分表。如下图，将数据库B拆分成了2个库： </p>
+<p><img src="../../../../img/tyansaction/803303066363.png" alt="img"></p>
+<p>对于分库分表的情况，一般开发人员都会使用一些数据库中间件来降低sql操作的复杂性。如，对于sql</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">user</span>(<span class="keyword">id</span>,<span class="keyword">name</span>) <span class="keyword">values</span> (<span class="number">1</span>,<span class="string">"张三"</span>),(<span class="number">2</span>,<span class="string">"李四"</span>)。</span><br></pre></td></tr></table></figure>
+<p>这条sql是操作单库的语法，单库情况下，可以保证事务的一致性。</p>
+<p>但是由于现在进行了分库分表，开发人员希望将1号记录插入分库1，2号记录插入分库2。所以数据库中间件要将其改写为2条sql，分别插入两个不同的分库，此时要保证两个库要不都成功，要不都失败，因此基本上所有的数据库中间件都面临着分布式事务的问题。</p>
+<h3 id="服务化"><a href="#服务化" class="headerlink" title="服务化"></a>服务化</h3><p>微服务架构是目前一个比较一个比较火的概念。例如上面笔者提到的一个案例，某个应用同时操作了9个库，这样的应用业务逻辑必然非常复杂，对于开发人员是极大的挑战，应该拆分成不同的独立服务，以简化业务逻辑。拆分后，独立服务之间通过<code>RPC框架</code>来进行远程调用，实现彼此的通信。下图演示了一个3个服务之间彼此调用的架构：</p>
+<p><img src="../../../../img/tyansaction/870448000242.png" alt="img"></p>
+<p>Service A完成某个功能需要直接操作数据库，同时需要调用Service B和Service C，而Service B又同时操作了2个数据库，Service C也操作了一个库。需要保证这些跨服务的对多个数据库的操作要不都成功，要不都失败，实际上这可能是最典型的分布式事务场景。</p>
+<p>小结：上述讨论的分布式事务场景中，无一例外的都直接或者间接的操作了多个数据库。如何保证事务的ACID特性，对于分布式事务实现方案而言，是非常大的挑战。同时，分布式事务实现方案还必须要考虑性能的问题，如果为了严格保证ACID特性，导致性能严重下降，那么对于一些要求快速响应的业务，是无法接受的。</p>
+<h1 id="X-Open-DTP模型与XA规范"><a href="#X-Open-DTP模型与XA规范" class="headerlink" title="X/Open DTP模型与XA规范"></a><code>X/Open DTP</code>模型与<code>XA</code>规范</h1><p>X/Open，即现在的open group，是一个独立的组织，主要负责制定各种行业技术标准。 就分布式事务处理(Distributed Transaction Processing,简称DTP)而言，X/Open主要提供了以下参考文档：</p>
+<ul>
+<li><a href="http://pubs.opengroup.org/onlinepubs/9294999599/toc.pdf" target="_blank" rel="noopener"><code>DTP 参考模型</code></a></li>
+<li><a href="http://pubs.opengroup.org/onlinepubs/009680699/toc.pdf" target="_blank" rel="noopener"><code>DTP XA规范</code></a></li>
+</ul>
+<h2 id="DTP模型"><a href="#DTP模型" class="headerlink" title="DTP模型"></a><code>DTP</code>模型</h2><p>构成DTP模型的5个基本元素：</p>
+<ul>
+<li><strong>应用程序(Application Program ，简称AP)：</strong>用于定义事务边界(即定义事务的开始和结束)，并且在事务边界内对资源进行操作。</li>
+<li><strong>资源管理器(Resource Manager，简称RM)：</strong>如数据库、文件系统等，并提供访问资源的方式。</li>
+<li><strong>事务管理器(Transaction Manager ，简称TM)：</strong>负责分配事务唯一标识，监控事务的执行进度，并负责事务的提交、回滚等。</li>
+<li><strong>通信资源管理器(Communication Resource Manager，简称<code>CRM</code>)：</strong>控制一个TM域(TM domain)内或者跨TM域的分布式应用之间的通信。</li>
+<li><strong>通信协议(Communication Protocol，简称<code>CP</code>)：</strong>提供<code>CRM</code>提供的分布式应用节点之间的底层通信服务。</li>
+</ul>
+<h2 id="XA规范"><a href="#XA规范" class="headerlink" title="XA规范"></a><code>XA</code>规范</h2><p>在<code>DTP</code>本地模型实例中，由<code>AP</code>、<code>RMs</code>和<code>TM</code>组成，不需要其他元素。<code>AP</code>、<code>RM</code>和<code>TM</code>之间，彼此都需要进行交互，如下图所示： </p>
+<p><img src="../../../../img/tyansaction/clipboard-16300557932363.png" alt="img"></p>
+<p>这张图中(1)表示<code>AP-RM</code>的交互接口，(2)表示AP-TM的交互接口，(3)表示RM-TM的交互接口。</p>
+<p><code>XA</code>规范的最主要的作用是，就是定义了<code>RM-TM</code>的交互接口，<code>XA</code>规范除了定义的<code>RM-TM</code>交互的接口<code>(XA Interface)</code>之外，还对两阶段提交协议进行了优化。</p>
+<p>两阶段协议<code>(two-phase commit)</code>是在<code>OSI TP</code>标准中提出的；在DTP参考模型<code>(&lt;&lt;Distributed Transaction Processing: Reference Model&gt;&gt;)</code>中，指定了全局事务的提交要使用<code>two-phase commit</code>协议；而<code>XA</code>规范<code>(&lt;&lt; Distributed Transaction Processing: The XA Specification&gt;&gt;)</code>只是定义了两阶段提交协议中需要使用到的接口，也就是上述提到的<code>RM-TM</code>交互的接口，因为两阶段提交过程中的参与方，只有<code>TM</code>和<code>RMs</code>。</p>
+<h1 id="两阶段提交协议-2PC"><a href="#两阶段提交协议-2PC" class="headerlink" title="两阶段提交协议(2PC)"></a>两阶段提交协议(<code>2PC</code>)</h1><p>两阶段提交协议（Two Phase Commit）不是在XA规范中提出，但是XA规范对其进行了优化。而从字面意思来理解，Two Phase Commit，就是将提交(commit)过程划分为2个阶段(Phase)：</p>
+<p><strong>阶段1：</strong></p>
+<p>TM通知各个RM准备提交它们的事务分支。如果RM判断自己进行的工作可以被提交，那就对工作内容进行持久化，再给TM肯定答复；要是发生了其他情况，那给TM的都是否定答复。在发送了否定答复并回滚了已经的工作后，RM就可以丢弃这个事务分支信息。</p>
+<p>以<code>mysql</code>数据库为例，在第一阶段，事务管理器向所有涉及到的数据库服务器发出prepare”准备提交”请求，数据库收到请求后执行数据修改和日志记录等处理，处理完成后只是把事务的状态改成”可以提交”,然后把结果返回给事务管理器。</p>
+<p><strong>阶段2</strong></p>
+<p>TM根据阶段1各个RM prepare的结果，决定是提交还是回滚事务。如果所有的RM都prepare成功，那么TM通知所有的RM进行提交；如果有RM prepare失败的话，则TM通知所有RM回滚自己的事务分支。</p>
+<p>以<code>mysql</code>数据库为例，如果第一阶段中所有数据库都prepare成功，那么事务管理器向数据库服务器发出”确认提交”请求，数据库服务器把事务的”可以提交”状态改为”提交完成”状态，然后返回应答。如果在第一阶段内有任何一个数据库的操作发生了错误，或者事务管理器收不到某个数据库的回应，则认为事务失败，回撤所有数据库的事务。数据库服务器收不到第二阶段的确认提交请求，也会把”可以提交”的事务回撤。</p>
+<p><img src="../../../../img/tyansaction/clipboard-16300557959024.png" alt="img"></p>
+<p><img src="../../../../img/tyansaction/clipboard-16300557978915.png" alt="img"></p>
+<p><strong><code>XA</code>是资源层面的分布式事务，强一致性，在两阶段提交的整个过程中，一直会持有资源的锁。</strong></p>
+<p><strong><code>TCC</code>是业务层面的分布式事务，最终一致性，不会一直持有资源的锁。</strong></p>
+<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>二阶段提交看起来确实能够提供原子性的操作，但是不幸的是，二阶段提交还是有几个缺点的：</p>
+<h3 id="1、同步阻塞问题。"><a href="#1、同步阻塞问题。" class="headerlink" title="1、同步阻塞问题。"></a><strong>1、同步阻塞问题。</strong></h3><p>两阶段提交方案下全局事务的ACID特性，是依赖于RM的。一个全局事务内部包含了多个独立的事务分支，这一组事务分支要不都成功，要不都失败。各个事务分支的ACID特性共同构成了全局事务的ACID特性。也就是将单个事务分支的支持的ACID特性提升一个层次到分布式事务的范畴。 即使在本地事务中，如果对操作读很敏感，我们也需要将事务隔离级别设置为<code>SERIALIZABLE</code>。而对于分布式事务来说，更是如此，可重复读隔离级别不足以保证分布式事务一致性。如果我们使用MySQL来支持XA分布式事务的话，那么最好将事务隔离级别设置为<code>SERIALIZABLE</code>，然而<code>SERIALIZABLE</code>(串行化)是四个事务隔离级别中最高的一个级别，也是执行效率最低的一个级别。</p>
+<h3 id="2、单点故障。"><a href="#2、单点故障。" class="headerlink" title="2、单点故障。"></a><strong>2、单点故障。</strong></h3><p>由于协调者的重要性，一旦协调者TM发生故障，参与者RM会一直阻塞下去。尤其在第二阶段，协调者发生故障，那么所有的参与者还都处于锁定事务资源的状态中，而无法继续完成事务操作。（如果是协调者挂掉，可以重新选举一个协调者，但是无法解决因为协调者宕机导致的参与者处于阻塞状态的问题）</p>
+<h3 id="3、数据不一致。"><a href="#3、数据不一致。" class="headerlink" title="3、数据不一致。"></a><strong>3、数据不一致。</strong></h3><p>在二阶段提交的阶段二中，当协调者向参与者发送commit请求之后，发生了局部网络异常或者在发送commit请求过程中协调者发生了故障，这会导致只有一部分参与者接受到了commit请求，而在这部分参与者接到commit请求之后就会执行commit操作，但是其他部分未接到commit请求的机器则无法执行事务提交。于是整个分布式系统便出现了数据不一致性的现象。</p>
+<p>由于二阶段提交存在着诸如同步阻塞、单点问题等缺陷，所以，研究者们在二阶段提交的基础上做了改进，提出了三阶段提交。 </p>
+<h1 id="三阶段提交协议-Three-phase-commit"><a href="#三阶段提交协议-Three-phase-commit" class="headerlink" title="三阶段提交协议(Three-phase commit)"></a>三阶段提交协议(Three-phase commit)</h1><p>三阶段提交（<code>3PC</code>)，是二阶段提交（<code>2PC</code>）的改进版本。</p>
+<p>与两阶段提交不同的是，三阶段提交有两个改动点：</p>
+<ul>
+<li>引入超时机制。同时在协调者和参与者中都引入超时机制。</li>
+<li>在第一阶段和第二阶段中插入一个准备阶段。保证了在最后提交阶段之前各参与节点的状态是一致的。也就是说，除了引入超时机制之外，<code>3PC</code>把<code>2PC</code>的准备阶段再次一分为二，这样三阶段提交就有<code>CanCommit</code>、<code>PreCommit</code>、<code>DoCommit</code>三个阶段。</li>
+</ul>
+<p><img src="../../../../img/tyansaction/clipboard-16300558012446.png" alt="img"></p>
+<h2 id="CanCommit阶段"><a href="#CanCommit阶段" class="headerlink" title="CanCommit阶段"></a><strong><code>CanCommit</code>阶段</strong></h2><p><code>3PC</code>的<code>CanCommit</code>阶段其实和<code>2PC</code>的准备阶段很像。协调者向参与者发送commit请求，参与者如果可以提交就返回Yes响应，否则返回No响应。</p>
+<ul>
+<li>事务询问 协调者向参与者发送<code>CanCommit</code>请求。询问是否可以执行事务提交操作。然后开始等待参与者的响应。</li>
+<li>响应反馈 参与者接到<code>CanCommit</code>请求之后，正常情况下，如果其自身认为可以顺利执行事务，则返回Yes响应，并进入预备状态。否则反馈No</li>
+</ul>
+<h2 id="PreCommit阶段"><a href="#PreCommit阶段" class="headerlink" title="PreCommit阶段"></a><strong><code>PreCommit</code>阶段</strong></h2><p>协调者根据参与者的反应情况来决定是否可以记性事务的<code>PreCommit</code>操作。根据响应情况，有以下两种可能。</p>
+<p>假如协调者从所有的参与者获得的反馈都是Yes响应，那么就会执行事务的预执行。</p>
+<ul>
+<li>发送预提交请求 协调者向参与者发送<code>PreCommit</code>请求，并进入Prepared阶段。   </li>
+<li>事务预提交 参与者接收到<code>PreCommit</code>请求后，会执行事务操作，并将undo和redo信息记录到事务日志中。</li>
+<li>响应反馈 如果参与者成功的执行了事务操作，则返回<code>ACK</code>响应，同时开始等待最终指令。</li>
+</ul>
+<p>假如有任何一个参与者向协调者发送了No响应，或者等待超时之后，协调者都没有接到参与者的响应，那么就执行事务的中断。</p>
+<ul>
+<li>发送中断请求 协调者向所有参与者发送abort请求。</li>
+<li>中断事务 参与者收到来自协调者的abort请求之后（或超时之后，仍未收到协调者的请求），执行事务的中断。</li>
+</ul>
+<h2 id="doCommit阶段"><a href="#doCommit阶段" class="headerlink" title="doCommit阶段"></a><strong><code>doCommit</code>阶段</strong></h2><p>该阶段进行真正的事务提交，也可以分为以下两种情况。</p>
+<p><strong>Case 1：执行提交</strong></p>
+<ul>
+<li>发送提交请求 协调接收到参与者发送的<code>ACK</code>响应，那么他将从预提交状态进入到提交状态。并向所有参与者发送<code>doCommit</code>请求。</li>
+<li>事务提交 参与者接收到<code>doCommit</code>请求之后，执行正式的事务提交。并在完成事务提交之后释放所有事务资源。</li>
+<li>响应反馈 事务提交完之后，向协调者发送<code>ACK</code>响应。</li>
+<li>完成事务 协调者接收到所有参与者的<code>ACK</code>响应之后，完成事务。</li>
+</ul>
+<p><strong>Case 2：中断事务</strong> </p>
+<p>协调者没有接收到参与者发送的<code>ACK</code>响应（可能是接受者发送的不是<code>ACK</code>响应，也可能响应超时），那么就会执行中断事务。</p>
+<ul>
+<li>发送中断请求 协调者向所有参与者发送abort请求</li>
+<li>事务回滚 参与者接收到abort请求之后，利用其在阶段二记录的undo信息来执行事务的回滚操作，并在完成回滚之后释放所有的事务资源。</li>
+<li>反馈结果 参与者完成事务回滚之后，向协调者发送<code>ACK</code>消息</li>
+<li>中断事务 协调者接收到参与者反馈的<code>ACK</code>消息之后，执行事务的中断。 </li>
+</ul>
+<p>在<code>doCommit</code>阶段，如果参与者无法及时接收到来自协调者的<code>doCommit</code>或者<code>rebort</code>请求时，会在等待超时之后，会继续进行事务的提交。（其实这个应该是基于概率来决定的，当进入第三阶段时，说明参与者在第二阶段已经收到了<code>PreCommit</code>请求，那么协调者产生<code>PreCommit</code>请求的前提条件是他在第二阶段开始之前，收到所有参与者的<code>CanCommit</code>响应都是Yes。（一旦参与者收到了<code>PreCommit</code>，意味他知道大家其实都同意修改了）所以，一句话概括就是，当进入第三阶段时，由于网络超时等原因，虽然参与者没有收到commit或者abort响应，但是他有理由相信：成功提交的几率很大。 ）</p>
+<h1 id="2PC与3PC的区别"><a href="#2PC与3PC的区别" class="headerlink" title="2PC与3PC的区别"></a><code>2PC</code>与<code>3PC</code>的区别</h1><p>相对于<code>2PC</code>，<code>3PC</code>主要解决的单点故障问题，并减少阻塞，因为一旦参与者无法及时收到来自协调者的信息之后，他会默认执行commit。而不会一直持有事务资源并处于阻塞状态。但是这种机制也会导致数据一致性问题，因为，由于网络原因，协调者发送的abort响应没有及时被参与者接收到，那么参与者在等待超时之后执行了commit操作。这样就和其他接到abort命令并执行回滚的参与者之间存在数据不一致的情况。</p>
+<p>了解了<code>2PC</code>和<code>3PC</code>之后，我们可以发现，无论是二阶段提交还是三阶段提交都无法彻底解决分布式的一致性问题。</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/08/28/resource-dataStructure-leetcode-leetcode-array/" data-toggle="tooltip" data-placement="top" title="数据结构测试题---数组">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/08/27/resource-java-algorithm-808-bit/" data-toggle="tooltip" data-placement="top" title="算法常用的解题思路---位运算">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#事务简介"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">事务简介</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#本地事务"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">本地事务</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#分布式事务典型场景"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">分布式事务典型场景</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#典型的分布式事务场景"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">典型的分布式事务场景</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#跨库事务"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">跨库事务</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分库分表"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">分库分表</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#服务化"><span class="toc-nav-number">3.1.3.</span> <span class="toc-nav-text">服务化</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#X-Open-DTP模型与XA规范"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">X&#x2F;Open DTP模型与XA规范</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#DTP模型"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">DTP模型</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#XA规范"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">XA规范</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#两阶段提交协议-2PC"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">两阶段提交协议(2PC)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#存在的问题"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">存在的问题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1、同步阻塞问题。"><span class="toc-nav-number">5.1.1.</span> <span class="toc-nav-text">1、同步阻塞问题。</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2、单点故障。"><span class="toc-nav-number">5.1.2.</span> <span class="toc-nav-text">2、单点故障。</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3、数据不一致。"><span class="toc-nav-number">5.1.3.</span> <span class="toc-nav-text">3、数据不一致。</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#三阶段提交协议-Three-phase-commit"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">三阶段提交协议(Three-phase commit)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#CanCommit阶段"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">CanCommit阶段</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#PreCommit阶段"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">PreCommit阶段</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#doCommit阶段"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">doCommit阶段</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#2PC与3PC的区别"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">2PC与3PC的区别</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Transaction" title="Transaction">Transaction</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

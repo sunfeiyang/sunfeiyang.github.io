@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          MySQL常见异常 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2020/09/22/resource-DB-MySQL-MySQl-error/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/DB/mysql.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+                            
+                        </div>
+
+                        <h1>MySQL常见异常</h1>
+                        <h2 class="subheading">mySQL数据库在使用过程中遇到的一些问题记录</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2020-09-22
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">1.5k</span> and
+                                Reading Time <span class="post-count">7</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>mySQL数据库在使用过程中遇到的一些问题记录<a id="more"></a></p>
+<h2 id="linux，登录mysql报错"><a href="#linux，登录mysql报错" class="headerlink" title="linux，登录mysql报错"></a>linux，登录mysql报错</h2><p>ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/var/lib/mysql.sock’</p>
+<p>首先检查/etc下的是否有my.cnf文件,这是启动时基本配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">log-bin&#x3D;mysql-bin</span><br><span class="line">server-id&#x3D;1</span><br><span class="line">#</span><br><span class="line"># Remove leading # and set to the amount of RAM for the most important data</span><br><span class="line"># cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.</span><br><span class="line">innodb_buffer_pool_size &#x3D; 8M</span><br><span class="line">#</span><br><span class="line"># Remove leading # to turn on a very important data integrity option: logging</span><br><span class="line"># changes to the binary log between backups.</span><br><span class="line"># log_bin</span><br><span class="line">#</span><br><span class="line"># Remove leading # to set options mainly useful for reporting servers.</span><br><span class="line"># The server defaults are faster for transactions and fast SELECTs.</span><br><span class="line"># Adjust sizes as needed, experiment to find the optimal values.</span><br><span class="line">join_buffer_size &#x3D; 8M</span><br><span class="line">sort_buffer_size &#x3D; 2M</span><br><span class="line">read_rnd_buffer_size &#x3D; 2M</span><br><span class="line">datadir&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql</span><br><span class="line">socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock</span><br><span class="line">log-bin</span><br><span class="line">max_binlog_size&#x3D;50M</span><br><span class="line">expire_logs_days&#x3D;7</span><br><span class="line"># 关闭所有网络链接,开启后只能使用mysql客户端链接</span><br><span class="line">#skip-networking</span><br><span class="line">#default-time-zone &#x3D; &#39;+8:00&#39;</span><br><span class="line">performance_schema_max_table_instances&#x3D;200</span><br><span class="line">table_definition_cache&#x3D;200</span><br><span class="line">table_open_cache&#x3D;128</span><br><span class="line">bind-address &#x3D; 0.0.0.0</span><br><span class="line">#skip-grant-tables</span><br><span class="line"></span><br><span class="line"># Disabling symbolic-links is recommended to prevent assorted security risks</span><br><span class="line">symbolic-links&#x3D;0</span><br><span class="line"></span><br><span class="line"># Recommended in standard MySQL setup</span><br><span class="line">sql_mode&#x3D;NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</span><br><span class="line"></span><br><span class="line">[mysqld_safe]</span><br><span class="line">log-error&#x3D;&#x2F;var&#x2F;log&#x2F;mysqld.log</span><br><span class="line">pid-file&#x3D;&#x2F;var&#x2F;run&#x2F;mysqld&#x2F;mysqld.pid</span><br><span class="line"></span><br><span class="line">#配置开启binlog</span><br><span class="line">log‐bin&#x3D;&#x2F;usr&#x2F;local&#x2F;software&#x2F;mysql&#x2F;binlog&#x2F;mysql‐bin</span><br><span class="line">##注意5.7以及更高版本需要配置本项:server‐id&#x3D;123454(自定义,保证唯一性);</span><br><span class="line">###binlog格式,有3种statement,row,mixed</span><br><span class="line">binlog‐format&#x3D;ROW</span><br><span class="line">###表示每1次执行写入就与硬盘同步,会影响性能,为0时表示,事务提交时mysql不做刷盘操作,由系统决定</span><br><span class="line">sync‐binlog&#x3D;1</span><br><span class="line">#</span><br></pre></td></tr></table></figure>
+<p>关闭进程指令：ps aux |grep ‘mysql*’<br>关闭mysql的所有进程</p>
+<p>启动mysql: systemctl start mysqld</p>
+<h2 id="server-id问题"><a href="#server-id问题" class="headerlink" title="server-id问题"></a>server-id问题</h2><p>[ERROR] You have enabled the binary log, but you haven’t provided the mandatory server-id.</p>
+<p>报错的原因：</p>
+<p>在设置bin log日志的时候，没有设置server_id参数。server-id参数用于在复制中，为主库和备库提供一个独立的ID，以区分主库和备库；开启二进制文件的时候，需要设置这个参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@mysql bin]# vi &#x2F;etc&#x2F;my.cnf</span><br><span class="line">#add</span><br><span class="line">[mysqld]</span><br><span class="line">log-bin&#x3D;mysql-bin</span><br><span class="line">server-id&#x3D;1</span><br></pre></td></tr></table></figure>
+<h2 id="远程登录授权"><a href="#远程登录授权" class="headerlink" title="远程登录授权"></a>远程登录授权</h2><p>Access denied for user ‘root’@’%’ to database ‘XXXX’</p>
+<p>解决方法<br>最后发现是user表中’root’@’%’没有grant的权限<br>可以用如下命令查看： </p>
+<p>可以看到现在这两个权限都是N<br>然后我们更新它们为Y，然后重启mysql</p>
+<p>update mysql.user set Grant_priv=’Y’,Super_priv=’Y’ where user = ‘root’ and host = ‘%’;</p>
+<h2 id="mysql5-7简单密码错误"><a href="#mysql5-7简单密码错误" class="headerlink" title="mysql5.7简单密码错误"></a>mysql5.7简单密码错误</h2><p>ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</p>
+<p>有时候，只是为了自己测试，不想密码设置得那么复杂，譬如只想设置root的密码为123456。</p>
+<p>SET PASSWORD FOR ‘root’@’localhost’ = PASSWORD(‘123456’);</p>
+<p>但是会报错：</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">SET</span> PASSWORD <span class="keyword">FOR</span> <span class="string">'root'</span>@<span class="string">'localhost'</span> = PASSWORD(<span class="string">'123'</span>);</span><br><span class="line">ERROR <span class="number">1819</span> (HY000): Your password does <span class="keyword">not</span> satisfy the current policy requirements</span><br></pre></td></tr></table></figure>
+<p>【原因】</p>
+<p>原来MySQL5.6.6版本之后增加了密码强度验证插件validate_password，相关参数设置的较为严格。<br>使用了该插件会检查设置的密码是否符合当前设置的强度规则，若不满足则拒绝设置。影响的语句和函数有：create user,grant,set password,password(),old password。<br>【解决】</p>
+<p>1） 查看mysql全局参数配置</p>
+<p>该问题其实与mysql的validate_password_policy的值有关。<br>查看一下msyql密码相关的几个全局参数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select @@validate_password_policy;</span><br><span class="line">+<span class="comment">----------------------------+</span></span><br><span class="line">| @@validate_password_policy |</span><br><span class="line">+<span class="comment">----------------------------+</span></span><br><span class="line">| MEDIUM                     |</span><br><span class="line">+<span class="comment">----------------------------+</span></span><br><span class="line"></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line">mysql&gt; <span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">'validate_password%'</span>;</span><br><span class="line">+<span class="comment">--------------------------------------+--------+</span></span><br><span class="line">| Variable_name                        | Value  |</span><br><span class="line">+<span class="comment">--------------------------------------+--------+</span></span><br><span class="line">| validate_password_dictionary_file    |        |</span><br><span class="line">| validate_password_length             | 8      |</span><br><span class="line">| validate_password_mixed_case_count   | 1      |</span><br><span class="line">| validate_password_number_count       | 1      |</span><br><span class="line">| validate_password_policy             | MEDIUM |</span><br><span class="line">| validate_password_special_char_count | 1      |</span><br><span class="line">+<span class="comment">--------------------------------------+--------+</span></span><br><span class="line"></span><br><span class="line">6 rows in <span class="keyword">set</span> (<span class="number">0.08</span> sec)</span><br></pre></td></tr></table></figure>
+<p>2）参数解释</p>
+<p>validate_password_dictionary_file<br>插件用于验证密码强度的字典文件路径。</p>
+<p>validate_password_length<br>密码最小长度，参数默认为8，它有最小值的限制，最小值为：validate_password_number_count + validate_password_special_char_count + (2 * validate_password_mixed_case_count)</p>
+<p>validate_password_mixed_case_count<br>密码至少要包含的小写字母个数和大写字母个数。</p>
+<p>validate_password_number_count<br>密码至少要包含的数字个数。</p>
+<p>validate_password_policy<br>密码强度检查等级，0/LOW、1/MEDIUM、2/STRONG。有以下取值：<br><strong>Policy         Tests Performed</strong><br>0 or LOW        Length<br>1 or MEDIUM     Length; numeric, lowercase/uppercase, and special characters<br>2 or STRONG     Length; numeric, lowercase/uppercase, and special characters; dictionary file<br>默认是1，即MEDIUM，所以刚开始设置的密码必须符合长度，且必须含有数字，小写或大写字母，特殊字符。</p>
+<p>validate_password_special_char_count<br>密码至少要包含的特殊字符数。</p>
+<p>3）修改mysql参数配置</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set global validate_password_policy=0;</span><br><span class="line">Query OK, 0 rows affected (0.05 sec)</span><br><span class="line">mysql&gt; </span><br><span class="line">mysql&gt; set global validate_password_mixed_case_count=0;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line">mysql&gt; set global validate_password_number_count=3;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line">mysql&gt; set global validate_password_special_char_count=0;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line">mysql&gt; set global validate_password_length=3;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE 'validate_password%';</span><br><span class="line">+<span class="comment">--------------------------------------+-------+</span></span><br><span class="line">| Variable_name                        | Value |</span><br><span class="line">+<span class="comment">--------------------------------------+-------+</span></span><br><span class="line">| validate_password_dictionary_file    |       |</span><br><span class="line">| validate_password_length             | 3     |</span><br><span class="line">| validate_password_mixed_case_count   | 0     |</span><br><span class="line">| validate_password_number_count       | 3     |</span><br><span class="line">| validate_password_policy             | LOW   |</span><br><span class="line">| validate_password_special_char_count | 0     |</span><br><span class="line"></span><br><span class="line">+<span class="comment">--------------------------------------+-------+</span></span><br><span class="line">6 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>4）修改简单密码：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123');</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br></pre></td></tr></table></figure>
+<h2 id="ERR-1273-Unknown-collation-‘utf8mb4-0900-ai-ci’"><a href="#ERR-1273-Unknown-collation-‘utf8mb4-0900-ai-ci’" class="headerlink" title="[ERR] 1273 - Unknown collation: ‘utf8mb4_0900_ai_ci’"></a>[ERR] 1273 - Unknown collation: ‘utf8mb4_0900_ai_ci’</h2><p>使用navicate12运行sql文件出错</p>
+<p>报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ERR] 1273 - Unknown collation: &#39;utf8mb4_0900_ai_ci&#39;</span><br></pre></td></tr></table></figure>
+<p>报错原因：<br>生成转储文件的数据库版本为8.0,要导入sql文件的数据库版本为5.6,因为是高版本导入到低版本，引起1273错误</p>
+<p>解决方法：<br>打开sql文件，将文件中的所有<br><code>utf8mb4_0900_ai_ci</code>替换为<code>utf8_general_ci</code><br><code>utf8mb4</code>替换为<code>utf8</code><br>保存后再次运行sql文件，运行成功</p>
+<h2 id="MySQL报错：Server-returns-invalid-timezone-Go-to-‘Advanced’-tab-and-set-‘serverTimezone’-property-manually"><a href="#MySQL报错：Server-returns-invalid-timezone-Go-to-‘Advanced’-tab-and-set-‘serverTimezone’-property-manually" class="headerlink" title="MySQL报错：Server returns invalid timezone. Go to ‘Advanced’ tab and set ‘serverTimezone’ property manually."></a>MySQL报错：Server returns invalid timezone. Go to ‘Advanced’ tab and set ‘serverTimezone’ property manually.</h2><p>错误：Server returns invalid timezone. Go to ‘Advanced’ tab and set ‘serverTimezone’ property manually.<br>　　　　服务器返回无效时区。转到“高级”选项卡并手动设置“serverTimezone”属性。</p>
+<p>mysql -u root -p<br>mysql&gt;show variables like ‘%time_zone%’;<br>mysql&gt;set global time_zone=’+8:00’;</p>
+<p>问题：每次重启服务都要重新配置一遍。<br>解决：mysql&gt;set persist time_zone=’+8:00’;</p>
+<h2 id="mysql-报错：1140-In-aggregated-query-without-GROUP-BY-expression"><a href="#mysql-报错：1140-In-aggregated-query-without-GROUP-BY-expression" class="headerlink" title="mysql 报错：1140 In aggregated query without GROUP BY, expression"></a>mysql 报错：1140 In aggregated query without GROUP BY, expression</h2><p>1140 In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column ‘football.order.id’; this is incompatible with sql_mode=only_full_group_by<br>mysql5.7执行sql语句报错：In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column ‘football.order.id’; this is incompatible with sql_mode=only_full_group_by</p>
+<p>找了好久找到可行的办法分享下</p>
+<p>1.方法1，需要重启mysql服务</p>
+<p>编辑/etc/my.cnf文件，加入如下参数，重启mysql</p>
+<blockquote>
+<p>sql_mode = “STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER”</p>
+</blockquote>
+<p>2.方法2，不需要重启mysql服务</p>
+<p>可以看到模式为only_full_group_by</p>
+<p>mysql&gt;show variables like ‘%sql_mode’;</p>
+<p>mysql&gt; show session variables like ‘%sql_mode%’;</p>
+<p>mysql&gt; show global variables like ‘%sql_mode%’;</p>
+<p>使当前会话失效</p>
+<p>mysql&gt; set global sql_mode=’ ‘;</p>
+<p>mysql&gt; set session sql_mode=’ ‘;</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/10/10/resource-designpattern-structure-Bridge/" data-toggle="tooltip" data-placement="top" title="java设计模式之桥接模式">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/09/22/resource-Spring-SpringBoot-SpringBoot集成WebSocket通信/" data-toggle="tooltip" data-placement="top" title="SpringBoot集成WebSocket通信">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#linux，登录mysql报错"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">linux，登录mysql报错</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#server-id问题"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">server-id问题</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#远程登录授权"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">远程登录授权</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#mysql5-7简单密码错误"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">mysql5.7简单密码错误</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ERR-1273-Unknown-collation-‘utf8mb4-0900-ai-ci’"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">[ERR] 1273 - Unknown collation: ‘utf8mb4_0900_ai_ci’</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#MySQL报错：Server-returns-invalid-timezone-Go-to-‘Advanced’-tab-and-set-‘serverTimezone’-property-manually"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">MySQL报错：Server returns invalid timezone. Go to ‘Advanced’ tab and set ‘serverTimezone’ property manually.</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#mysql-报错：1140-In-aggregated-query-without-GROUP-BY-expression"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">mysql 报错：1140 In aggregated query without GROUP BY, expression</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

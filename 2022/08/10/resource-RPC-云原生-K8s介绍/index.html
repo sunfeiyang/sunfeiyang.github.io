@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          K8s 介绍 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2022/08/10/resource-RPC-云原生-K8s介绍/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/rpc/k8s基础入门.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#K8s" title="K8s">K8s</a>
+                            
+                        </div>
+
+                        <h1>K8s 介绍</h1>
+                        <h2 class="subheading">云原生是一种新型技术体系，是云计算未来的发展方向。</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2022-08-10
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.5k</span> and
+                                Reading Time <span class="post-count">8</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="1-K8s-介绍"><a href="#1-K8s-介绍" class="headerlink" title="1 K8s 介绍"></a>1 K8s 介绍</h1><p>1.Kubernetes 是什么？</p>
+<blockquote>
+<p>中文文档：<a href="http://docs.kubernetes.org.cn/" target="_blank" rel="noopener">http://docs.kubernetes.org.cn/</a></p>
+</blockquote>
+<p><img src="../../../../img/K8s介绍/image-20220812140022738.png" alt="image-20220812140022738"></p>
+<p><strong>传统部署时代</strong></p>
+<blockquote>
+<p>早期，各个组织机构在物理服务器上运行应用程序。无法为物理服务器中的应用程序定义资 源边界，这会导致资源分配问题。 例如，如果在物理服务器上运行多个应用程序，则可能 会出现一个应用程序占用大部分资源的情况， 结果可能导致其他应用程序的性能下降。 一 种解决方案是在不同的物理服务器上运行每个应用程序，但是由于资源利用不足而无法扩 展， 并且维护许多物理服务器的成本很高。 </p>
+</blockquote>
+<p><strong>虚拟化部署时代</strong> </p>
+<blockquote>
+<p>作为解决方案，引入了虚拟化。虚拟化技术允许你在单个物理服务器的 CPU 上运行多个虚 拟机（VM）。 虚拟化允许应用程序在 VM 之间隔离，并提供一定程度的安全，因为一个应 用程序的信息 不能被另一应用程序随意访问。 虚拟化技术能够更好地利用物理服务器上的资源，并且因为可轻松地添加或更新应用程序而可以实现更好的可伸缩性，降低硬件成本等等。 每个 VM 是一台完整的计算机，在虚拟化硬件之上运行所有组件，包括其自己的操作系统。</p>
+</blockquote>
+<p><strong>容器部署时代</strong></p>
+<blockquote>
+<p>容器类似于 VM，但是它们具有被放宽的隔离属性，可以在应用程序之间共享操作系统（OS）。 因此，容器被认为是轻量级的。容器与 VM 类似，具有自己的文件系统、CPU、内存、进程 空间等。 由于它们与基础架构分离，因此可以跨云和 OS 发行版本进行移植。<sunfy-line></p>
+</blockquote>
+<p>容器因具有许多优势而变得流行起来。下面列出的是容器的一些好处： </p>
+<ul>
+<li>敏捷应用程序的创建和部署：与使用 VM 镜像相比，提高了容器镜像创建的简便性 和效率。 </li>
+<li>持续开发、集成和部署：通过快速简单的回滚（由于镜像不可变性），支持可靠且频 繁的 容器镜像构建和部署。</li>
+<li>关注开发与运维的分离：在构建/发布时而不是在部署时创建应用程序容器镜像， 从 而将应用程序与基础架构分离。 </li>
+<li>可观察性：不仅可以显示操作系统级别的信息和指标，还可以显示应用程序的运行状 况和其他指标信号。 </li>
+<li>跨开发、测试和生产的环境一致性：在便携式计算机上与在云中相同地运行。 </li>
+<li>跨云和操作系统发行版本的可移植性：可在 Ubuntu、RHEL、CoreOS、本地、 Google Kubernetes Engine 和其他任何地方运行。 </li>
+<li>以应用程序为中心的管理：提高抽象级别，从在虚拟硬件上运行 OS 到使用逻辑资 源在 OS 上运行应用程序。 </li>
+<li>松散耦合、分布式、弹性、解放的微服务：应用程序被分解成较小的独立部分， 并 且可以动态部署和管理 - 而不是在一台大型单机上整体运行。 </li>
+<li>资源隔离：可预测的应用程序性能。 </li>
+<li>资源利用：高效率和高密度。</li>
+</ul>
+<p>容器是捆绑和运行应用程序的好方法。在生产环境中，您需要管理运行应用程序的容器并确 保没有停机时间。例如，如果一个容器发生故障，则另一个容器需要启动。如果这种行为由 系统处理会不会更容易？</p>
+<h1 id="2-为什么需要-Kubernetes，它能做什么"><a href="#2-为什么需要-Kubernetes，它能做什么" class="headerlink" title="2 为什么需要 Kubernetes，它能做什么?"></a>2 为什么需要 Kubernetes，它能做什么?</h1><p>服务发现和负载均衡</p>
+<blockquote>
+<p>Kubernetes 可以使用 DNS 名称或自己的 IP 地址公开容器，如果进入容器的流量很大， Kubernetes 可以负载均衡并分配网络流量，从而使部署稳定。 </p>
+</blockquote>
+<p>自动部署和回滚</p>
+<blockquote>
+<p>你可以使用 Kubernetes 描述已部署容器的所需状态，它可以以受控的速率将实际状态 更 改为期望状态。例如，你可以自动化 Kubernetes 来为你的部署创建新容器， 删除现有容 器并将它们的所有资源用于新容器。 </p>
+</blockquote>
+<p>自动完成装箱计算 </p>
+<blockquote>
+<p>Kubernetes 允许你指定每个容器所需 CPU 和内存（RAM）。 当容器指定了资源请求时， Kubernetes 可以做出更好的决策来管理容器的资源。</p>
+</blockquote>
+<p>自我修复</p>
+<blockquote>
+<p>Kubernetes 重新启动失败的容器、替换容器、杀死不响应用户定义的 运行状况检查的容器， 并且在准备好服务之前不将其通告给客户端。</p>
+</blockquote>
+<p>密钥与配置管理</p>
+<blockquote>
+<p>Kubernetes 允许你存储和管理敏感信息，例如密码、OAuth 令牌和 ssh 密钥。 你可以在 不重建容器镜像的情况下部署和更新密钥和应用程序配置，也无需在堆栈配置中暴露密钥。</p>
+</blockquote>
+<p>弹性扩展</p>
+<blockquote>
+<p>定义期待的容器状态与资源，K8S 自动检测、创建、删除实例和配置以满足要求。 </p>
+</blockquote>
+<p>存储编排 </p>
+<blockquote>
+<p>Kubernetes 允许你自动挂载你选择的存储系统，例如本地存储、公共云提供商等。</p>
+</blockquote>
+<h1 id="3-K8s-容器生态系统及容器编排技术对比"><a href="#3-K8s-容器生态系统及容器编排技术对比" class="headerlink" title="3 K8s 容器生态系统及容器编排技术对比"></a>3 K8s 容器生态系统及容器编排技术对比</h1><p><img src="../../../../img/K8s介绍/image-20220812140758891.png" alt="image-20220812140758891"></p>
+<p><img src="../../../../img/K8s介绍/image-20220812140815876.png" alt="image-20220812140815876"></p>
+<h1 id="4-Kubernets-资源"><a href="#4-Kubernets-资源" class="headerlink" title="4 Kubernets 资源"></a>4 Kubernets 资源</h1><blockquote>
+<p>中文社区 • <a href="https://www.kubernetes.org.cn/" target="_blank" rel="noopener">https://www.kubernetes.org.cn/</a> • 官方网址 • <a href="https://kubernetes.io/" target="_blank" rel="noopener">https://kubernetes.io/</a></p>
+</blockquote>
+<h1 id="5-Kubernetes-版本进化"><a href="#5-Kubernetes-版本进化" class="headerlink" title="5 Kubernetes 版本进化"></a>5 Kubernetes 版本进化</h1><ul>
+<li>2014 年 6 月：谷歌宣布 kubernetes 开源。 </li>
+<li>2014 年 7 月：Mircrosoft、Red Hat、IBM、 Docker、 CoreOS、 Mesosphere 和 Saltstack 加入 kubernetes。</li>
+<li>2014 年 8 月：Mesosphere 宣布将 kubernetes 作为 frame 整合到 mesosphere 生态系统中，用于 Docker 容器集群的调度、部署和管理 • 2014 年 8 月：VMware 加入 kubernetes 社区，</li>
+<li>2014 年 11 月 ： HP 加入 kubernetes 社区。 </li>
+<li>2014 年 11 月：Google 容器引擎 Alpha 启动，谷歌宣布 GCE 中支持容器及服务，并 以 kubernetes 为构架。</li>
+<li>2015 年 1 月：Google 和 Mirantis 及伙伴将 kubernetes 引入 OpenStack， 开发者可 以在 openstack 上部署运行 kubernetes 应用。</li>
+<li>2015 年 4 月：Google 和 CoreOs 联合发布 Tectonic， 它将 kubernetes 和 CoreOS 软件栈整合在了一起。</li>
+<li>2015 年 5 月： Intel 加入 kubernetes 社区，宣布将合作加速 Tectonic 软件栈的发展 进度。 </li>
+<li>2015 年 6 月：Google 容器引擎进入 beta 版。</li>
+<li>2015 年 7 月：Google 正式加入 OpenStack 基金会，Kubernetes 的产品经理宣称将 把它容器计算的专家技术带入 OpenStack </li>
+<li>2015 年 7 月：Kuberentes v1.0 正式发布。 </li>
+<li>2017 年 9 月 ： Kuberentes v1.8 正式发布 </li>
+<li>2017 年 12 月 ： Kuberentes v1.9 正式发布 </li>
+<li>Current : Kuberentes 1.22</li>
+</ul>
+<h1 id="6-Kubernetes-概念"><a href="#6-Kubernetes-概念" class="headerlink" title="6 Kubernetes 概念"></a>6 Kubernetes 概念</h1><p><img src="../../../../img/K8s介绍/image-20220812141206553.png" alt="image-20220812141206553"></p>
+<p><img src="../../../../img/K8s介绍/image-20220812141240618.png" alt="image-20220812141240618"></p>
+<p><strong>控制平面组件（Control Plane Components）</strong> </p>
+<ul>
+<li>apiserver：作为kubernetes系统的入口，封装了核心对象的增删改查操作，以RESTFul 接口方式提供给外部客户和内部组件调用。它维护的 REST 对象将持久化到 etcd（一 个分布式强一致性的 key/value 存储）。</li>
+<li>scheduler：负责集群的资源调度，为新建的 pod 分配机器。这部分工作分出来变成 一个组件，意味着可以很方便地替换成其他的调度器。</li>
+<li>controller-manager：负责执行各种控制器，目前有两类： <ul>
+<li>endpoint-controller：定期关联 service 和 pod(关联信息由 endpoint 对象维 护)，保证 service 到 pod 的映射总是最新的。</li>
+<li>replication-controller ： 定 期 关 联 replicationController 和 pod ，保证 replicationController 定义的复制数量与实际运行 pod 的数量总是一致的。 </li>
+</ul>
+</li>
+</ul>
+<p><strong>Node 组件</strong></p>
+<ul>
+<li>kubelet：负责管控 docker 容器，如启动/停止、监控运行状态等。它会定期从 etcd 获取分配到本机的 pod，并根据 pod 信息启动或停止相应的容器。同时，它也会接 收 apiserver 的 HTTP 请求，汇报 pod 的运行状态。 </li>
+<li>proxy：负责为 pod 提供代理。它会定期从 etcd 获取所有的 service，并根据 service 信息创建代理。当某个客户 pod 要访问其他 pod 时，访问请求会经过本机 proxy 做 转发。 </li>
+<li>Container Runtime – Docker enginee </li>
+</ul>
+<p><strong>插件（Addons）</strong></p>
+<ul>
+<li>CoreDNS: Kube-DNS, CoreDNS</li>
+<li>Network Plugin : Flannel/calico</li>
+<li>Web 界面（仪表盘）:Dashboard 是 Kubernetes 集群的通用的、基于 Web 的用户 界面。 它使用户可以管理集群中运行的应用程序以及集群本身并进行故障排除。 </li>
+<li>容器资源监控： Heapster, Metrics-server</li>
+</ul>
+<h1 id="7-Kubernetes-HA-集群"><a href="#7-Kubernetes-HA-集群" class="headerlink" title="7 Kubernetes HA 集群"></a><strong>7 Kubernetes HA 集群</strong></h1><p><img src="../../../../img/K8s介绍/image-20220812141627908.png" alt="."></p>
+<h1 id="8-k8s-中-3-个重要概念"><a href="#8-k8s-中-3-个重要概念" class="headerlink" title="8 k8s 中 3 个重要概念"></a>8 k8s 中 3 个重要概念</h1><ul>
+<li>Pod：是 Kubernetes 最基本的部署调度单元，可以包含 Container，逻辑上表示某种 应用的一个实例。比如一个 web 站点应用由前端、后端及数据库构建而成，这三个 组件将运行在各自的容器中，那么我们可以创建包含三个 Container 的 Pod。</li>
+<li>Service： 也是 Kubernetes 的基本操作单元，是真实应用服务的抽象，每一个服务 后面都有很多对应的容器来支持，通过 Proxy 的 port 和服务 selector 决定服务请求 传递给后端提供服务的容器，对外表现为一个单一访问接口，外部不需要了解后端 如何运行，这给扩展或维护后端带来很大的好处。</li>
+<li>ReplicationController：是 Pod 的复制抽象，用于解决 Pod 的扩容缩容问题。通常， 分布式应用为了性能或高可用性的考虑，需要复制多份资源，并且根据负载情况动 态伸缩。通过 ReplicationController，我们可以指定一个应用需要几份复制， Kubernetes 将为每份复制创建一个 Pod，并且保证实际运行 Pod 数量总是与该复制 数量相等(例如，当前某个 Pod 宕机时，自动创建新的 Pod 来替换)。</li>
+</ul>
+<p><img src="../../../../img/K8s介绍/image-20220812141738064.png" alt="image-20220812141738064"></p>
+<h1 id="9-Kubernetes-k8s-编排调度框架"><a href="#9-Kubernetes-k8s-编排调度框架" class="headerlink" title="9 Kubernetes (k8s)编排调度框架"></a>9 Kubernetes (k8s)编排调度框架</h1><p><img src="../../../../img/K8s介绍/image-20220812142021877.png" alt="image-20220812142021877"></p>
+<p><img src="../../../../img/2022/end.gif" alt="end"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2022/08/18/resource-MicroService-ELK-ES简介/" data-toggle="tooltip" data-placement="top" title="resource-MicroService-ELK-ES简介">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2022/08/05/resource-java-Base-GET-和-POST请求的本质区别/" data-toggle="tooltip" data-placement="top" title="GET 和 POST请求的本质区别">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#1-K8s-介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1 K8s 介绍</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#2-为什么需要-Kubernetes，它能做什么"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2 为什么需要 Kubernetes，它能做什么?</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#3-K8s-容器生态系统及容器编排技术对比"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3 K8s 容器生态系统及容器编排技术对比</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#4-Kubernets-资源"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4 Kubernets 资源</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#5-Kubernetes-版本进化"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5 Kubernetes 版本进化</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#6-Kubernetes-概念"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">6 Kubernetes 概念</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#7-Kubernetes-HA-集群"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">7 Kubernetes HA 集群</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#8-k8s-中-3-个重要概念"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">8 k8s 中 3 个重要概念</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#9-Kubernetes-k8s-编排调度框架"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">9 Kubernetes (k8s)编排调度框架</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#K8s" title="K8s">K8s</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

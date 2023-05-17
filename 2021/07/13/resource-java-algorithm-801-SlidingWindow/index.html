@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          算法常用的解题思路---滑动窗口 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/07/13/resource-java-algorithm-801-SlidingWindow/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/interview/SlidingWindows.gif')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>算法常用的解题思路---滑动窗口</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-07-13
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">4.6k</span> and
+                                Reading Time <span class="post-count">18</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>学过计算机网络的同学，都知道滑动窗口协议（Sliding Window Protocol），该协议是 <a href="https://baike.baidu.com/item/TCP协议" target="_blank" rel="noopener">TCP协议</a> 的一种应用，用于网络数据传输时的流量控制，以避免拥塞的发生。该协议允许发送方在停止并等待确认前发送多个数据分组。由于发送方不必每发一个分组就停下来等待确认。因此该协议可以加速数据的传输，提高网络吞吐量。</p>
+<hr>
+<p>滑动窗口算法其实和这个是一样的，只是用的地方场景不一样，可以根据需要调整窗口的大小，有时也可以是固定窗口大小。</p>
+<h1 id="滑动窗口算法（Sliding-Window-Algorithm）"><a href="#滑动窗口算法（Sliding-Window-Algorithm）" class="headerlink" title="滑动窗口算法（Sliding Window Algorithm）"></a>滑动窗口算法（Sliding Window Algorithm）</h1><blockquote>
+<p>Sliding window algorithm is used to perform required operation on specific window size of given large buffer or array.</p>
+<p>滑动窗口算法是在给定特定窗口大小的数组或字符串上执行要求的操作。</p>
+<p>This technique shows how a nested for loop in few problems can be converted to single for loop and hence reducing the time complexity.</p>
+<p>该技术可以将一部分问题中的嵌套循环转变为一个单循环，因此它可以减少时间复杂度。</p>
+</blockquote>
+<p>简而言之，滑动窗口算法在一个特定大小的字符串或数组上进行操作，而不在整个字符串和数组上操作，这样就降低了问题的复杂度，从而也达到降低了循环的嵌套深度。<strong>其实这里就可以看出来滑动窗口主要应用在数组和字符串上。</strong></p>
+<h1 id="基本示例"><a href="#基本示例" class="headerlink" title="基本示例"></a>基本示例</h1><p>如下图所示，设定滑动窗口（window）大小为 3，当滑动窗口每次划过数组时，计算当前滑动窗口中元素的和，得到结果 res。</p>
+<p><img src="../../../../img/801-SlidingWindow/20190305164439172.png" alt="20190305164439172"></p>
+<p>可以用来解决一些查找满足一定条件的连续区间的性质（长度等）的问题。由于区间连续，因此当区间发生变化时，可以通过旧有的计算结果对搜索空间进行剪枝，这样便减少了重复计算，降低了时间复杂度。往往类似于” <strong>请找到满足 xx 的最 x 的区间（子串、子数组)的 xx</strong> ”这类问题都可以使用该方法进行解决。</p>
+<p>需要注意的是，滑动窗口算法更多的是一种思想，而非某种数据结构的使用。 </p>
+<h1 id="滑动窗口法的大体框架"><a href="#滑动窗口法的大体框架" class="headerlink" title="滑动窗口法的大体框架"></a>滑动窗口法的大体框架</h1><p>在介绍滑动窗口的框架时候，大家先从字面理解下：</p>
+<ul>
+<li><strong>滑动：</strong>说明这个窗口是移动的，也就是移动是按照一定方向来的。</li>
+<li><strong>窗口：</strong>窗口大小并不是固定的，可以不断扩容直到满足一定的条件；也可以不断缩小，直到找到一个满足条件的最小窗口；当然也可以是固定大小。</li>
+</ul>
+<p>为了便于理解，这里采用的是字符串来讲解。但是对于数组其实也是一样的。滑动窗口算法的思路是这样：</p>
+<ol>
+<li>我们在字符串 S 中使用双指针中的左右指针技巧，初始化 left = right = 0，把索引闭区间 [left, right] 称为一个「窗口」。</li>
+<li>我们先不断地增加 right 指针扩大窗口 [left, right]，直到窗口中的字符串符合要求（包含了 T 中的所有字符）。</li>
+<li>此时，我们停止增加 right，转而不断增加 left 指针缩小窗口 [left, right]，直到窗口中的字符串不再符合要求（不包含 T 中的所有字符了）。同时，每次增加 left，我们都要更新一轮结果。</li>
+<li>重复第 2 和第 3 步，直到 right 到达字符串 S 的尽头。</li>
+</ol>
+<p>这个思路其实也不难，第 2 步相当于在寻找一个「可行解」，然后第 3 步在优化这个「可行解」，最终找到最优解。左右指针轮流前进，窗口大小增增减减，窗口不断向右滑动。</p>
+<p>下面画图理解一下，needs 和 window 相当于计数器，分别记录 T 中字符出现次数和窗口中的相应字符的出现次数。</p>
+<p>初始状态：<br><img src="../../../../img/801-SlidingWindow/2019101621574345.png" alt="2019101621574345"></p>
+<p>增加 right，直到窗口 [left, right] 包含了 T 中所有字符：<br><img src="../../../../img/801-SlidingWindow/20191016215752186.png" alt="20191016215752186"></p>
+<p>现在开始增加 left，缩小窗口 [left, right]。</p>
+<p><img src="../../../../img/801-SlidingWindow/20191016215807735.png" alt="20191016215807735"></p>
+<p>直到窗口中的字符串不再符合要求，left 不再继续移动。</p>
+<p><img src="../../../../img/801-SlidingWindow/20191016215824468.png" alt="20191016215824468"></p>
+<p>之后重复上述过程，先移动 right，再移动 left…… 直到 right 指针到达字符串 S 的末端，算法结束。</p>
+<p>如果你能够理解上述过程，恭喜，你已经完全掌握了滑动窗口算法思想。至于如何具体到问题，如何得出此题的答案，都是编程问题，等会提供一套模板，理解一下就会了。<sunfy-line></p>
+<p>上述过程对于非固定大小的滑动窗口，可以简单地写出如下伪码框架：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">string s, t;</span><br><span class="line"><span class="comment">// 在 s 中寻找 t 的「最小覆盖子串」</span></span><br><span class="line"><span class="keyword">int</span> left = <span class="number">0</span>, right = <span class="number">0</span>;</span><br><span class="line">string res = s;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(right &lt; s.size()) &#123;</span><br><span class="line">    window.add(s[right]);</span><br><span class="line">    right++;</span><br><span class="line">    <span class="comment">// 如果符合要求，说明窗口构造完成，移动 left 缩小窗口</span></span><br><span class="line">    <span class="keyword">while</span> (window 符合要求) &#123;</span><br><span class="line">        <span class="comment">// 如果这个窗口的子串更短，则更新 res</span></span><br><span class="line">        res = minLen(res, window);</span><br><span class="line">        window.remove(s[left]);</span><br><span class="line">        left++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> res;</span><br></pre></td></tr></table></figure>
+<p>但是，对于固定窗口大小，可以总结如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">// 固定窗口大小为 k</span></span><br><span class="line">   string s;</span><br><span class="line">   <span class="comment">// 在 s 中寻找窗口大小为 k 时的所包含最大元音字母个数</span></span><br><span class="line">   <span class="keyword">int</span> right = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span>(right &lt; s.size()) &#123;</span><br><span class="line">       window.add(s[right]);</span><br><span class="line">       right++;</span><br><span class="line">       <span class="comment">// 如果符合要求，说明窗口构造完成，</span></span><br><span class="line">       <span class="keyword">if</span> (right&gt;=k) &#123;</span><br><span class="line">           <span class="comment">// 这是已经是一个窗口了，根据条件做一些事情</span></span><br><span class="line">          <span class="comment">// ... 可以计算窗口最大值等 </span></span><br><span class="line">           <span class="comment">// 最后不要忘记把 right -k 位置元素从窗口里面移除</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> res;</span><br></pre></td></tr></table></figure>
+<p>可以发现此时不需要依赖 left 指针了。因为窗口固定所以其实就没必要使用left，right 双指针来控制窗口的大小。</p>
+<p>其次是对于窗口是固定的，可以轻易获取到 left 的位置，此处 left = right-k;</p>
+<p>实际上，对于窗口的构造是很重要的。具体可以看下面的实例。</p>
+<h1 id="算法实例"><a href="#算法实例" class="headerlink" title="算法实例"></a>算法实例</h1><h2 id="3-无重复字符的最长子串"><a href="#3-无重复字符的最长子串" class="headerlink" title="3. 无重复字符的最长子串"></a><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">3. 无重复字符的最长子串</a></h2><p>给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。</p>
+<p>示例 1:</p>
+<p>输入: s = “abcabcbb”<br>输出: 3<br>解释: 因为无重复字符的最长子串是 “abc”，所以其长度为 3。<br>示例 2:</p>
+<p>输入: s = “bbbbb”<br>输出: 1<br>解释: 因为无重复字符的最长子串是 “b”，所以其长度为 1。<br>示例 3:</p>
+<p>输入: s = “pwwkew”<br>输出: 3<br>解释: 因为无重复字符的最长子串是 “wke”，所以其长度为 3。<br>     请注意，你的答案必须是 子串 的长度，”pwke” 是一个子序列，不是子串。<br>示例 4:</p>
+<p>输入: s = “”<br>输出: 0</p>
+<p>提示：</p>
+<p>0 &lt;= s.length &lt;= 5 * 104<br>s 由英文字母、数字、符号和空格组成</p>
+<h3 id="思路和算法"><a href="#思路和算法" class="headerlink" title="思路和算法"></a>思路和算法</h3><p>我们先用一个例子考虑如何在较优的时间复杂度内通过本题。</p>
+<p>我们不妨以示例一中的字符串 <code>abcabcbb</code> 为例，找出从每一个字符开始的，不包含重复字符的最长子串，那么其中最长的那个字符串即为答案。对于示例一中的字符串，我们列举出这些结果，其中括号中表示选中的字符以及最长的字符串：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">以 (a)bcabcbb 开始的最长字符串为 (abc)abcbb；</span><br><span class="line">以 a(b)cabcbb 开始的最长字符串为 a(bca)bcbb；</span><br><span class="line">以 ab(c)abcbb 开始的最长字符串为 ab(cab)cbb；</span><br><span class="line">以 abc(a)bcbb 开始的最长字符串为 abc(abc)bb；</span><br><span class="line">以 abca(b)cbb 开始的最长字符串为 abca(bc)bb；</span><br><span class="line">以 abcab(c)bb 开始的最长字符串为 abcab(cb)b；</span><br><span class="line">以 abcabc(b)b 开始的最长字符串为 abcabc(b)b；</span><br><span class="line">以 abcabcb(b) 开始的最长字符串为 abcabcb(b)</span><br></pre></td></tr></table></figure>
+<p>发现了什么？如果我们依次递增地枚举子串的起始位置，那么子串的结束位置也是递增的！这里的原因在于，假设我们选择字符串中的第 k 个字符作为起始位置，并且得到了不包含重复字符的最长子串的结束位置为 r_k 。那么当我们选择第 k+1个字符作为起始位置时，首先从 k+1 到 r_k 的字符显然是不重复的，并且由于少了原本的第 k 个字符，我们可以尝试继续增大 r_k ，直到右侧出现了重复字符为止。</p>
+<p>这样一来，我们就可以使用「滑动窗口」来解决这个问题了：</p>
+<p>我们使用两个指针表示字符串中的某个子串（或窗口）的左右边界，其中左指针代表着上文中「枚举子串的起始位置」，而右指针即为上文中的 r_k；</p>
+<p>在每一步的操作中，我们会将左指针向右移动一格，表示 我们开始枚举下一个字符作为起始位置，然后我们可以不断地向右移动右指针，但需要保证这两个指针对应的子串中没有重复的字符。在移动结束后，这个子串就对应着 以左指针开始的，不包含重复字符的最长子串。我们记录下这个子串的长度；</p>
+<p>在枚举结束后，我们找到的最长的子串的长度即为答案。</p>
+<p>判断重复字符</p>
+<p>在上面的流程中，我们还需要使用一种数据结构来判断 是否有重复的字符，常用的数据结构为哈希集合（即 C++ 中的 std::unordered_set，Java 中的 <code>HashSet</code>，Python 中的 set, JavaScript 中的 Set）。在左指针向右移动的时候，我们从哈希集合中移除一个字符，在右指针向右移动的时候，我们往哈希集合中添加一个字符。</p>
+<p>至此，我们就完美解决了本题。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 哈希集合，记录每个字符是否出现过</span></span><br><span class="line">        Set&lt;Character&gt; occ = <span class="keyword">new</span> HashSet&lt;Character&gt;();</span><br><span class="line">        <span class="keyword">int</span> n = s.length();</span><br><span class="line">        <span class="comment">// 右指针，初始值为 -1，相当于我们在字符串的左边界的左侧，还没有开始移动</span></span><br><span class="line">        <span class="keyword">int</span> rk = -<span class="number">1</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// 左指针向右移动一格，移除一个字符</span></span><br><span class="line">                occ.remove(s.charAt(i - <span class="number">1</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (rk + <span class="number">1</span> &lt; n &amp;&amp; !occ.contains(s.charAt(rk + <span class="number">1</span>))) &#123;</span><br><span class="line">                <span class="comment">// 不断地移动右指针</span></span><br><span class="line">                occ.add(s.charAt(rk + <span class="number">1</span>));</span><br><span class="line">                ++rk;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 第 i 到 rk 个字符是一个极长的无重复字符子串</span></span><br><span class="line">            ans = Math.max(ans, rk - i + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><ul>
+<li>时间复杂度：<code>O(N)</code>，其中 <code>N</code> 是字符串的长度。左指针和右指针分别会遍历整个字符串一次。</li>
+<li>空间复杂度：<code>O(∣Σ∣)</code>，其中 <code>Σ</code> 表示字符集（即字符串中可以出现的字符），<code>∣Σ∣</code> 表示字符集的大小。在本题中没有明确说明字符集，因此可以默认为所有 <code>ASCII</code> 码在 <code>[0,128)</code> 内的字符，即<code>∣Σ∣=128</code>。我们需要用到哈希集合来存储出现过的字符，而字符最多有<code>∣Σ∣</code> 个，因此空间复杂度为 <code>O(∣Σ∣)</code>。</li>
+</ul>
+<h2 id="1208-尽可能使字符串相等"><a href="#1208-尽可能使字符串相等" class="headerlink" title="1208. 尽可能使字符串相等"></a><a href="https://leetcode-cn.com/problems/get-equal-substrings-within-budget/" target="_blank" rel="noopener">1208. 尽可能使字符串相等</a></h2><p>给你两个长度相同的字符串，s 和 t。</p>
+<p>将 s 中的第 i 个字符变到 t 中的第 i 个字符需要 |s[i] - t[i]| 的开销（开销可能为 0），也就是两个字符的 ASCII 码值的差的绝对值。</p>
+<p>用于变更字符串的最大预算是 maxCost。在转化字符串时，总开销应当小于等于该预算，这也意味着字符串的转化可能是不完全的。</p>
+<p>如果你可以将 s 的子字符串转化为它在 t 中对应的子字符串，则返回可以转化的最大长度。</p>
+<p>如果 s 中没有子字符串可以转化成 t 中对应的子字符串，则返回 0。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s &#x3D; &quot;abcd&quot;, t &#x3D; &quot;bcdf&quot;, cost &#x3D; 3</span><br><span class="line">输出：3</span><br><span class="line">解释：s 中的 &quot;abc&quot; 可以变为 &quot;bcd&quot;。开销为 3，所以最大长度为 3。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s &#x3D; &quot;abcd&quot;, t &#x3D; &quot;cdef&quot;, cost &#x3D; 3</span><br><span class="line">输出：1</span><br><span class="line">解释：s 中的任一字符要想变成 t 中对应的字符，其开销都是 2。因此，最大长度为 1。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s &#x3D; &quot;abcd&quot;, t &#x3D; &quot;acde&quot;, cost &#x3D; 0</span><br><span class="line">输出：1</span><br><span class="line">解释：你无法作出任何改动，所以最大长度为 1。</span><br></pre></td></tr></table></figure>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">equalSubstring</span><span class="params">(String s, String t, <span class="keyword">int</span> maxCost)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right =<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;　　　　 <span class="comment">// 构造窗口</span></span><br><span class="line">        <span class="keyword">while</span> (right &lt; s.length()) &#123;</span><br><span class="line">            sum += Math.abs(s.charAt(right) - t.charAt(right));</span><br><span class="line">            right++;　　　　　　　<span class="comment">// 窗口构造完成，这时候要根据条件当前的窗口调整窗口大小</span></span><br><span class="line">            <span class="keyword">while</span> (sum &gt; maxCost) &#123;</span><br><span class="line">                sum -=  Math.abs(s.charAt(left) - t.charAt(left));</span><br><span class="line">                left++;</span><br><span class="line">            &#125;　　　　　　　<span class="comment">// 记录此时窗口的大小</span></span><br><span class="line">            res = Math.max(res, right -left);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里跟前面总结的框架不一样的一个点就是，前面的框架是求最小窗口大小，这里是求最大窗口大小，大家要学会灵活变通。</p>
+<h2 id="239-滑动窗口最大值"><a href="#239-滑动窗口最大值" class="headerlink" title="239. 滑动窗口最大值"></a><a href="https://leetcode-cn.com/problems/sliding-window-maximum/" target="_blank" rel="noopener">239. 滑动窗口最大值</a></h2><p>给定一个数组 <code>nums</code>，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。</p>
+<p>返回滑动窗口中的最大值。</p>
+<p>进阶：</p>
+<p>你能在线性时间复杂度内解决此题吗？</p>
+<p><strong>示例:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">输入: nums &#x3D; [1,3,-1,-3,5,3,6,7], 和 k &#x3D; 3</span><br><span class="line">输出: [3,3,5,5,6,7] </span><br><span class="line">解释: </span><br><span class="line"></span><br><span class="line">  滑动窗口的位置                最大值</span><br><span class="line">---------------               -----</span><br><span class="line">[1  3  -1] -3  5  3  6  7       3</span><br><span class="line"> 1 [3  -1  -3] 5  3  6  7       3</span><br><span class="line"> 1  3 [-1  -3  5] 3  6  7       5</span><br><span class="line"> 1  3  -1 [-3  5  3] 6  7       5</span><br><span class="line"> 1  3  -1  -3 [5  3  6] 7       6</span><br><span class="line"> 1  3  -1  -3  5 [3  6  7]      7</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 &lt;&#x3D; nums.length &lt;&#x3D; 10^5</span><br><span class="line">-10^4 &lt;&#x3D; nums[i] &lt;&#x3D; 10^4</span><br><span class="line">1 &lt;&#x3D; k &lt;&#x3D; nums.length</span><br></pre></td></tr></table></figure>
+<h3 id="解答："><a href="#解答：" class="headerlink" title="解答："></a>解答：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] maxSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        <span class="keyword">int</span> right =<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length -k +<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> index=<span class="number">0</span>;</span><br><span class="line">        LinkedList&lt;Integer&gt; list = <span class="keyword">new</span> LinkedList&lt;&gt;();　　　　　<span class="comment">// 开始构造窗口</span></span><br><span class="line">        <span class="keyword">while</span> (right &lt; nums.length) &#123;　　　　　　　<span class="comment">// 这里的list的首位必须是窗口中最大的那位</span></span><br><span class="line">            <span class="keyword">while</span> (!list.isEmpty() &amp;&amp; nums[right] &gt; list.peekLast()) &#123;</span><br><span class="line">                list.removeLast();</span><br><span class="line">            &#125;　　　　　　　<span class="comment">// 不断添加</span></span><br><span class="line">            list.addLast(nums[right]);</span><br><span class="line">            right++;　　　　　　　<span class="comment">// 构造窗口完成，这时候需要根据条件做一些操作</span></span><br><span class="line">            <span class="keyword">if</span> (right &gt;= k)&#123;</span><br><span class="line">                res[index++]=list.peekFirst();　　　　　　　　　　<span class="comment">// 如果发现第一个已经在窗口外面了，就移除</span></span><br><span class="line">                <span class="keyword">if</span>(list.peekFirst() == nums[right-k]) &#123;</span><br><span class="line">                    list.removeFirst();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这道题难度是困难。当然我们也会发现，这道题目和前面的非固定大小滑动窗口还是不一样的。</p>
+<p>看了一道困难的题目后，接下来看一道中等难度的就会发现是小菜一碟。</p>
+<h2 id="1456-定长子串中元音的最大数目"><a href="#1456-定长子串中元音的最大数目" class="headerlink" title="1456. 定长子串中元音的最大数目"></a><a href="https://leetcode-cn.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/" target="_blank" rel="noopener">1456. 定长子串中元音的最大数目</a></h2><p>给你字符串 s 和整数 k 。</p>
+<p>请返回字符串 s 中长度为 k 的单个子字符串中可能包含的最大元音字母数。</p>
+<p>英文中的 元音字母 为（a, e, i, o, u）。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s &#x3D; &quot;abciiidef&quot;, k &#x3D; 3</span><br><span class="line">输出：3</span><br><span class="line">解释：子字符串 &quot;iii&quot; 包含 3 个元音字母。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s &#x3D; &quot;aeiou&quot;, k &#x3D; 2</span><br><span class="line">输出：2</span><br><span class="line">解释：任意长度为 2 的子字符串都包含 2 个元音字母。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s &#x3D; &quot;leetcode&quot;, k &#x3D; 3</span><br><span class="line">输出：2</span><br><span class="line">解释：&quot;lee&quot;、&quot;eet&quot; 和 &quot;ode&quot; 都包含 2 个元音字母。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 4：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：s &#x3D; &quot;rhythms&quot;, k &#x3D; 4</span><br><span class="line">输出：0</span><br><span class="line">解释：字符串 s 中不含任何元音字母。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 5：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s &#x3D; &quot;tryhard&quot;, k &#x3D; 4</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 &lt;&#x3D; s.length &lt;&#x3D; 10^5</span><br><span class="line">s 由小写英文字母组成</span><br><span class="line">1 &lt;&#x3D; k &lt;&#x3D; s.length</span><br></pre></td></tr></table></figure>
+<h3 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxVowels</span><span class="params">(String s, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> right =<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (right &lt; s.length()) &#123;</span><br><span class="line">            sum += isYuan(s.charAt(right)) ;</span><br><span class="line">            right++;</span><br><span class="line">            <span class="keyword">if</span> (right &gt;=k) &#123;</span><br><span class="line">                max = Math.max(max, sum);</span><br><span class="line">                sum -= isYuan(s.charAt(right-k));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">isYuan</span><span class="params">(<span class="keyword">char</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s==<span class="string">'a'</span> || s==<span class="string">'e'</span> ||s==<span class="string">'i'</span> ||s==<span class="string">'o'</span> ||s==<span class="string">'u'</span> ? <span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="567-字符串的排列"><a href="#567-字符串的排列" class="headerlink" title="567. 字符串的排列"></a><a href="https://leetcode-cn.com/problems/permutation-in-string/" target="_blank" rel="noopener">567. 字符串的排列</a></h2><p>给定两个字符串 <code>s1</code> 和 <code>s2</code>，写一个函数来判断 <code>s2</code> 是否包含 <code>s1</code> 的排列。</p>
+<p>换句话说，第一个字符串的排列之一是第二个字符串的 <strong>子串</strong> 。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入: s1 = "ab" s2 = "eidbaooo"</span><br><span class="line">输出: True</span><br><span class="line">解释: s2 包含 s1 的排列之一 ("ba").</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入: s1= "ab" s2 = "eidboaoo"</span><br><span class="line">输出: False</span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line">1 &lt;= s1.length, s2.length &lt;= 104</span><br><span class="line">s1 和 s2 仅包含小写字母</span><br></pre></td></tr></table></figure>
+<h3 id="方法一：滑动窗口"><a href="#方法一：滑动窗口" class="headerlink" title="方法一：滑动窗口"></a>方法一：滑动窗口</h3><p><img src="../../../../img/801-SlidingWindow/image-20210726113222418.png" alt="image-20210726113222418"></p>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">checkInclusion</span><span class="params">(String s1, String s2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s1.length(), m = s2.length();</span><br><span class="line">        <span class="keyword">if</span> (n &gt; m) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] cnt1 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line">        <span class="keyword">int</span>[] cnt2 = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            ++cnt1[s1.charAt(i) - <span class="string">'a'</span>];</span><br><span class="line">            ++cnt2[s2.charAt(i) - <span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (Arrays.equals(cnt1, cnt2)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &lt; m; ++i) &#123;</span><br><span class="line">            ++cnt2[s2.charAt(i) - <span class="string">'a'</span>];</span><br><span class="line">            --cnt2[s2.charAt(i - n) - <span class="string">'a'</span>];</span><br><span class="line">            <span class="keyword">if</span> (Arrays.equals(cnt1, cnt2)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><p><img src="../../../../img/801-SlidingWindow/image-20210726113307804.png" alt="image-20210726113307804"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">checkInclusion</span><span class="params">(String s1, String s2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s1.length(), m = s2.length();</span><br><span class="line">        <span class="keyword">if</span> (n &gt; m) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] cnt = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            --cnt[s1.charAt(i) - <span class="string">'a'</span>];</span><br><span class="line">            ++cnt[s2.charAt(i) - <span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> diff = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> c : cnt) &#123;</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="number">0</span>) &#123;</span><br><span class="line">                ++diff;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (diff == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = s2.charAt(i) - <span class="string">'a'</span>, y = s2.charAt(i - n) - <span class="string">'a'</span>;</span><br><span class="line">            <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (cnt[x] == <span class="number">0</span>) &#123;</span><br><span class="line">                ++diff;</span><br><span class="line">            &#125;</span><br><span class="line">            ++cnt[x];</span><br><span class="line">            <span class="keyword">if</span> (cnt[x] == <span class="number">0</span>) &#123;</span><br><span class="line">                --diff;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (cnt[y] == <span class="number">0</span>) &#123;</span><br><span class="line">                ++diff;</span><br><span class="line">            &#125;</span><br><span class="line">            --cnt[y];</span><br><span class="line">            <span class="keyword">if</span> (cnt[y] == <span class="number">0</span>) &#123;</span><br><span class="line">                --diff;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (diff == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><p><img src="../../../../img/801-SlidingWindow/image-20210726113401922.png" alt="image-20210726113401922"></p>
+<h3 id="方法二：双指针"><a href="#方法二：双指针" class="headerlink" title="方法二：双指针"></a>方法二：双指针</h3><p><img src="../../../../img/801-SlidingWindow/image-20210726113430765.png" alt="image-20210726113430765"></p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">checkInclusion</span><span class="params">(String s1, String s2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s1.length(), m = s2.length();</span><br><span class="line">        <span class="keyword">if</span> (n &gt; m) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] cnt = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            --cnt[s1.charAt(i) - <span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> right = <span class="number">0</span>; right &lt; m; ++right) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = s2.charAt(right) - <span class="string">'a'</span>;</span><br><span class="line">            ++cnt[x];</span><br><span class="line">            <span class="keyword">while</span> (cnt[x] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                --cnt[s2.charAt(left) - <span class="string">'a'</span>];</span><br><span class="line">                ++left;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (right - left + <span class="number">1</span> == n) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="复杂度分析-2"><a href="#复杂度分析-2" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><p><img src="../../../../img/801-SlidingWindow/image-20210726113548403.png" alt="image-20210726113548403"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/07/14/resource-java-Base-002ThreadLocal/" data-toggle="tooltip" data-placement="top" title="Java面试题002-说一下ThreadLocal">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/07/13/resource-java-Base-001Arraylist-LinkedList/" data-toggle="tooltip" data-placement="top" title="Java面试题001-ArrayList和LinkedList区别">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#滑动窗口算法（Sliding-Window-Algorithm）"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">滑动窗口算法（Sliding Window Algorithm）</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#基本示例"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">基本示例</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#滑动窗口法的大体框架"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">滑动窗口法的大体框架</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#算法实例"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">算法实例</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3-无重复字符的最长子串"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">3. 无重复字符的最长子串</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#思路和算法"><span class="toc-nav-number">4.1.1.</span> <span class="toc-nav-text">思路和算法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#代码"><span class="toc-nav-number">4.1.2.</span> <span class="toc-nav-text">代码</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#复杂度分析"><span class="toc-nav-number">4.1.3.</span> <span class="toc-nav-text">复杂度分析</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1208-尽可能使字符串相等"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">1208. 尽可能使字符串相等</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#代码-1"><span class="toc-nav-number">4.2.1.</span> <span class="toc-nav-text">代码</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#239-滑动窗口最大值"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">239. 滑动窗口最大值</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#解答："><span class="toc-nav-number">4.3.1.</span> <span class="toc-nav-text">解答：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1456-定长子串中元音的最大数目"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">1456. 定长子串中元音的最大数目</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#解答"><span class="toc-nav-number">4.4.1.</span> <span class="toc-nav-text">解答</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#567-字符串的排列"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">567. 字符串的排列</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#方法一：滑动窗口"><span class="toc-nav-number">4.5.1.</span> <span class="toc-nav-text">方法一：滑动窗口</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码-2"><span class="toc-nav-number">4.5.1.1.</span> <span class="toc-nav-text">代码</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#优化"><span class="toc-nav-number">4.5.1.2.</span> <span class="toc-nav-text">优化</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#复杂度分析-1"><span class="toc-nav-number">4.5.1.3.</span> <span class="toc-nav-text">复杂度分析</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#方法二：双指针"><span class="toc-nav-number">4.5.2.</span> <span class="toc-nav-text">方法二：双指针</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#代码-3"><span class="toc-nav-number">4.5.2.1.</span> <span class="toc-nav-text">代码</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#复杂度分析-2"><span class="toc-nav-number">4.5.2.2.</span> <span class="toc-nav-text">复杂度分析</span></a></li></ol></li></ol></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

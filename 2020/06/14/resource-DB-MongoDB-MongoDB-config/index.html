@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          MongoDB 通过配置文件启动 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2020/06/14/resource-DB-MongoDB-MongoDB-config/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/DB/mongodb.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#MongoDB" title="MongoDB">MongoDB</a>
+                            
+                        </div>
+
+                        <h1>MongoDB 通过配置文件启动</h1>
+                        <h2 class="subheading">通过配置文件的方式配置这些参数加载配置。</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2020-06-14
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">3.9k</span> and
+                                Reading Time <span class="post-count">14</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>通过配置文件的方式配置这些参数加载配置。<a id="more"></a></p>
+<p>./bin/mongod —config ./conf/mongodb.conf(或./bin/mongod -f ./conf/mongodb.conf)</p>
+<p>配置（mongod.conf）参数说明如下。</p>
+<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a><strong>基本配置</strong></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#verbose：日志信息冗余。默认false。提高内部报告标准输出或记录到logpath配置的日志文件中。要启用verbose或启用verbosity 用vvvv参数</span></span><br><span class="line"><span class="string">verbose</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"><span class="comment">#启动verbose冗长信息，它的级别有 vv~vvvvv，v越多级别越高，在日志文件中记录的信息越详细。</span></span><br><span class="line"><span class="string">vvvv</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#port：端口。默认27017，MongoDB的默认服务TCP端口，监听客户端连接。要是端口设置小于1024，比如1021，则需要root权限启动，不能用mongodb帐号启动</span></span><br><span class="line"><span class="string">port</span> <span class="string">=</span> <span class="number">27017</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#bind_ip：绑定地址。默认127.0.0.1，只能通过本地连接。进程绑定和监听来自这个地址上的应用连接。要是需要给其他服务器连接，则需要注释掉这个或则把IP改成本机地址，可以用一个逗号分隔的列表绑定多个IP地址。</span></span><br><span class="line"><span class="string">bind_ip</span> <span class="string">=</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#maxConns：最大连接数。默认值：取决于系统（即的ulimit和文件描述符）限制。MongoDB中不会限制其自身的连接。当设置大于系统的限制，则无效，以系统限制为准。这对于客户端创建很多“表”，允许连接超时而不关闭“表”的时候很有用。设置该值的高于连接池和总连接数的大小，以防止尖峰时候的连接。注意：不能设置该值大于20000。</span></span><br><span class="line"><span class="string">maxConns</span> <span class="string">=</span> <span class="number">1000</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#objcheck:强制验证客户端请求。2.4的默认设置为objcheck成为true，在早期版本objcheck默认为false。因为它强制验证客户端请求，确保客户端绝不插入无效文件到数据库中。对于嵌套文档的对象，会有一点性能影响。设置noobjcheck 关闭。</span></span><br><span class="line"><span class="string">objcheck</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"><span class="comment">#noobjcheck = false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#logpath：指定日志文件，该文件将保存所有的日志记录、诊断信息。除非另有指定，mongod将所有的日志信息输出到标准输出。如果没有指定logappend，重启则日志会进行覆盖操作。</span></span><br><span class="line"><span class="string">logpath=</span> <span class="string">/home/mongo/mongodb-2.6.8/logs/mongodb.log</span></span><br><span class="line"><span class="comment">#logappend：写日志的模式：设置为true为追加。默认是覆盖。如果未指定此设置，启动时MongoDB的将覆盖现有的日志文件。</span></span><br><span class="line"><span class="string">logappend=true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#syslog：日志输出都发送到主机的syslog系统，而不是标准输出到logpath指定日志文件。syslog和logpath不能一起用，会报错：</span></span><br><span class="line"><span class="string">syslog</span>  <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pidfilepath：进程ID，没有指定则启动时候就没有PID文件。默认缺省。</span></span><br><span class="line"><span class="string">pidfilepath</span> <span class="string">=</span> <span class="string">/home/mongo/mongodb-2.6.8/data/mongo.pid</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#keyFile：指定存储身份验证信息的密钥文件的路径。默认缺省。</span></span><br><span class="line"><span class="string">keyFile</span> <span class="string">=</span> <span class="string">/home/mongo/mongodb-2.6.8/data/keyfile</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#nounixsocket：套接字文件，默认为false，有生成socket文件。当设置为true时，不会生成socket文件。</span></span><br><span class="line"><span class="string">nounixsocket</span> <span class="string">=</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#unixSocketPrefix：套接字文件路径，默认/tmp</span></span><br><span class="line"><span class="string">unixSocketPrefix</span> <span class="string">=</span> <span class="string">/home/mongo/mongodb-2.6.8/tmp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#fork：是否后台运行，设置为true 启动 进程在后台运行的守护进程模式。默认false。</span></span><br><span class="line"><span class="string">fork</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#auth：用户认证，默认false。不需要认证。当设置为true时候，进入数据库需要auth验证，当数据库里没有用户，则不需要验证也可以操作。直到创建了第一个用户，之后操作都需要验证。比如：通过db.addUser('sa','sa')在admin库下面创建一个超级用户，只能在在admin库下面先认证完毕了：ab.auth('sa','sa')，才能去别的库操作，不能在其他库验证。这样连接数据库也需要指定库：</span></span><br><span class="line"><span class="comment">#mongo -usa -psa admin     #sa 帐号连接admin</span></span><br><span class="line"><span class="comment">#mongo -uaa -paa test      #aa 帐号连接test</span></span><br><span class="line"><span class="string">auth</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#noauth：禁止用户认证，默认true</span></span><br><span class="line"><span class="string">noauth</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#cpu：设置为true会强制mongodb每4s报告cpu利用率和io等待，把日志信息写到标准输出或日志文件。默认为false。</span></span><br><span class="line"><span class="string">cpu</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#dbpath：数据存放目录。默认：/data/db/</span></span><br><span class="line"><span class="string">dbpath=</span> <span class="string">/home/mongo/mongodb-2.6.8/data/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#diaglog：创建一个非常详细的故障排除和各种错误的诊断日志记录。默认0。设置为1，为在dbpath目录里生成一个diaglog.开头的日志文件，设置不等于0，日志会每分钟flush一次。产生的日志可以用mongosniff来查看，当重新设置成0，会停止写入文件，但mongod还是继续保持打开该文件，即使它不再写入数据文件。如果你想重命名，移动或删除诊断日志，你必须完全关闭mongod实例。</span></span><br><span class="line"><span class="number">0</span>    <span class="string">off.</span> <span class="literal">No</span> <span class="string">logging.</span>       <span class="comment">#关闭。没有记录。</span></span><br><span class="line"><span class="comment">#1    Log write operations.  #写操作</span></span><br><span class="line"><span class="comment">#2    Log read operations.   #读操作</span></span><br><span class="line"><span class="comment">#3    Log both read and write operations. #读写操作</span></span><br><span class="line"><span class="comment">#7    Log write and some read operations. #写和一些读操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#directoryperdb：设置为true，修改数据目录存储模式，每个数据库的文件存储在DBPATH指定目录的不同的文件夹中。使用此选项，可以配置的MongoDB将数据存储在不同的磁盘设备上，以提高写入吞吐量或磁盘容量。默认为false。要是在运行一段时间的数据库中，开启该参数，会导致原始的数据都会消失（注释参数则会回来）。因为数据目录都不同了，除非迁移现有的数据文件到directoryperdb产生的数据库目录中，所以需要在规划好之后确定是否要开启。</span></span><br><span class="line"><span class="string">directoryperdb</span> <span class="string">=</span> <span class="string">ture</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#journal：日志，（redo log，更多的介绍请看这里和这里）。默认值：（在64位系统）true。默认值：（32位系统）false。</span></span><br><span class="line"><span class="comment">#设置为true，启用操作日志，以确保写入持久性和数据的一致性，会在dbpath目录下创建journal目录。</span></span><br><span class="line"><span class="comment">#设置为false，以防止日志持久性的情况下，并不需要开销。为了减少磁盘上使用的日志的影响，您可以启用nojournal，并设置为true。</span></span><br><span class="line"><span class="comment">#注意：在64位系统上禁用日志必须使用带有nojournal的。</span></span><br><span class="line"><span class="string">journal</span> <span class="string">=</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#nojournal:禁止日志，默认值：（在64位系统）false。默认值：（32位系统）true。</span></span><br><span class="line"><span class="comment">#设置nojournal为true关闭日志，64位，2.0版本后的mongodb默认是启用 journal日志。</span></span><br><span class="line"><span class="string">nojournal</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#journalCommitInterval：刷写提交机制，默认是30ms或则100ms。较低的值，会更消耗磁盘的性能。此选项接受2和300毫秒之间的值：</span></span><br><span class="line"><span class="comment">#如果单块设备提供日志和数据文件，默认的日记提交时间间隔为100毫秒。</span></span><br><span class="line"><span class="comment">#如果不同的块设备提供的日志和数据文件，默认的日记提交的时间间隔为30毫秒。</span></span><br><span class="line"><span class="string">journalCommitInterval</span> <span class="string">=</span> <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#ipv6：是否支持ipv6，默认false。</span></span><br><span class="line"><span class="string">ipv6</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#jsonp：是否允许JSONP访问通过一个HTTP接口，默认false。</span></span><br><span class="line"><span class="string">jsonp</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#nohttpinterface：是否禁止http接口，即28017 端口开启的服务。默认false，支持。</span></span><br><span class="line"><span class="string">nohttpinterface</span> <span class="string">=</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#noprealloc：预分配方式。默认false：使用预分配方式来保证写入性能的稳定，预分配在后台进行，并且每个预分配的文件都用0进行填充。这会让MongoDB始终保持额外的空间和空余的数据文件，从而避免了数据增长过快而带来的分配磁盘空间引起的阻塞。设置noprealloc= true来禁用预分配的数据文件，会缩短启动时间，但在正常操作过程中，可能会导致性能显著下降。</span></span><br><span class="line"><span class="string">noprealloc</span> <span class="string">=</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#noscripting：是否禁止脚本引擎。默认是false：不禁止。ture：禁止,要是设置成true：运行一些脚本的时候会出现："server-side JavaScript execution is disabled" </span></span><br><span class="line"><span class="string">noscripting</span> <span class="string">=</span> <span class="literal">true</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">#notablescan：是否禁止表扫描操作。默认false：不禁止，ture：禁止,禁止要是执行表扫描会出现："table scans not allowed"</span></span><br><span class="line"><span class="string">notablescan</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#nssize:命名空间的文件（即NS）的默认大小，默认16M，最大2G。所有新创建的默认大小命名空间的文件（即NS）。此选项不会影响现有的命名空间的文件的大小。默认值是16M字节，最大大小为2 GB。让小数据库不让浪费太多的磁盘空间，同时让大数据在磁盘上有连续的空间。</span></span><br><span class="line"><span class="string">nssize</span>  <span class="string">=</span> <span class="number">16</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#profile：数据库分析等级设置。记录一些操作性能到标准输出或则指定的logpath的日志文件中，默认0:关闭。</span></span><br><span class="line"><span class="comment">#0 关。无分析。</span></span><br><span class="line"><span class="comment">#1 开。仅包括慢操作。</span></span><br><span class="line"><span class="comment">#2 开。包括所有操作。</span></span><br><span class="line"><span class="comment">#控制 Profiling  的开关和级别：2种,第一种是直接在启动参数里直接进行设置或则启动MongoDB时加上–profile=级别，其信息保存在 生成的system.profile 中。第二种是在客户端用db.setProfilingLevel(级别)命令来实时配置，其信息保存在 生成的system.profile 中。默认情况下，mongod的禁用分析。数据库分析可以影响数据库的性能，因为分析器必须记录和处理所有的数据库操作。所以在需要的时候用动态修改就可以了。</span></span><br><span class="line"><span class="string">profile</span> <span class="string">=</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#slowms：记录profile分析的慢查询的时间，默认是100毫秒。具体同上。</span></span><br><span class="line"><span class="string">slowms</span>  <span class="string">=</span> <span class="number">200</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#quota：配额，默认false。是否开启配置每个数据库的最多文件数的限制。当为true则用quotaFiles来配置最多文件的数量。</span></span><br><span class="line"><span class="string">quota</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"><span class="comment">#quotaFiles：配额数量。每个数据库的数据文件数量的限制。此选项需要quota为true。默认为8。</span></span><br><span class="line"><span class="string">quotaFiles</span> <span class="string">=</span> <span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#rest： 默认false，设置为true，使一个简单的 REST API。设置为true，开启后，在MongoDB默认会开启一个HTTP协议的端口提供REST的服务（nohttpinterface=false），这个端口是你Server端口加上1000，即28017，默认的HTTP端口是数据库状态页面，（开启后，web页面的Commands行中的命令都可以点进去）。mongodb自带的REST，不支持增、删、改，同时也不支持 权限认证。</span></span><br><span class="line"><span class="string">rest</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#repair：修复数据库操作，默认是false。设置为true时，启动后修复所有数据库，设置这个选项最好在命令行上，而不是在配置文件或控制脚本。启动时修复，需要关闭journal.并且启动时,用控制文件指定参数和配置文件里指定参数的方式进行修复之后，（修复信息见log），需要再禁用repair参数才能启用mongodb。注意：mongod修复时，需要重写所有的数据库文件。如果在同一个帐号下不能运行修复，则需要运行chown修改数据库文件的权限。</span></span><br><span class="line"><span class="string">repair</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#repairpath：修复路径，默认是在dbpath路径下的_tmp 目录。</span></span><br><span class="line"><span class="string">repairpath</span> <span class="string">=</span> <span class="string">_tmp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#smallfiles：是否使用较小的默认文件。默认为false，不使用。设置为true，使用较小的默认数据文件大小。smallfiles减少数据文件的初始大小，并限制他们到512M，也减少了日志文件的大小，并限制他们到128M。如果数据库很大，各持有少量的数据，会导致mongodb创建很多文件，会影响性能。</span></span><br><span class="line"><span class="string">smallfiles</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#syncdelay：刷写数据到日志的频率，通过fsync操作数据。默认60秒。默认就可以，不需要设置。不会对日志文件（journal files）有影响。警告：如果设置为0，SYNCDELAY 不会同步到磁盘的内存映射文件。在生产系统上，不要设置这个值。</span></span><br><span class="line"><span class="string">syncdelay</span> <span class="string">=</span> <span class="number">60</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#sysinfo：系统信息，默认false。设置为true，mongod会诊断系统有关的页面大小，数量的物理页面，可用物理??页面的数量输出到标准输出。当开启sysinfo参数的时候，只会打印上面的信息，不会启动mongodb的程序。所以要关闭该参数，才能开启mongodb。</span></span><br><span class="line"><span class="string">sysinfo</span> <span class="string">=</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#upgrade:升级。默认为false。当设置为true，指定DBPATH，升级磁盘上的数据格式的文件到最新版本。会影响数据库操作，更新元数据。大部分情况下，不需要设置该值。</span></span><br><span class="line"><span class="string">upgrade</span> <span class="string">=</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#traceExceptions：是否使用内部诊断。默认false。</span></span><br><span class="line"><span class="string">traceExceptions</span> <span class="string">=</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#quiet：安静模式。</span></span><br><span class="line"><span class="string">quiet</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#setParameter：2.4的新参数，指定启动选项配置。想设置多个选项则用一个setParameter选项指定.格式：setParameter = &lt;parameter&gt;=&lt;value&gt;,如配置文件里设置syncdelay：</span></span><br><span class="line"><span class="string">setParameter</span> <span class="string">=</span> <span class="string">syncdelay=</span> <span class="number">55</span><span class="string">,notablescan</span> <span class="string">=</span> <span class="literal">true</span><span class="string">,journalCommitInterval</span> <span class="string">=</span> <span class="number">50</span><span class="string">,traceExceptions</span> <span class="string">=</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="复制选项（Replication-Options）"><a href="#复制选项（Replication-Options）" class="headerlink" title="复制选项（Replication Options）"></a><strong>复制选项（Replication Options）</strong></h3><p>replSet：使用此设置来配置复制副本集。指定一个副本集名称作为参数，所有主机都必须有相同的名称作为同一个副本集。<br>oplogSize：指定的复制操作日志（OPLOG）的最大大小。mongod创建一个OPLOG的大小基于最大可用空间量。对于64位系统，OPLOG通常是5％的可用磁盘空间。<br>一旦mongod第一次创建OPLOG，改变oplogSize将不会影响OPLOG的大小。<br>fastsync：默认为false。在副本集下，设置为true，从一个dbpath里启用从库复制服务，该dbpath的数据库是主库的快照，可用于快速启用同步，否则的mongod将尝试执行初始同步。注意：如果数据不完全同步，mongod指定fastsync开启，secondary或slave与主永久不同步，这可能会导致显着的一致性问题。<br>replIndexPrefetch：2.2版本出现的新参数，默认是all。可以设置的值有：all, none, and <em>id_only。只能在副本集（replSet）中使用。默认情况下，secondary副本集的成员将加载所有索引到内存中（从OPLOG之前的操作有关的）。您可以修改此行为，使secondary只会加载_id索引。指定_id</em>或none，防止mongod的任何索引加载到内存。</p>
+<h3 id="主从复制的相关设置"><a href="#主从复制的相关设置" class="headerlink" title="主从复制的相关设置"></a><strong>主从复制的相关设置</strong></h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#master：默认为false，当设置为true，则配置当前实例作为主实例。</span></span><br><span class="line"><span class="attr">master</span> = <span class="literal">true</span></span><br><span class="line"><span class="comment">#slave：默认为false，当设置为true，则配置当前实例作为从实例。</span></span><br><span class="line"><span class="attr">slave</span> = <span class="literal">true</span></span><br><span class="line"><span class="comment">#source：默认为空，格式为：&lt;host&gt;&lt;:port&gt;。用于从实例的复制：设置从的时候指定该选项会让从复制指定主的实例。</span></span><br><span class="line"><span class="attr">source</span> = <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">30001</span></span><br><span class="line"><span class="comment">#only：默认为空，用于从选项，指定一个数据库进行复制。</span></span><br><span class="line"><span class="attr">only</span> = abc          <span class="comment">#只同步abc集合（库）</span></span><br><span class="line"><span class="comment">#slavedelay：设置从库同步主库的延迟时间，用于从设置，默认为0。</span></span><br><span class="line"><span class="attr">slavedelay</span> = <span class="number">60</span>     <span class="comment">#延迟60s同步主数据</span></span><br><span class="line"><span class="comment">#autoresync：默认为false，用于从设置。是否自动重新同步。设置为true，如果落后主超过10秒，会强制从自动重新同步。如果oplogSize太小，此设置可能有问题。如果OPLOG大小不足以存储主的变化状态和从的状态变化之间的差异，这种情况下强制重新同步是不必要的。当设置autoresync选项设置为false，10分钟内从不会进行大于1次的自动重新同步。</span></span><br><span class="line"><span class="attr">autoresync</span> = <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h3 id="分片集群设置"><a href="#分片集群设置" class="headerlink" title="分片集群设置"></a><strong>分片集群设置</strong></h3><p>configsvr  #设置是否是配置服务，默认端口27019，默认目录/data/configdb</p>
+<p>shardsvr  #设置是否分片，默认端口27018</p>
+<p>配置实例：conf/mongod.conf</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#port 端口号</span></span><br><span class="line"><span class="attr">port</span>=<span class="number">23000</span></span><br><span class="line"><span class="comment">#dbpath 数据库存储文件目录</span></span><br><span class="line"><span class="attr">dbpath</span>=/home/mongo/mongodb-<span class="number">2.6</span>.<span class="number">8</span>/data</span><br><span class="line"><span class="comment">#logpath 日志路径</span></span><br><span class="line"><span class="attr">logpath</span>=/home/mongo/mongodb-<span class="number">2.6</span>.<span class="number">8</span>/logs/mongodb.log</span><br><span class="line"><span class="comment">#logappend 日志追加形式  false:重新启动覆盖文件</span></span><br><span class="line"><span class="attr">logappend</span>=<span class="literal">true</span></span><br><span class="line"><span class="comment">#fork 后台启动</span></span><br><span class="line"><span class="attr">fork</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#设置日志级别</span></span><br><span class="line"><span class="comment">#0 - 关闭性能分析，测试环境可以打开，生成环境关闭，对性能有很大影响;</span></span><br><span class="line"><span class="comment">#1 - 开启慢查询日志，执行时间大于100毫秒的语句</span></span><br><span class="line"><span class="comment">#2 - 开启所有操作日志</span></span><br><span class="line"><span class="attr">profile</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>启动：./bin/mongod -f conf/mongod.conf</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/07/10/resource-designpattern-behavior-observer/" data-toggle="tooltip" data-placement="top" title="java设计模式之观察者模式">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/06/09/resource-system-Linux-Linux-PlanTask/" data-toggle="tooltip" data-placement="top" title="Linux执行定时任务">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#基本配置"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">基本配置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#复制选项（Replication-Options）"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">复制选项（Replication Options）</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#主从复制的相关设置"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">主从复制的相关设置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分片集群设置"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">分片集群设置</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#MongoDB" title="MongoDB">MongoDB</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

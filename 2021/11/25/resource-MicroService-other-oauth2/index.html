@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Oauth2协议及其密码授权模式 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/11/25/resource-MicroService-other-oauth2/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/MicroService/oauth2.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>Oauth2协议及其密码授权模式</h1>
+                        <h2 class="subheading">将应用拆分成一个一个的服务,每一个服务都是提供特定的功能，一个服务只做一件事</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-11-25
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">3.3k</span> and
+                                Reading Time <span class="post-count">12</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>学习本课程的前提： 了解Oauth2协议及其密码授权模式，熟悉Spring Security Oauth2和JWT的使用，熟悉Spring Cloud Gateway网关使用。</p>
+<p><strong>1. 架构设计分析</strong></p>
+<p><strong>1.1 多点登录</strong></p>
+<p><img src="../../../../img/oauth2/clipboard-16378335965551.png" alt="img"></p>
+<p><strong>1.2 单点登录</strong></p>
+<p><img src="../../../../img/oauth2/clipboard-16378335965562.png" alt="img"></p>
+<p><strong>1.3 微服务接入网关实现单点登录设计思路</strong></p>
+<p>网关整合 OAuth2.0 有两种思路，一种是授权服务器生成令牌, 所有请求统一在网关层验证，判断权限等操作；另一种是由各资源服务处理，网关只做请求转发。  比较常用的是第一种，把API网关作为OAuth2.0的资源服务器角色，实现接入客户端权限拦截、令牌解析并转发当前登录用户信息给微服务，这样下游微服务就不需要关心令牌格式解析以及OAuth2.0相关机制了。  </p>
+<p>网关在认证授权体系里主要负责两件事：<sunfy-line>（1）作为OAuth2.0的资源服务器角色，实现接入方访问权限拦截。 （2）令牌解析并转发当前登录用户信息（明文token）给微服务 微服务拿到明文token(明文token中包含登录用户的身份和权限信息)后也需要做两件事： （1）用户授权拦截（看当前用户是否有权访问该资源） （2）将用户信息存储进当前线程上下文（有利于后续业务逻辑随时获取当前用户信息） </p>
+<p><img src="../../../../img/oauth2/clipboard-16378335965573.png" alt="img"></p>
+<p><strong>2. 搭建微服务授权中心</strong></p>
+<p>授权中心的认证依赖：</p>
+<ul>
+<li>第三方客户端的信息</li>
+<li>微服务的信息</li>
+<li>登录用户的信息</li>
+</ul>
+<p>创建微服务tulingmall-auth</p>
+<p><strong>2.1 引入依赖</strong></p>
+<p><strong>2.2 添加yml配置</strong></p>
+<p><strong>2.3 配置授权服务器</strong></p>
+<p><strong>基于DB模式配置授权服务器存储第三方客户端的信息</strong></p>
+<p>在oauth_client_details中添加第三方客户端信息（client_id  client_secret  scope等等）</p>
+<p><strong>基于内存模式配置授权服务器存储第三方客户端的信息</strong></p>
+<p><strong>2.4 配置SpringSecurity</strong></p>
+<p><strong>获取会员信息，此处通过feign从tulingmall-member获取会员信息，需要配置feign，核心代码：</strong></p>
+<p><strong>修改授权服务配置，支持密码模式</strong></p>
+<p><strong>2.5 测试模拟用户登录</strong></p>
+<p><strong>授权码模式</strong></p>
+<p>授权码（authorization code）方式，指的是第三方应用先申请一个授权码，然后再用该码获取令牌。</p>
+<p>这种方式是最常用的流程，安全性也最高，它适用于那些有后端的 Web 应用。授权码通过前端传送，令牌则是储存在后端，而且所有与资源服务器的通信都在后端完成。这样的前后端分离，可以避免令牌泄漏。</p>
+<p>适用场景：目前市面上主流的第三方验证都是采用这种模式</p>
+<p><img src="../../../../img/oauth2/6a92a862da97a4692c755c7e186dfd07.jpg" alt="img"></p>
+<p>它的步骤如下：</p>
+<p>（A）用户访问客户端，后者将前者导向授权服务器。</p>
+<p>（B）用户选择是否给予客户端授权。</p>
+<p>（C）假设用户给予授权，授权服务器将用户导向客户端事先指定的”重定向URI”（redirection URI），同时附上一个授权码。</p>
+<p>（D）客户端收到授权码，附上早先的”重定向URI”，向授权服务器申请令牌。这一步是在客户端的后台的服务器上完成的，对用户不可见。</p>
+<p>（E）授权服务器核对了授权码和重定向URI，确认无误后，向客户端发送访问令牌（access token）和更新令牌（refresh token）。</p>
+<p><a href="http://localhost:9999/oauth/authorize?response_type=code&amp;client_id=client&amp;redirect_uri=http://www.baidu.com&amp;scope=all" target="_blank" rel="noopener">http://localhost:9999/oauth/authorize?response_type=code&amp;client_id=client&amp;redirect_uri=http://www.baidu.com&amp;scope=all</a></p>
+<p>获取到code</p>
+<p><img src="../../../../img/oauth2/clipboard-16378335965574.png" alt="img"></p>
+<p><img src="../../../../img/oauth2/clipboard-16378335965575.png" alt="img"></p>
+<p><strong>密码模式</strong></p>
+<p>如果你高度信任某个应用，RFC 6749 也允许用户把用户名和密码，直接告诉该应用。该应用就使用你的密码，申请令牌，这种方式称为”密码式”（password）。</p>
+<p>在这种模式中，用户必须把自己的密码给客户端，但是客户端不得储存密码。这通常用在用户对客户端高度信任的情况下，比如客户端是操作系统的一部分，或者由一个著名公司出品。而授权服务器只有在其他授权模式无法执行的情况下，才能考虑使用这种模式。</p>
+<p>适用场景：自家公司搭建的授权服务器</p>
+<p>测试获取token</p>
+<p><a href="http://localhost:9999/oauth/token?username=test&amp;password=test&amp;grant_type=password&amp;client_id=client&amp;client_secret=123123&amp;scope=all" target="_blank" rel="noopener">http://localhost:9999/oauth/token?username=test&amp;password=test&amp;grant_type=password&amp;client_id=client&amp;client_secret=123123&amp;scope=all</a></p>
+<p><img src="../../../../img/oauth2/clipboard-16378335965576.png" alt="img"></p>
+<p>测试校验token接口</p>
+<p><img src="../../../../img/oauth2/clipboard-16378335965577.png" alt="img"></p>
+<p>因为授权服务器的security配置需要携带clientId和clientSecret，可以采用basic Auth的方式发请求</p>
+<p><img src="../../../../img/oauth2/clipboard-16378335965588.png" alt="img"></p>
+<p>注意： 传参是token</p>
+<p><img src="../../../../img/oauth2/clipboard-16378335965589.png" alt="img"></p>
+<p><strong>2.6 配置资源服务器</strong></p>
+<p>测试携带token访问资源</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655810.png" alt="img"></p>
+<p>或者请求头配置Authorization</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655811.png" alt="img"></p>
+<p><strong>2.7 Spring Security Oauth2整合JWT</strong></p>
+<p>JSON Web Token（JWT）是一个开放的行业标准（RFC 7519），它定义了一种简介的、自包含的协议格式，用于在通信双方传递json对象，传递的信息经过数字签名可以被验证和信任。JWT可以使用HMAC算法或使用RSA的公钥/私钥对来签名，防止被篡改。 官网：<a href="https://jwt.io/" target="_blank" rel="noopener">https://jwt.io/</a></p>
+<p>JWT令牌的优点：</p>
+<ul>
+<li>jwt基于json，非常方便解析。</li>
+<li>可以在令牌中自定义丰富的内容，易扩展。</li>
+<li>通过非对称加密算法及数字签名技术，JWT防止篡改，安全性高。</li>
+<li>资源服务使用JWT可不依赖认证服务即可完成授权。</li>
+</ul>
+<p>缺点：</p>
+<p>​    JWT令牌较长，占存储空间比较大。  </p>
+<p>JWT组成</p>
+<p>一个JWT实际上就是一个字符串，它由三部分组成，头部（header）、载荷（payload）与签名（signature）。</p>
+<p><img src="../../../../img/oauth2/image-20201218143315750.png" alt="img"></p>
+<p><strong>头部（header）</strong></p>
+<p>头部用于描述关于该JWT的最基本的信息：类型（即JWT）以及签名所用的算法（如HMACSHA256或RSA）等。</p>
+<p>这也可以被表示成一个JSON对象：</p>
+<p>{  “alg”: “HS256”,  “typ”: “JWT” }</p>
+<p>然后将头部进行base64加密（该加密是可以对称解密的),构成了第一部分:</p>
+<p>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9</p>
+<p><strong>载荷（payload）</strong></p>
+<p>第二部分是载荷，就是存放有效信息的地方。这个名字像是特指飞机上承载的货品，这些有效信息包含三个部分：</p>
+<ul>
+<li>标准中注册的声明（建议但不强制使用）  </li>
+</ul>
+<p><strong>iss</strong>: jwt签发者</p>
+<p><strong>sub</strong>: jwt所面向的用户</p>
+<p><strong>aud</strong>: 接收jwt的一方</p>
+<p><strong>exp</strong>: jwt的过期时间，这个过期时间必须要大于签发时间</p>
+<p><strong>nbf</strong>: 定义在什么时间之前，该jwt都是不可用的.</p>
+<p><strong>iat</strong>: jwt的签发时间</p>
+<p><strong>jti</strong>: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。</p>
+<ul>
+<li>公共的声明 公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息.但不建议添加敏感信息，因为该部分在客户端可解密.  </li>
+<li>私有的声明 私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解密的，意味着该部分信息可以归类为明文信息。  </li>
+</ul>
+<p>定义一个payload：</p>
+<p>{  “sub”: “1234567890”,  “name”: “John Doe”,  “iat”: 1516239022 }</p>
+<p>然后将其进行base64加密，得到Jwt的第二部分:</p>
+<p>eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ</p>
+<p><strong>签名（signature）</strong></p>
+<p>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：</p>
+<ul>
+<li>header (base64后的)</li>
+<li>payload (base64后的)</li>
+<li>secret(盐，一定要保密）  </li>
+</ul>
+<p>这个部分需要base64加密后的header和base64加密后的payload使用.连接组成的字符串，然后通过header中声明的加密方式进行加盐secret组合加密，然后就构成了jwt的第三部分:</p>
+<p>var encodedString = base64UrlEncode(header) + ‘.’ + base64UrlEncode(payload); var signature = HMACSHA256(encodedString, ‘fox’); // khA7TNYc7_0iELcDyTc7gHBZ_xfIcgbfpzUNWwQtzME</p>
+<p>将这三部分用.连接成一个完整的字符串,构成了最终的jwt:</p>
+<p>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.khA7TNYc7_0iELcDyTc7gHBZ_xfIcgbfpzUNWwQtzME</p>
+<p>注意：secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。</p>
+<p>引入依赖</p>
+<p><!--spring secuity对jwt的支持 spring cloud oauth2已经依赖，可以不配置--> <dependency>    <groupId>org.springframework.security</groupId>    <artifactId>spring-security-jwt</artifactId>    <version>1.0.9.RELEASE</version> </dependency></p>
+<p>添加JWT配置</p>
+<p>在授权服务器配置中指定令牌的存储策略为JWT </p>
+<p>密码模式测试：</p>
+<p><a href="http://localhost:9999/oauth/token?username=test&amp;password=test&amp;grant_type=password&amp;client_id=client&amp;client_secret=123123&amp;scope=all" target="_blank" rel="noopener">http://localhost:9999/oauth/token?username=test&amp;password=test&amp;grant_type=password&amp;client_id=client&amp;client_secret=123123&amp;scope=all</a></p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655812.png" alt="img"></p>
+<p><strong>将access_token复制到</strong><a href="https://jwt.io/" target="_blank" rel="noopener"><strong>https://jwt.io/</strong></a><strong>的Encoded中打开,可以看到会员认证信息</strong></p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655813.png" alt="img"></p>
+<p>测试校验token</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655814.png" alt="img"></p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655815.png" alt="img"></p>
+<p>测试获取token_key</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655816.png" alt="img"></p>
+<p>测试刷新token</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655817.png" alt="img"></p>
+<p><strong>2.8 优化：实现JWT非对称加密（公钥私钥）</strong></p>
+<p><strong>第一步：生成jks 证书文件</strong></p>
+<p>我们使用jdk自动的工具生成</p>
+<p>命令格式 </p>
+<p>keytool </p>
+<p>-genkeypair  生成密钥对</p>
+<p>-alias jwt(别名) </p>
+<p>-keypass 123456(别名密码) </p>
+<p>-keyalg RSA(生证书的算法名称，RSA是一种非对称加密算法) </p>
+<p>-keysize 1024(密钥长度,证书大小) </p>
+<p>-validity 365(证书有效期，天单位) </p>
+<p>-keystore D:/jwt/jwt.jks(指定生成证书的位置和证书名称) </p>
+<p>-storepass 123456(获取keystore信息的密码)</p>
+<p>-storetype (指定密钥仓库类型)</p>
+<p>使用 “keytool -help” 获取所有可用命令</p>
+<p>keytool -genkeypair -alias jwt -keyalg RSA -keysize 2048 -keystore D:/jwt/jwt.jks</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655818.png" alt="img"></p>
+<p>将生成的jwt.jks文件cope到授权服务器的resource目录下</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655819.png" alt="img"></p>
+<p>查看公钥信息</p>
+<p> keytool -list -rfc —keystore jwt.jks  | openssl x509 -inform pem -pubkey</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655920.png" alt="img"></p>
+<p>第二步：授权服务中增加jwt的属性配置类</p>
+<p>yml中添加jwt配置</p>
+<p>tuling:  jwt:    keyPairName: jwt.jks    keyPairAlias: jwt    keyPairSecret: 123123    keyPairStoreSecret: 123123</p>
+<p>第三步：修改JwtTokenStoreConfig的配置，支持非对称加密</p>
+<p>第四步：扩展JWT中的存储内容</p>
+<p>有时候我们需要扩展JWT中存储的内容，根据自己业务添加字段到Jwt中。 继承TokenEnhancer实现一个JWT内容增强器 </p>
+<p>在JwtTokenStoreConfig中配置TulingTokenEnhancer</p>
+<p>在授权服务器配置中配置JWT的内容增强器  </p>
+<p>1）通过密码模式测试获取token</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655921.png" alt="img"></p>
+<p><a href="https://jwt.io/中校验token，可以获取到增强的用户信息，传入私钥和公钥可以校验通过。" target="_blank" rel="noopener">https://jwt.io/中校验token，可以获取到增强的用户信息，传入私钥和公钥可以校验通过。</a></p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655922.png" alt="img"></p>
+<p>2）测试校验token</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655923.png" alt="img"></p>
+<p><strong>3. 接入网关服务</strong></p>
+<p>在网关服务tulingmall-gateway中配置tulingmall-auth</p>
+<p>1）yml中添加对tulingmall-auth的路由</p>
+<p>2）编写GateWay的全局过滤器进行权限的校验拦截 </p>
+<p>认证过滤器AuthenticationFilter#filter中需要实现的逻辑</p>
+<p>//1.过滤不需要认证的url,比如/oauth/** //2. 获取token // 从请求头中解析 Authorization  value:  bearer xxxxxxx // 或者从请求参数中解析 access_token //3. 校验token // 拿到token后，通过公钥（需要从授权服务获取公钥）校验 // 校验失败或超时抛出异常 //4. 校验通过后，从token中获取的用户登录信息存储到请求头中</p>
+<p>1）过滤不需要认证的url ，可以通过yml设置不需要认证的url。</p>
+<p>网关中引入授权中心配置</p>
+<p>- id: tulingmall-auth  uri: lb://tulingmall-auth  predicates:  - Path=/oauth/**</p>
+<p>测试： 密码模式 client_id为会员微服务，能够获取到token信息</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655924.png" alt="img"></p>
+<p>测试：  会员微服务会员登录逻辑</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655925.png" alt="img"></p>
+<p>2） 解析请求，获取token</p>
+<p>从请求头中解析 Authorization  value:  bearer xxxxxxx 或者 从请求参数中解析 access_token</p>
+<p>引入依赖</p>
+<p>在AuthenticationFilter#filter中实现获取token的逻辑</p>
+<p>//2. 获取token // 从请求头中解析 Authorization  value:  bearer xxxxxxx // 或者从请求参数中解析 access_token //第一步:解析出我们Authorization的请求头  value为: “bearer XXXXXXXXXXXXXX” String authHeader = exchange.getRequest().getHeaders().getFirst(“Authorization”); //第二步:判断Authorization的请求头是否为空 if(StringUtils.isEmpty(authHeader)) {    log.warn(“需要认证的url,请求头为空”);    throw new GateWayException(ResultCode.AUTHORIZATION_HEADER_IS_EMPTY); }</p>
+<p>测试： 通过网关获取用户优惠券信息，因为请求头中不带token信息，所以会抛出异常</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655926.png" alt="img"></p>
+<p>3）校验token</p>
+<p>拿到token后，通过公钥（需要从授权服务获取公钥）校验，校验失败或超时抛出异常</p>
+<p>引入依赖</p>
+<p>在AuthenticationFilter#filter中实现校验token的逻辑</p>
+<p>//3. 校验token // 拿到token后，通过公钥（需要从授权服务获取公钥）校验 // 校验失败或超时抛出异常 //第三步 校验我们的jwt 若jwt不对或者超时都会抛出异常 Claims claims = JwtUtils.validateJwtToken(authHeader,publicKey);</p>
+<p>校验token逻辑</p>
+<p>工具类</p>
+<p>需要从tulingmall-auth获取公钥，实现公钥获取逻辑</p>
+<p>注意： 此处不能直接通过@LoadBalancer配置RestTemplate去获取公钥，思考为什么？</p>
+<p>源码参考：</p>
+<p>org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration</p>
+<p>org.springframework.beans.factory.support.DefaultListableBeanFactory#preInstantiateSingletons</p>
+<p>测试： 正确的token，通过网关获取用户优惠券信息</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655927.png" alt="img"></p>
+<p>错误的token，抛出异常</p>
+<p><img src="../../../../img/oauth2/clipboard-163783359655928.png" alt="img"></p>
+<p>4）校验通过后，从token中获取的用户登录信息存储到请求头中</p>
+<p>在AuthenticationFilter#filter中，将从token中获取的用户登陆信息存储到请求头中</p>
+<p>//4. 校验通过后，从token中获取的用户登录信息存储到请求头中 //第四步 把从jwt中解析出来的 用户登陆信息存储到请求头中 ServerWebExchange webExchange = wrapHeader(exchange,claims);</p>
+<p> 解析用户登录信息存储到请求头中</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/11/29/resource-DB-MySQL-MySQL-execution/" data-toggle="tooltip" data-placement="top" title="MySQL执行计划和索引实践">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/11/17/resource-java-concurrent-synchronized/" data-toggle="tooltip" data-placement="top" title="synchronized原理分析">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

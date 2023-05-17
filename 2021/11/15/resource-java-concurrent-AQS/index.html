@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          对AQS的理解 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/11/15/resource-java-concurrent-AQS/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/concurrent/aqs.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>对AQS的理解</h1>
+                        <h2 class="subheading">AQS是一个抽象同步框架，可以用来实现一个依赖状态的同步器</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-11-15
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.8k</span> and
+                                Reading Time <span class="post-count">9</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="什么是AQS"><a href="#什么是AQS" class="headerlink" title="什么是AQS"></a>什么是<code>AQS</code></h1><p>全名<code>AbstractQueuedSynchronizer</code>(简称<code>AQS</code>)，<code>AQS</code>是一个抽象同步框架，可以用来实现依赖状态的同步器。是<code>jdk</code>1.5就有的，<code>java.util.concurrent.locks</code>包下的一个基础类。大部分同步器都是基于此类来实现的，围绕着共同的基础行为，包括等待队列、条件队列、独占获取、共享获取等。</p>
+<p><img src="../../../../img/AQS/image-20211115222538503.png" alt="image-20211115222538503"></p>
+<h2 id="AQS特性"><a href="#AQS特性" class="headerlink" title="AQS特性"></a><code>AQS</code>特性</h2><ul>
+<li>阻塞等待队列</li>
+<li>共享还是独占</li>
+<li>公平还是非公平</li>
+<li>是否支持可重入</li>
+<li>是否允许中断</li>
+</ul>
+<h2 id="一个重要的属性"><a href="#一个重要的属性" class="headerlink" title="一个重要的属性"></a>一个重要的属性</h2><p>用来记录当前锁的同步状态</p>
+<p><img src="../../../../img/AQS/image-20211115224134524.png" alt="image-20211115224134524"></p>
+<p><code>getState()</code><sunfy-line></p>
+<blockquote>
+<p>返回同步状态的当前值。此操作具有 {@code volatile} 读取的内存语义。 @return 当前状态值</p>
+</blockquote>
+<p><code>setState(int newState)</code></p>
+<blockquote>
+<p>设置同步状态的值。此操作具有 {@code volatile} 写入的内存语义。 @param newState 新的状态值</p>
+</blockquote>
+<p><code>compareAndSetState(int expect, int update)</code></p>
+<blockquote>
+<p>如果当前状态值等于预期值，则原子地将同步状态设置为给定的更新值。此操作具有 {@code volatile} 读写的内存语义。 @param 期望值 @param 更新新值 @return {@code true} 如果成功。假返回表示实际值不等于预期值。</p>
+</blockquote>
+<h2 id="两种资源共享方式"><a href="#两种资源共享方式" class="headerlink" title="两种资源共享方式"></a>两种资源共享方式</h2><ul>
+<li>Exclusive-独占，只有一个线程能执行，如<code>ReentrantLock</code></li>
+<li>Share-共享，多个线程可以同时执行，如<code>Semaphore</code>、<code>CountDownLatch</code></li>
+</ul>
+<h2 id="两种队列"><a href="#两种队列" class="headerlink" title="两种队列"></a>两种队列</h2><ul>
+<li>同步等待队列</li>
+<li>条件等待队列</li>
+</ul>
+<p>不同的自定义同步器竞争共享资源的方式也不同。自定义同步器在实现时只需要实现共享资源state的获取与释放方式即可，至于具体线程等待队列的维护（如获取资源失败入队/唤醒出队等），<code>AQS</code>已经在顶层实现好了。自定义同步器实现时主要实现以下几种方法： </p>
+<ul>
+<li><code>isHeldExclusively()</code>：该线程是否正在独占资源。只有用到condition才需要去实现它。 </li>
+<li><code>tryAcquire(int)</code>：独占方式。尝试获取资源，成功则返回true，失败则返回false。 </li>
+<li><code>tryRelease(int)</code>：独占方式。尝试释放资源，成功则返回true，失败则返回false。</li>
+<li><code>tryAcquireShared(int)</code>：共享方式。尝试获取资源。负数表示失败；0表示成功，但没有剩余可用资源；正数表示成功，且有剩余资源。</li>
+<li><code>tryReleaseShared(int)</code>：共享方式。尝试释放资源，如果释放后允许唤醒后续等待结点返回true，否则返回false。</li>
+</ul>
+<h3 id="同步等待队列"><a href="#同步等待队列" class="headerlink" title="同步等待队列"></a>同步等待队列</h3><p><code>AQS</code>当中的同步等待队列也称<code>CLH</code>队列，<code>CLH</code>队列是<code>Craig</code>、<code>Landin</code>、<code>Hagersten</code>三人发明的一种基于双向链表数据结构的队列，是FIFO先入先出线程等待队列，Java中的<code>CLH</code>队列是原<code>CLH</code>队列的一个变种,线程由原自旋机制改为阻塞机制。</p>
+<p><code>AQS</code>依赖<code>CLH</code>同步队列来完成同步状态的管理： </p>
+<ul>
+<li>当前线程如果获取同步状态失败时，<code>AQS</code>则会将当前线程已经等待状态等信息构造成一个节点（Node）并将其加入到<code>CLH</code>同步队列，同时会阻塞</li>
+<li>当前线程当同步状态释放时，会把首节点唤醒（公平锁），使其再次尝试获取同步状态。</li>
+<li>通过<code>signal</code>或<code>signalAll</code>将条件队列中的节点转移到同步队列。（由条件队列转化为同步队列）</li>
+</ul>
+<p>等待队列节点类。等待队列是“CLH”（Craig、Landin 和 Hagersten）锁定队列的变体。 CLH 锁通常用于自旋锁。我们改为将它们用于阻塞同步器，但使用相同的基本策略，即在其节点的前驱中保存有关线程的一些控制信息。每个节点中的“状态”字段跟踪线程是否应该阻塞。节点在其前任发布时收到信号。队列的每个节点都充当一个特定的通知式监视器，持有一个等待线程。尽管状态字段不控制线程是否被授予锁定等。一个线程可能会尝试获取它是否在队列中的第一个。但成为第一并不能保证成功；它只给予抗争的权利。所以当前发布的竞争者线程可能需要重新等待。要加入 CLH 锁，您可以原子地将其拼接为新的尾部。要出列，您只需设置 head 字段。</p>
+<p><img src="../../../../img/AQS/image-20211115225448353.png" alt="image-20211115225448353"></p>
+<p>插入 CLH 队列只需要对“tail”进行一次原子操作，所以有一个简单的从未排队到排队的分界点。类似地，出列只涉及更新“头”。然而，节点需要做更多的工作来确定他们的继任者是谁，部分是为了处理由于超时和中断可能导致的取消。 “prev”链接（未在原始 CLH 锁中使用），主要用于处理取消。如果一个节点被取消，它的后继（通常）会重新链接到一个未取消的前驱。有关自旋锁情况下的类似机制的解释，请参阅 Scott 和 Scherer 的论文，网址为 http:www.cs.rochester.eduuscottsynchronization 我们还使用“next”链接来实现阻塞机制。每个节点的线程 id 保存在它自己的节点中，因此前驱通过遍历下一个链接来确定它是哪个线程来通知下一个节点唤醒。确定后继节点必须避免与新排队节点竞争以设置其前驱节点的“下一个”字段。当节点的后继节点似乎为空时，通过从原子更新的“尾部”向后检查，在必要时解决此问题。（或者，换种说法，下一个链接是一种优化，因此我们通常不需要向后扫描。）取消为基本算法引入了一些保守性。</p>
+<p>由于我们必须轮询其他节点的取消，因此我们可能无法注意到被取消的节点是在我们前面还是在我们后面。这是通过在取消时总是解除后继者来处理的，允许他们在新的前任者上稳定下来，除非我们能确定一个未取消的前任者将承担这个责任。CLH队列需要一个虚拟头节点来启动。但是我们不会在构建时创建它们，因为如果从不存在争用，那将是浪费精力。</p>
+<p>相反，在第一次争用时构造节点并设置头指针和尾指针。等待条件的线程使用相同的节点，但使用额外的链接。条件只需要链接简单（非并发)链接队列中的节点，因为它们仅在独占时才被访问。在等待时，一个节点被插入到条件队列中。根据信号，节点被转移到主队列。 status 字段的特殊值用于标记节点所在的队列。 </p>
+<h3 id="条件等待队列"><a href="#条件等待队列" class="headerlink" title="条件等待队列"></a>条件等待队列</h3><p><code>AQS</code>中条件队列是使用单向列表保存的，用<code>nextWaiter</code>来连接:</p>
+<ul>
+<li>调用await方法阻塞线程；</li>
+<li>当前线程存在于同步队列的头结点，调用await方法进行阻塞（从同步队列转化到条件队列）</li>
+</ul>
+<h2 id="Condition接口"><a href="#Condition接口" class="headerlink" title="Condition接口"></a>Condition接口</h2><p><img src="../../../../img/AQS/image-20211115230112973.png" alt="image-20211115230112973"></p>
+<ul>
+<li>调用Condition#await方法会释放当前持有的锁，然后阻塞当前线程，同时向Condition队列尾部添加一个节点，所以调用Condition#await方法的时候必须持有锁。</li>
+<li>调用Condition#signal方法会将Condition队列的首节点移动到阻塞队列尾部，然后唤醒因调用Condition#await方法而阻塞的线程(唤醒之后这个线程就可以去竞争锁了)，所以调用Condition#signal方法的时候必须持有锁，持有锁的线程唤醒被因调用Condition#await方法而阻塞的线程。</li>
+</ul>
+<p>Condition将Object监视器方法（wait、notify和notifyAll）分解为不同的对象，通过将它们与任意Lock实现的使用相结合，产生每个对象具有多个等待集的效果。Lock代替了synchronized方法和语句的使用，而Condition代替了对象监视器方法的使用。<br>条件（也称为条件队列或条件变量）为一个线程提供了一种挂起执行（“等待”）的方法，直到另一个线程通知某个状态条件现在可能为真。因为对这个共享状态信息的访问发生在不同的线程中，它必须受到保护，所以某种形式的锁与条件相关联。等待条件提供的关键属性是它以原子方式释放关联的锁并挂起当前线程，就像Object.wait一样。<br>Condition实例本质上绑定到一个锁。要获取特定Lock实例的Condition实例，请使用其newCondition()方法</p>
+<p>Condition实现可以提供与Object监视器方法不同的行为和语义，例如保证通知的顺序，或者在执行通知时不需要持有锁。 如果实现提供了这样的专门语义，那么实现必须记录这些语义。<br>请注意，Condition实例只是普通对象，它们本身可以用作synchronized语句中的目标，并且可以调用它们自己的监视器wait和notification方法。获取Condition实例的监视器锁，或使用其监视器方法，与获取与该Condition关联的Lock或其等待和信号方法的使用没有特定的关系。建议您不要以这种方式使用Condition实例以避免混淆，除非在它们自己的实现中。<br>除非另有说明，否则为任何参数传递null值都将导致抛出NullPointerException。<br>实施注意事项<br>在等待Condition，通常允许发生“虚假唤醒”，作为对底层平台语义的让步。这对大多数应用程序几乎没有实际影响，因为应始终在循环中等待Condition，以测试正在等待的状态谓词。实现可以自由地消除虚假唤醒的可能性，但建议应用程序程序员始终假设它们可能发生，因此始终在循环中等待。<br>三种形式的条件等待（可中断、不可中断和定时）在某些平台上的实现难易程度和性能特征方面可能有所不同。特别是，可能很难提供这些功能并维护特定的语义，例如排序保证。此外，在所有平台上实现中断线程实际挂起的能力并不总是可行的。<br>因此，实现不需要为所有三种等待形式定义完全相同的保证或语义，也不需要支持线程实际挂起的中断。<br>一个实现需要清楚地记录每个等待方法提供的语义和保证，当一个实现确实支持线程挂起的中断时，它必须遵守这个接口中定义的中断语义。<br>由于中断通常意味着取消，并且中断检查通常很少，因此实现可以倾向于响应中断而不是正常的方法返回。即使可以证明中断发生在另一个可能已解除线程阻塞的操作之后也是如此。实现应记录此行为</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/11/16/resource-java-concurrent-ReentrantLock/" data-toggle="tooltip" data-placement="top" title="AQS之独占锁ReentrantLock">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/11/09/resource-MicroService-other-分布式唯一ID/" data-toggle="tooltip" data-placement="top" title="关于分布式唯一ID的思考">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#什么是AQS"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">什么是AQS</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#AQS特性"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">AQS特性</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一个重要的属性"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">一个重要的属性</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#两种资源共享方式"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">两种资源共享方式</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#两种队列"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">两种队列</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#同步等待队列"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">同步等待队列</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#条件等待队列"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">条件等待队列</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Condition接口"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Condition接口</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          MySQL执行计划和索引实践 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/11/29/resource-DB-MySQL-MySQL-execution/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/DB/execution.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+                            
+                        </div>
+
+                        <h1>MySQL执行计划和索引实践</h1>
+                        <h2 class="subheading">该EXPLAIN语句提供有关MySQL如何执行语句的信息。EXPLAIN作品有SELECT，DELETE，INSERT，REPLACE，和UPDATE语句。</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-11-29
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">7.3k</span> and
+                                Reading Time <span class="post-count">28</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Explain工具"><a href="#Explain工具" class="headerlink" title="Explain工具"></a><strong>Explain工具</strong></h1><p>使用EXPLAIN关键字可以模拟优化器执行SQL语句,分析查询语句或是结构的性能瓶颈</p>
+<p>在 select 语句之前增加 explain 关键字,MySQL 会在查询上设置一个标记,执行查询会返回执行计划的信息,而不是执行SQL</p>
+<p>注意:如果 from 中包含子查询,仍会执行该子查询,将结果放入临时表中</p>
+<p>官方文档：<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/explain-output.html</a></p>
+<p>该<a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>语句提供有关 MySQL 如何执行语句的信息。 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>作品有 <a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>， <a href="https://dev.mysql.com/doc/refman/5.7/en/delete.html" target="_blank" rel="noopener"><code>DELETE</code></a>， <a href="https://dev.mysql.com/doc/refman/5.7/en/insert.html" target="_blank" rel="noopener"><code>INSERT</code></a>， <a href="https://dev.mysql.com/doc/refman/5.7/en/replace.html" target="_blank" rel="noopener"><code>REPLACE</code></a>，和 <a href="https://dev.mysql.com/doc/refman/5.7/en/update.html" target="_blank" rel="noopener"><code>UPDATE</code></a>语句。</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>为<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>语句中使用的每个表返回一行信息 。它按照 MySQL 在处理语句时读取它们的顺序列出输出中的表。MySQL 使用嵌套循环连接方法解析所有连接。这意味着 MySQL 从第一个表中读取一行，然后在第二个表中找到匹配的行，第三个表，依此类推。处理完所有表后，MySQL 输出选定的列并通过表列表回溯，直到找到具有更多匹配行的表。从此表中读取下一行，然后处理下一个表。</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>输出包括分区信息。此外，对于<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a> 语句，<a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>产生可与被显示扩展信息 <a href="https://dev.mysql.com/doc/refman/5.7/en/show-warnings.html" target="_blank" rel="noopener"><code>SHOW WARNINGS</code></a>之后的 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>。</p>
+<h3 id="输出类信息"><a href="#输出类信息" class="headerlink" title="输出类信息"></a>输出类信息</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">JSON 名称</th>
+<th style="text-align:left">意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_id" target="_blank" rel="noopener"><code>id</code></a></td>
+<td style="text-align:left"><code>select_id</code></td>
+<td style="text-align:left">该<code>SELECT</code>标识符</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_select_type" target="_blank" rel="noopener"><code>select_type</code></a></td>
+<td style="text-align:left">没有任何</td>
+<td style="text-align:left">该<code>SELECT</code>类型</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_table" target="_blank" rel="noopener"><code>table</code></a></td>
+<td style="text-align:left"><code>table_name</code></td>
+<td style="text-align:left">输出行的表</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_partitions" target="_blank" rel="noopener"><code>partitions</code></a></td>
+<td style="text-align:left"><code>partitions</code></td>
+<td style="text-align:left">匹配的分区</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_type" target="_blank" rel="noopener"><code>type</code></a></td>
+<td style="text-align:left"><code>access_type</code></td>
+<td style="text-align:left">联接类型</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_possible_keys" target="_blank" rel="noopener"><code>possible_keys</code></a></td>
+<td style="text-align:left"><code>possible_keys</code></td>
+<td style="text-align:left">可供选择的可能索引</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_key" target="_blank" rel="noopener"><code>key</code></a></td>
+<td style="text-align:left"><code>key</code></td>
+<td style="text-align:left">实际选择的索引</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_key_len" target="_blank" rel="noopener"><code>key_len</code></a></td>
+<td style="text-align:left"><code>key_length</code></td>
+<td style="text-align:left">所选密钥的长度</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_ref" target="_blank" rel="noopener"><code>ref</code></a></td>
+<td style="text-align:left"><code>ref</code></td>
+<td style="text-align:left">与索引比较的列</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_rows" target="_blank" rel="noopener"><code>rows</code></a></td>
+<td style="text-align:left"><code>rows</code></td>
+<td style="text-align:left">要检查的行的估计</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_filtered" target="_blank" rel="noopener"><code>filtered</code></a></td>
+<td style="text-align:left"><code>filtered</code></td>
+<td style="text-align:left">按表条件过滤的行百分比</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain_extra" target="_blank" rel="noopener"><code>Extra</code></a></td>
+<td style="text-align:left">没有任何</td>
+<td style="text-align:left">附加信息</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>JSON<code>NULL</code>格式的<code>EXPLAIN</code> 输出中未显示的JSON 属性。</p>
+<ul>
+<li><p><code>id</code>（JSON名： <code>select_id</code>）</p>
+<p>的<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>标识符。这是<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>查询中的序列号 。<code>NULL</code>如果该行引用其他行的联合结果，则该值可以是。在这种情况下，该 <code>table</code>列显示的值类似于 表示该行引用具有 和值的行的 并集 。 <code>&lt;union*</code>M<code>*,*</code>N<code>*&gt;``id</code><em><code>M</code>**<code>N</code></em></p>
+</li>
+<li><p><code>select_type</code> （JSON 名称：无）</p>
+<p>的类型<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>，可以是下表中的任何一种。JSON 格式<code>EXPLAIN</code>将<code>SELECT</code>类型公开 为 a 的属性 <code>query_block</code>，除非它是 <code>SIMPLE</code>或<code>PRIMARY</code>。JSON 名称（如果适用）也显示在表中。</p>
+<p>| <code>select_type</code> 价值                                           | JSON 名称                    | 意义                                                         |<br>| :—————————————————————————————- | :—————————————- | :—————————————————————————————- |<br>| <code>SIMPLE</code>                                                     | 没有任何                     | 简单<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>（不使用 <a href="https://dev.mysql.com/doc/refman/5.7/en/union.html" target="_blank" rel="noopener"><code>UNION</code></a>或子查询） |<br>| <code>PRIMARY</code>                                                    | 没有任何                     | 最外面 <a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a> |<br>| <a href="https://dev.mysql.com/doc/refman/5.7/en/union.html" target="_blank" rel="noopener"><code>UNION</code></a> | 没有任何                     | 中的第二个或以后的<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>语句 <a href="https://dev.mysql.com/doc/refman/5.7/en/union.html" target="_blank" rel="noopener"><code>UNION</code></a> |<br>| <code>DEPENDENT UNION</code>                                            | <code>dependent</code>( <code>true</code>)         | a 中的第二个或后面的<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>语句 <a href="https://dev.mysql.com/doc/refman/5.7/en/union.html" target="_blank" rel="noopener"><code>UNION</code></a>，取决于外部查询 |<br>| <code>UNION RESULT</code>                                               | <code>union_result</code>               | 的结果<a href="https://dev.mysql.com/doc/refman/5.7/en/union.html" target="_blank" rel="noopener"><code>UNION</code></a>。 |<br>| <a href="https://dev.mysql.com/doc/refman/5.7/en/optimizer-hints.html#optimizer-hints-subquery" target="_blank" rel="noopener"><code>SUBQUERY</code></a> | 没有任何                     | 首先<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>在子查询 |<br>| <code>DEPENDENT SUBQUERY</code>                                         | <code>dependent</code>( <code>true</code>)         | 首先<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>在子查询中，依赖于外部查询 |<br>| <code>DERIVED</code>                                                    | 没有任何                     | 派生表                                                       |<br>| <code>MATERIALIZED</code>                                               | <code>materialized_from_subquery</code> | 物化子查询                                                   |<br>| <code>UNCACHEABLE SUBQUERY</code>                                       | <code>cacheable</code>( <code>false</code>)        | 无法缓存结果并且必须为外部查询的每一行重新评估的子查询       |<br>| <code>UNCACHEABLE UNION</code>                                          | <code>cacheable</code>( <code>false</code>)        | <a href="https://dev.mysql.com/doc/refman/5.7/en/union.html" target="_blank" rel="noopener"><code>UNION</code></a> 属于不可缓存子查询的第二个或以后的选择（请参阅 <code>UNCACHEABLE SUBQUERY</code>） |</p>
+<p><code>DEPENDENT</code>通常表示使用相关子查询。</p>
+<p><code>DEPENDENT SUBQUERY</code>评价不同于<code>UNCACHEABLE SUBQUERY</code>评价。对于<code>DEPENDENT SUBQUERY</code>，对于来自其外部上下文的变量的每组不同值，子查询仅重新评估一次。对于 <code>UNCACHEABLE SUBQUERY</code>，为外部上下文的每一行重新评估子查询。</p>
+<p>子查询的可缓存性不同于在查询缓存中缓存查询结果。子查询缓存发生在查询执行期间，而查询缓存仅用于在查询执行完成后存储结果。</p>
+<p>当您指定<code>FORMAT=JSON</code>with 时 <code>EXPLAIN</code>，输出没有直接等效于<code>select_type</code>; 的单个属性 。该 <code>query_block</code>属性对应于给定的<code>SELECT</code>。与<code>SELECT</code>刚刚显示的大多数子查询类型等效的属性可用（例如 <code>materialized_from_subquery</code>for <code>MATERIALIZED</code>），并在适当时显示。<code>SIMPLE</code>或没有 JSON 等价物 <code>PRIMARY</code>。</p>
+<p><code>select_type</code>非<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>语句 的值显示受影响表的语句类型。例如，<code>select_type</code>is <code>DELETE</code>for <a href="https://dev.mysql.com/doc/refman/5.7/en/delete.html" target="_blank" rel="noopener"><code>DELETE</code></a>语句。</p>
+</li>
+<li><p><code>table</code>（JSON名： <code>table_name</code>）</p>
+<p>输出行所引用的表的名称。这也可以是以下值之一：</p>
+<ul>
+<li><code>&lt;union*</code>M<code>*,*</code>N<code>*&gt;</code>: 行是指具有 和<code>id</code>值的行 的 <em><code>M</code></em>并集 <em><code>N</code></em>。</li>
+<li><code>&lt;derived*</code>N<code>*&gt;</code>：该行是指用于与该行的派生表结果<code>id</code>的值 <em><code>N</code></em>。例如，派生表可能来自<code>FROM</code>子句中的子查询 。</li>
+<li><code>&lt;subquery*</code>N<code>*&gt;</code>：该行是指与物化子查询该行的结果<code>id</code> 的值<em><code>N</code></em>。请参阅 <a href="https://dev.mysql.com/doc/refman/5.7/en/subquery-materialization.html" target="_blank" rel="noopener">第 8.2.2.2 节，“使用实现优化子查询”</a>。</li>
+</ul>
+</li>
+<li><p><code>partitions</code>（JSON名： <code>partitions</code>）</p>
+<p>查询将匹配记录的分区。该值<code>NULL</code>用于非分区表。请参阅 <a href="https://dev.mysql.com/doc/refman/5.7/en/partitioning-info.html" target="_blank" rel="noopener">第 22.3.5 节，“获取有关分区的信息”</a>。</p>
+</li>
+<li><p><code>type</code>（JSON名： <code>access_type</code>）</p>
+<p>联接类型。有关不同类型的说明，请参阅 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain-join-types" target="_blank" rel="noopener"><code>EXPLAIN</code> 联接类型</a>。</p>
+</li>
+<li><p><code>possible_keys</code>（JSON名： <code>possible_keys</code>）</p>
+<p>该<code>possible_keys</code>列指示 MySQL 可以选择从中查找该表中行的索引。请注意，此列完全独立于从 的输出中显示的表的顺序 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>。这意味着某些键<code>possible_keys</code>在实际中可能无法与生成的表顺序一起使用。</p>
+<p>如果此列是<code>NULL</code>（或在 JSON 格式的输出中未定义），则没有相关索引。在这种情况下，您可以通过检查<code>WHERE</code> 子句来检查它是否引用了适合编制索引的某些列或多列，从而提高查询的性能。如果是这样，请创建适当的索引并<a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>再次检查查询 。见 <a href="https://dev.mysql.com/doc/refman/5.7/en/alter-table.html" target="_blank" rel="noopener">第 13.1.8 节，“ALTER TABLE 语句”</a>。</p>
+<p>要查看表具有哪些索引，请使用. <code>SHOW INDEX FROM *</code>tbl_name<code>*</code></p>
+</li>
+<li><p><code>key</code>（JSON名：<code>key</code>）</p>
+<p>该<code>key</code>列表示 MySQL 实际决定使用的键（索引）。如果 MySQL 决定使用其中一个<code>possible_keys</code> 索引来查找行，则该索引将作为键值列出。</p>
+<p>可以<code>key</code>命名值中不存在的索引 <code>possible_keys</code>。如果没有任何<code>possible_keys</code>索引适合查找行，但查询选择的所有列都是某个其他索引的列，就会发生这种情况。也就是说，命名索引覆盖了选定的列，因此虽然它不用于确定要检索哪些行，但索引扫描比数据行扫描更有效。</p>
+<p>对于<code>InnoDB</code>，二级索引可能会覆盖选定的列，即使查询也选择了主键，因为<code>InnoDB</code>每个二级索引都存储了主键值。如果 <code>key</code>是<code>NULL</code>，则 MySQL 找不到可用于更有效地执行查询的索引。</p>
+<p>要强制MySQL使用或忽略列出的索引 <code>possible_keys</code>列，使用 <code>FORCE INDEX</code>，<code>USE INDEX</code>或<code>IGNORE INDEX</code>在您的查询。见<a href="https://dev.mysql.com/doc/refman/5.7/en/index-hints.html" target="_blank" rel="noopener">第 8.9.4 节，“索引提示”</a>。</p>
+<p>对于<code>MyISAM</code>表，运行 <a href="https://dev.mysql.com/doc/refman/5.7/en/analyze-table.html" target="_blank" rel="noopener"><code>ANALYZE TABLE</code></a>有助于优化器选择更好的索引。对于 <code>MyISAM</code>表，<a href="https://dev.mysql.com/doc/refman/5.7/en/myisamchk.html" target="_blank" rel="noopener"><strong>myisamchk —analyze</strong></a>执行相同的操作。请参阅 <a href="https://dev.mysql.com/doc/refman/5.7/en/analyze-table.html" target="_blank" rel="noopener">第 13.7.2.1 节，“ANALYZE TABLE 语句”</a>和 <a href="https://dev.mysql.com/doc/refman/5.7/en/myisam-table-maintenance.html" target="_blank" rel="noopener">第 7.6 节，“MyISAM 表维护和崩溃恢复”</a>。</p>
+</li>
+<li><p><code>key_len</code>（JSON名： <code>key_length</code>）</p>
+<p>该<code>key_len</code>列表示 MySQL 决定使用的键的长度。的值 <code>key_len</code>使您能够确定 MySQL 实际使用的多部分键的多少部分。如果<code>key</code>列说 <code>NULL</code>，<code>key_len</code> 列也说<code>NULL</code>。</p>
+<p>由于密钥存储格式的原因，列的密钥长度<code>NULL</code> 比列的长度<code>NOT NULL</code>大一。</p>
+</li>
+<li><p><code>ref</code>（JSON名：<code>ref</code>）</p>
+<p>该<code>ref</code>列显示哪些列或常量与列中指定的索引进行比较以 <code>key</code>从表中选择行。</p>
+<p>如果值为<code>func</code>，则使用的值是某个函数的结果。要查看哪个功能，请使用 <a href="https://dev.mysql.com/doc/refman/5.7/en/show-warnings.html" target="_blank" rel="noopener"><code>SHOW WARNINGS</code></a>以下内容 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>查看扩展 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>输出。该函数实际上可能是一个运算符，例如算术运算符。</p>
+</li>
+<li><p><code>rows</code>（JSON名： <code>rows</code>）</p>
+<p>该<code>rows</code>列表示 MySQL 认为它必须检查以执行查询的行数。</p>
+<p>对于<a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-storage-engine.html" target="_blank" rel="noopener"><code>InnoDB</code></a>表格，这个数字是一个估计值，可能并不总是准确的。</p>
+</li>
+<li><p><code>filtered</code>（JSON名： <code>filtered</code>）</p>
+<p>该<code>filtered</code>列指示按表条件过滤的表行的估计百分比。最大值为 100，这意味着没有发生行过滤。从 100 开始减小的值表示过滤量增加。 <code>rows</code>显示检查的估计行数，<code>rows</code>× <code>filtered</code>显示与下表连接的行数。例如，如果 <code>rows</code>是 1000 并且 <code>filtered</code>是 50.00 (50%)，那么与下表连接的行数为 1000 × 50% = 500。</p>
+</li>
+<li><p><code>Extra</code> （JSON 名称：无）</p>
+<p>此列包含有关 MySQL 如何解析查询的附加信息。有关不同值的说明，请参阅 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain-extra-information" target="_blank" rel="noopener"><code>EXPLAIN</code> 额外信息</a>。</p>
+<p>没有与<code>Extra</code>列对应的单个 JSON 属性 ；但是，此列中可能出现的值会作为 JSON 属性或作为属性的文本公开<code>message</code>。</p>
+</li>
+</ul>
+<h3 id="联接类型"><a href="#联接类型" class="headerlink" title="联接类型"></a>联接类型</h3><p>该<code>type</code>列 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>输出介绍如何联接表。在 JSON 格式的输出中，这些作为<code>access_type</code>属性的值被找到。下面的列表描述了连接类型，从最好的类型到最差的类型：</p>
+<ul>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_system" target="_blank" rel="noopener"><code>system</code></a></p>
+<p>该表只有一行（= 系统表）。这是<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_const" target="_blank" rel="noopener"><code>const</code></a>连接类型的一个特例 。</p>
+</li>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_const" target="_blank" rel="noopener"><code>const</code></a></p>
+<p>该表最多有一个匹配行，在查询开始时读取。因为只有一行，该行中该列的值可以被优化器的其余部分视为常量。 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_const" target="_blank" rel="noopener"><code>const</code></a>表非常快，因为它们只被读取一次。</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_const" target="_blank" rel="noopener"><code>const</code></a>当您将 a<code>PRIMARY KEY</code>或 <code>UNIQUE</code>索引的所有部分与常量值进行比较时使用。在以下查询中，<em><code>tbl_name</code></em>可以用作<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_const" target="_blank" rel="noopener"><code>const</code></a> 表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name <span class="keyword">WHERE</span> primary_key=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name</span><br><span class="line">  <span class="keyword">WHERE</span> primary_key_part1=<span class="number">1</span> <span class="keyword">AND</span> primary_key_part2=<span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_eq_ref" target="_blank" rel="noopener"><code>eq_ref</code></a></p>
+<p>对于先前表中的每个行组合，从该表中读取一行。除了 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_system" target="_blank" rel="noopener"><code>system</code></a>and <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_const" target="_blank" rel="noopener"><code>const</code></a>类型之外，这是最好的连接类型。当连接使用索引的所有部分并且索引是一个 <code>PRIMARY KEY</code>或<code>UNIQUE NOT NULL</code>索引时使用它。</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_eq_ref" target="_blank" rel="noopener"><code>eq_ref</code></a>可用于使用<code>=</code>运算符进行比较的索引列 。比较值可以是常量或表达式，该表达式使用在此表之前读取的表中的列。在以下示例中，MySQL 可以使用 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_eq_ref" target="_blank" rel="noopener"><code>eq_ref</code></a>连接来处理 <em><code>ref_table</code></em>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table,other_table</span><br><span class="line">  <span class="keyword">WHERE</span> ref_table.key_column=other_table.column;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table,other_table</span><br><span class="line">  <span class="keyword">WHERE</span> ref_table.key_column_part1=other_table.column</span><br><span class="line">  <span class="keyword">AND</span> ref_table.key_column_part2=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_ref" target="_blank" rel="noopener"><code>ref</code></a></p>
+<p>对于先前表中的每个行组合，从该表中读取具有匹配索引值的所有行。<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_ref" target="_blank" rel="noopener"><code>ref</code></a>如果联接仅使用键的最左前缀或键不是 a<code>PRIMARY KEY</code>或 <code>UNIQUE</code>索引（换句话说，如果联接无法根据键值选择单行），则使用。如果使用的键只匹配几行，这是一个很好的连接类型。</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_ref" target="_blank" rel="noopener"><code>ref</code></a>可用于使用<code>=</code>or<code>&lt;=&gt;</code> 运算符进行比较的索引列 。在以下示例中，MySQL 可以使用 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_ref" target="_blank" rel="noopener"><code>ref</code></a>连接来处理 <em><code>ref_table</code></em>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table <span class="keyword">WHERE</span> key_column=expr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table,other_table</span><br><span class="line">  <span class="keyword">WHERE</span> ref_table.key_column=other_table.column;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table,other_table</span><br><span class="line">  <span class="keyword">WHERE</span> ref_table.key_column_part1=other_table.column</span><br><span class="line">  <span class="keyword">AND</span> ref_table.key_column_part2=<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_fulltext" target="_blank" rel="noopener"><code>fulltext</code></a></p>
+<p>连接是使用<code>FULLTEXT</code> 索引执行的。</p>
+</li>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_ref_or_null" target="_blank" rel="noopener"><code>ref_or_null</code></a></p>
+<p>这种连接类型类似于 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_ref" target="_blank" rel="noopener"><code>ref</code></a>，但另外，MySQL 会额外搜索包含<code>NULL</code>值的行。这种连接类型优化最常用于解析子查询。在以下示例中，MySQL 可以使用 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_ref_or_null" target="_blank" rel="noopener"><code>ref_or_null</code></a>连接来处理<em><code>ref_table</code></em>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ref_table</span><br><span class="line">  <span class="keyword">WHERE</span> key_column=expr <span class="keyword">OR</span> key_column <span class="keyword">IS</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_index_merge" target="_blank" rel="noopener"><code>index_merge</code></a><br>此连接类型表示使用了索引合并优化。在这种情况下，<code>key</code>输出行中的列包含所使用索引的列表，并<code>key_len</code>包含所使用索引 的最长关键部分的列表。有关更多信息，请参阅 <a href="https://dev.mysql.com/doc/refman/5.7/en/index-merge-optimization.html" target="_blank" rel="noopener">第 8.2.1.3 节，“索引合并优化”</a>。</li>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_unique_subquery" target="_blank" rel="noopener"><code>unique_subquery</code></a></p>
+<p>这种类型替代 了以下形式的<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_eq_ref" target="_blank" rel="noopener"><code>eq_ref</code></a>一些 <code>IN</code>子查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value IN (<span class="keyword">SELECT</span> primary_key <span class="keyword">FROM</span> single_table <span class="keyword">WHERE</span> some_expr)</span><br></pre></td></tr></table></figure>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_unique_subquery" target="_blank" rel="noopener"><code>unique_subquery</code></a> 只是一个索引查找函数，完全替换子查询以提高效率。</p>
+</li>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_index_subquery" target="_blank" rel="noopener"><code>index_subquery</code></a></p>
+<p>这种联接类型类似于 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_unique_subquery" target="_blank" rel="noopener"><code>unique_subquery</code></a>. 它取代了<code>IN</code>子查询，但它适用于以下形式的子查询中的非唯一索引：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value IN (<span class="keyword">SELECT</span> key_column <span class="keyword">FROM</span> single_table <span class="keyword">WHERE</span> some_expr)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_range" target="_blank" rel="noopener"><code>range</code></a></p>
+<p>仅检索给定范围内的行，使用索引来选择行。的<code>key</code> 输出行中的列指示使用哪个索引。将<code>key_len</code>包含已使用的时间最长的关键部分。该<code>ref</code>列适用 <code>NULL</code>于这种类型。</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_range" target="_blank" rel="noopener"><code>range</code></a>当使用<a href="https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#operator_equal" target="_blank" rel="noopener"><code>=</code></a>, <a href="https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#operator_not-equal" target="_blank" rel="noopener"><code>&lt;&gt;</code></a>, <a href="https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#operator_greater-than" target="_blank" rel="noopener"><code>&gt;</code></a>, <a href="https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#operator_greater-than-or-equal" target="_blank" rel="noopener"><code>&gt;=</code></a>, <a href="https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#operator_less-than" target="_blank" rel="noopener"><code>&lt;</code></a>, <a href="https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#operator_less-than-or-equal" target="_blank" rel="noopener"><code>&lt;=</code></a>, <a href="https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#operator_is-null" target="_blank" rel="noopener"><code>IS NULL</code></a>, <a href="https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#operator_equal-to" target="_blank" rel="noopener"><code>&lt;=&gt;</code></a>, <a href="https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#operator_between" target="_blank" rel="noopener"><code>BETWEEN</code></a>, <a href="https://dev.mysql.com/doc/refman/5.7/en/string-comparison-functions.html#operator_like" target="_blank" rel="noopener"><code>LIKE</code></a>, 或 <a href="https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#operator_in" target="_blank" rel="noopener"><code>IN()</code></a>运算符中的任何一个将键列与常量进行比较时，可以使用 ：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name</span><br><span class="line">  <span class="keyword">WHERE</span> key_column = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name</span><br><span class="line">  <span class="keyword">WHERE</span> key_column <span class="keyword">BETWEEN</span> <span class="number">10</span> <span class="keyword">and</span> <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name</span><br><span class="line">  <span class="keyword">WHERE</span> key_column <span class="keyword">IN</span> (<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> tbl_name</span><br><span class="line">  <span class="keyword">WHERE</span> key_part1 = <span class="number">10</span> <span class="keyword">AND</span> key_part2 <span class="keyword">IN</span> (<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_index" target="_blank" rel="noopener"><code>index</code></a></p>
+<p>该<code>index</code>联接类型是一样的 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_all" target="_blank" rel="noopener"><code>ALL</code></a>，只是索引树被扫描。这有两种方式：</p>
+<ul>
+<li>如果索引是查询的覆盖索引，可以满足表中所有需要的数据，则只扫描索引树。在这种情况下，该<code>Extra</code>列显示 <code>Using index</code>。仅索引扫描通常比<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_all" target="_blank" rel="noopener"><code>ALL</code></a>索引的大小通常小于表数据的大小要快 。</li>
+<li>使用从索引中读取来执行全表扫描以按索引顺序查找数据行。 <code>Uses index</code>不会出现在 <code>Extra</code>列中。</li>
+</ul>
+<p>当查询仅使用属于单个索引的列时，MySQL 可以使用此连接类型。</p>
+</li>
+<li><p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_all" target="_blank" rel="noopener"><code>ALL</code></a></p>
+<p>对先前表中的每个行组合进行全表扫描。如果表是第一个未标记的表 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_const" target="_blank" rel="noopener"><code>const</code></a>，这通常不好，并且在所有其他情况下通常 <em>非常</em>糟糕。通常，您可以<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_all" target="_blank" rel="noopener"><code>ALL</code></a>通过添加索引来避免 基于常量值或早期表中的列值从表中检索行。</p>
+</li>
+</ul>
+<h4 id="额外信息"><a href="#额外信息" class="headerlink" title="额外信息"></a>额外信息</h4><p>该<code>Extra</code>列 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>输出包含MySQL解决查询的额外信息。以下列表说明了可以出现在此列中的值。每个项目还为 JSON 格式的输出指示哪个属性显示<code>Extra</code>值。对于其中一些，有一个特定的属性。其他显示为<code>message</code> 属性的文本。</p>
+<p>如果您想尽可能快地进行查询，请注意and 的<code>Extra</code>列值，或者，在 JSON 格式的输出中， for 和 properties 等于 。 <code>Using filesort``Using temporary``EXPLAIN``using_filesort``using_temporary_table``true</code></p>
+<ul>
+<li><p><code>Child of &#39;*</code>table<code>*&#39; pushed join@1</code>（JSON：<code>message</code> 文本）</p>
+<p>此表被引用为 <em><code>table</code></em>可以下推到 NDB 内核的连接中的子项。仅适用于 NDB Cluster，当启用下推连接时。有关<a href="https://dev.mysql.com/doc/refman/5.7/en/mysql-cluster-options-variables.html#sysvar_ndb_join_pushdown" target="_blank" rel="noopener"><code>ndb_join_pushdown</code></a>更多信息和示例，请参阅服务器系统变量的描述 。</p>
+</li>
+<li><p><code>const row not found</code>（JSON属性： <code>const_row_not_found</code>）</p>
+<p>对于诸如 之类的查询，该表为空。 <code>SELECT ... FROM *</code>tbl_name<code>*</code></p>
+</li>
+<li><p><code>Deleting all rows</code>（JSON属性： <code>message</code>）</p>
+<p>对于<a href="https://dev.mysql.com/doc/refman/5.7/en/delete.html" target="_blank" rel="noopener"><code>DELETE</code></a>，某些存储引擎（例如<a href="https://dev.mysql.com/doc/refman/5.7/en/myisam-storage-engine.html" target="_blank" rel="noopener"><code>MyISAM</code></a>）支持以简单快速的方式删除所有表行的处理程序方法。<code>Extra</code>如果引擎使用此优化，则会显示此值。</p>
+</li>
+<li><p><code>Distinct</code>（JSON属性： <code>distinct</code>）</p>
+<p>MySQL 正在寻找不同的值，因此它在找到第一个匹配行后停止为当前行组合搜索更多行。</p>
+</li>
+<li><p><code>FirstMatch(*</code>tbl_name<code>*)</code> （JSON属性：<code>first_match</code>）</p>
+<p>半连接 FirstMatch 连接快捷策略用于<em><code>tbl_name</code></em>.</p>
+</li>
+<li><p><code>Full scan on NULL key</code>（JSON属性： <code>message</code>）</p>
+<p>当优化器无法使用索引查找访问方法时，子查询优化作为回退策略会发生这种情况。</p>
+</li>
+<li><p><code>Impossible HAVING</code>（JSON属性： <code>message</code>）</p>
+<p>该<code>HAVING</code>子句始终为 false，不能选择任何行。</p>
+</li>
+<li><p><code>Impossible WHERE</code>（JSON属性： <code>message</code>）</p>
+<p>该<code>WHERE</code>子句始终为 false，不能选择任何行。</p>
+</li>
+<li><p><code>Impossible WHERE noticed after reading const tables</code>（JSON属性： <code>message</code>）</p>
+<p>MySQL 已读取所有 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_const" target="_blank" rel="noopener"><code>const</code></a>（和 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_system" target="_blank" rel="noopener"><code>system</code></a>）表并注意到该<code>WHERE</code>子句始终为假。</p>
+</li>
+<li><p><code>LooseScan(*</code>m<code>*..*</code>n<code>*)</code> （JSON属性：<code>message</code>）</p>
+<p>使用了半连接 LooseScan 策略。 <em><code>m</code></em>和 <em><code>n</code></em>是关键部件号。</p>
+</li>
+<li><p><code>No matching min/max row</code>（JSON属性： <code>message</code>）</p>
+<p>没有行满足查询条件，例如 。 <code>SELECT MIN(...) FROM ... WHERE *</code>condition<code>*</code></p>
+</li>
+<li><p><code>no matching row in const table</code>（JSON属性：<code>message</code>）</p>
+<p>对于带有连接的查询，有一个空表或一个没有满足唯一索引条件的行的表。</p>
+</li>
+<li><p><code>No matching rows after partition pruning</code>（JSON属性： <code>message</code>）</p>
+<p>对于<a href="https://dev.mysql.com/doc/refman/5.7/en/delete.html" target="_blank" rel="noopener"><code>DELETE</code></a>or <a href="https://dev.mysql.com/doc/refman/5.7/en/update.html" target="_blank" rel="noopener"><code>UPDATE</code></a>，优化器在分区修剪后没有发现要删除或更新的内容。它的含义类似于<code>Impossible WHERE</code> for<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>语句。</p>
+</li>
+<li><p><code>No tables used</code>（JSON属性： <code>message</code>）</p>
+<p>查询没有<code>FROM</code>子句，或有 <code>FROM DUAL</code>子句。</p>
+<p>对于<a href="https://dev.mysql.com/doc/refman/5.7/en/insert.html" target="_blank" rel="noopener"><code>INSERT</code></a>or <a href="https://dev.mysql.com/doc/refman/5.7/en/replace.html" target="_blank" rel="noopener"><code>REPLACE</code></a>语句， <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>当没有<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a> 部件时显示该值。例如，它出现是<code>EXPLAIN INSERT INTO t VALUES(10)</code>因为它等价于 <code>EXPLAIN INSERT INTO t SELECT 10 FROM DUAL</code>。</p>
+</li>
+<li><p><code>Not exists</code>（JSON属性： <code>message</code>）</p>
+<p>MySQL 能够对<code>LEFT JOIN</code> 查询进行优化，并且在找到符合<code>LEFT JOIN</code>条件的行后，不会检查该表中前一行组合的更多行。以下是可以通过这种方式优化的查询类型的示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t1 <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> t2 <span class="keyword">ON</span> t1.id=t2.id</span><br><span class="line">  <span class="keyword">WHERE</span> t2.id <span class="keyword">IS</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p>假设<code>t2.id</code>定义为 <code>NOT NULL</code>。在这种情况下，MySQL使用 的值 扫描 <code>t1</code>和查找行 。如果 MySQL 在 中找到匹配的行 ，它知道 永远不可能是 ，并且不会扫描具有相同值的其余行。换句话说，对于 中的每一行，MySQL 只需要在 中进行一次查找，而不管 中实际匹配了多少行。 <code>t2``t1.id``t2``t2.id``NULL``t2``id``t1``t2``t2</code></p>
+</li>
+<li><p><code>Plan isn&#39;t ready yet</code> （JSON 属性：无）</p>
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-for-connection.html" target="_blank" rel="noopener"><code>EXPLAIN FOR CONNECTION</code></a>当优化器尚未完成为在命名连接中执行的语句创建执行计划时， 会出现此值。如果执行计划输出包含多行，则其中任何一行或所有行都可以具有此 <code>Extra</code>值，具体取决于优化器确定完整执行计划的进度。</p>
+</li>
+<li><p><code>Range checked for each record (index map: *</code>N<code>*)</code>（JSON属性： <code>message</code>）</p>
+<p>MySQL 没有发现可以使用的好的索引，但是发现某些索引可能会在已知前表中的列值后使用。对于前面表中的每个行组合，MySQL 会检查是否可以使用 a<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_range" target="_blank" rel="noopener"><code>range</code></a>或 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_index_merge" target="_blank" rel="noopener"><code>index_merge</code></a>access 方法来检索行。这不是很快，但比执行完全没有索引的连接要快。适用性标准如 <a href="https://dev.mysql.com/doc/refman/5.7/en/range-optimization.html" target="_blank" rel="noopener">第 8.2.1.2 节“范围优化”</a>和 <a href="https://dev.mysql.com/doc/refman/5.7/en/index-merge-optimization.html" target="_blank" rel="noopener">第 8.2.1.3 节“索引合并优化”所述</a>，除了上表的所有列值都是已知的并被视为常量。</p>
+<p>索引从 1 开始编号，其顺序<a href="https://dev.mysql.com/doc/refman/5.7/en/show-index.html" target="_blank" rel="noopener"><code>SHOW INDEX</code></a>与表中 的 相同。索引映射值 <em><code>N</code></em>是指示哪些索引是候选的位掩码值。例如，值<code>0x19</code>(binary 11001) 表示考虑索引 1、4 和 5。</p>
+</li>
+<li><p><code>Scanned *</code>N<code>* databases</code>（JSON属性： <code>message</code>）</p>
+<p>这表示服务器在处理<code>INFORMATION_SCHEMA</code>表查询时执行的目录扫描次数 ，如<a href="https://dev.mysql.com/doc/refman/5.7/en/information-schema-optimization.html" target="_blank" rel="noopener">第 8.2.3 节“优化 INFORMATION_SCHEMA 查询”中所述</a>。的值<em><code>N</code></em>可以是 0、1 或 <code>all</code>。</p>
+</li>
+<li><p><code>Select tables optimized away</code>（JSON属性：<code>message</code>）</p>
+<p>优化器确定 1) 最多应返回一行，以及 2) 要生成该行，必须读取一组确定性的行。当在优化阶段可以读取要读取的行（例如通过读取索引行）时，查询执行期间不需要读取任何表。</p>
+<p>当查询被隐式分组（包含聚合函数但没有<code>GROUP BY</code>子句）时，满足第一个条件 。当对每个使用的索引执行一次行查找时，满足第二个条件。读取的索引数决定了要读取的行数。</p>
+<p>考虑以下隐式分组查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(c1), <span class="keyword">MIN</span>(c2) <span class="keyword">FROM</span> t1;</span><br></pre></td></tr></table></figure>
+<p>假设<code>MIN(c1)</code>可以通过读取一个索引行<code>MIN(c2)</code> 来检索，并且可以通过从不同的索引读取一行来检索。也就是说，对于每一列<code>c1</code>and <code>c2</code>，都存在一个索引，其中该列是索引的第一列。在这种情况下，通过读取两个确定性行返回一行。</p>
+<p><code>Extra</code>如果要读取的行不确定，则不会出现 此值。考虑这个查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(c2) <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> c1 &lt;= <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>假设这<code>(c1, c2)</code>是一个覆盖索引。使用此索引，<code>c1 &lt;= 10</code>必须扫描所有行以找到最小值 <code>c2</code>。相比之下，请考虑以下查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(c2) <span class="keyword">FROM</span> t1 <span class="keyword">WHERE</span> c1 = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>在这种情况下，第一个索引行<code>c1 = 10</code>包含最小值<code>c2</code> 。只需读取一行即可生成返回的行。</p>
+<p>对于为每个表维护精确行数的存储引擎（例如<code>MyISAM</code>，但不是 <code>InnoDB</code>），对于缺少子句或始终为真且没有 子句的查询，<code>Extra</code> 可能会出现此值。（这是一个隐式分组查询的实例，其中存储引擎会影响是否可以读取确定数量的行。） <code>COUNT(*)``WHERE``GROUP BY</code></p>
+</li>
+<li><p><code>Skip_open_table</code>， <code>Open_frm_only</code>， <code>Open_full_table</code>（JSON属性： <code>message</code>）</p>
+<p>这些值表示适用于<code>INFORMATION_SCHEMA</code> 表查询的文件打开优化，如 <a href="https://dev.mysql.com/doc/refman/5.7/en/information-schema-optimization.html" target="_blank" rel="noopener">第 8.2.3 节“优化 INFORMATION_SCHEMA 查询”中所述</a>。</p>
+<ul>
+<li><code>Skip_open_table</code>: 表文件不需要打开。通过扫描数据库目录，该信息已在查询中可用。</li>
+<li><code>Open_frm_only</code>: 只<code>.frm</code>需要打开表的文件。</li>
+<li><code>Open_full_table</code>：未优化的信息查找。的<code>.frm</code>， <code>.MYD</code>和 <code>.MYI</code>文件必须被打开。</li>
+</ul>
+</li>
+<li><p><code>Start temporary</code>，<code>End temporary</code>（JSON属性： <code>message</code>）</p>
+<p>这表示半连接重复清除策略的临时表使用。</p>
+</li>
+<li><p><code>unique row not found</code>（JSON属性： <code>message</code>）</p>
+<p>对于诸如 的查询，没有行满足 索引或表的条件。 <code>SELECT ... FROM *</code>tbl_name<code>*``UNIQUE``PRIMARY KEY</code></p>
+</li>
+<li><p><code>Using filesort</code>（JSON属性： <code>using_filesort</code>）</p>
+<p>MySQL 必须执行额外的检查以找出如何按排序顺序检索行。排序是通过根据连接类型遍历所有行并存储排序键和指向与<code>WHERE</code>子句匹配的所有行的行的指针来完成的。然后对键进行排序，并按排序顺序检索行。请参见 <a href="https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html" target="_blank" rel="noopener">第 8.2.1.14 节，“ORDER BY 优化”</a>。</p>
+</li>
+<li><p><code>Using index</code>（JSON属性： <code>using_index</code>）</p>
+<p>仅使用索引树中的信息从表中检索列信息，而无需执行额外的查找来读取实际行。当查询仅使用属于单个索引的列时，可以使用此策略。</p>
+<p>对于<code>InnoDB</code>具有用户定义的聚集索引的表，即使列中<code>Using index</code>不存在 该索引，也可以使用该索引<code>Extra</code>。如果<code>type</code>is <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_index" target="_blank" rel="noopener"><code>index</code></a>和 <code>key</code>is就是这种情况 <code>PRIMARY</code>。</p>
+</li>
+<li><p><code>Using index condition</code>（JSON属性： <code>using_index_condition</code>）</p>
+<p>通过访问索引元组并首先测试它们以确定是否读取完整的表行来读取表。通过这种方式，索引信息用于推迟（“下推”）读取全表行，除非有必要。请参见 <a href="https://dev.mysql.com/doc/refman/5.7/en/index-condition-pushdown-optimization.html" target="_blank" rel="noopener">第 8.2.1.5 节，“索引条件下推优化”</a>。</p>
+</li>
+<li><p><code>Using index for group-by</code>（JSON属性：<code>using_index_for_group_by</code>）</p>
+<p>与<code>Using index</code>表访问方法类似，<code>Using index for group-by</code> 表示 MySQL 找到了一个索引，该索引可用于检索 a<code>GROUP BY</code>或 <code>DISTINCT</code>查询的所有列，而无需对实际表进行任何额外的磁盘访问。此外，索引以最有效的方式使用，因此对于每个组，仅读取少数索引条目。有关详细信息，请参阅 <a href="https://dev.mysql.com/doc/refman/5.7/en/group-by-optimization.html" target="_blank" rel="noopener">第 8.2.1.15 节，“GROUP BY 优化”</a>。</p>
+</li>
+<li><p><code>Using join buffer (Block Nested Loop)</code>， <code>Using join buffer (Batched Key Access)</code> （JSON属性：<code>using_join_buffer</code>）</p>
+<p>来自早期连接的表被分部分读入连接缓冲区，然后它们的行从缓冲区中用于执行与当前表的连接。 <code>(Block Nested Loop)</code>指示使用块嵌套循环算法并<code>(Batched Key Access)</code>指示使用批处理密钥访问算法。也就是说，<a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>输出前一行表中的键 被缓冲，匹配的行从<code>Using join buffer</code>出现的行表示的表中批量获取 。</p>
+<p>在 JSON 格式的输出中， 的值 <code>using_join_buffer</code>始终是<code>Block Nested Loop</code>或 之一 <code>Batched Key Access</code>。</p>
+<p>有关这些算法的更多信息，请参阅 <a href="https://dev.mysql.com/doc/refman/5.7/en/nested-loop-joins.html#block-nested-loop-join-algorithm" target="_blank" rel="noopener">Block Nested-Loop Join Algorithm</a>和 <a href="https://dev.mysql.com/doc/refman/5.7/en/bnl-bka-optimization.html#bka-optimization" target="_blank" rel="noopener">Batched Key Access Joins</a>。</p>
+</li>
+<li><p><code>Using MRR</code>（JSON属性： <code>message</code>）</p>
+<p>使用多范围读取优化策略读取表。请参见<a href="https://dev.mysql.com/doc/refman/5.7/en/mrr-optimization.html" target="_blank" rel="noopener">第 8.2.1.10 节，“多范围读取优化”</a>。</p>
+</li>
+<li><p><code>Using sort_union(...)</code>，<code>Using union(...)</code>，<code>Using intersect(...)</code>（JSON属性： <code>message</code>）</p>
+<p>这些指示显示如何为<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_index_merge" target="_blank" rel="noopener"><code>index_merge</code></a>连接类型合并索引扫描的特定算法 。请参阅<a href="https://dev.mysql.com/doc/refman/5.7/en/index-merge-optimization.html" target="_blank" rel="noopener">第 8.2.1.3 节，“索引合并优化”</a>。</p>
+</li>
+<li><p><code>Using temporary</code>（JSON属性： <code>using_temporary_table</code>）</p>
+<p>为了解决查询，MySQL 需要创建一个临时表来保存结果。如果查询包含以不同方式列出列的<code>GROUP BY</code>和 <code>ORDER BY</code>子句，则通常会发生这种情况。</p>
+</li>
+<li><p><code>Using where</code>（JSON属性： <code>attached_condition</code>）</p>
+<p>甲<code>WHERE</code>子句用于限制来匹配下一个表或发送到客户端的行。除非您特别打算从表中获取或检查所有行，否则如果该<code>Extra</code>值不是 <code>Using where</code>并且表连接类型是 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_all" target="_blank" rel="noopener"><code>ALL</code></a>or ，则您的查询可能会出错<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_index" target="_blank" rel="noopener"><code>index</code></a>。</p>
+<p><code>Using where</code>在 JSON 格式的输出中没有直接对应物；该 <code>attached_condition</code>属性包含使用的任何<code>WHERE</code>条件。</p>
+</li>
+<li><p><code>Using where with pushed condition</code>（JSON属性：<code>message</code>）</p>
+<p>此产品适用于<a href="https://dev.mysql.com/doc/refman/5.7/en/mysql-cluster.html" target="_blank" rel="noopener"><code>NDB</code></a> 表<em>只</em>。这意味着 NDB Cluster 正在使用 Condition Pushdown 优化来提高非索引列和常量之间直接比较的效率。在这种情况下，条件被“下推”到集群的数据节点，并同时在所有数据节点上进行评估。这消除了通过网络发送不匹配行的需要，并且可以将此类查询的速度提高 5 到 10 倍，比可以使用但未使用条件下推的情况。有关更多信息，请参阅 <a href="https://dev.mysql.com/doc/refman/5.7/en/engine-condition-pushdown-optimization.html" target="_blank" rel="noopener">第 8.2.1.4 节，“发动机状态下推优化”</a>。</p>
+</li>
+<li><p><code>Zero limit</code>（JSON属性： <code>message</code>）</p>
+<p>查询有一个<code>LIMIT 0</code>子句，不能选择任何行。</p>
+</li>
+</ul>
+<h4 id="EXPLAIN-输出解释"><a href="#EXPLAIN-输出解释" class="headerlink" title="EXPLAIN 输出解释"></a>EXPLAIN 输出解释</h4><p>通过取输出<code>rows</code> 列中的值的乘积，您可以很好地表明连接的好坏<a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>。这应该告诉您 MySQL 必须检查多少行才能执行查询。如果您使用<a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_max_join_size" target="_blank" rel="noopener"><code>max_join_size</code></a>系统变量限制查询，则 此行积还用于确定<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a> 要执行哪些多表语句以及要中止哪些多表语句。</p>
+<p>以下示例显示了如何根据 提供的信息逐步优化多表连接 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>。</p>
+<p>假设您有<a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>此处显示的 语句，并且您计划使用<a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>以下命令检查它 ：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">EXPLAIN</span> <span class="keyword">SELECT</span> tt.TicketNumber, tt.TimeIn,</span><br><span class="line">               tt.ProjectReference, tt.EstimatedShipDate,</span><br><span class="line">               tt.ActualShipDate, tt.ClientID,</span><br><span class="line">               tt.ServiceCodes, tt.RepetitiveID,</span><br><span class="line">               tt.CurrentProcess, tt.CurrentDPPerson,</span><br><span class="line">               tt.RecordVolume, tt.DPPrinted, et.COUNTRY,</span><br><span class="line">               et_1.COUNTRY, do.CUSTNAME</span><br><span class="line">        <span class="keyword">FROM</span> tt, et, et <span class="keyword">AS</span> et_1, <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">WHERE</span> tt.SubmitTime <span class="keyword">IS</span> <span class="literal">NULL</span></span><br><span class="line">          <span class="keyword">AND</span> tt.ActualPC = et.EMPLOYID</span><br><span class="line">          <span class="keyword">AND</span> tt.AssignedPC = et_1.EMPLOYID</span><br><span class="line">          <span class="keyword">AND</span> tt.ClientID = do.CUSTNMBR;</span><br></pre></td></tr></table></figure>
+<p>对于此示例，请做出以下假设：</p>
+<ul>
+<li><p>被比较的列已声明如下。</p>
+<p>| 桌子 | 柱子         | 数据类型   |<br>| :—- | :—————- | :————- |<br>| <code>tt</code> | <code>ActualPC</code>   | <code>CHAR(10)</code> |<br>| <code>tt</code> | <code>AssignedPC</code> | <code>CHAR(10)</code> |<br>| <code>tt</code> | <code>ClientID</code>   | <code>CHAR(10)</code> |<br>| <code>et</code> | <code>EMPLOYID</code>   | <code>CHAR(15)</code> |<br>| <code>do</code> | <code>CUSTNMBR</code>   | <code>CHAR(15)</code> |</p>
+</li>
+<li><p>这些表具有以下索引。</p>
+<p>| 桌子 | 指数                      |<br>| :—- | :———————————— |<br>| <code>tt</code> | <code>ActualPC</code>                |<br>| <code>tt</code> | <code>AssignedPC</code>              |<br>| <code>tt</code> | <code>ClientID</code>                |<br>| <code>et</code> | <code>EMPLOYID</code> （首要的关键） |<br>| <code>do</code> | <code>CUSTNMBR</code> （首要的关键） |</p>
+</li>
+<li><p>这些<code>tt.ActualPC</code>值不是均匀分布的。</p>
+</li>
+</ul>
+<p>最初，在执行任何优化之前，该 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>语句会生成以下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">table type possible_keys key  key_len ref  rows  Extra</span><br><span class="line">et    ALL  PRIMARY       NULL NULL    NULL 74</span><br><span class="line">do    ALL  PRIMARY       NULL NULL    NULL 2135</span><br><span class="line">et_1  ALL  PRIMARY       NULL NULL    NULL 74</span><br><span class="line">tt    ALL  AssignedPC,   NULL NULL    NULL 3872</span><br><span class="line">           ClientID,</span><br><span class="line">           ActualPC</span><br><span class="line">      Range checked for each record (index map: 0x23)</span><br></pre></td></tr></table></figure>
+<p>因为<code>type</code>是 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_all" target="_blank" rel="noopener"><code>ALL</code></a>为每个表，这个输出表明MySQL正在生成的所有表的笛卡儿积; 也就是说，行的每个组合。这需要相当长的时间，因为必须检查每个表中行数的乘积。对于手头的情况，该乘积为 74 × 2135 × 74 × 3872 = 45,268,558,720 行。如果桌子更大，您只能想象需要多长时间。</p>
+<p>这里的一个问题是，如果将列声明为相同的类型和大小，则 MySQL 可以更有效地使用列上的索引。在这种情况下，<a href="https://dev.mysql.com/doc/refman/5.7/en/char.html" target="_blank" rel="noopener"><code>VARCHAR</code></a>与 <a href="https://dev.mysql.com/doc/refman/5.7/en/char.html" target="_blank" rel="noopener"><code>CHAR</code></a>被认为是相同的，如果它们被声明为相同的大小。 <code>tt.ActualPC</code>被声明为 <code>CHAR(10)</code>and <code>et.EMPLOYID</code> is <code>CHAR(15)</code>，因此存在长度不匹配。</p>
+<p>要修复列长度之间的这种差异，请使用 <a href="https://dev.mysql.com/doc/refman/5.7/en/alter-table.html" target="_blank" rel="noopener"><code>ALTER TABLE</code></a>将<code>ActualPC</code>10 个字符延长 到 15 个字符：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE tt MODIFY ActualPC VARCHAR(15);</span><br></pre></td></tr></table></figure>
+<p>现在<code>tt.ActualPC</code>和 <code>et.EMPLOYID</code>都是 <code>VARCHAR(15)</code>。<a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>再次执行该 语句会产生以下结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">table type   possible_keys key     key_len ref         rows    Extra</span><br><span class="line">tt    ALL    AssignedPC,   NULL    NULL    NULL        3872    Using</span><br><span class="line">             ClientID,                                         where</span><br><span class="line">             ActualPC</span><br><span class="line">do    ALL    PRIMARY       NULL    NULL    NULL        2135</span><br><span class="line">      Range checked for each record (index map: 0x1)</span><br><span class="line">et_1  ALL    PRIMARY       NULL    NULL    NULL        74</span><br><span class="line">      Range checked for each record (index map: 0x1)</span><br><span class="line">et    eq_ref PRIMARY       PRIMARY 15      tt.ActualPC 1</span><br></pre></td></tr></table></figure>
+<p>这并不完美，但要好得多：<code>rows</code>值的乘积 少了 74 倍。此版本在几秒钟内执行。</p>
+<p>可以进行第二次更改以消除<code>tt.AssignedPC = et_1.EMPLOYID</code>和<code>tt.ClientID = do.CUSTNMBR</code>比较的列长度不匹配：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ALTER TABLE tt MODIFY AssignedPC VARCHAR(15),</span><br><span class="line">                      MODIFY ClientID   VARCHAR(15);</span><br></pre></td></tr></table></figure>
+<p>修改后， <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>生成此处显示的输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">table type   possible_keys key      key_len ref           rows Extra</span><br><span class="line">et    ALL    PRIMARY       NULL     NULL    NULL          74</span><br><span class="line">tt    ref    AssignedPC,   ActualPC 15      et.EMPLOYID   52   Using</span><br><span class="line">             ClientID,                                         where</span><br><span class="line">             ActualPC</span><br><span class="line">et_1  eq_ref PRIMARY       PRIMARY  15      tt.AssignedPC 1</span><br><span class="line">do    eq_ref PRIMARY       PRIMARY  15      tt.ClientID   1</span><br></pre></td></tr></table></figure>
+<p>在这一点上，查询几乎被优化了。剩下的问题是，默认情况下，MySQL 假设<code>tt.ActualPC</code> 列中的值是均匀分布的，而<code>tt</code>表并非如此。幸运的是，很容易告诉 MySQL 分析密钥分布：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; ANALYZE TABLE tt;</span><br></pre></td></tr></table></figure>
+<p>使用额外的索引信息，连接是完美的并 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>产生以下结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">table type   possible_keys key     key_len ref           rows Extra</span><br><span class="line">tt    ALL    AssignedPC    NULL    NULL    NULL          3872 Using</span><br><span class="line">             ClientID,                                        where</span><br><span class="line">             ActualPC</span><br><span class="line">et    eq_ref PRIMARY       PRIMARY 15      tt.ActualPC   1</span><br><span class="line">et_1  eq_ref PRIMARY       PRIMARY 15      tt.AssignedPC 1</span><br><span class="line">do    eq_ref PRIMARY       PRIMARY 15      tt.ClientID   1</span><br></pre></td></tr></table></figure>
+<p><code>rows</code>输出中 的列 <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a>是来自 MySQL 连接优化器的有根据的猜测。通过将<code>rows</code>乘积与查询返回的实际行数进行比较，检查数字是否更接近真实 情况。如果数字完全不同，您可能会通过<code>STRAIGHT_JOIN</code>在 <a href="https://dev.mysql.com/doc/refman/5.7/en/select.html" target="_blank" rel="noopener"><code>SELECT</code></a>语句中使用并尝试在<code>FROM</code>子句中以不同顺序列出表来 获得更好的性能 。（但是， <code>STRAIGHT_JOIN</code>可能会阻止使用索引，因为它禁用了半连接转换。请参阅<a href="https://dev.mysql.com/doc/refman/5.7/en/semijoins.html" target="_blank" rel="noopener">第 8.2.2.1 节，“</a>使用半连接转换 <a href="https://dev.mysql.com/doc/refman/5.7/en/semijoins.html" target="_blank" rel="noopener">优化子查询、派生表和视图引用”</a>.)</p>
+<p>在某些情况下，可以在<a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN SELECT</code></a>与子查询一起使用时执行修改数据的语句；有关更多信息，请参阅<a href="https://dev.mysql.com/doc/refman/5.7/en/derived-tables.html" target="_blank" rel="noopener">第 13.2.10.8 节，“派生表”</a>。</p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/12/01/resource-DB-MySQL-MySQL-sql/" data-toggle="tooltip" data-placement="top" title="从一条SQL的执行理解MySQL">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/11/25/resource-MicroService-other-oauth2/" data-toggle="tooltip" data-placement="top" title="Oauth2协议及其密码授权模式">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#Explain工具"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Explain工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#输出类信息"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">输出类信息</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#联接类型"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">联接类型</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#额外信息"><span class="toc-nav-number">1.0.2.1.</span> <span class="toc-nav-text">额外信息</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#EXPLAIN-输出解释"><span class="toc-nav-number">1.0.2.2.</span> <span class="toc-nav-text">EXPLAIN 输出解释</span></a></li></ol></li></ol></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

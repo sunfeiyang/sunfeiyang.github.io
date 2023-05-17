@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          Zookeeper基础数据类型和基本客户端操作 - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2020/06/06/resource-java-Zookeeper-ZookeeperUse/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/header_img/15.gif')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Zookeeper" title="Zookeeper">Zookeeper</a>
+                            
+                        </div>
+
+                        <h1>Zookeeper基础数据类型和基本客户端操作</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2020-06-06
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.6k</span> and
+                                Reading Time <span class="post-count">10</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>Zookeeper一个分布式协调框架,是<code>Apache Hadoop</code> 的一个子项目,它主要是用来解决分布式应用中经常遇到的一些数据管理问题,如:统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等<a id="more"></a></p>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p>一个用于存储少量数据的基于内存的数据库，主要有如下两个核心的概念：文件系统数据结构+监听通知机制。</p>
+<h3 id="文件系统数据结构"><a href="#文件系统数据结构" class="headerlink" title="文件系统数据结构"></a>文件系统数据结构</h3><ul>
+<li>PERSISTENT-持久化目录节点<br>客户端与Zookeeper断开连接后，该节点依旧存在，只要不手动删除该节点，他将永远存在</li>
+<li>PERSISTENT_SEQUENTIAL-持久化顺序编号目录节点<br>客户端与Zookeeper断开连接后，该节点依旧存在，只是Zookeeper给该节点名称进行顺序编号</li>
+<li>EPHEMERAL-临时目录节点<br>客户端与Zookeeper断开连接后，该节点被删除</li>
+<li>EPHEMERAL_SEQUENTIAL-临时顺序编号目录节点<br>客户端与Zookeeper断开连接后，该节点被删除，只是Zookeeper给该节点名称进行顺序编号</li>
+<li>Container 节点（3.5.3 版本新增，如果Container节点下面没有子节点，则Container节点在未来会被Zookeeper自动清除,定时任务默认60s 检查一次） </li>
+<li>TTL 节点( 默认禁用，只能通过系统配置 <code>zookeeper.extendedTypesEnabled=true</code> 开启，不稳定)</li>
+</ul>
+<h3 id="监听通知机制"><a href="#监听通知机制" class="headerlink" title="监听通知机制"></a>监听通知机制</h3><p>客户端注册监听它关心的任意节点，或者目录节点及递归子目录节点 </p>
+<ul>
+<li><p>如果注册的是对某个节点的监听，则当这个节点被删除，或者被修改时，对应的客户端将被通知</p>
+</li>
+<li><p>如果注册的是对某个目录的监听，则当这个目录有子节点被创建，或者有子节点被删除，对应的客户端将被通知</p>
+</li>
+<li><p>如果注册的是对某个目录的递归子节点进行监听，则当这个目录下面的任意子节点有目录结构的变化（有子节点被创建，或被删除）或者根节点有数据变化时，对应的客户端将被通知。</p>
+</li>
+</ul>
+<p>注：所有的通知都是一次性的，及无论是对节点还是对目录进行的监听，一旦触发，对应的监听即被移除。递归子节点，监听是对所有子节点的，所以，每个子节点下面的事件同样只会被触发一次。</p>
+<h2 id="Zookeeper安装"><a href="#Zookeeper安装" class="headerlink" title="Zookeeper安装"></a>Zookeeper安装<sunfy-line></h2><ul>
+<li><p>配置JAVA环境，检验环境：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载解压 Zookeeper</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.5.8/apache-zookeeper-3.5.8-bin.tar.gz tar -zxvf apache-zookeeper-3.5.8-bin.tar.gz cd  apache-zookeeper-3.5.8-bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重命名配置文件  <code>zoo_sample.cfg</code></p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp zoo_sample.cfg  zoo.cfg</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动Zookeeper</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 可以通过 bin/zkServer.sh  来查看都支持哪些参数  </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入安装目录</span></span><br><span class="line">bin/zkServer.sh start conf/zoo.cfg</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检测是否启动成功</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo stat | nc 192.168.109.200 // 前提是配置文件中中讲 stat 四字命令设置了了白名单  如： 4lw.commands.whitelist=stat </span><br><span class="line"><span class="meta">#</span><span class="bash"> 或使用</span></span><br><span class="line">ps -ef | grep zookeeper</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>连接服务器</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/zkCli.sh -server ip:port</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="命令行操作Zookeeper"><a href="#命令行操作Zookeeper" class="headerlink" title="命令行操作Zookeeper"></a>命令行操作Zookeeper</h2><p>命令 help 查看Zookeeper所支持的所有命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 80] help</span><br><span class="line">ZooKeeper -server host:port cmd args</span><br><span class="line"><span class="meta">	#</span><span class="bash"> 输入认证授权信息，相当于注册用户信息，注册时输入明文密码，zk将以密文的形式存储 </span></span><br><span class="line">	addauth scheme auth</span><br><span class="line">	close </span><br><span class="line">	config [-c] [-w] [-s]</span><br><span class="line">	connect host:port</span><br><span class="line"><span class="meta">	#</span><span class="bash"> 创建zookeeper 节点命令</span></span><br><span class="line"><span class="meta">	#</span><span class="bash"> -s: 顺序节点</span></span><br><span class="line">    # -e: 临时节点</span><br><span class="line">    # -c: 容器节点</span><br><span class="line">    # -t:  可以给节点添加过期时间，默认禁用，需要通过系统参数启用</span><br><span class="line">    # 创建子节点， 这里要注意，zookeeper是以节点组织数据的，没有相对路径这么一说，所以，所有的节点一定是以 / 开头。</span><br><span class="line">    # create 后跟一个 -e 创建临时节点 ， 临时节点不能创建子节点</span><br><span class="line">    # 容器节点主要用来容纳字节点，如果没有给其创建子节点，容器节点表现和持久化节点一样，如果给容器节点创建了子节点，后续又把子节点清空，容器节点也会被zookeeper删除。</span><br><span class="line">	create [-s] [-e] [-c] [-t ttl] path [data] [acl]   </span><br><span class="line">	delete [-v version] path</span><br><span class="line">	deleteall path</span><br><span class="line">	delquota [-n|-b] path</span><br><span class="line"><span class="meta">	#</span><span class="bash"> 查看节点</span></span><br><span class="line">    # -w: 针对节点的监听：一定事件触发，对应的注册立刻被移除，所以事件监听是一次性的</span><br><span class="line">	get [-s] [-w] path</span><br><span class="line"><span class="meta">	#</span><span class="bash"> 获取某个节点的acl权限信息</span></span><br><span class="line">	getAcl [-s] path</span><br><span class="line">	history </span><br><span class="line">	listquota path</span><br><span class="line"><span class="meta">	#</span><span class="bash"> -R 区分大小写，一定用大写 </span></span><br><span class="line">    # -w: 针对目录的监听</span><br><span class="line">	ls [-s] [-w] [-R] path</span><br><span class="line">	ls2 path [watch]</span><br><span class="line">	printwatches on|off</span><br><span class="line">	quit </span><br><span class="line">	reconfig [-s] [-v version] [[-file path] | [-members serverID=host:port1:port2;port3[,...]*]] | [-add serverId=host:port1:port2;port3[,...]]* [-remove serverId[,...]*]</span><br><span class="line">	redo cmdno</span><br><span class="line">	removewatches path [-c|-d|-a] [-l]</span><br><span class="line">	rmr path</span><br><span class="line"><span class="meta">	#</span><span class="bash"> 修改节点数据</span></span><br><span class="line">	set [-s] [-v version] path data</span><br><span class="line"><span class="meta">	#</span><span class="bash"> 设置某个节点的acl权限信息</span></span><br><span class="line">	setAcl [-s] [-v version] [-R] path acl</span><br><span class="line">	setquota -n|-b val path</span><br><span class="line"><span class="meta">	#</span><span class="bash"> 查看节点状态信息</span></span><br><span class="line"><span class="meta">	#</span><span class="bash"> cZxid：创建znode的事务ID（Zxid的值）。</span></span><br><span class="line">    # mZxid：最后修改znode的事务ID。</span><br><span class="line">    # pZxid：最后添加或删除子节点的事务ID（子节点列表发生变化才会发生改变）。</span><br><span class="line">    # ctime：znode创建时间。</span><br><span class="line">    # mtime：znode最近修改时间。</span><br><span class="line">    # dataVersion：znode的当前数据版本。</span><br><span class="line">    # cversion：znode的子节点结果集版本（一个节点的子节点增加、删除都会影响这个版本）。</span><br><span class="line">    # aclVersion：表示对此znode的acl版本。</span><br><span class="line">    # ephemeralOwner：znode是临时znode时，表示znode所有者的 session ID。 如果znode不是临时znode，则该字段设置为零。</span><br><span class="line">    # dataLength：znode数据字段的长度。</span><br><span class="line"><span class="meta">	#</span><span class="bash"> numChildren：znode的子znode的数量。</span></span><br><span class="line"><span class="meta">	#</span><span class="bash"> [-w] 对节点进行监听，且获取元数据信息</span></span><br><span class="line">	stat [-w] path</span><br><span class="line">	sync path</span><br></pre></td></tr></table></figure>
+<p>Zookeeper事件类型：</p>
+<p>​            None: 连接建立事件<br>​            NodeCreated： 节点创建<br>​            NodeDeleted： 节点删除<br>​            NodeDataChanged：节点数据变化<br>​            NodeChildrenChanged：子节点列表变化<br>​            DataWatchRemoved：节点监听被移除<br>​            ChildWatchRemoved：子节点监听被移除</p>
+<h2 id="ACL-权限控制-Access-Control-List"><a href="#ACL-权限控制-Access-Control-List" class="headerlink" title="ACL 权限控制( Access Control   List )"></a>ACL 权限控制( Access Control   List )</h2><p>控制节点的读写操作,保证数据的安全性，Zookeeper ACL 权限设置分为 3 部分组成，分别是：<strong>权限模式</strong>（Scheme）、<strong>授权对象</strong>（ID）、<strong>权限信息</strong>（Permission）</p>
+<p><strong>Scheme（权限模式）</strong>：用来设置 Zookeeper 服务器进行权限验证的方式。</p>
+<p>一种是<strong>范围验证</strong>。所谓的范围验证就是说 Zookeeper 可以针对一个 IP 或者一段 IP 地址授予某种权限。比如我们可以让一个 IP 地址为<code>ip：192.168.0.110</code>的机器对服务器上的某个数据节点具有写入的权限。或者也可以通过<code>ip:192.168.0.1/24</code>给一段 IP 地址的机器赋权。</p>
+<p>另一种是<strong>口令验证</strong>，也可以理解为用户名密码的方式。在 Zookeeper 中这种验证方式是 Digest 认证，而 Digest 这种认证方式首先在客户端传送<code>username:password</code>这种形式的权限表示符后，Zookeeper 服务端会对密码 部分使用 <code>SHA-1</code>和 <code>BASE64</code> 算法进行加密，以保证安全性。</p>
+<p>还有一种Super权限模式,  Super可以认为是一种特殊的 Digest 认证。具有 Super 权限的客户端可以对 Zookeeper 上的任意数据节点进行任意操作。 </p>
+<p><strong>授权对象（ID）</strong></p>
+<p>授权对象就是说我们要把权限赋予谁，而对应于 4 种不同的权限模式来说，如果我们选择采用 IP 方式，使用的授权对象可以是一个 IP 地址或 IP 地址段；而如果使用 Digest 或 Super 方式，则对应于一个用户名。如果是 World 模式，是授权系统中所有的用户。</p>
+<p><strong>权限信息（Permission）</strong></p>
+<p>权限就是指我们可以在数据节点上执行的操作种类，如下所示：在 Zookeeper 中已经定义好的权限有 5 种：</p>
+<p>数据节点（c: create）创建权限，授予权限的对象可以在数据节点下创建子节点；<br>数据节点（w: wirte）更新权限，授予权限的对象可以更新该数据节点；<br>数据节点（r: read）读取权限，授予权限的对象可以读取该节点的内容以及子节点的列表信息；<br>数据节点（d: delete）删除权限，授予权限的对象可以删除该数据节点的子节点；<br>数据节点（a: admin）管理者权限，授予权限的对象可以对该数据节点体进行 ACL 权限设置。</p>
+<p>通过系统参数<code>zookeeper.skipACL=yes</code>进行配置，默认是no,可以配置为true, 则配置过的ACL将不再进行权限检测</p>
+<h3 id="生成授权ID"><a href="#生成授权ID" class="headerlink" title="生成授权ID"></a>生成授权ID</h3><p>A-代码生成ID:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">generateSuperDigest</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchAlgorithmException </span>&#123;</span><br><span class="line">    String sId = DigestAuthenticationProvider.generateDigest(<span class="string">"gj:test"</span>);</span><br><span class="line">    System.out.println(sId);<span class="comment">//  gj:X/NSthOB0fD/OT6iilJ55WJVado=</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>B-在x shell 中生成：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo -n &lt;user&gt;:&lt;password&gt; | openssl dgst -binary -sha1 | openssl base64</span><br></pre></td></tr></table></figure>
+<h3 id="设置ACL"><a href="#设置ACL" class="headerlink" title="设置ACL"></a>设置ACL</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 节点创建的同时设置ACL</span></span><br><span class="line">create [-s] [-e] [-c]   path [data] [acl]</span><br><span class="line">create /zk-node datatest digest:gj:X/NSthOB0fD/OT6iilJ55WJVado=:cdrwa</span><br><span class="line"><span class="meta">#</span><span class="bash"> 用setAcl 设置</span></span><br><span class="line">setAcl /zk-node  digest:gj:X/NSthOB0fD/OT6iilJ55WJVado=:cdrwa</span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加授权信息后，不能直接访问，直接访问将报如下异常</span></span><br><span class="line"><span class="meta">#</span><span class="bash">=================================================================</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 访问前需要添加授权信息</span></span><br><span class="line">addauth digest gj:test</span><br><span class="line">get /zk-node</span><br><span class="line">datatest</span><br><span class="line"><span class="meta">#</span><span class="bash"> 另一种授权模式： auth 明文授权</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用之前需要先</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> addauth  digest username:password  注册用户信息，后续可以直接用明文授权</span></span><br><span class="line">addauth digest u100:p100</span><br><span class="line">create /node-1 node1data auth:u100:p100:cdwra</span><br><span class="line"><span class="meta">#</span><span class="bash"> 这是u100用户授权信息会被zk保存，可以认为当前的授权用户为u100</span></span><br><span class="line">get /node-1</span><br><span class="line">node1data</span><br><span class="line"><span class="meta">#</span><span class="bash"> IP授权模式：</span></span><br><span class="line">setAcl /node-ip ip:192.168.109.128:cdwra</span><br><span class="line">create /node-ip  data  ip:192.168.109.128:cdwra</span><br><span class="line"><span class="meta">#</span><span class="bash"> 多个指定IP可以通过逗号分隔， 如 setAcl /node-ip  ip:IP1:rw,ip:IP2:a</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Super 超级管理员模式</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 这是一种特殊的Digest模式， 在Super模式下超级管理员用户可以对Zookeeper上的节点进行任何的操作。需要在启动了上通过JVM 系统参数开启：</span></span><br><span class="line">DigestAuthenticationProvider中定义</span><br><span class="line">-Dzookeeper.DigestAuthenticationProvider.superDigest=super:&lt;base64encoded(SHA1(password))</span><br></pre></td></tr></table></figure>
+<h2 id="Zookeeper-内存数据和持久化"><a href="#Zookeeper-内存数据和持久化" class="headerlink" title="Zookeeper 内存数据和持久化"></a>Zookeeper 内存数据和持久化</h2><p>数据的组织形式为一个类似文件系统的数据结构，而这些数据都是存储在内存中的，所以我们可以认为，Zookeeper是一个基于内存的小型数据库 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 内存中的数据：</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataTree</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ConcurrentHashMap&lt;String, DataNode&gt; nodes =</span><br><span class="line">        <span class="keyword">new</span> ConcurrentHashMap&lt;String, DataNode&gt;();  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> WatchManager dataWatches = <span class="keyword">new</span> WatchManager();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> WatchManager childWatches = <span class="keyword">new</span> WatchManager();</span><br><span class="line">&#125;   </span><br><span class="line"><span class="comment">// DataNode 是Zookeeper存储节点数据的最小单位</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataNode</span> <span class="keyword">implements</span> <span class="title">Record</span> </span>&#123;</span><br><span class="line">    <span class="keyword">byte</span> data[];</span><br><span class="line">    Long acl;</span><br><span class="line">    <span class="keyword">public</span> StatPersisted stat;</span><br><span class="line">    <span class="keyword">private</span> Set&lt;String&gt; children = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/06/09/resource-system-Linux-Linux-PlanTask/" data-toggle="tooltip" data-placement="top" title="Linux执行定时任务">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/05/18/resource-java-Zookeeper-ZookeeperCluster/" data-toggle="tooltip" data-placement="top" title="Zookeeper集群">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#核心概念"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">核心概念</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#文件系统数据结构"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">文件系统数据结构</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#监听通知机制"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">监听通知机制</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Zookeeper安装"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Zookeeper安装</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#命令行操作Zookeeper"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">命令行操作Zookeeper</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ACL-权限控制-Access-Control-List"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">ACL 权限控制( Access Control   List )</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#生成授权ID"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">生成授权ID</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#设置ACL"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">设置ACL</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Zookeeper-内存数据和持久化"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Zookeeper 内存数据和持久化</span></a></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Zookeeper" title="Zookeeper">Zookeeper</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

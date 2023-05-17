@@ -1,0 +1,5 @@
+[1022/120337.075:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: browser
+[1022/120337.481:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: gpu-process
+[1022/120337.684:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: utility
+[1022/120537.396:INFO:crash_reporting.cc(219)] Crash reporting enabled for process: gpu-process
+[1022/171121.065:ERROR:dns_config_service_win.cc(765)] DNS config watch failed.

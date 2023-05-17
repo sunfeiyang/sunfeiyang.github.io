@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="sunfy, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          AQS之独占锁ReentrantLock - Sunfy
+        
+    </title>
+
+    <link rel="canonical" href="https://sunfy9.gitee.io/2021/11/16/resource-java-concurrent-ReentrantLock/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="../../../../css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="../../../../css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="../../../../css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="../../../../css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/widget.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/signature.css">
+
+
+    
+<link rel="stylesheet" href="../../../../css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="../../../../css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- 详情页面标题Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/img/header_img/concurrent/ReentrantLock.png')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/undefined');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"> -->
+                <div class="col-md-12">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+
+                        <h1>AQS之独占锁ReentrantLock</h1>
+                        <h2 class="subheading">是一种基于AQS框架的应用实现，是一种互斥锁，可以保证线程安全。</h2>
+                        <span class="meta">
+                            Posted by Sunfy on
+                            2021-11-16
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.2k</span> and
+                                Reading Time <span class="post-count">9</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+        
+          <div class="widget">
+            <span>
+                Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
+            </span>
+            <br/>
+            <span>
+                <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
+            </span>
+          </div>
+        
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+
+</header>
+
+	
+    <!-- Navigation 导航栏-->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sunfy Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/project/">project</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="https://sunfy.top" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Blog详情页面-Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <!-- <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container"> -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="什么是ReentrantLock"><a href="#什么是ReentrantLock" class="headerlink" title="什么是ReentrantLock"></a>什么是<code>ReentrantLock</code></h1><p><code>ReentrantLock</code>是一种基于<code>AQS</code>框架的应用实现，是JDK中的一种线程并发访问的同步手段，它的功能类似于<code>synchronized</code>是一种互斥锁，可以保证线程安全。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>可中断</li>
+<li>可以设置超时时间</li>
+<li>可以设置为公平锁</li>
+<li>支持多个条件变量</li>
+<li>同<code>synchronized</code>一样，支持可重入</li>
+</ul>
+<h2 id="synchronized与ReentrantLock区别"><a href="#synchronized与ReentrantLock区别" class="headerlink" title="synchronized与ReentrantLock区别"></a><code>synchronized</code>与<code>ReentrantLock</code>区别</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>sYNCHRONIZED</th>
+<th>rEENTRANTLOCK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>层级</td>
+<td>JVM层级</td>
+<td>JDK层级</td>
+</tr>
+<tr>
+<td>锁状态</td>
+<td>无法在代码中直接判断</td>
+<td>可以通过<code>isLocked</code>判断</td>
+</tr>
+<tr>
+<td>公平</td>
+<td>非公平锁</td>
+<td>可以是公平也可以非公平</td>
+</tr>
+<tr>
+<td>中断</td>
+<td>不可被中断</td>
+<td><code>lockinterruptibly</code>可以中断</td>
+</tr>
+<tr>
+<td>释放锁</td>
+<td>发生异常会自动释放锁</td>
+<td>在finally块中显示释放锁</td>
+</tr>
+<tr>
+<td>获取锁</td>
+<td>立即返回是否成功的<code>tryLock()</code>，等待指定时长的获取</td>
+<td>已经在等待的线程是后来的线程先获得锁</td>
+</tr>
+<tr>
+<td></td>
+<td>队列，先进先出，先来的线程先获得锁</td>
+<td>栈，先进后出</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="ReentrantLock用法"><a href="#ReentrantLock用法" class="headerlink" title="ReentrantLock用法"></a><code>ReentrantLock</code>用法<sunfy-line></h1><ul>
+<li><p>创建锁</p>
+<p>公平锁</p>
+<blockquote>
+<p>ReentrantLock lock = new ReentrantLock(true);</p>
+</blockquote>
+<p>非公平锁</p>
+<blockquote>
+<p>ReentrantLock lock = new ReentrantLock();</p>
+<p>参数默认为false，所以传入false或者不传参数都是非公平锁</p>
+</blockquote>
+</li>
+<li><p>对临界区加锁</p>
+<blockquote>
+<p>lock.lock();</p>
+<p>加锁完成后，要将临界区代码使用try进行异常处理</p>
+</blockquote>
+</li>
+<li><p>必须显示解锁</p>
+<blockquote>
+<p>在finally中显示的解锁</p>
+<p>lock.unlock();</p>
+</blockquote>
+</li>
+</ul>
+<p>下面看几个例子，从锁的五个特性入手，进行针对性的理解</p>
+<h2 id="重入"><a href="#重入" class="headerlink" title="重入"></a>重入</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同一个锁，在线程1中加锁一次，并在线程1中调用线程2，输出结果正常</span></span><br><span class="line"><span class="comment">// 不过注意我们需要对两次加锁分别进行解锁</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    method1();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        log.debug(<span class="string">"execute method1"</span>);</span><br><span class="line">        method2();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        log.debug(<span class="string">"execute method2"</span>);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出结果</span></span><br><span class="line">execute method1</span><br><span class="line">execute method2</span><br></pre></td></tr></table></figure>
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>需要在线程中手动设置为可中断，<code>lock.lockInterruptibly();</code></p>
+<p>显示调用中断锁：<code>t1.interrupt();</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    Thread t1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">        log.debug(<span class="string">"t1启动..."</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 设置可中断</span></span><br><span class="line">            lock.lockInterruptibly();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                log.debug(<span class="string">"t1获得了锁"</span>);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            log.debug(<span class="string">"t1等锁的过程中被中断"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="string">"t1"</span>);</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        log.debug(<span class="string">"main线程获得了锁"</span>);</span><br><span class="line">        t1.start();</span><br><span class="line">        <span class="comment">//先让线程t1执行</span></span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        <span class="comment">// 手动中断锁</span></span><br><span class="line">        t1.interrupt();</span><br><span class="line">        log.debug(<span class="string">"线程t1执行中断"</span>);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="超时"><a href="#超时" class="headerlink" title="超时"></a>超时</h2><p>通过<code>lock.tryLock()</code>尝试获取锁，如果未获取到，直接返回失败</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!lock.tryLock()) &#123;</span><br><span class="line">    log.debug(<span class="string">"获取锁失败，立即返回false"</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过<code>lock.tryLock(3, TimeUnit.SECONDS)</code>尝试在指定时间内获取锁，如果在设定时间内获取到则放回true，否则返回false</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!lock.tryLock(<span class="number">3</span>, TimeUnit.SECONDS)) &#123;</span><br><span class="line">        log.debug(<span class="string">"等待 3s 后获取锁失败，直接返回"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="公平"><a href="#公平" class="headerlink" title="公平"></a>公平</h2><p>先创建500个线程并启动线程，等所有线程创建好之后，然后去竞争锁，如果设置的为公平锁，那必然符合队列的先进先出原则（FIFO），若设置为非公平锁，那就可能出现后创建的线程在之前先执行。因为非公平锁在创建后会先尝试去获取一下锁，如果获取到则直接执行，如果获取不到才会放入等待队列中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ReentrantLock lock = new ReentrantLock(true); //公平锁</span></span><br><span class="line">ReentrantLock lock = <span class="keyword">new</span> ReentrantLock(); <span class="comment">//非公平锁</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">500</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">10</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            log.debug(Thread.currentThread().getName() + <span class="string">" running..."</span>);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="string">"t"</span> + i).start();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 1s 之后去争抢锁</span></span><br><span class="line">Thread.sleep(<span class="number">1000</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">500</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            log.debug(Thread.currentThread().getName() + <span class="string">" running..."</span>);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="string">"强行插入"</span> + i).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h2><p>定义信号量为变量1，变量2</p>
+<p>在主线程中，分别修改变量1和变量2的值，并分别调用相应条件的<code>signal1.signal();</code>，激活线程继续执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//变量1</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">signal1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">while</span>(!has1)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                log.debug(<span class="string">"未获取到变量1，等待中..."</span>);</span><br><span class="line">                signal1.await();</span><br><span class="line">            &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        log.debug(<span class="string">"获取到变量1"</span>);</span><br><span class="line">    &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//变量2</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">signal2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">while</span>(!has2)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                log.debug(<span class="string">"未获取到变量2，等待中..."</span>);</span><br><span class="line">                signal2.await();</span><br><span class="line">            &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        log.debug(<span class="string">"获取到变量2"</span>);</span><br><span class="line">    &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Condition signal1 = lock.newCondition();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Condition signal2 = lock.newCondition();</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> has1 = <span class="keyword">false</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> has2 = <span class="keyword">false</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ReentrantLockDemo6 test = <span class="keyword">new</span> ReentrantLockDemo6();</span><br><span class="line">    <span class="keyword">new</span> Thread(() -&gt;&#123;</span><br><span class="line">        test.signal1();</span><br><span class="line">    &#125;).start();</span><br><span class="line">    <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">        test.signal2();</span><br><span class="line">    &#125;).start();</span><br><span class="line">    <span class="keyword">new</span> Thread(() -&gt;&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            has1 = <span class="keyword">true</span>;</span><br><span class="line">            log.debug(<span class="string">"唤醒变量1等待线程"</span>);</span><br><span class="line">            signal1.signal();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,<span class="string">"t1"</span>).start();</span><br><span class="line">    <span class="keyword">new</span> Thread(() -&gt;&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            has2 = <span class="keyword">true</span>;</span><br><span class="line">            log.debug(<span class="string">"唤醒变量2等待线程"</span>);</span><br><span class="line">            signal2.signal();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,<span class="string">"t2"</span>).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出结果</p>
+<p>未获取到变量1，等待中…<br>未获取到变量2，等待中…<br>唤醒变量1等待线程<br>唤醒变量2等待线程<br>获取到变量1<br>获取到变量2</p>
+</blockquote>
+<h1 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h1><p>带着问题看源码：</p>
+<ul>
+<li><code>ReentrantLock</code>加锁解锁逻辑</li>
+<li>如何实现公平与非公平</li>
+<li>如何实现可重入锁机制</li>
+<li>线程竞争锁失败的入队阻塞逻辑</li>
+<li>获取锁的线程释放锁唤醒阻塞线程</li>
+<li>竞争锁的逻辑如何实现</li>
+</ul>
+<p>首先我们先看下<code>ReentrantLock</code>所有的方法，从方法的名称中我们也大概能判断相应的方法的功能。</p>
+<p><img src="../../../../img/ReentrantLock/image-20211116222602021.png" alt="image-20211116222602021"></p>
+<h2 id="Node说明"><a href="#Node说明" class="headerlink" title="Node说明"></a>Node说明</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 指示节点在共享模式下等待的标记 */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Node SHARED = <span class="keyword">new</span> Node();</span><br><span class="line">    <span class="comment">/** 指示节点正在以独占模式等待的标记 */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Node EXCLUSIVE = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">/** 指示线程已取消的 waitStatus 值 */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CANCELLED =  <span class="number">1</span>;</span><br><span class="line">    <span class="comment">/** 指示后继线程需要解停的waitStatus 值 */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SIGNAL    = -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">/** waitStatus 值指示线程正在等待条件 */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CONDITION = -<span class="number">2</span>;</span><br><span class="line">    <span class="comment">/** 指示下一个acquireShared 应无条件传播的waitStatus值 */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PROPAGATE = -<span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ReentrantLock</code>在进行线程判断的时候重点会使用到上面的几个参数进行判断。</p>
+<h2 id="加锁逻辑"><a href="#加锁逻辑" class="headerlink" title="加锁逻辑"></a>加锁逻辑</h2><p><img src="../../../../img/ReentrantLock/image-20211116224412185.png" alt="image-20211116224412185"></p>
+<p>先来看下公平锁：</p>
+<p><img src="../../../../img/ReentrantLock/image-20211116230146439.png" alt="image-20211116230146439"></p>
+<p><code>acquire</code>:以独占模式获取，忽略中断。 通过至少调用一次tryAcquire ，成功返回。 否则线程会排队，可能会反复阻塞和解除阻塞，调用tryAcquire直到成功。 此方法可用于实现方法Lock.lock 。</p>
+<p><img src="../../../../img/ReentrantLock/image-20211116224648154.png" alt="image-20211116224648154"></p>
+<p><code>tryAcquire</code>:tryAcquire 的公平版本。 除非递归调用或没有服务员或是第一个，否则不要授予访问权限。</p>
+<p><img src="../../../../img/ReentrantLock/image-20211117100515974.png" alt="image-20211117100515974"></p>
+<p>非公平版本:执行不公平的 tryLock。 tryAcquire 在子类中实现，但两者都需要对 trylock 方法进行非公平尝试</p>
+<p><img src="../../../../img/ReentrantLock/image-20211117100926315.png" alt="image-20211117100926315"></p>
+<p><code>addWaiter</code>:为当前线程和给定模式创建和排队节点。参数：模式 – Node.EXCLUSIVE 为独占，Node.SHARED 为共享返回：新节点</p>
+<p>此处因为初始化<code>pred==null</code>会先调用<code>enq(node)</code>进行等待队列的初始化，第二个线程再次调用到此方法时，pred不为null，则会进行入队操作</p>
+<p><img src="../../../../img/ReentrantLock/image-20211116224734790.png" alt="image-20211116224734790"></p>
+<p><code>acquireQueued</code>:以独占不间断模式获取已在队列中的线程。 由条件等待方法以及获取使用。</p>
+<p><img src="../../../../img/ReentrantLock/image-20211116225053821.png" alt="image-20211116225053821"></p>
+<p><code>enq</code>:将节点插入队列，必要时进行初始化。<strong>此处才对等待队列进行了初始化，此处非常值得学习，体会如何初始化一个队列</strong></p>
+<p><img src="../../../../img/ReentrantLock/image-20211116225235439.png" alt="image-20211116225235439"></p>
+<p>接下来我们再对比看下非公平锁：</p>
+<p><img src="../../../../img/ReentrantLock/image-20211116230245671.png" alt="image-20211116230245671"></p>
+<p>对比可以看到，非公平锁比公平锁就多了一层判断</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (compareAndSetState(<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">    setExclusiveOwnerThread(Thread.currentThread());</span><br></pre></td></tr></table></figure>
+<p>方法中直接去尝试获取锁，如果锁获取成功，则直接设置独占所有者线程。这我们就能明白<code>ReentrantLock</code>就是通过这个判断来实现了公平锁和非公平锁。</p>
+<h2 id="解锁逻辑"><a href="#解锁逻辑" class="headerlink" title="解锁逻辑"></a>解锁逻辑</h2><p><code>unlock</code>:尝试释放此锁。<br>如果当前线程是此锁的持有者，则持有计数递减。 如果保持计数现在为零，则释放锁。 如果当前线程不是此锁的持有者，则抛出<code>IllegalMonitorStateException</code> </p>
+<p><img src="../../../../img/ReentrantLock/image-20211116230919961.png" alt="image-20211116230919961"></p>
+<p><code>release</code>:以独占模式发布。 如果tryRelease返回 true，则通过解除阻塞一个或多个线程tryRelease实现。 此方法可用于实现方法Lock.unlock 。</p>
+<p><img src="../../../../img/ReentrantLock/image-20211116231028070.png" alt="image-20211116231028070"></p>
+<p><code>unparkSuccessor</code>:唤醒节点的后继节点（如果存在）。</p>
+<p><img src="../../../../img/ReentrantLock/image-20211116231209250.png" alt="image-20211116231209250"></p>
+<p>解锁后去唤醒等待队列中的后继节点。</p>
+<h2 id="重入锁机制"><a href="#重入锁机制" class="headerlink" title="重入锁机制"></a>重入锁机制</h2><p>在<code>ReentrantLock</code>中定义，在尝试获取锁时会进行判断定义的<code>state</code>的数值，如果获取到state是0，则说明是首次获取锁，加锁成功并设置当前拥有独占访问权限的线程。否则会判断当前线程尝试加锁线程是否为当前锁的线程，如果是同一个线程，那么会累加<code>state</code>值，从而支持可重入。</p>
+<p><img src="../../../../img/ReentrantLock/image-20211117103436500.png" alt="image-20211117103436500"></p>
+
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/11/17/resource-java-concurrent-synchronizedBase/" data-toggle="tooltip" data-placement="top" title="synchronized基本使用">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/11/15/resource-java-concurrent-AQS/" data-toggle="tooltip" data-placement="top" title="对AQS的理解">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        Copyright 2021 sunfy.top ALL Rights Reserved
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="../../../../css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="../../../../css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../../js/music-player/utill.js"></script>
+
+
+<script src="../../../../js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="../../../../js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#什么是ReentrantLock"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">什么是ReentrantLock</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#特点"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">特点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#synchronized与ReentrantLock区别"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">synchronized与ReentrantLock区别</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#ReentrantLock用法"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">ReentrantLock用法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#重入"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">重入</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#中断"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">中断</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#超时"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">超时</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#公平"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">公平</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#条件变量"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">条件变量</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#源码分析"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">源码分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Node说明"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Node说明</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#加锁逻辑"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">加锁逻辑</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#解锁逻辑"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">解锁逻辑</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#重入锁机制"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">重入锁机制</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-10
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Blog</a></li>
+                    
+                        <li><a href="http://sunfy.top" target="_blank">sunfy&#39;s Web</a></li>
+                    
+                        <li><a href="https://github.com/sunfeiyang" target="_blank">sunfy Github</a></li>
+                    
+                        <li><a href="#" target="_blank">Other</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/sunfeiyang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Sunfy 2023 <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备19007042号</a>
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/sunfeiyang/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=sunfeiyang&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="../../../../js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="../../../../js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="../../../../js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://sunfy9.gitee.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🌾&quot;,&quot;🍀&quot;,&quot;don&#39;t give up&quot;,&quot;🍂&quot;,&quot;🌻&quot;,&quot;try it again&quot;,&quot;🍃&quot;,&quot;never say die&quot;,&quot;🌵&quot;,&quot;🌿&quot;,&quot;🌴&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
